@@ -118,14 +118,24 @@ body {
 .rv-delay-4 { transition-delay: .4s; }
 .rv-delay-5 { transition-delay: .5s; }
 
-/* ═══════ BACKGROUND GRID ═══════ */
+/* ═══════ BACKGROUND ═══════ */
 body::before {
   content: '';
   position: fixed; inset: 0;
-  background-image:
-    linear-gradient(rgba(12,36,97,.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(12,36,97,.03) 1px, transparent 1px);
-  background-size: 60px 60px;
+  background:
+    radial-gradient(ellipse 90% 70% at 15% 5%, rgba(7,143,210,.14) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 60% at 85% 25%, rgba(24,73,169,.12) 0%, transparent 55%),
+    radial-gradient(ellipse 80% 50% at 50% 85%, rgba(7,143,210,.10) 0%, transparent 50%),
+    radial-gradient(ellipse 40% 35% at 65% 60%, rgba(24,73,169,.08) 0%, transparent 50%);
+  pointer-events: none; z-index: 0;
+}
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  opacity: .35;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.06'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
   pointer-events: none; z-index: 0;
 }
 
@@ -200,10 +210,18 @@ nav.scrolled {
 }
 .hero::before {
   content: '';
-  position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
-  width: 900px; height: 900px;
-  background: radial-gradient(circle, rgba(7,143,210,.08) 0%, rgba(24,73,169,.04) 40%, transparent 70%);
+  position: absolute; top: -30%; left: 50%; transform: translateX(-50%);
+  width: 140%; height: 100%;
+  background:
+    radial-gradient(ellipse 55% 50% at 25% 15%, rgba(7,143,210,.18) 0%, transparent 70%),
+    radial-gradient(ellipse 45% 55% at 75% 35%, rgba(24,73,169,.15) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 35% at 50% 75%, rgba(7,143,210,.12) 0%, transparent 60%);
   pointer-events: none;
+  animation: meshFloat 12s ease-in-out infinite alternate;
+}
+@keyframes meshFloat {
+  0% { transform: translateX(-50%) scale(1) rotate(0deg); }
+  100% { transform: translateX(-50%) scale(1.05) rotate(1deg); }
 }
 .hero-content { position: relative; max-width: 800px; }
 
@@ -682,10 +700,9 @@ section { position: relative; z-index: 1; }
 .cta-section::after {
   content: '';
   position: absolute; inset: 0;
-  background-image:
-    linear-gradient(rgba(255,255,255,.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.02) 1px, transparent 1px);
-  background-size: 60px 60px;
+  background:
+    radial-gradient(ellipse 60% 50% at 30% 30%, rgba(255,255,255,.04) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 70% 60%, rgba(7,143,210,.06) 0%, transparent 55%);
   pointer-events: none;
 }
 .cta-content { position: relative; z-index: 1; }
@@ -821,6 +838,324 @@ footer {
   border-color: rgba(249,115,22,.3);
 }
 
+/* ═══════ ABOUT US ═══════ */
+.about-section {
+  padding: 100px 56px;
+  background: var(--navy);
+  position: relative; overflow: hidden;
+}
+.about-section::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 70% 30%, rgba(7,143,210,.15) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 30% 70%, rgba(24,73,169,.10) 0%, transparent 55%);
+  pointer-events: none;
+}
+.about-content { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; text-align: center; }
+.about-title {
+  font-size: clamp(28px, 4vw, 42px); font-weight: 800;
+  background: linear-gradient(135deg, var(--cyan), #60A5FA);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text; margin-bottom: 32px;
+}
+.about-text {
+  font-size: 18px; font-weight: 500; line-height: 2;
+  color: rgba(241,245,249,.75);
+}
+.about-text strong { color: var(--cyan); font-weight: 700; }
+
+/* ═══════ MOBILE APPS ═══════ */
+.mobile-section {
+  padding: 100px 56px;
+  background: var(--white);
+  position: relative; overflow: hidden;
+  border-top: 1px solid var(--border);
+}
+.mobile-inner { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; }
+.mobile-header { text-align: right; margin-bottom: 48px; }
+.mobile-title {
+  font-size: clamp(28px, 4vw, 42px); font-weight: 800;
+  color: var(--navy); margin-bottom: 14px;
+}
+.mobile-title span {
+  background: linear-gradient(135deg, var(--blue), var(--cyan));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.mobile-sub { font-size: 16px; font-weight: 500; color: var(--muted); line-height: 1.9; }
+.mobile-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 40px;
+}
+.mobile-stores { display: flex; flex-direction: column; gap: 24px; align-items: center; justify-content: center; }
+.store-badge {
+  display: flex; align-items: center; gap: 14px;
+  padding: 16px 32px; border-radius: 14px;
+  border: 1px solid var(--border);
+  background: var(--white);
+  text-decoration: none; color: var(--navy);
+  transition: border-color .3s, transform .3s, box-shadow .3s;
+}
+.store-badge:hover { border-color: var(--cyan); transform: translateY(-2px); box-shadow: var(--shadow); }
+.store-badge .store-icon { font-size: 28px; }
+.store-badge .store-info { text-align: right; }
+.store-badge .store-small { font-size: 11px; color: var(--muted); display: block; }
+.store-badge .store-name { font-size: 18px; font-weight: 800; font-family: var(--en); color: var(--navy); }
+.store-label { font-family: var(--en); font-size: 12px; font-weight: 600; color: var(--muted); letter-spacing: 1px; margin-top: 4px; }
+.mobile-features { display: flex; flex-direction: column; gap: 16px; }
+.mobile-feat {
+  display: flex; align-items: center; gap: 16px; justify-content: flex-end;
+  padding: 20px 24px; border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--white);
+  transition: border-color .3s, box-shadow .3s;
+}
+.mobile-feat:hover { border-color: var(--cyan); box-shadow: var(--shadow); }
+.mobile-feat-icon {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--cyan), var(--blue));
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 16px; flex-shrink: 0;
+}
+.mobile-feat-text { text-align: right; }
+.mobile-feat-title { font-size: 16px; font-weight: 700; color: var(--navy); }
+.mobile-feat-desc { font-size: 13px; color: var(--muted); margin-top: 2px; }
+
+/* ═══════ PRICING ═══════ */
+.pricing-section {
+  padding: 100px 56px;
+  background: var(--navy);
+  position: relative; overflow: hidden;
+  border-top: 1px solid rgba(255,255,255,.06);
+}
+.pricing-section::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 55% 50% at 50% 20%, rgba(7,143,210,.12) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 35% at 80% 80%, rgba(24,73,169,.08) 0%, transparent 55%);
+  pointer-events: none;
+}
+.pricing-inner { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; }
+.pricing-header { text-align: right; margin-bottom: 48px; }
+.pricing-title {
+  font-size: clamp(28px, 4vw, 42px); font-weight: 800;
+  background: linear-gradient(135deg, var(--cyan), #60A5FA);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text; margin-bottom: 14px;
+}
+.pricing-sub { font-size: 16px; font-weight: 500; color: rgba(241,245,249,.55); line-height: 1.9; }
+.pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.pricing-card {
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: var(--r); padding: 36px 28px;
+  text-align: right; position: relative;
+  transition: transform .4s cubic-bezier(.16,1,.3,1), border-color .4s, box-shadow .4s;
+}
+.pricing-card:hover { transform: translateY(-4px); border-color: rgba(7,143,210,.3); box-shadow: 0 12px 40px rgba(7,143,210,.12); }
+.pricing-card.featured {
+  border-color: rgba(7,143,210,.35);
+  background: linear-gradient(160deg, rgba(7,143,210,.08), rgba(24,73,169,.04));
+  box-shadow: 0 8px 32px rgba(7,143,210,.1);
+}
+.pricing-badge {
+  display: inline-block; font-family: var(--en); font-size: 11px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  padding: 4px 14px; border-radius: 20px;
+  border: 1px solid rgba(7,143,210,.3);
+  color: var(--cyan); margin-bottom: 16px;
+}
+.pricing-card-title { font-size: 22px; font-weight: 800; color: #F1F5F9; margin-bottom: 24px; }
+.pricing-list { list-style: none; display: flex; flex-direction: column; gap: 14px; margin-bottom: 28px; }
+.pricing-list li {
+  display: flex; align-items: center; gap: 10px; justify-content: flex-end;
+  font-size: 14px; font-weight: 600; color: rgba(241,245,249,.7);
+}
+.pricing-check {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--cyan), var(--blue));
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 12px; flex-shrink: 0;
+}
+.pricing-btn {
+  display: inline-block; width: 100%; text-align: center;
+  font-family: var(--ar); font-size: 15px; font-weight: 700;
+  padding: 12px 24px; border-radius: 10px;
+  border: 1px solid rgba(7,143,210,.3);
+  background: rgba(7,143,210,.08);
+  color: var(--cyan); text-decoration: none;
+  transition: background .3s, border-color .3s, transform .3s;
+}
+.pricing-btn:hover { background: rgba(7,143,210,.18); border-color: rgba(7,143,210,.5); transform: translateY(-2px); }
+.pricing-note {
+  margin-top: 32px; padding: 20px 28px;
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 12px; text-align: center;
+  font-size: 14px; font-weight: 600;
+  color: rgba(241,245,249,.6); line-height: 1.8;
+}
+.pricing-note strong { color: var(--cyan); }
+
+/* ═══════ FAQ ═══════ */
+.faq-section {
+  padding: 100px 56px;
+  background: var(--white);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.faq-inner { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; }
+.faq-header { text-align: center; margin-bottom: 48px; }
+.faq-title {
+  font-size: clamp(28px, 4vw, 42px); font-weight: 800;
+  color: var(--navy); margin-bottom: 14px;
+}
+.faq-sub { font-size: 16px; font-weight: 500; color: var(--muted); line-height: 1.9; }
+.faq-container { max-width: 720px; margin: 0 auto; }
+.faq-item {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 12px;
+  overflow: hidden;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  opacity: 0;
+  animation: fadeUp 0.5s ease forwards;
+}
+.faq-item:nth-child(1) { animation-delay: 0.05s; }
+.faq-item:nth-child(2) { animation-delay: 0.1s; }
+.faq-item:nth-child(3) { animation-delay: 0.15s; }
+.faq-item:nth-child(4) { animation-delay: 0.2s; }
+.faq-item:nth-child(5) { animation-delay: 0.25s; }
+.faq-item:nth-child(6) { animation-delay: 0.3s; }
+.faq-item:hover { border-color: rgba(7,143,210,.2); }
+.faq-item.open {
+  border-color: var(--cyan);
+  box-shadow: var(--shadow);
+}
+.faq-item:last-child { margin-bottom: 0; }
+.faq-item-header {
+  display: flex; align-items: center; gap: 14px;
+  padding: 18px 20px; cursor: pointer;
+  transition: background 0.2s ease;
+}
+.faq-item-header:hover { background: rgba(7,143,210,.02); }
+.faq-icon {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: rgba(7,143,210,.08);
+  border: 1px solid rgba(7,143,210,.12);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; transition: all 0.3s ease;
+}
+.faq-icon svg { width: 12px; height: 12px; color: var(--cyan); transition: transform 0.3s ease; }
+.faq-item.open .faq-icon { background: var(--cyan); border-color: var(--cyan); }
+.faq-item.open .faq-icon svg { color: #fff; transform: rotate(180deg); }
+.faq-question {
+  flex: 1; font-size: 15px; font-weight: 700;
+  color: var(--navy); line-height: 1.5;
+}
+.faq-answer {
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+.faq-item.open .faq-answer { max-height: 150px; }
+.faq-answer-content {
+  padding: 0 20px 18px 62px;
+  font-size: 14px; color: var(--tx2); line-height: 1.8;
+}
+@media (max-width: 1024px) {
+  .faq-section { padding: 72px 24px; }
+}
+@media (max-width: 640px) {
+  .faq-answer-content { padding-left: 20px; }
+  .faq-question { font-size: 13px; }
+}
+
+/* ═══════ CONTACT ═══════ */
+.contact-section {
+  padding: 100px 56px;
+  background: var(--white);
+  position: relative; overflow: hidden;
+  border-top: 1px solid var(--border);
+}
+.contact-inner { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; }
+.contact-header { text-align: right; margin-bottom: 48px; }
+.contact-title {
+  font-size: clamp(28px, 4vw, 42px); font-weight: 800;
+  color: var(--navy); margin-bottom: 14px;
+}
+.contact-title span {
+  background: linear-gradient(135deg, var(--blue), var(--cyan));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.contact-sub { font-size: 16px; font-weight: 500; color: var(--muted); line-height: 1.9; }
+.contact-grid { display: grid; grid-template-columns: 1fr 380px; gap: 32px; }
+.contact-form {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r); padding: 36px;
+}
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-group.full { grid-column: 1 / -1; }
+.form-label { font-size: 13px; font-weight: 700; color: var(--tx2); text-align: right; }
+.form-input, .form-select, .form-textarea {
+  font-family: var(--ar); font-size: 14px; font-weight: 600;
+  padding: 12px 16px; border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--white);
+  color: var(--navy); outline: none;
+  transition: border-color .3s, box-shadow .3s;
+  direction: rtl;
+}
+.form-input::placeholder, .form-textarea::placeholder { color: #94A3B8; }
+.form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(7,143,210,.1); }
+.form-select { appearance: none; cursor: pointer; }
+.form-textarea { min-height: 120px; resize: vertical; }
+.form-actions { display: flex; gap: 12px; justify-content: flex-end; margin-top: 20px; }
+.form-submit {
+  font-family: var(--ar); font-size: 15px; font-weight: 700;
+  padding: 12px 28px; border-radius: 10px; border: none; cursor: pointer;
+  background: linear-gradient(135deg, var(--cyan), var(--blue));
+  color: #fff; transition: transform .3s, box-shadow .3s;
+}
+.form-submit:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(7,143,210,.25); }
+.form-copy {
+  font-family: var(--ar); font-size: 15px; font-weight: 700;
+  padding: 12px 28px; border-radius: 10px; cursor: pointer;
+  background: var(--white);
+  border: 1px solid var(--border);
+  color: var(--tx2); transition: border-color .3s, box-shadow .3s;
+}
+.form-copy:hover { border-color: var(--cyan); box-shadow: var(--shadow); }
+.form-note { font-size: 12px; color: var(--muted); margin-top: 14px; text-align: center; }
+.contact-cards { display: flex; flex-direction: column; gap: 16px; }
+.contact-card {
+  display: flex; align-items: center; gap: 16px; justify-content: flex-end;
+  padding: 24px; border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  transition: border-color .3s, box-shadow .3s;
+  text-decoration: none;
+}
+.contact-card:hover { border-color: var(--cyan); box-shadow: var(--shadow); }
+.contact-card-icon {
+  width: 48px; height: 48px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; flex-shrink: 0;
+}
+.contact-card-icon.wa { background: linear-gradient(135deg, #25D366, #128C7E); color: #fff; }
+.contact-card-icon.phone { background: linear-gradient(135deg, var(--cyan), var(--blue)); color: #fff; }
+.contact-card-icon.email { background: linear-gradient(135deg, var(--cyan), var(--blue)); color: #fff; }
+.contact-card-text { text-align: right; }
+.contact-card-label { font-size: 16px; font-weight: 800; color: var(--navy); }
+.contact-card-value { font-size: 13px; font-weight: 600; color: var(--muted); font-family: var(--en); direction: ltr; }
+.contact-note { font-size: 12px; color: var(--muted); margin-top: 8px; text-align: center; }
+
 /* ═══════ RESPONSIVE ═══════ */
 @media (max-width: 1024px) {
   nav { padding: 0 24px; }
@@ -833,6 +1168,10 @@ footer {
   .float-card { display: none; }
   .clients-section { padding: 36px 24px; }
   .cta-section { padding: 64px 24px; }
+  .about-section, .mobile-section, .pricing-section, .contact-section { padding: 72px 24px; }
+  .mobile-grid { grid-template-columns: 1fr; gap: 24px; }
+  .pricing-grid { grid-template-columns: 1fr; gap: 20px; }
+  .contact-grid { grid-template-columns: 1fr; }
   footer { padding: 24px; flex-direction: column; align-items: flex-start; }
   .divider { margin: 0 24px; }
 }
@@ -911,6 +1250,13 @@ footer {
         <linearGradient id="ng2" x1="0" y1="227" x2="692" y2="227" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#1849A9"/><stop offset="1" stop-color="#078FD2"/></linearGradient>
         <linearGradient id="ng3" x1="0" y1="418" x2="213" y2="418" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#1e3a8a"/><stop offset="1" stop-color="#1849A9"/></linearGradient>
         <linearGradient id="ng4" x1="0" y1="513" x2="629" y2="513" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#1849A9"/><stop offset="1" stop-color="#078FD2"/></linearGradient>
+        <linearGradient id="nav-shim-g" x1="0%" x2="100%"><stop offset="0%" stop-color="white" stop-opacity="0"/><stop offset="50%" stop-color="white" stop-opacity="0.3"/><stop offset="100%" stop-color="white" stop-opacity="0"/></linearGradient>
+        <clipPath id="ncp1"><rect x="0" y="111" width="463" height="42" rx="21"/></clipPath>
+        <clipPath id="ncp2"><rect x="0" y="206" width="692" height="42" rx="21"/></clipPath>
+        <clipPath id="ncp3"><rect x="0" y="301" width="328" height="42" rx="21"/></clipPath>
+        <clipPath id="ncp4"><rect x="0" y="397" width="213" height="42" rx="21"/></clipPath>
+        <clipPath id="ncp5"><rect x="0" y="492" width="629" height="42" rx="21"/></clipPath>
+        <clipPath id="ncp6"><rect x="0" y="587" width="554" height="42" rx="21"/></clipPath>
       </defs>
       <g fill="#0c2461">
         <path d="M597.03,153.05h1.63v-.05c-.54.02-1.09.05-1.63.05ZM598.66,153v.05s.02-.02.02-.05h-.02Z"/>
@@ -928,15 +1274,24 @@ footer {
       <path fill="url(#ng3)" d="M15.09,397.29h198.73v41.81H15.09C6.76,439.1,0,432.34,0,424.01v-11.64C0,404.05,6.76,397.29,15.09,397.29Z"/>
       <path fill="url(#ng4)" d="M15.09,492.64h614.01v41.81H15.09C6.76,534.45,0,527.69,0,519.37v-11.64C0,499.4,6.76,492.64,15.09,492.64Z"/>
       <path fill="#1849a9"  d="M15.09,587.99h554.33v41.81H15.09C6.76,629.81,0,623.05,0,614.72v-11.64C0,594.75,6.76,587.99,15.09,587.99Z"/>
+      <rect class="bar-shimmer" clip-path="url(#ncp1)" x="0" y="111" width="463" height="42" fill="url(#nav-shim-g)" style="animation-delay:0s"/>
+      <rect class="bar-shimmer" clip-path="url(#ncp2)" x="0" y="206" width="692" height="42" fill="url(#nav-shim-g)" style="animation-delay:.3s"/>
+      <rect class="bar-shimmer" clip-path="url(#ncp3)" x="0" y="301" width="328" height="42" fill="url(#nav-shim-g)" style="animation-delay:.6s"/>
+      <rect class="bar-shimmer" clip-path="url(#ncp4)" x="0" y="397" width="213" height="42" fill="url(#nav-shim-g)" style="animation-delay:.9s"/>
+      <rect class="bar-shimmer" clip-path="url(#ncp5)" x="0" y="492" width="629" height="42" fill="url(#nav-shim-g)" style="animation-delay:1.2s"/>
+      <rect class="bar-shimmer" clip-path="url(#ncp6)" x="0" y="587" width="554" height="42" fill="url(#nav-shim-g)" style="animation-delay:1.5s"/>
     </svg>
-    <span class="nav-logo-text">Manasety</span>
+    <span class="nav-logo-text">Manasety<span id="nav-blink" style="color:#078FD2;">_</span></span>
   </a>
   <ul class="nav-links">
     <li><a href="#diff">ما نقدمه</a></li>
     <li><a href="#services">الخدمات</a></li>
     <li><a href="#how">كيف نعمل</a></li>
+    <li><a href="#pricing">الأسعار</a></li>
+    <li><a href="#faq">الأسئلة</a></li>
+    <li><a href="#contact">تواصل</a></li>
   </ul>
-  <a href="#cta" class="nav-cta">ابدأ الآن</a>
+  <a href="#contact" class="nav-cta">ابدأ الآن</a>
 </nav>
 
 <!-- ═══════ HERO ═══════ -->
@@ -1154,6 +1509,255 @@ footer {
   </div>
 </div>
 
+<!-- ═══════ ABOUT US ═══════ -->
+<section class="about-section rv" id="about">
+  <div class="about-content">
+    <h2 class="about-title">من نحن</h2>
+    <p class="about-text">
+      <strong>Manasety</strong> هو مزوّد حلول برمجية متخصّص في بناء أنظمة ومنصات تشغيل للشركات،
+      وليس مجرد مواقع إلكترونية. نبدأ دائمًا بفهم البزنس قبل كتابة أي سطر كود لأن النظام الجيد هو الذي يخدم
+      طريقة العمل، لا العكس.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════ MOBILE APPS ═══════ -->
+<section class="mobile-section rv" id="mobile">
+  <div class="mobile-inner">
+    <div class="mobile-header">
+      <h2 class="mobile-title">تطبيقات الجوال</h2>
+      <p class="mobile-sub">نبني تطبيقات جوال احترافية لنظامي iOS و Android، ونقوم بنشرها في App Store و Google Play Store. من الفكرة حتى النشر والدعم المستمر.</p>
+    </div>
+    <div class="mobile-grid">
+      <div class="mobile-stores">
+        <a href="#" class="store-badge">
+          <span class="store-icon"></span>
+          <span class="store-info">
+            <span class="store-small">متاح على</span>
+            <span class="store-name">App Store</span>
+          </span>
+        </a>
+        <span class="store-label">iOS Apps</span>
+        <a href="#" class="store-badge">
+          <span class="store-icon">▶</span>
+          <span class="store-info">
+            <span class="store-small">احصل عليه من</span>
+            <span class="store-name">Google Play</span>
+          </span>
+        </a>
+        <span class="store-label">Android Apps</span>
+      </div>
+      <div class="mobile-features">
+        <div class="mobile-feat">
+          <div class="mobile-feat-text">
+            <div class="mobile-feat-title">تطبيقات أصلية Native</div>
+            <div class="mobile-feat-desc">أداء عالي وتجربة مستخدم سلسة</div>
+          </div>
+          <div class="mobile-feat-icon">✓</div>
+        </div>
+        <div class="mobile-feat">
+          <div class="mobile-feat-text">
+            <div class="mobile-feat-title">تصميم متجاوب</div>
+            <div class="mobile-feat-desc">يعمل على جميع أحجام الشاشات</div>
+          </div>
+          <div class="mobile-feat-icon">✓</div>
+        </div>
+        <div class="mobile-feat">
+          <div class="mobile-feat-text">
+            <div class="mobile-feat-title">نشر ودعم</div>
+            <div class="mobile-feat-desc">نتولى النشر في المتاجر والتحديثات</div>
+          </div>
+          <div class="mobile-feat-icon">✓</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ PRICING ═══════ -->
+<section class="pricing-section rv" id="pricing">
+  <div class="pricing-inner">
+    <div class="pricing-header">
+      <h2 class="pricing-title">الأسعار</h2>
+      <p class="pricing-sub">باقات مرنة حسب نطاق العمل — ويتم تحديد التكلفة بعد جلسة مختصرة لفهم المتطلبات.</p>
+    </div>
+    <div class="pricing-grid">
+      <!-- Starter -->
+      <div class="pricing-card">
+        <span class="pricing-badge">Starter</span>
+        <h3 class="pricing-card-title">باقة الانطلاق</h3>
+        <ul class="pricing-list">
+          <li><span>حل تقني أساسي</span><span class="pricing-check">✓</span></li>
+          <li><span>منصة/نظام بسيط</span><span class="pricing-check">✓</span></li>
+          <li><span>مناسب للشركات الناشئة</span><span class="pricing-check">✓</span></li>
+        </ul>
+        <a href="#contact" class="pricing-btn">اطلب عرض</a>
+      </div>
+      <!-- Business -->
+      <div class="pricing-card featured">
+        <span class="pricing-badge">Business</span>
+        <h3 class="pricing-card-title">باقة الأعمال</h3>
+        <ul class="pricing-list">
+          <li><span>منصة تفاعلية + لوحة تحكم</span><span class="pricing-check">✓</span></li>
+          <li><span>تقارير أساسية</span><span class="pricing-check">✓</span></li>
+          <li><span>دعم بعد التسليم</span><span class="pricing-check">✓</span></li>
+        </ul>
+        <a href="#contact" class="pricing-btn">تواصل الآن</a>
+      </div>
+      <!-- Enterprise -->
+      <div class="pricing-card">
+        <span class="pricing-badge">Enterprise</span>
+        <h3 class="pricing-card-title">باقة المؤسسات</h3>
+        <ul class="pricing-list">
+          <li><span>نظام مخصص بالكامل</span><span class="pricing-check">✓</span></li>
+          <li><span>تقارير متقدمة + أتمتة</span><span class="pricing-check">✓</span></li>
+          <li><span>قابلية توسع عالية</span><span class="pricing-check">✓</span></li>
+        </ul>
+        <a href="#contact" class="pricing-btn">اطلب جلسة</a>
+      </div>
+    </div>
+    <div class="pricing-note">
+      <strong>ملاحظة:</strong> يتم تحديد النطاق والتكلفة بعد جلسة قصيرة لفهم طريقة التشغيل والمتطلبات والأولويات.
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ FAQ ═══════ -->
+<section class="faq-section rv" id="faq">
+  <div class="faq-inner">
+    <div class="faq-header">
+      <div class="section-tag" style="justify-content:center;"><span style="display:none;"></span>أسئلة شائعة</div>
+      <h2 class="faq-title">الأسئلة الشائعة</h2>
+      <p class="faq-sub">إجابات مختصرة تساعدك على فهم طريقة العمل والفرق بين "موقع" و"نظام".</p>
+    </div>
+    <div class="faq-container">
+      <div class="faq-item">
+        <div class="faq-item-header" onclick="toggleFaq(this)">
+          <span class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
+          <h3 class="faq-question">هل تقدمون مواقع أم أنظمة؟</h3>
+        </div>
+        <div class="faq-answer"><p class="faq-answer-content">نحن نبني أنظمة ومنصات تشغيل للشركات (إدارة + متابعة + تقارير + صلاحيات) وليس مجرد مواقع شكلية.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-item-header" onclick="toggleFaq(this)">
+          <span class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
+          <h3 class="faq-question">هل الحل يكون مخصصاً؟</h3>
+        </div>
+        <div class="faq-answer"><p class="faq-answer-content">نعم، كل نظام يُبنى حسب نشاط الشركة وطريقة التشغيل وحجم الفريق.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-item-header" onclick="toggleFaq(this)">
+          <span class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
+          <h3 class="faq-question">هل النظام قابل للتوسع مستقبلاً؟</h3>
+        </div>
+        <div class="faq-answer"><p class="faq-answer-content">بالتأكيد، نضع النمو في الحسبان لإضافة مستخدمين وميزات وتقارير بدون كسر النظام.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-item-header" onclick="toggleFaq(this)">
+          <span class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
+          <h3 class="faq-question">هل يوجد دعم بعد التسليم؟</h3>
+        </div>
+        <div class="faq-answer"><p class="faq-answer-content">نعم، نوفر دعماً وتحسينات وتطويراً مستمراً حسب الاتفاق، كشريك تقني لا كمورد فقط.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-item-header" onclick="toggleFaq(this)">
+          <span class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
+          <h3 class="faq-question">هل يمكن ربط النظام بأنظمة أخرى؟</h3>
+        </div>
+        <div class="faq-answer"><p class="faq-answer-content">نعم، حسب احتياجك: بريد/إشعارات/واجهات تكامل/أنظمة داخلية... إلخ.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-item-header" onclick="toggleFaq(this)">
+          <span class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
+          <h3 class="faq-question">هل يمكن إضافة تقارير وذكاء اصطناعي؟</h3>
+        </div>
+        <div class="faq-answer"><p class="faq-answer-content">نعم، بحسب الهدف: فلترة، تصنيف، اقتراح قرارات، Chatbots داخلية، ولوحات KPIs.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════ CONTACT ═══════ -->
+<section class="contact-section rv" id="contact">
+  <div class="contact-inner">
+    <div class="contact-header">
+      <h2 class="contact-title">تواصل معنا</h2>
+      <p class="contact-sub">أرسل لنا تفاصيل مشروعك وسنتواصل معك في أقرب وقت.</p>
+    </div>
+    <div class="contact-grid">
+      <form class="contact-form" id="contactForm" action="https://formspree.io/f/3bdelhamid97@gmail.com" method="POST">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">اسم الشركة</label>
+            <input type="text" name="company" class="form-input" placeholder="اسم الشركة">
+          </div>
+          <div class="form-group">
+            <label class="form-label">الاسم</label>
+            <input type="text" name="name" class="form-input" placeholder="اسمك الكامل" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">نوع الخدمة</label>
+            <select name="service" class="form-select">
+              <option value="">اختر خدمة</option>
+              <option value="platform">تطوير منصة/نظام</option>
+              <option value="mobile">تطبيق جوال</option>
+              <option value="ai">حلول ذكاء اصطناعي</option>
+              <option value="automation">أتمتة عمليات</option>
+              <option value="other">أخرى</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">رقم الجوال</label>
+            <input type="tel" name="phone" class="form-input" placeholder="966+ ..." dir="ltr">
+          </div>
+        </div>
+        <div class="form-group full" style="margin-bottom:0;">
+          <label class="form-label">وصف مختصر للاحتياج</label>
+          <textarea name="message" class="form-textarea" placeholder="اكتب احتياجك باختصار.."></textarea>
+        </div>
+        <input type="hidden" name="_subject" value="طلب جديد من موقع Manasety">
+        <input type="hidden" name="_next" value="">
+        <div class="form-actions">
+          <a href="https://wa.me/966532180937" target="_blank" class="form-copy" style="display:inline-flex;align-items:center;gap:8px;text-decoration:none;">
+            <svg viewBox="0 0 24 24" fill="#25D366" width="20" height="20" style="width:20px;height:20px;flex-shrink:0;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            تواصل واتساب
+          </a>
+          <button type="submit" class="form-submit">إرسال الطلب</button>
+        </div>
+        <p class="form-note">سيتم إرسال طلبك مباشرة إلى فريق Manasety.</p>
+      </form>
+      <div class="contact-cards">
+        <a href="https://wa.me/966532180937" class="contact-card" target="_blank">
+          <div class="contact-card-text">
+            <div class="contact-card-label">WhatsApp</div>
+            <div class="contact-card-value">+966 532180937</div>
+          </div>
+          <div class="contact-card-icon wa"><svg viewBox="0 0 24 24" fill="#fff" style="width:22px;height:22px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></div>
+        </a>
+        <a href="tel:+966597388618" class="contact-card">
+          <div class="contact-card-text">
+            <div class="contact-card-label">مكالمة</div>
+            <div class="contact-card-value">0597388618 | 0551919337</div>
+          </div>
+          <div class="contact-card-icon phone">📞</div>
+        </a>
+        <a href="mailto:hello@manasety.com" class="contact-card">
+          <div class="contact-card-text">
+            <div class="contact-card-label">Email</div>
+            <div class="contact-card-value">hello@manasety.com</div>
+          </div>
+          <div class="contact-card-icon email">@</div>
+        </a>
+        <p class="contact-note">ملاحظة: يمكنك لاحقًا استبدال Placeholder بروابط فعلية.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ═══════ CTA ═══════ -->
 <section class="cta-section rv" id="cta">
   <div class="cta-content">
@@ -1173,6 +1777,15 @@ footer {
 <footer>
   <div class="footer-logo">
     <svg viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg" style="height:28px;width:28px;">
+      <defs>
+        <linearGradient id="ft-shim-g" x1="0%" x2="100%"><stop offset="0%" stop-color="white" stop-opacity="0"/><stop offset="50%" stop-color="white" stop-opacity="0.3"/><stop offset="100%" stop-color="white" stop-opacity="0"/></linearGradient>
+        <clipPath id="fcp1"><rect x="0" y="111" width="463" height="42" rx="21"/></clipPath>
+        <clipPath id="fcp2"><rect x="0" y="206" width="692" height="42" rx="21"/></clipPath>
+        <clipPath id="fcp3"><rect x="0" y="301" width="328" height="42" rx="21"/></clipPath>
+        <clipPath id="fcp4"><rect x="0" y="397" width="213" height="42" rx="21"/></clipPath>
+        <clipPath id="fcp5"><rect x="0" y="492" width="629" height="42" rx="21"/></clipPath>
+        <clipPath id="fcp6"><rect x="0" y="587" width="554" height="42" rx="21"/></clipPath>
+      </defs>
       <g fill="#0c2461">
         <path d="M790.86,42.63c-6.08-13.27-14.68-23.68-25.78-31.26C753.98,3.8,740.86,0,725.71,0c-12.18,0-23.28,2.84-33.29,8.53-10.01,5.68-19.42,14.14-28.22,25.38-8.77,11.22-17.1,25.36-24.96,42.41-2.69,5.68-5.96,11.17-9.74,16.43-3.81,5.29-8.33,9.61-13.59,13-5.29,3.39-11.71,5.07-19.28,5.07l-86.08.42v41.82s87.56-.02,88.1-.05h.02c14.95-.49,27.23-4.13,36.9-10.92,8.48-5.93,15.47-13.15,21.03-21.62,3.68,5.04,8.18,9.61,13.49,13.72,7.83,6.08,16.83,10.7,26.99,13.79,10.16,3.11,21.03,4.67,32.67,4.67,20.29,0,37.07-5.54,50.34-16.63,13.25-11.1,19.89-27.21,19.89-48.32,0-16.78-3.04-31.78-9.14-45.05ZM753.32,105.55c-6.5,4.87-14.48,7.32-23.95,7.32-10.82,0-20.91-2.3-30.25-6.92-9.34-4.6-16.98-10.68-22.93-18.26,5.68-13.52,12.58-24.81,20.71-33.88,8.11-9.07,17.72-13.62,28.82-13.62,8.92,0,16.09,2.25,21.53,6.7,5.41,4.47,9.39,10.08,11.96,16.86s3.86,13.94,3.86,21.53c0,8.65-3.24,15.42-9.74,20.29Z"/>
         <path d="M798.99,345.52c-.69-8.5-1.56-16.76-2.64-24.76-1.09-7.96-2.3-14.41-3.66-19.28-1.88-9.47-4.87-16.04-8.92-19.67-4.05-3.66-9.19-5.49-15.42-5.49-4.35,0-8.33.74-11.99,2.22-3.66,1.48-6.7,3.04-9.12,4.67,2.15,8.92,4.45,19.35,6.9,31.26,2.42,11.91,4.47,23.87,6.08,35.91,1.63,12.06,2.3,23.35,2.03,33.91-3.24,2.17-7.98,4.28-14.21,6.3-6.23,2.03-13.32,3.66-21.3,4.87-7.98,1.21-26.99,1.83-26.99,1.83-10.01,0-18.41-1.36-25.18-4.08-6.77-2.69-11.76-7.44-15-14.19-.07-.17-.17-.35-.25-.54,1.53-6.25,2.27-12.97,2.27-20.17,0-16.78-3.53-31.11-10.55-43.03-7.04-11.91-16.93-20.98-29.63-27.21-12.73-6.23-27.36-9.34-43.84-9.34-12.73,0-25.31,1.98-37.76,5.91-12.46,3.9-24.37,10.4-35.74,19.47-11.34,9.07-22.12,21.38-32.25,36.95-9,13.77-17.4,30.32-25.18,49.72-4.89-2-8.67-4.3-11.37-6.89-4.47-4.37-7.07-9.52-7.76-15.42,0-.05,0-.12-.02-.17-.02-.62-.94-44.09-.94-44.09-.27-5.68-2.1-9.89-5.49-12.58-3.39-2.72-7.64-4.05-12.78-4.05-3.78,0-7.24.32-10.35,1.01-3.11.67-5.49,1.56-7.09,2.62l-1.24,49.53c-.27,13.27-3.9,22.69-10.95,28.22-7.04,5.56-17.87,8.33-32.47,8.33h-85.26v41.82l88.13-.02c9.56-.1,18.68-1.53,27.38-4.25,9.05-2.84,16.71-7.09,22.93-12.78,4.2-3.86,7.24-8.4,9.09-13.64,3.14,4.82,7.29,9.02,12.41,12.63,9.47,6.62,23.21,11.29,41.2,13.99,18.02,2.72,40.95,4.08,68.83,4.08,45.45,0,78.61-6.77,99.45-20.32,3.21-2.08,6.15-4.3,8.87-6.7,4.47,8.21,11.54,14.68,21.16,19.5,9.32,4.65,21.25,7.17,35.74,7.49,1.06.02,7.71.02,7.71.02,14.06,0,27.95-1.56,41.62-4.67,13.67-3.11,24.69-7.24,33.07-12.38,8.95-5.68,14.75-12.46,17.47-20.31,2.69-7.83,4.05-18.66,4.05-32.47,0-7.29-.35-15.22-1.01-23.75ZM600.49,389.16c-15.03,6.5-37.02,9.74-65.99,9.74-13.25,0-24.96-.4-35.09-1.21-4.15-.35-8.18-.69-12.04-1.06,5.73-13.99,11.84-25.6,18.31-34.87,7.86-11.22,15.89-19.94,24.17-26.17,8.23-6.23,16.29-10.48,24.15-12.78,7.83-2.3,15.27-3.46,22.32-3.46,13.82,0,25.04,3.58,33.71,10.75,8.65,7.19,12.97,16.58,12.97,28.22,0,14.06-7.51,24.34-22.51,30.84Z"/>
@@ -1184,19 +1797,31 @@ footer {
       <path fill="#1849A9" d="M15.09,397.29h198.73v41.81H15.09C6.76,439.1,0,432.34,0,424.01v-11.64C0,404.05,6.76,397.29,15.09,397.29Z"/>
       <path fill="#078FD2" d="M15.09,492.64h614.01v41.81H15.09C6.76,534.45,0,527.69,0,519.37v-11.64C0,499.4,6.76,492.64,15.09,492.64Z"/>
       <path fill="#1849a9" d="M15.09,587.99h554.33v41.81H15.09C6.76,629.81,0,623.05,0,614.72v-11.64C0,594.75,6.76,587.99,15.09,587.99Z"/>
+      <rect class="bar-shimmer" clip-path="url(#fcp1)" x="0" y="111" width="463" height="42" fill="url(#ft-shim-g)" style="animation-delay:0s"/>
+      <rect class="bar-shimmer" clip-path="url(#fcp2)" x="0" y="206" width="692" height="42" fill="url(#ft-shim-g)" style="animation-delay:.3s"/>
+      <rect class="bar-shimmer" clip-path="url(#fcp3)" x="0" y="301" width="328" height="42" fill="url(#ft-shim-g)" style="animation-delay:.6s"/>
+      <rect class="bar-shimmer" clip-path="url(#fcp4)" x="0" y="397" width="213" height="42" fill="url(#ft-shim-g)" style="animation-delay:.9s"/>
+      <rect class="bar-shimmer" clip-path="url(#fcp5)" x="0" y="492" width="629" height="42" fill="url(#ft-shim-g)" style="animation-delay:1.2s"/>
+      <rect class="bar-shimmer" clip-path="url(#fcp6)" x="0" y="587" width="554" height="42" fill="url(#ft-shim-g)" style="animation-delay:1.5s"/>
     </svg>
-    <span class="footer-logo-text">Manasety</span>
+    <span class="footer-logo-text">Manasety<span id="ft-blink" style="color:#078FD2;">_</span></span>
   </div>
   <ul class="footer-links">
     <li><a href="#diff">ما نقدمه</a></li>
     <li><a href="#services">الخدمات</a></li>
-    <li><a href="#how">كيف نعمل</a></li>
-    <li><a href="mailto:hello@manasety.com">تواصل معنا</a></li>
+    <li><a href="#pricing">الأسعار</a></li>
+    <li><a href="#contact">تواصل</a></li>
   </ul>
   <span class="footer-copy">Manasety &middot; Software & AI Solutions &middot; 2025</span>
 </footer>
 
 <script>
+/* ═══════ NAV BLINK ═══════ */
+const nb=document.getElementById('nav-blink');
+if(nb) setInterval(()=>{nb.style.opacity=nb.style.opacity==='0'?'1':'0'},550);
+const fb=document.getElementById('ft-blink');
+if(fb) setInterval(()=>{fb.style.opacity=fb.style.opacity==='0'?'1':'0'},550);
+
 /* ═══════ PRELOADER ═══════ */
 window.addEventListener('load', () => {
   setTimeout(() => {
@@ -1297,6 +1922,37 @@ const diffObs = new IntersectionObserver(entries => {
 }, { threshold: 0.2 });
 document.querySelectorAll('.diff-box').forEach(el => diffObs.observe(el));
 
+/* ═══════ FAQ TOGGLE ═══════ */
+function toggleFaq(header) {
+  const item = header.parentElement;
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(faq => faq.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+/* ═══════ FORM SUBMIT (Formspree) ═══════ */
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+  contactForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+    fetch(this.action, {
+      method: 'POST',
+      body: formData,
+      headers: { 'Accept': 'application/json' }
+    }).then(response => {
+      if (response.ok) {
+        alert('تم إرسال طلبك بنجاح! سنتواصل معك قريباً.');
+        this.reset();
+      } else {
+        alert('حدث خطأ أثناء الإرسال. حاول مرة أخرى.');
+      }
+    }).catch(() => {
+      alert('حدث خطأ في الاتصال. حاول مرة أخرى.');
+    });
+  });
+}
+
 /* ═══════ PARALLAX HERO CARDS ═══════ */
 if (window.matchMedia('(hover: hover)').matches) {
   window.addEventListener('scroll', () => {
@@ -1308,5 +1964,6 @@ if (window.matchMedia('(hover: hover)').matches) {
   }, { passive: true });
 }
 </script>
+<script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="0ee1ae9b-c9d8-4f80-94d5-1039c2e06caa";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
 </body>
 </html>
