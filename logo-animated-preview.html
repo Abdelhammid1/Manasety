@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manasety — Animated Logo Preview</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Courier New', monospace;
+    background: #07090F;
+    color: #94A3B8;
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 48px; padding: 48px 24px;
+  }
+
+  .label {
+    font-size: 9px; letter-spacing: 3px;
+    text-transform: uppercase; color: #2563EB;
+    margin-bottom: 16px;
+  }
+
+  /* ── PREVIEW PANELS ── */
+  .panels { display: flex; gap: 24px; flex-wrap: wrap; justify-content: center; }
+
+  .panel {
+    border-radius: 12px; padding: 32px;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid #1E293B;
+  }
+  .panel-dark  { background: #07090F; }
+  .panel-light { background: #F4F6F9; }
+  .panel-navy  { background: #1E3A8A; }
+
+  .panel svg { width: 220px; height: auto; }
+
+  /* ── CONTROLS ── */
+  .controls {
+    background: #0D1420; border: 1px solid #1E293B;
+    border-radius: 12px; padding: 24px 28px;
+    display: flex; flex-direction: column; gap: 16px;
+    width: 100%; max-width: 560px;
+  }
+  .controls-title {
+    font-size: 9px; letter-spacing: 3px;
+    text-transform: uppercase; color: #2563EB;
+    margin-bottom: 4px;
+  }
+  .control-row {
+    display: flex; align-items: center;
+    justify-content: space-between; gap: 16px;
+  }
+  .control-lbl { font-size: 10px; color: #64748B; letter-spacing: 1px; min-width: 120px; }
+  .control-val { font-size: 10px; color: #00D4FF; min-width: 48px; text-align: left; }
+  input[type=range] {
+    flex: 1; accent-color: #2563EB; height: 4px;
+    cursor: pointer;
+  }
+  .btn-export {
+    margin-top: 8px; padding: 10px 20px;
+    background: #F97316; color: #07090F;
+    border: none; border-radius: 4px; cursor: pointer;
+    font-family: 'Courier New', monospace;
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    transition: transform .2s;
+    align-self: flex-start;
+  }
+  .btn-export:hover { transform: translateY(-1px); }
+
+  /* ── SIZE VARIANTS ── */
+  .sizes { display: flex; gap: 32px; align-items: flex-end; flex-wrap: wrap; justify-content: center; }
+  .size-item { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .size-lbl { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: #334155; }
+
+  /* ── HOW-TO ── */
+  .howto {
+    background: #0D1420; border: 1px solid #1E293B;
+    border-radius: 12px; padding: 24px 28px;
+    width: 100%; max-width: 560px;
+    direction: ltr;
+  }
+  .howto pre {
+    font-size: 11px; color: #60A5FA;
+    line-height: 1.7; overflow-x: auto;
+    white-space: pre-wrap; word-break: break-all;
+  }
+  .howto .cm { color: #334155; }
+  .howto .tg { color: #4ADE80; }
+  .howto .at { color: #F97316; }
+  .howto .vl { color: #00D4FF; }
+</style>
+</head>
+<body>
+
+<div class="label">// Manasety — Animated Logo Preview</div>
+
+<!-- PREVIEW PANELS -->
+<div class="panels">
+
+  <div style="display:flex;flex-direction:column;align-items:center;">
+    <div class="label">dark</div>
+    <div class="panel panel-dark" id="panel-dark">
+      <svg id="logo-dark" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <style>
+            @keyframes shimmer-scan {
+              0%   { transform: translateX(-900px); }
+              100% { transform: translateX(1600px); }
+            }
+            .bar-shimmer { animation: shimmer-scan 2.8s cubic-bezier(0.4,0,0.6,1) infinite; }
+          </style>
+          <linearGradient id="lg1" x1="0" y1="132.13" x2="463.47" y2="132.13" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#1e3a8a"/><stop offset="1" stop-color="#2563eb"/>
+          </linearGradient>
+          <linearGradient id="lg2" x1="0" y1="227.49" x2="692.02" y2="227.49" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#2563eb"/><stop offset="1" stop-color="#09c"/>
+          </linearGradient>
+          <linearGradient id="lg3" x1="0" y1="418.19" x2="213.81" y2="418.19" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#1e3a8a"/><stop offset="1" stop-color="#2563eb"/>
+          </linearGradient>
+          <linearGradient id="lg4" x1="0" y1="513.55" x2="629.09" y2="513.55" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#2563eb"/><stop offset="1" stop-color="#09c"/>
+          </linearGradient>
+          <linearGradient id="sg" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%"   stop-color="white" stop-opacity="0"/>
+            <stop offset="35%"  stop-color="white" stop-opacity="0"/>
+            <stop offset="50%"  stop-color="white" stop-opacity="0.30"/>
+            <stop offset="65%"  stop-color="white" stop-opacity="0"/>
+            <stop offset="100%" stop-color="white" stop-opacity="0"/>
+          </linearGradient>
+          <clipPath id="cp1"><rect x="0" y="111.23" width="463.47" height="41.81" rx="20.9"/></clipPath>
+          <clipPath id="cp2"><rect x="0" y="206.58" width="692.02" height="41.81" rx="20.9"/></clipPath>
+          <clipPath id="cp3"><rect x="0" y="301.93" width="328.24" height="41.81" rx="20.9"/></clipPath>
+          <clipPath id="cp4"><rect x="0" y="397.29" width="213.81" height="41.81" rx="20.9"/></clipPath>
+          <clipPath id="cp5"><rect x="0" y="492.64" width="629.09" height="41.81" rx="20.9"/></clipPath>
+          <clipPath id="cp6"><rect x="0" y="587.99" width="554.33" height="41.81" rx="20.9"/></clipPath>
+        </defs>
+
+        <!-- letterform -->
+        <g fill="#0c2461">
+          <path d="M597.03,153.05h1.63v-.05c-.54.02-1.09.05-1.63.05ZM598.66,153v.05s.02-.02.02-.05h-.02Z"/>
+          <path d="M790.86,42.63c-6.08-13.27-14.68-23.68-25.78-31.26C753.98,3.8,740.86,0,725.71,0c-12.18,0-23.28,2.84-33.29,8.53-10.01,5.68-19.42,14.14-28.22,25.38-8.77,11.22-17.1,25.36-24.96,42.41-2.69,5.68-5.96,11.17-9.74,16.43-3.81,5.29-8.33,9.61-13.59,13-5.29,3.39-11.71,5.07-19.28,5.07l-86.08.42v41.82s87.56-.02,88.1-.05h.02c14.95-.49,27.23-4.13,36.9-10.92,8.48-5.93,15.47-13.15,21.03-21.62,3.68,5.04,8.18,9.61,13.49,13.72,7.83,6.08,16.83,10.7,26.99,13.79,10.16,3.11,21.03,4.67,32.67,4.67,20.29,0,37.07-5.54,50.34-16.63,13.25-11.1,19.89-27.21,19.89-48.32,0-16.78-3.04-31.78-9.14-45.05ZM753.32,105.55c-6.5,4.87-14.48,7.32-23.95,7.32-10.82,0-20.91-2.3-30.25-6.92-9.34-4.6-16.98-10.68-22.93-18.26,5.68-13.52,12.58-24.81,20.71-33.88,8.11-9.07,17.72-13.62,28.82-13.62,8.92,0,16.09,2.25,21.53,6.7,5.41,4.47,9.39,10.08,11.96,16.86s3.86,13.94,3.86,21.53c0,8.65-3.24,15.42-9.74,20.29Z"/>
+          <path d="M349,439.11v-.02c-.4.02,0,.02,0,.02Z"/>
+          <path d="M779.91,209.39c-4.2-4.32-9.96-6.47-17.25-6.47s-12.73,2.15-17.05,6.47c-4.32,4.35-6.5,10.16-6.5,17.47s2.17,12.73,6.5,17.05c4.32,4.32,10.01,6.48,17.05,6.48s13.05-2.15,17.25-6.48c4.2-4.32,6.3-10.01,6.3-17.05s-2.1-13.12-6.3-17.47ZM696.08,439.09v.02h3.24c-1.09,0-2.17,0-3.24-.02Z"/>
+          <path d="M798.99,345.52c-.69-8.5-1.56-16.76-2.64-24.76-1.09-7.96-2.3-14.41-3.66-19.28-1.88-9.47-4.87-16.04-8.92-19.67-4.05-3.66-9.19-5.49-15.42-5.49-4.35,0-8.33.74-11.99,2.22-3.66,1.48-6.7,3.04-9.12,4.67,2.15,8.92,4.45,19.35,6.9,31.26,2.42,11.91,4.47,23.87,6.08,35.91,1.63,12.06,2.3,23.35,2.03,33.91-3.24,2.17-7.98,4.28-14.21,6.3-6.23,2.03-13.32,3.66-21.3,4.87-7.98,1.21-26.99,1.83-26.99,1.83-10.01,0-18.41-1.36-25.18-4.08-6.77-2.69-11.76-7.44-15-14.19-.07-.17-.17-.35-.25-.54,1.53-6.25,2.27-12.97,2.27-20.17,0-16.78-3.53-31.11-10.55-43.03-7.04-11.91-16.93-20.98-29.63-27.21-12.73-6.23-27.36-9.34-43.84-9.34-12.73,0-25.31,1.98-37.76,5.91-12.46,3.9-24.37,10.4-35.74,19.47-11.34,9.07-22.12,21.38-32.25,36.95-9,13.77-17.4,30.32-25.18,49.72-4.89-2-8.67-4.3-11.37-6.89-4.47-4.37-7.07-9.52-7.76-15.42,0-.05,0-.12-.02-.17-.02-.62-.94-44.09-.94-44.09-.27-5.68-2.1-9.89-5.49-12.58-3.39-2.72-7.64-4.05-12.78-4.05-3.78,0-7.24.32-10.35,1.01-3.11.67-5.49,1.56-7.09,2.62l-1.24,49.53c-.27,13.27-3.9,22.69-10.95,28.22-7.04,5.56-17.87,8.33-32.47,8.33h-85.26v41.82l88.13-.02c9.56-.1,18.68-1.53,27.38-4.25,9.05-2.84,16.71-7.09,22.93-12.78,4.2-3.86,7.24-8.4,9.09-13.64,3.14,4.82,7.29,9.02,12.41,12.63,9.47,6.62,23.21,11.29,41.2,13.99,18.02,2.72,40.95,4.08,68.83,4.08,45.45,0,78.61-6.77,99.45-20.32,3.21-2.08,6.15-4.3,8.87-6.7,4.47,8.21,11.54,14.68,21.16,19.5,9.32,4.65,21.25,7.17,35.74,7.49,1.06.02,7.71.02,7.71.02,14.06,0,27.95-1.56,41.62-4.67,13.67-3.11,24.69-7.24,33.07-12.38,8.95-5.68,14.75-12.46,17.47-20.31,2.69-7.83,4.05-18.66,4.05-32.47,0-7.29-.35-15.22-1.01-23.75ZM600.49,389.16c-15.03,6.5-37.02,9.74-65.99,9.74-13.25,0-24.96-.4-35.09-1.21-4.15-.35-8.18-.69-12.04-1.06,5.73-13.99,11.84-25.6,18.31-34.87,7.86-11.22,15.89-19.94,24.17-26.17,8.23-6.23,16.29-10.48,24.15-12.78,7.83-2.3,15.27-3.46,22.32-3.46,13.82,0,25.04,3.58,33.71,10.75,8.65,7.19,12.97,16.58,12.97,28.22,0,14.06-7.51,24.34-22.51,30.84Z"/>
+          <path d="M775.63,492.29c-4.05-4.05-9.61-6.1-16.63-6.1s-12.58,2.05-16.66,6.1c-4.05,4.05-6.08,9.61-6.08,16.63s2.03,12.26,6.08,16.43c4.08,4.2,9.61,6.3,16.66,6.3s12.58-2.1,16.63-6.3c4.08-4.18,6.1-9.66,6.1-16.43s-2.03-12.58-6.1-16.63ZM715.16,492.29c-4.05-4.05-9.61-6.1-16.66-6.1s-12.16,2.05-16.24,6.1c-4.05,4.05-6.08,9.61-6.08,16.63s2.03,12.26,6.08,16.43c4.08,4.2,9.49,6.3,16.24,6.3s12.6-2.1,16.66-6.3c4.05-4.18,6.08-9.66,6.08-16.43s-2.03-12.58-6.08-16.63Z"/>
+          <path d="M800,655.06c0,13.81-1.36,24.64-4.05,32.5-2.72,7.83-8.53,14.61-17.47,20.29-8.38,5.14-19.43,9.27-33.07,12.38-13.67,3.11-27.56,4.67-41.62,4.67,0,0-27.75-1.36-36.13-4.05-8.38-2.72-15.42-6.92-21.11-12.6-4.6-4.6-8.13-10.18-10.6-16.73-1.48,6.38-4.67,11.84-9.49,16.34-6.1,5.68-13.59,9.94-22.54,12.78-8.92,2.84-18.14,4.28-27.61,4.28h-45.87l-520.2.25c-5.66,0-10.23-4.57-10.23-10.23v-21.33c0-5.66,4.57-10.26,10.23-10.26l475.96-.25h89.29c12.73,0,22.66-2.77,29.85-8.33,7.17-5.54,10.87-14.95,11.15-28.2l.82-49.53c1.9-.82,4.4-1.63,7.51-2.45,3.11-.82,6.57-1.21,10.36-1.21,5.14,0,9.39,1.36,12.78,4.05,3.39,2.72,5.21,6.9,5.49,12.58l.82,38.16c.54,12.46,4.4,21.4,11.57,26.79,7.17,5.44,17.13,8.13,29.83,8.13,0,0,23.08-.62,31.07-1.83,7.98-1.21,15.08-2.84,21.3-4.87,6.23-2.03,10.97-4.13,14.21-6.3.27-10.55-.4-21.85-2.03-33.88-1.63-12.04-3.66-24.02-6.08-35.93-2.45-11.91-4.75-22.32-6.9-31.26,2.42-1.61,5.46-3.16,9.12-4.67,3.66-1.48,7.64-2.22,11.99-2.22,6.2,0,11.37,1.83,15.42,5.49,4.05,3.66,7.02,10.21,8.92,19.67,1.36,4.87,2.57,11.32,3.66,19.3,1.09,7.98,1.95,16.24,2.64,24.76.67,8.53,1.01,16.43,1.01,23.73Z"/>
+          <path d="M622.18,760.61c-4.05-4.05-9.59-6.08-16.63-6.08s-12.18,2.03-16.24,6.08c-4.05,4.08-6.08,9.61-6.08,16.66s2.03,12.23,6.08,16.43c4.05,4.2,9.47,6.3,16.24,6.3s12.58-2.1,16.63-6.3c4.08-4.2,6.1-9.69,6.1-16.43s-2.03-12.58-6.1-16.66ZM682.68,760.61c-4.05-4.05-9.61-6.08-16.66-6.08s-12.58,2.03-16.63,6.08c-4.05,4.08-6.1,9.61-6.1,16.66s2.05,12.23,6.1,16.43c4.05,4.2,9.59,6.3,16.63,6.3s12.6-2.1,16.66-6.3c4.05-4.2,6.08-9.69,6.08-16.43s-2.03-12.58-6.08-16.66Z"/>
+        </g>
+        <!-- bars -->
+        <path fill="url(#lg1)" d="M15.09,111.23h448.38v41.81H15.09C6.76,153.04,0,146.28,0,137.95v-11.64C0,117.99,6.76,111.23,15.09,111.23Z"/>
+        <path fill="url(#lg2)" d="M15.09,206.58h676.93v41.81H15.09C6.76,248.39,0,241.63,0,233.31v-11.64C0,213.34,6.76,206.58,15.09,206.58Z"/>
+        <path fill="#1849a9"  d="M15.09,301.93h328.24v41.81H15.09C6.76,343.75,0,336.99,0,328.66v-11.64C0,308.69,6.76,301.93,15.09,301.93Z"/>
+        <path fill="url(#lg3)" d="M15.09,397.29h198.73v41.81H15.09C6.76,439.1,0,432.34,0,424.01v-11.64C0,404.05,6.76,397.29,15.09,397.29Z"/>
+        <path fill="url(#lg4)" d="M15.09,492.64h614.01v41.81H15.09C6.76,534.45,0,527.69,0,519.37v-11.64C0,499.4,6.76,492.64,15.09,492.64Z"/>
+        <path fill="#1849a9"  d="M15.09,587.99h554.33v41.81H15.09C6.76,629.81,0,623.05,0,614.72v-11.64C0,594.75,6.76,587.99,15.09,587.99Z"/>
+        <!-- shimmer -->
+        <rect class="bar-shimmer" clip-path="url(#cp1)" x="0" y="111.23" width="463.47" height="41.81" fill="url(#sg)" style="animation-delay:0s"/>
+        <rect class="bar-shimmer" clip-path="url(#cp2)" x="0" y="206.58" width="692.02" height="41.81" fill="url(#sg)" style="animation-delay:0.35s"/>
+        <rect class="bar-shimmer" clip-path="url(#cp3)" x="0" y="301.93" width="328.24" height="41.81" fill="url(#sg)" style="animation-delay:0.7s"/>
+        <rect class="bar-shimmer" clip-path="url(#cp4)" x="0" y="397.29" width="213.81" height="41.81" fill="url(#sg)" style="animation-delay:1.05s"/>
+        <rect class="bar-shimmer" clip-path="url(#cp5)" x="0" y="492.64" width="629.09" height="41.81" fill="url(#sg)" style="animation-delay:1.4s"/>
+        <rect class="bar-shimmer" clip-path="url(#cp6)" x="0" y="587.99" width="554.33" height="41.81" fill="url(#sg)" style="animation-delay:1.75s"/>
+      </svg>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;align-items:center;">
+    <div class="label">light</div>
+    <div class="panel panel-light">
+      <svg viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="llg1" x1="0" y1="132.13" x2="463.47" y2="132.13" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#1e3a8a"/><stop offset="1" stop-color="#2563eb"/>
+          </linearGradient>
+          <linearGradient id="llg2" x1="0" y1="227.49" x2="692.02" y2="227.49" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#2563eb"/><stop offset="1" stop-color="#09c"/>
+          </linearGradient>
+          <linearGradient id="llg3" x1="0" y1="418.19" x2="213.81" y2="418.19" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#1e3a8a"/><stop offset="1" stop-color="#2563eb"/>
+          </linearGradient>
+          <linearGradient id="llg4" x1="0" y1="513.55" x2="629.09" y2="513.55" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#2563eb"/><stop offset="1" stop-color="#09c"/>
+          </linearGradient>
+          <linearGradient id="lsg" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%"   stop-color="white" stop-opacity="0"/>
+            <stop offset="50%"  stop-color="white" stop-opacity="0.35"/>
+            <stop offset="100%" stop-color="white" stop-opacity="0"/>
+          </linearGradient>
+          <clipPath id="lcp1"><rect x="0" y="111.23" width="463.47" height="41.81" rx="20.9"/></clipPath>
+          <clipPath id="lcp2"><rect x="0" y="206.58" width="692.02" height="41.81" rx="20.9"/></clipPath>
+          <clipPath id="lcp3"><rect x="0" y="301.93" width="328.24" height="41.81" rx="20.9"/></clipPath>
+          <clipPath id="lcp4"><rect x="0" y="397.29" width="213.81" height="41.81" rx="20.9"/></clipPath>
+          <clipPath id="lcp5"><rect x="0" y="492.64" width="629.09" height="41.81" rx="20.9"/></clipPath>
+          <clipPath id="lcp6"><rect x="0" y="587.99" width="554.33" height="41.81" rx="20.9"/></clipPath>
+        </defs>
+        <g fill="#0c2461">
+          <path d="M597.03,153.05h1.63v-.05c-.54.02-1.09.05-1.63.05ZM598.66,153v.05s.02-.02.02-.05h-.02Z"/>
+          <path d="M790.86,42.63c-6.08-13.27-14.68-23.68-25.78-31.26C753.98,3.8,740.86,0,725.71,0c-12.18,0-23.28,2.84-33.29,8.53-10.01,5.68-19.42,14.14-28.22,25.38-8.77,11.22-17.1,25.36-24.96,42.41-2.69,5.68-5.96,11.17-9.74,16.43-3.81,5.29-8.33,9.61-13.59,13-5.29,3.39-11.71,5.07-19.28,5.07l-86.08.42v41.82s87.56-.02,88.1-.05h.02c14.95-.49,27.23-4.13,36.9-10.92,8.48-5.93,15.47-13.15,21.03-21.62,3.68,5.04,8.18,9.61,13.49,13.72,7.83,6.08,16.83,10.7,26.99,13.79,10.16,3.11,21.03,4.67,32.67,4.67,20.29,0,37.07-5.54,50.34-16.63,13.25-11.1,19.89-27.21,19.89-48.32,0-16.78-3.04-31.78-9.14-45.05ZM753.32,105.55c-6.5,4.87-14.48,7.32-23.95,7.32-10.82,0-20.91-2.3-30.25-6.92-9.34-4.6-16.98-10.68-22.93-18.26,5.68-13.52,12.58-24.81,20.71-33.88,8.11-9.07,17.72-13.62,28.82-13.62,8.92,0,16.09,2.25,21.53,6.7,5.41,4.47,9.39,10.08,11.96,16.86s3.86,13.94,3.86,21.53c0,8.65-3.24,15.42-9.74,20.29Z"/>
+          <path d="M779.91,209.39c-4.2-4.32-9.96-6.47-17.25-6.47s-12.73,2.15-17.05,6.47c-4.32,4.35-6.5,10.16-6.5,17.47s2.17,12.73,6.5,17.05c4.32,4.32,10.01,6.48,17.05,6.48s13.05-2.15,17.25-6.48c4.2-4.32,6.3-10.01,6.3-17.05s-2.1-13.12-6.3-17.47Z"/>
+          <path d="M798.99,345.52c-.69-8.5-1.56-16.76-2.64-24.76-1.09-7.96-2.3-14.41-3.66-19.28-1.88-9.47-4.87-16.04-8.92-19.67-4.05-3.66-9.19-5.49-15.42-5.49-4.35,0-8.33.74-11.99,2.22-3.66,1.48-6.7,3.04-9.12,4.67,2.15,8.92,4.45,19.35,6.9,31.26,2.42,11.91,4.47,23.87,6.08,35.91,1.63,12.06,2.3,23.35,2.03,33.91-3.24,2.17-7.98,4.28-14.21,6.3-6.23,2.03-13.32,3.66-21.3,4.87-7.98,1.21-26.99,1.83-26.99,1.83-10.01,0-18.41-1.36-25.18-4.08-6.77-2.69-11.76-7.44-15-14.19-.07-.17-.17-.35-.25-.54,1.53-6.25,2.27-12.97,2.27-20.17,0-16.78-3.53-31.11-10.55-43.03-7.04-11.91-16.93-20.98-29.63-27.21-12.73-6.23-27.36-9.34-43.84-9.34-12.73,0-25.31,1.98-37.76,5.91-12.46,3.9-24.37,10.4-35.74,19.47-11.34,9.07-22.12,21.38-32.25,36.95-9,13.77-17.4,30.32-25.18,49.72-4.89-2-8.67-4.3-11.37-6.89-4.47-4.37-7.07-9.52-7.76-15.42,0-.05,0-.12-.02-.17-.02-.62-.94-44.09-.94-44.09-.27-5.68-2.1-9.89-5.49-12.58-3.39-2.72-7.64-4.05-12.78-4.05-3.78,0-7.24.32-10.35,1.01-3.11.67-5.49,1.56-7.09,2.62l-1.24,49.53c-.27,13.27-3.9,22.69-10.95,28.22-7.04,5.56-17.87,8.33-32.47,8.33h-85.26v41.82l88.13-.02c9.56-.1,18.68-1.53,27.38-4.25,9.05-2.84,16.71-7.09,22.93-12.78,4.2-3.86,7.24-8.4,9.09-13.64,3.14,4.82,7.29,9.02,12.41,12.63,9.47,6.62,23.21,11.29,41.2,13.99,18.02,2.72,40.95,4.08,68.83,4.08,45.45,0,78.61-6.77,99.45-20.32,3.21-2.08,6.15-4.3,8.87-6.7,4.47,8.21,11.54,14.68,21.16,19.5,9.32,4.65,21.25,7.17,35.74,7.49,1.06.02,7.71.02,7.71.02,14.06,0,27.95-1.56,41.62-4.67,13.67-3.11,24.69-7.24,33.07-12.38,8.95-5.68,14.75-12.46,17.47-20.31,2.69-7.83,4.05-18.66,4.05-32.47,0-7.29-.35-15.22-1.01-23.75ZM600.49,389.16c-15.03,6.5-37.02,9.74-65.99,9.74-13.25,0-24.96-.4-35.09-1.21-4.15-.35-8.18-.69-12.04-1.06,5.73-13.99,11.84-25.6,18.31-34.87,7.86-11.22,15.89-19.94,24.17-26.17,8.23-6.23,16.29-10.48,24.15-12.78,7.83-2.3,15.27-3.46,22.32-3.46,13.82,0,25.04,3.58,33.71,10.75,8.65,7.19,12.97,16.58,12.97,28.22,0,14.06-7.51,24.34-22.51,30.84Z"/>
+          <path d="M775.63,492.29c-4.05-4.05-9.61-6.1-16.63-6.1s-12.58,2.05-16.66,6.1c-4.05,4.05-6.08,9.61-6.08,16.63s2.03,12.26,6.08,16.43c4.08,4.2,9.61,6.3,16.66,6.3s12.58-2.1,16.63-6.3c4.08-4.18,6.1-9.66,6.1-16.43s-2.03-12.58-6.1-16.63ZM715.16,492.29c-4.05-4.05-9.61-6.1-16.66-6.1s-12.16,2.05-16.24,6.1c-4.05,4.05-6.08,9.61-6.08,16.63s2.03,12.26,6.08,16.43c4.08,4.2,9.49,6.3,16.24,6.3s12.6-2.1,16.66-6.3c4.05-4.18,6.08-9.66,6.08-16.43s-2.03-12.58-6.08-16.63Z"/>
+          <path d="M800,655.06c0,13.81-1.36,24.64-4.05,32.5-2.72,7.83-8.53,14.61-17.47,20.29-8.38,5.14-19.43,9.27-33.07,12.38-13.67,3.11-27.56,4.67-41.62,4.67,0,0-27.75-1.36-36.13-4.05-8.38-2.72-15.42-6.92-21.11-12.6-4.6-4.6-8.13-10.18-10.6-16.73-1.48,6.38-4.67,11.84-9.49,16.34-6.1,5.68-13.59,9.94-22.54,12.78-8.92,2.84-18.14,4.28-27.61,4.28h-45.87l-520.2.25c-5.66,0-10.23-4.57-10.23-10.23v-21.33c0-5.66,4.57-10.26,10.23-10.26l475.96-.25h89.29c12.73,0,22.66-2.77,29.85-8.33,7.17-5.54,10.87-14.95,11.15-28.2l.82-49.53c1.9-.82,4.4-1.63,7.51-2.45,3.11-.82,6.57-1.21,10.36-1.21,5.14,0,9.39,1.36,12.78,4.05,3.39,2.72,5.21,6.9,5.49,12.58l.82,38.16c.54,12.46,4.4,21.4,11.57,26.79,7.17,5.44,17.13,8.13,29.83,8.13,0,0,23.08-.62,31.07-1.83,7.98-1.21,15.08-2.84,21.3-4.87,6.23-2.03,10.97-4.13,14.21-6.3.27-10.55-.4-21.85-2.03-33.88-1.63-12.04-3.66-24.02-6.08-35.93-2.45-11.91-4.75-22.32-6.9-31.26,2.42-1.61,5.46-3.16,9.12-4.67,3.66-1.48,7.64-2.22,11.99-2.22,6.2,0,11.37,1.83,15.42,5.49,4.05,3.66,7.02,10.21,8.92,19.67,1.36,4.87,2.57,11.32,3.66,19.3,1.09,7.98,1.95,16.24,2.64,24.76.67,8.53,1.01,16.43,1.01,23.73Z"/>
+          <path d="M622.18,760.61c-4.05-4.05-9.59-6.08-16.63-6.08s-12.18,2.03-16.24,6.08c-4.05,4.08-6.08,9.61-6.08,16.66s2.03,12.23,6.08,16.43c4.05,4.2,9.47,6.3,16.24,6.3s12.58-2.1,16.63-6.3c4.08-4.2,6.1-9.69,6.1-16.43s-2.03-12.58-6.1-16.66ZM682.68,760.61c-4.05-4.05-9.61-6.08-16.66-6.08s-12.58,2.03-16.63,6.08c-4.05,4.08-6.1,9.61-6.1,16.66s2.05,12.23,6.1,16.43c4.05,4.2,9.59,6.3,16.63,6.3s12.6-2.1,16.66-6.3c4.05-4.2,6.08-9.69,6.08-16.43s-2.03-12.58-6.08-16.66Z"/>
+        </g>
+        <path fill="url(#llg1)" d="M15.09,111.23h448.38v41.81H15.09C6.76,153.04,0,146.28,0,137.95v-11.64C0,117.99,6.76,111.23,15.09,111.23Z"/>
+        <path fill="url(#llg2)" d="M15.09,206.58h676.93v41.81H15.09C6.76,248.39,0,241.63,0,233.31v-11.64C0,213.34,6.76,206.58,15.09,206.58Z"/>
+        <path fill="#1849a9"  d="M15.09,301.93h328.24v41.81H15.09C6.76,343.75,0,336.99,0,328.66v-11.64C0,308.69,6.76,301.93,15.09,301.93Z"/>
+        <path fill="url(#llg3)" d="M15.09,397.29h198.73v41.81H15.09C6.76,439.1,0,432.34,0,424.01v-11.64C0,404.05,6.76,397.29,15.09,397.29Z"/>
+        <path fill="url(#llg4)" d="M15.09,492.64h614.01v41.81H15.09C6.76,534.45,0,527.69,0,519.37v-11.64C0,499.4,6.76,492.64,15.09,492.64Z"/>
+        <path fill="#1849a9"  d="M15.09,587.99h554.33v41.81H15.09C6.76,629.81,0,623.05,0,614.72v-11.64C0,594.75,6.76,587.99,15.09,587.99Z"/>
+        <rect class="bar-shimmer" clip-path="url(#lcp1)" x="0" y="111.23" width="463.47" height="41.81" fill="url(#lsg)" style="animation-delay:0s"/>
+        <rect class="bar-shimmer" clip-path="url(#lcp2)" x="0" y="206.58" width="692.02" height="41.81" fill="url(#lsg)" style="animation-delay:0.35s"/>
+        <rect class="bar-shimmer" clip-path="url(#lcp3)" x="0" y="301.93" width="328.24" height="41.81" fill="url(#lsg)" style="animation-delay:0.7s"/>
+        <rect class="bar-shimmer" clip-path="url(#lcp4)" x="0" y="397.29" width="213.81" height="41.81" fill="url(#lsg)" style="animation-delay:1.05s"/>
+        <rect class="bar-shimmer" clip-path="url(#lcp5)" x="0" y="492.64" width="629.09" height="41.81" fill="url(#lsg)" style="animation-delay:1.75s"/>
+        <rect class="bar-shimmer" clip-path="url(#lcp6)" x="0" y="587.99" width="554.33" height="41.81" fill="url(#lsg)" style="animation-delay:1.4s"/>
+      </svg>
+    </div>
+  </div>
+
+</div>
+
+<!-- CONTROLS -->
+<div class="controls">
+  <div class="controls-title">// animation controls</div>
+
+  <div class="control-row">
+    <span class="control-lbl">// speed</span>
+    <input type="range" id="speed" min="1" max="6" step="0.1" value="2.8">
+    <span class="control-val" id="speed-val">2.8s</span>
+  </div>
+  <div class="control-row">
+    <span class="control-lbl">// shimmer opacity</span>
+    <input type="range" id="opacity" min="0.05" max="0.6" step="0.05" value="0.30">
+    <span class="control-val" id="opacity-val">30%</span>
+  </div>
+  <div class="control-row">
+    <span class="control-lbl">// delay between bars</span>
+    <input type="range" id="delay" min="0.1" max="0.8" step="0.05" value="0.35">
+    <span class="control-val" id="delay-val">0.35s</span>
+  </div>
+
+  <button class="btn-export" onclick="exportCode()">COPY CSS CODE →</button>
+  <div id="copy-feedback" style="font-size:9px;color:#4ADE80;letter-spacing:1px;display:none;">✓ copied to clipboard</div>
+</div>
+
+<!-- HOW TO USE -->
+<div class="howto">
+  <div style="font-size:9px;letter-spacing:3px;color:#2563EB;margin-bottom:12px;text-transform:uppercase;">// how to use in your website</div>
+  <pre id="code-preview"><span class="cm">/* 1. ضيف ده في الـ CSS */</span>
+<span class="tg">@keyframes</span> <span class="vl">shimmer-scan</span> {
+  0%   { <span class="at">transform</span>: <span class="vl">translateX(-900px)</span>; }
+  100% { <span class="at">transform</span>: <span class="vl">translateX(1600px)</span>; }
+}
+.<span class="vl">bar-shimmer</span> {
+  <span class="at">animation</span>: shimmer-scan <span class="vl">2.8s</span> cubic-bezier(0.4,0,0.6,1) infinite;
+}
+
+<span class="cm">/* 2. حط الـ SVG inline في الـ HTML
+      مش كـ img tag — لازم inline */</span>
+<span class="tg">&lt;svg</span> <span class="at">viewBox</span>=<span class="vl">"0 0 800 800"</span><span class="tg">&gt;</span>
+  <span class="cm">&lt;!-- الـ SVG content كامل هنا --&gt;</span>
+  <span class="cm">&lt;!-- shimmer rects في الآخر --&gt;</span>
+<span class="tg">&lt;/svg&gt;</span></pre>
+</div>
+
+<script>
+function updateAnimation() {
+  const speed   = document.getElementById('speed').value;
+  const opacity = document.getElementById('opacity').value;
+  const delay   = parseFloat(document.getElementById('delay').value);
+
+  document.getElementById('speed-val').textContent   = speed + 's';
+  document.getElementById('opacity-val').textContent = Math.round(opacity*100) + '%';
+  document.getElementById('delay-val').textContent   = delay + 's';
+
+  // Update all shimmer elements
+  document.querySelectorAll('.bar-shimmer').forEach((el, i) => {
+    el.style.animationDuration = speed + 's';
+    el.style.animationDelay   = (i * delay) + 's';
+  });
+
+  // Update stop opacity in shimmer gradients
+  document.querySelectorAll('[id="sg"] stop, [id="lsg"] stop').forEach(s => {
+    if (s.getAttribute('stop-opacity') > 0) {
+      s.setAttribute('stop-opacity', opacity);
+    }
+  });
+}
+
+document.getElementById('speed').addEventListener('input', updateAnimation);
+document.getElementById('opacity').addEventListener('input', updateAnimation);
+document.getElementById('delay').addEventListener('input', updateAnimation);
+
+function exportCode() {
+  const speed = document.getElementById('speed').value;
+  const delay = document.getElementById('delay').value;
+  const opacity = Math.round(document.getElementById('opacity').value * 100);
+
+  const code = `@keyframes shimmer-scan {
+  0%   { transform: translateX(-900px); }
+  100% { transform: translateX(1600px); }
+}
+.bar-shimmer {
+  animation: shimmer-scan ${speed}s cubic-bezier(0.4,0,0.6,1) infinite;
+}
+
+/* shimmer gradient opacity: ${opacity}% */
+/* delay between bars: ${delay}s */`;
+
+  navigator.clipboard.writeText(code).then(() => {
+    const fb = document.getElementById('copy-feedback');
+    fb.style.display = 'block';
+    setTimeout(() => fb.style.display = 'none', 2000);
+  });
+}
+</script>
+</body>
+</html>

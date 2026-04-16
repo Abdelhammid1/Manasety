@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>منصتي — للبرمجيات وحلول الذكاء الاصطناعي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F2F5F9;--sur:#FFFFFF;--bdr:#E2E8F0;--navy:#0C2461;--blue:#1849A9;--blue2:#2563EB;--cyan:#0099CC;--ora:#F97316;--grn:#16A34A;--red:#DC2626;--tx:#0C2461;--tx2:#334155;--mu:#64748B;--lt:#94A3B8;--mono:'IBM Plex Mono','Courier New',monospace;--ar:'IBM Plex Sans Arabic',sans-serif;--r:12px;--sh:0 2px 16px rgba(12,36,97,.07);--shl:0 8px 40px rgba(12,36,97,.12)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font-family:var(--ar);overflow-x:hidden;cursor:none}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--blue2);border-radius:2px}
+
+/* CURSOR */
+.cur{position:fixed;width:8px;height:8px;background:var(--blue2);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .1s,background .15s}
+.cur-r{position:fixed;width:28px;height:28px;border:1.5px solid rgba(37,99,235,.3);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform .12s ease}
+
+/* KEYFRAMES */
+@keyframes shimmer-scan{0%{transform:translateX(-900px)}100%{transform:translateX(1600px)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes fillBar{from{width:0}to{width:var(--w)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.bar-shimmer{animation:shimmer-scan 2.8s cubic-bezier(.4,0,.6,1) infinite}
+
+/* GRID */
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(37,99,235,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(37,99,235,.04) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;background:rgba(242,245,249,.93);backdrop-filter:blur(20px);border-bottom:1px solid var(--bdr);box-shadow:0 1px 12px rgba(12,36,97,.05)}
+.nav-logo{display:flex;align-items:center;text-decoration:none}
+.nav-links{display:flex;align-items:center;gap:28px;list-style:none}
+.nav-links a{font-family:var(--mono);font-size:10px;color:var(--mu);text-decoration:none;letter-spacing:2px;text-transform:uppercase;transition:color .2s}
+.nav-links a:hover{color:var(--blue2)}
+.nav-cta{font-family:var(--mono);font-size:10px;padding:9px 22px;border-radius:4px;background:var(--navy);color:#fff;text-decoration:none;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;transition:transform .2s,box-shadow .2s}
+.nav-cta:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(12,36,97,.25)}
+
+/* HERO */
+.hero{position:relative;z-index:1;min-height:100vh;display:grid;grid-template-columns:1fr 340px;align-items:center;gap:48px;padding:100px 48px 60px}
+.h-eye{font-family:var(--mono);font-size:10px;letter-spacing:3px;color:var(--blue2);text-transform:uppercase;margin-bottom:28px;display:flex;align-items:center;gap:10px;opacity:0;animation:fadeUp .6s ease .15s both}
+.h-eye::before{content:'';width:24px;height:1px;background:var(--blue2)}
+
+/* diff */
+.diff-hero{margin-bottom:28px;opacity:0;animation:fadeUp .6s ease .3s both}
+.dc{font-family:var(--mono);font-size:11px;color:var(--lt);margin-bottom:6px;letter-spacing:.5px}
+.dl{display:flex;align-items:center;padding:12px 14px;margin-bottom:3px;border-radius:5px}
+.dl.m{background:rgba(220,38,38,.05);border-right:2.5px solid #DC2626}
+.dl.p{background:rgba(22,163,74,.06);border-right:2.5px solid #16A34A}
+.dl .s{font-family:var(--mono);font-size:18px;font-weight:700;width:18px;flex-shrink:0;line-height:1}
+.dl.m .s{color:#DC2626}.dl.p .s{color:#16A34A}
+.dl .t{font-size:20px;font-weight:600;padding-right:10px;line-height:1.3}
+.dl.m .t{color:#991B1B}.dl.p .t{color:var(--navy)}
+.dl.p .t em{color:var(--blue2);font-style:normal}
+
+.h-sub{font-size:15px;color:var(--tx2);line-height:1.85;margin-bottom:32px;opacity:0;animation:fadeUp .6s ease .45s both}
+.h-btns{display:flex;gap:12px;flex-wrap:wrap;opacity:0;animation:fadeUp .6s ease .6s both}
+.btn-p{font-family:var(--mono);font-size:11px;padding:13px 26px;border-radius:5px;background:var(--ora);color:#fff;text-decoration:none;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;transition:transform .2s,box-shadow .2s;display:inline-flex;align-items:center;gap:8px}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(249,115,22,.3)}
+.btn-s{font-family:var(--mono);font-size:11px;padding:13px 26px;border-radius:5px;border:1.5px solid var(--bdr);color:var(--mu);text-decoration:none;letter-spacing:1.5px;text-transform:uppercase;transition:border-color .2s,color .2s}
+.btn-s:hover{border-color:var(--blue2);color:var(--blue2)}
+
+/* hero card */
+.h-card{background:var(--sur);border:1px solid var(--bdr);border-radius:14px;padding:24px;box-shadow:var(--shl);opacity:0;animation:float 4s ease-in-out infinite,fadeIn .8s ease .8s both}
+.hc-t{font-family:var(--mono);font-size:9px;letter-spacing:2.5px;color:var(--lt);text-transform:uppercase;margin-bottom:20px}
+.hc-i{margin-bottom:14px}.hc-i:last-child{margin-bottom:0}
+.hc-m{display:flex;justify-content:space-between;margin-bottom:5px}
+.hc-l{font-family:var(--mono);font-size:9px;color:var(--mu)}
+.hc-p{font-family:var(--mono);font-size:9px;font-weight:600}
+.hc-tr{height:6px;background:#EEF2FF;border-radius:3px;overflow:hidden}
+.hc-f{height:100%;border-radius:3px;animation:fillBar 1.4s cubic-bezier(.4,0,.2,1) both}
+
+/* STATS */
+.stats{position:relative;z-index:1;background:var(--sur);border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr)}
+.stat-g{display:grid;grid-template-columns:repeat(4,1fr)}
+.stat-i{padding:32px 20px;text-align:center;border-left:1px solid var(--bdr);position:relative;overflow:hidden}
+.stat-i:last-child{border-left:none}
+.stat-i::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--navy),var(--blue2),var(--cyan));transform:scaleX(0);transform-origin:right;transition:transform .4s}
+.stat-i:hover::before{transform:scaleX(1)}
+.stat-v{font-family:var(--mono);font-size:36px;font-weight:700;color:var(--navy);line-height:1}
+.stat-v span{color:var(--blue2)}
+.stat-b{height:2px;margin:10px auto 8px;border-radius:1px;max-width:56px}
+.stat-l{font-family:var(--mono);font-size:9px;color:var(--mu);letter-spacing:2px;text-transform:uppercase}
+
+/* SHARED */
+section{position:relative;z-index:1}
+.sp{padding:88px 48px}
+.stag{font-family:var(--mono);font-size:9px;letter-spacing:3px;color:var(--blue2);text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.stag::before{content:'';width:18px;height:1px;background:var(--blue2)}
+.sh{font-size:32px;font-weight:700;line-height:1.2;color:var(--navy);margin-bottom:10px}
+.sh span{color:var(--blue2)}
+.ss{font-size:15px;color:var(--tx2);line-height:1.8}
+.div{height:1px;background:linear-gradient(90deg,transparent,var(--bdr),transparent);margin:0 48px}
+.rv{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease}
+.rv.on{opacity:1;transform:translateY(0)}
+
+/* DIFF SEC */
+.diff-sec{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.db{background:var(--sur);border:1px solid var(--bdr);border-radius:14px;overflow:hidden;box-shadow:var(--sh)}
+.db-hdr{background:#F8FAFC;padding:9px 14px;font-family:var(--mono);font-size:9px;color:var(--mu);letter-spacing:2px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;gap:8px}
+.db-hdr::before{content:'';width:8px;height:8px;background:var(--grn);border-radius:50%;flex-shrink:0}
+.db-c{font-family:var(--mono);font-size:9px;color:var(--lt);padding:7px 14px}
+.db-r{display:flex;align-items:center;gap:8px;padding:9px 14px}
+.db-r.m{background:rgba(220,38,38,.04);border-right:2px solid #DC2626}
+.db-r.p{background:rgba(22,163,74,.05);border-right:2px solid #16A34A}
+.db-r .s{font-family:var(--mono);font-size:11px;font-weight:700;width:12px}
+.db-r.m .s{color:#DC2626}.db-r.p .s{color:#16A34A}
+.db-r .t{font-family:var(--mono);font-size:11px}
+.db-r.m .t{color:#991B1B}.db-r.p .t{color:var(--tx)}
+.db-r.p .t em{color:var(--blue);font-style:normal}
+
+/* SERVICES */
+.sh-c{text-align:center;margin-bottom:52px}
+.sh-c .stag{justify-content:center}.sh-c .stag::before{display:none}
+.srv-g{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.srv{background:var(--sur);border:1px solid var(--bdr);border-radius:14px;padding:24px;transition:transform .3s,box-shadow .3s,border-color .3s;position:relative;overflow:hidden}
+.srv::before{content:'';position:absolute;top:0;right:0;left:0;height:2px;background:linear-gradient(90deg,var(--navy),var(--blue2),var(--cyan));transform:scaleX(0);transform-origin:right;transition:transform .35s}
+.srv:hover{transform:translateY(-5px);box-shadow:var(--shl);border-color:rgba(37,99,235,.2)}
+.srv:hover::before{transform:scaleX(1)}
+.srv-ico{width:40px;height:40px;background:rgba(37,99,235,.07);border:1px solid rgba(37,99,235,.12);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:17px;margin-bottom:12px}
+.srv-n{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:6px}
+.srv-d{font-size:12px;color:var(--tx2);line-height:1.7;margin-bottom:12px}
+.srv-pl{font-family:var(--mono);font-size:8px;color:var(--lt);margin-bottom:4px;letter-spacing:1px}
+.srv-tr{height:3px;background:#EEF2FF;border-radius:2px;overflow:hidden}
+.srv-fi{height:100%;border-radius:2px}
+
+/* HOW */
+.steps{display:flex;flex-direction:column;max-width:580px;margin:0 auto}
+.step{display:grid;grid-template-columns:42px 1fr;gap:18px;padding-bottom:32px}
+.step:last-child{padding-bottom:0}
+.s-ln{display:flex;flex-direction:column;align-items:center}
+.s-dot{width:32px;height:32px;border-radius:50%;background:var(--sur);border:2px solid var(--blue2);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10px;font-weight:700;color:var(--blue2);flex-shrink:0;box-shadow:0 2px 8px rgba(37,99,235,.1)}
+.s-con{flex:1;width:1px;background:var(--bdr);margin-top:4px}
+.step:last-child .s-con{display:none}
+.s-b{padding-top:3px}
+.s-tag{font-family:var(--mono);font-size:8px;color:var(--blue2);letter-spacing:2px;text-transform:uppercase;margin-bottom:5px}
+.s-ti{font-size:16px;font-weight:700;color:var(--navy);margin-bottom:5px}
+.s-de{font-size:13px;color:var(--tx2);line-height:1.7}
+.s-pr{margin-top:8px;height:4px;background:#EEF2FF;border-radius:2px;overflow:hidden;max-width:160px}
+.s-fi{height:100%;border-radius:2px}
+
+/* CLIENTS */
+.cl-sec{padding:40px 48px;background:var(--sur);border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr)}
+.cl-lbl{font-family:var(--mono);font-size:9px;letter-spacing:3px;color:var(--lt);text-transform:uppercase;text-align:center;margin-bottom:22px}
+.cl-row{display:flex;justify-content:center;align-items:center;gap:44px;flex-wrap:wrap}
+.cl-tag{font-family:var(--mono);font-size:12px;color:var(--lt);letter-spacing:1px;transition:color .2s}
+.cl-tag:hover{color:var(--blue2)}
+
+/* CTA */
+.cta-s{padding:88px 48px;text-align:center;background:var(--navy);position:relative;overflow:hidden;z-index:1}
+.cta-s::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:700px;background:radial-gradient(circle,rgba(37,99,235,.15) 0%,transparent 70%);pointer-events:none}
+.cta-df{display:inline-flex;flex-direction:column;gap:4px;margin-bottom:32px;text-align:right}
+.cd{display:flex;align-items:center;gap:12px;padding:11px 18px;border-radius:6px}
+.cd.m{background:rgba(239,68,68,.1);border-right:2.5px solid rgba(239,68,68,.5)}
+.cd.p{background:rgba(74,222,128,.08);border-right:2.5px solid #4ADE80}
+.cd .s{font-family:var(--mono);font-size:15px;font-weight:700}
+.cd.m .s{color:#FCA5A5}.cd.p .s{color:#4ADE80}
+.cd .t{font-size:17px;font-weight:600}
+.cd.m .t{color:#FCA5A5}.cd.p .t{color:#F1F5F9}
+.cta-su{font-size:14px;color:rgba(241,245,249,.65);margin-bottom:28px;line-height:1.8}
+.cta-bt{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.bc-p{font-family:var(--mono);font-size:11px;padding:13px 26px;border-radius:5px;background:var(--ora);color:#fff;text-decoration:none;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;transition:transform .2s,box-shadow .2s}
+.bc-p:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(249,115,22,.35)}
+.bc-s{font-family:var(--mono);font-size:11px;padding:13px 26px;border-radius:5px;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);text-decoration:none;letter-spacing:1.5px;text-transform:uppercase;transition:border-color .2s,color .2s}
+.bc-s:hover{border-color:rgba(255,255,255,.5);color:#fff}
+
+/* FOOTER */
+footer{background:var(--sur);border-top:1px solid var(--bdr);padding:28px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;position:relative;z-index:1}
+.ft-logo{display:flex;align-items:center}
+.ft-lnk{display:flex;gap:18px;list-style:none}
+.ft-lnk a{font-family:var(--mono);font-size:9px;color:var(--mu);text-decoration:none;letter-spacing:1px;transition:color .2s}
+.ft-lnk a:hover{color:var(--blue2)}
+.ft-cp{font-family:var(--mono);font-size:9px;color:var(--lt);letter-spacing:1px}
+
+@media(max-width:960px){
+  nav{padding:0 20px}.nav-links{display:none}
+  .hero{grid-template-columns:1fr;padding:88px 20px 48px}.h-card{display:none}
+  .diff-sec,.sp{padding:56px 20px}.diff-sec{grid-template-columns:1fr;gap:28px}
+  .srv-g{grid-template-columns:1fr 1fr}
+  .stat-g{grid-template-columns:repeat(2,1fr)}
+  .cl-sec,.cta-s{padding:44px 20px}
+  footer{padding:22px 20px;flex-direction:column;align-items:flex-start}
+  .div{margin:0 20px}
+}
+@media(max-width:540px){.srv-g{grid-template-columns:1fr}.dl .t{font-size:16px}}
+</style>
+</head>
+<body>
+
+<div class="cur" id="cur"></div>
+<div class="cur-r" id="cur-r"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo" aria-label="منصتي" style="display:flex;align-items:center;gap:12px;text-decoration:none;">
+    <!-- أيكون فقط — SVG بـ viewBox يقطع الجزء المهم -->
+    <svg viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg" style="height:44px;width:44px;flex-shrink:0;">
+      <defs>
+        <linearGradient id="nav-g1" x1="0" y1="132" x2="463" y2="132" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#1e3a8a"/><stop offset="1" stop-color="#2563eb"/></linearGradient>
+        <linearGradient id="nav-g2" x1="0" y1="227" x2="692" y2="227" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#2563eb"/><stop offset="1" stop-color="#09c"/></linearGradient>
+        <linearGradient id="nav-g3" x1="0" y1="418" x2="213" y2="418" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#1e3a8a"/><stop offset="1" stop-color="#2563eb"/></linearGradient>
+        <linearGradient id="nav-g4" x1="0" y1="513" x2="629" y2="513" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#2563eb"/><stop offset="1" stop-color="#09c"/></linearGradient>
+        <linearGradient id="nav-shim-g" x1="0%" x2="100%"><stop offset="0%" stop-color="white" stop-opacity="0"/><stop offset="50%" stop-color="white" stop-opacity="0.3"/><stop offset="100%" stop-color="white" stop-opacity="0"/></linearGradient>
+        <clipPath id="ncp1"><rect x="0" y="111" width="463" height="42" rx="21"/></clipPath>
+        <clipPath id="ncp2"><rect x="0" y="206" width="692" height="42" rx="21"/></clipPath>
+        <clipPath id="ncp3"><rect x="0" y="301" width="328" height="42" rx="21"/></clipPath>
+        <clipPath id="ncp4"><rect x="0" y="397" width="213" height="42" rx="21"/></clipPath>
+        <clipPath id="ncp5"><rect x="0" y="492" width="629" height="42" rx="21"/></clipPath>
+        <clipPath id="ncp6"><rect x="0" y="587" width="554" height="42" rx="21"/></clipPath>
+      </defs>
+      <g fill="#0c2461">
+        <path d="M597.03,153.05h1.63v-.05c-.54.02-1.09.05-1.63.05ZM598.66,153v.05s.02-.02.02-.05h-.02Z"/>
+        <path d="M790.86,42.63c-6.08-13.27-14.68-23.68-25.78-31.26C753.98,3.8,740.86,0,725.71,0c-12.18,0-23.28,2.84-33.29,8.53-10.01,5.68-19.42,14.14-28.22,25.38-8.77,11.22-17.1,25.36-24.96,42.41-2.69,5.68-5.96,11.17-9.74,16.43-3.81,5.29-8.33,9.61-13.59,13-5.29,3.39-11.71,5.07-19.28,5.07l-86.08.42v41.82s87.56-.02,88.1-.05h.02c14.95-.49,27.23-4.13,36.9-10.92,8.48-5.93,15.47-13.15,21.03-21.62,3.68,5.04,8.18,9.61,13.49,13.72,7.83,6.08,16.83,10.7,26.99,13.79,10.16,3.11,21.03,4.67,32.67,4.67,20.29,0,37.07-5.54,50.34-16.63,13.25-11.1,19.89-27.21,19.89-48.32,0-16.78-3.04-31.78-9.14-45.05ZM753.32,105.55c-6.5,4.87-14.48,7.32-23.95,7.32-10.82,0-20.91-2.3-30.25-6.92-9.34-4.6-16.98-10.68-22.93-18.26,5.68-13.52,12.58-24.81,20.71-33.88,8.11-9.07,17.72-13.62,28.82-13.62,8.92,0,16.09,2.25,21.53,6.7,5.41,4.47,9.39,10.08,11.96,16.86s3.86,13.94,3.86,21.53c0,8.65-3.24,15.42-9.74,20.29Z"/>
+        <path d="M349,439.11v-.02c-.4.02,0,.02,0,.02Z"/>
+        <path d="M779.91,209.39c-4.2-4.32-9.96-6.47-17.25-6.47s-12.73,2.15-17.05,6.47c-4.32,4.35-6.5,10.16-6.5,17.47s2.17,12.73,6.5,17.05c4.32,4.32,10.01,6.48,17.05,6.48s13.05-2.15,17.25-6.48c4.2-4.32,6.3-10.01,6.3-17.05s-2.1-13.12-6.3-17.47ZM696.08,439.09v.02h3.24c-1.09,0-2.17,0-3.24-.02Z"/>
+        <path d="M798.99,345.52c-.69-8.5-1.56-16.76-2.64-24.76-1.09-7.96-2.3-14.41-3.66-19.28-1.88-9.47-4.87-16.04-8.92-19.67-4.05-3.66-9.19-5.49-15.42-5.49-4.35,0-8.33.74-11.99,2.22-3.66,1.48-6.7,3.04-9.12,4.67,2.15,8.92,4.45,19.35,6.9,31.26,2.42,11.91,4.47,23.87,6.08,35.91,1.63,12.06,2.3,23.35,2.03,33.91-3.24,2.17-7.98,4.28-14.21,6.3-6.23,2.03-13.32,3.66-21.3,4.87-7.98,1.21-26.99,1.83-26.99,1.83-10.01,0-18.41-1.36-25.18-4.08-6.77-2.69-11.76-7.44-15-14.19-.07-.17-.17-.35-.25-.54,1.53-6.25,2.27-12.97,2.27-20.17,0-16.78-3.53-31.11-10.55-43.03-7.04-11.91-16.93-20.98-29.63-27.21-12.73-6.23-27.36-9.34-43.84-9.34-12.73,0-25.31,1.98-37.76,5.91-12.46,3.9-24.37,10.4-35.74,19.47-11.34,9.07-22.12,21.38-32.25,36.95-9,13.77-17.4,30.32-25.18,49.72-4.89-2-8.67-4.3-11.37-6.89-4.47-4.37-7.07-9.52-7.76-15.42,0-.05,0-.12-.02-.17-.02-.62-.94-44.09-.94-44.09-.27-5.68-2.1-9.89-5.49-12.58-3.39-2.72-7.64-4.05-12.78-4.05-3.78,0-7.24.32-10.35,1.01-3.11.67-5.49,1.56-7.09,2.62l-1.24,49.53c-.27,13.27-3.9,22.69-10.95,28.22-7.04,5.56-17.87,8.33-32.47,8.33h-85.26v41.82l88.13-.02c9.56-.1,18.68-1.53,27.38-4.25,9.05-2.84,16.71-7.09,22.93-12.78,4.2-3.86,7.24-8.4,9.09-13.64,3.14,4.82,7.29,9.02,12.41,12.63,9.47,6.62,23.21,11.29,41.2,13.99,18.02,2.72,40.95,4.08,68.83,4.08,45.45,0,78.61-6.77,99.45-20.32,3.21-2.08,6.15-4.3,8.87-6.7,4.47,8.21,11.54,14.68,21.16,19.5,9.32,4.65,21.25,7.17,35.74,7.49,1.06.02,7.71.02,7.71.02,14.06,0,27.95-1.56,41.62-4.67,13.67-3.11,24.69-7.24,33.07-12.38,8.95-5.68,14.75-12.46,17.47-20.31,2.69-7.83,4.05-18.66,4.05-32.47,0-7.29-.35-15.22-1.01-23.75ZM600.49,389.16c-15.03,6.5-37.02,9.74-65.99,9.74-13.25,0-24.96-.4-35.09-1.21-4.15-.35-8.18-.69-12.04-1.06,5.73-13.99,11.84-25.6,18.31-34.87,7.86-11.22,15.89-19.94,24.17-26.17,8.23-6.23,16.29-10.48,24.15-12.78,7.83-2.3,15.27-3.46,22.32-3.46,13.82,0,25.04,3.58,33.71,10.75,8.65,7.19,12.97,16.58,12.97,28.22,0,14.06-7.51,24.34-22.51,30.84Z"/>
+        <path d="M775.63,492.29c-4.05-4.05-9.61-6.1-16.63-6.1s-12.58,2.05-16.66,6.1c-4.05,4.05-6.08,9.61-6.08,16.63s2.03,12.26,6.08,16.43c4.08,4.2,9.61,6.3,16.66,6.3s12.58-2.1,16.63-6.3c4.08-4.18,6.1-9.66,6.1-16.43s-2.03-12.58-6.1-16.63ZM715.16,492.29c-4.05-4.05-9.61-6.1-16.66-6.1s-12.16,2.05-16.24,6.1c-4.05,4.05-6.08,9.61-6.08,16.63s2.03,12.26,6.08,16.43c4.08,4.2,9.49,6.3,16.24,6.3s12.6-2.1,16.66-6.3c4.05-4.18,6.08-9.66,6.08-16.43s-2.03-12.58-6.08-16.63Z"/>
+        <path d="M800,655.06c0,13.81-1.36,24.64-4.05,32.5-2.72,7.83-8.53,14.61-17.47,20.29-8.38,5.14-19.43,9.27-33.07,12.38-13.67,3.11-27.56,4.67-41.62,4.67,0,0-27.75-1.36-36.13-4.05-8.38-2.72-15.42-6.92-21.11-12.6-4.6-4.6-8.13-10.18-10.6-16.73-1.48,6.38-4.67,11.84-9.49,16.34-6.1,5.68-13.59,9.94-22.54,12.78-8.92,2.84-18.14,4.28-27.61,4.28h-45.87l-520.2.25c-5.66,0-10.23-4.57-10.23-10.23v-21.33c0-5.66,4.57-10.26,10.23-10.26l475.96-.25h89.29c12.73,0,22.66-2.77,29.85-8.33,7.17-5.54,10.87-14.95,11.15-28.2l.82-49.53c1.9-.82,4.4-1.63,7.51-2.45,3.11-.82,6.57-1.21,10.36-1.21,5.14,0,9.39,1.36,12.78,4.05,3.39,2.72,5.21,6.9,5.49,12.58l.82,38.16c.54,12.46,4.4,21.4,11.57,26.79,7.17,5.44,17.13,8.13,29.83,8.13,0,0,23.08-.62,31.07-1.83,7.98-1.21,15.08-2.84,21.3-4.87,6.23-2.03,10.97-4.13,14.21-6.3.27-10.55-.4-21.85-2.03-33.88-1.63-12.04-3.66-24.02-6.08-35.93-2.45-11.91-4.75-22.32-6.9-31.26,2.42-1.61,5.46-3.16,9.12-4.67,3.66-1.48,7.64-2.22,11.99-2.22,6.2,0,11.37,1.83,15.42,5.49,4.05,3.66,7.02,10.21,8.92,19.67,1.36,4.87,2.57,11.32,3.66,19.3,1.09,7.98,1.95,16.24,2.64,24.76.67,8.53,1.01,16.43,1.01,23.73Z"/>
+        <path d="M622.18,760.61c-4.05-4.05-9.59-6.08-16.63-6.08s-12.18,2.03-16.24,6.08c-4.05,4.08-6.08,9.61-6.08,16.66s2.03,12.23,6.08,16.43c4.05,4.2,9.47,6.3,16.24,6.3s12.58-2.1,16.63-6.3c4.08-4.2,6.1-9.69,6.1-16.43s-2.03-12.58-6.1-16.66ZM682.68,760.61c-4.05-4.05-9.61-6.08-16.66-6.08s-12.58,2.03-16.63,6.08c-4.05,4.08-6.1,9.61-6.1,16.66s2.05,12.23,6.1,16.43c4.05,4.2,9.59,6.3,16.63,6.3s12.6-2.1,16.66-6.3c4.05-4.2,6.08-9.69,6.08-16.43s-2.03-12.58-6.08-16.66Z"/>
+      </g>
+      <path fill="url(#nav-g1)" d="M15.09,111.23h448.38v41.81H15.09C6.76,153.04,0,146.28,0,137.95v-11.64C0,117.99,6.76,111.23,15.09,111.23Z"/>
+      <path fill="url(#nav-g2)" d="M15.09,206.58h676.93v41.81H15.09C6.76,248.39,0,241.63,0,233.31v-11.64C0,213.34,6.76,206.58,15.09,206.58Z"/>
+      <path fill="#1849a9"       d="M15.09,301.93h328.24v41.81H15.09C6.76,343.75,0,336.99,0,328.66v-11.64C0,308.69,6.76,301.93,15.09,301.93Z"/>
+      <path fill="url(#nav-g3)" d="M15.09,397.29h198.73v41.81H15.09C6.76,439.1,0,432.34,0,424.01v-11.64C0,404.05,6.76,397.29,15.09,397.29Z"/>
+      <path fill="url(#nav-g4)" d="M15.09,492.64h614.01v41.81H15.09C6.76,534.45,0,527.69,0,519.37v-11.64C0,499.4,6.76,492.64,15.09,492.64Z"/>
+      <path fill="#1849a9"       d="M15.09,587.99h554.33v41.81H15.09C6.76,629.81,0,623.05,0,614.72v-11.64C0,594.75,6.76,587.99,15.09,587.99Z"/>
+      <rect class="bar-shimmer" clip-path="url(#ncp1)" x="0" y="111" width="463" height="42" fill="url(#nav-shim-g)" style="animation-delay:0s"/>
+      <rect class="bar-shimmer" clip-path="url(#ncp2)" x="0" y="206" width="692" height="42" fill="url(#nav-shim-g)" style="animation-delay:.3s"/>
+      <rect class="bar-shimmer" clip-path="url(#ncp3)" x="0" y="301" width="328" height="42" fill="url(#nav-shim-g)" style="animation-delay:.6s"/>
+      <rect class="bar-shimmer" clip-path="url(#ncp4)" x="0" y="397" width="213" height="42" fill="url(#nav-shim-g)" style="animation-delay:.9s"/>
+      <rect class="bar-shimmer" clip-path="url(#ncp5)" x="0" y="492" width="629" height="42" fill="url(#nav-shim-g)" style="animation-delay:1.2s"/>
+      <rect class="bar-shimmer" clip-path="url(#ncp6)" x="0" y="587" width="554" height="42" fill="url(#nav-shim-g)" style="animation-delay:1.5s"/>
+    </svg>
+    <!-- النص بره الـ SVG — HTML عادي -->
+    <span style="font-family:'IBM Plex Mono','Courier New',monospace;font-size:18px;font-weight:600;color:#0C2461;letter-spacing:-.3px;white-space:nowrap;">Manasety<span id="nav-blink" style="color:#2563EB;">_</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#diff">ما نقدمه</a></li>
+    <li><a href="#services">الخدمات</a></li>
+    <li><a href="#how">كيف نعمل</a></li>
+  </ul>
+  <a href="#cta" class="nav-cta">ابدأ الآن</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div>
+    <div class="h-eye">منصتي — للبرمجيات وحلول الذكاء الاصطناعي</div>
+    <div class="diff-hero">
+      <div class="dc">// وضعك الحالي</div>
+      <div class="dl m"><span class="s">−</span><span class="t">أنظمة متفرقة تُبطئ نموك</span></div>
+      <div class="dl m"><span class="s">−</span><span class="t">عمليات يدوية تهدر مواردك</span></div>
+      <div class="dc" style="margin-top:8px">// مع منصتي</div>
+      <div class="dl p"><span class="s">+</span><span class="t"><em>منصة ذكية</em> تعمل بدلاً عنك</span></div>
+      <div class="dl p"><span class="s">+</span><span class="t"><em>ذكاء اصطناعي</em> يسرّع قرارك</span></div>
+    </div>
+    <p class="h-sub">نبني حلول برمجية مخصصة وأنظمة ذكاء اصطناعي تحوّل طريقة عمل شركتك — من الفكرة إلى الإطلاق في أسابيع لا أشهر.</p>
+    <div class="h-btns">
+      <a href="#cta" class="btn-p">ابدأ مشروعك ←</a>
+      <a href="#how" class="btn-s">كيف نعمل</a>
+    </div>
+  </div>
+
+  <div class="h-card">
+    <div class="hc-t">// نتائج عملائنا</div>
+    <div class="hc-i">
+      <div class="hc-m"><span class="hc-l">// deployment</span><span class="hc-p" style="color:#0099CC">100%</span></div>
+      <div class="hc-tr"><div class="hc-f" style="--w:100%;background:linear-gradient(90deg,#1E3A8A,#2563EB,#09c);animation-delay:.2s"></div></div>
+    </div>
+    <div class="hc-i">
+      <div class="hc-m"><span class="hc-l">// AI integration</span><span class="hc-p" style="color:#2563EB">87%</span></div>
+      <div class="hc-tr"><div class="hc-f" style="--w:87%;background:linear-gradient(90deg,#1849A9,#2563EB);animation-delay:.4s"></div></div>
+    </div>
+    <div class="hc-i">
+      <div class="hc-m"><span class="hc-l">// automation</span><span class="hc-p" style="color:#1849A9">73%</span></div>
+      <div class="hc-tr"><div class="hc-f" style="--w:73%;background:#1849A9;animation-delay:.6s"></div></div>
+    </div>
+    <div class="hc-i">
+      <div class="hc-m"><span class="hc-l">// growth</span><span class="hc-p" style="color:#F97316">+64%</span></div>
+      <div class="hc-tr"><div class="hc-f" style="--w:64%;background:linear-gradient(90deg,#C2410C,#F97316);animation-delay:.8s"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats rv">
+  <div class="stat-g">
+    <div class="stat-i"><div class="stat-v">30<span>+</span></div><div class="stat-b" style="background:linear-gradient(90deg,#1E3A8A,#2563EB,#09c)"></div><div class="stat-l">// مشروع منجز</div></div>
+    <div class="stat-i"><div class="stat-v">150<span>+</span></div><div class="stat-b" style="background:linear-gradient(90deg,#1E3A8A,#2563EB)"></div><div class="stat-l">// متدرب مؤهّل</div></div>
+    <div class="stat-i"><div class="stat-v">3<span>×</span></div><div class="stat-b" style="background:linear-gradient(90deg,#2563EB,#09c)"></div><div class="stat-l">// سرعة التسليم</div></div>
+    <div class="stat-i"><div class="stat-v">96<span>%</span></div><div class="stat-b" style="background:linear-gradient(90deg,#1849A9,#2563EB,#16A34A)"></div><div class="stat-l">// رضا العملاء</div></div>
+  </div>
+</div>
+
+<!-- DIFF SEC -->
+<section class="sp diff-sec rv" id="diff">
+  <div>
+    <div class="stag">// 01 — الفرق الحقيقي</div>
+    <h2 class="sh">لا نبيع برمجيات —<br><span>نبيع التحوّل.</span></h2>
+    <p class="ss" style="margin-top:12px">كل مشروع نبنيه ينطلق من سؤال واحد: ما الذي سيتغيّر في عملك بعد يوم التسليم؟ منصتي تُعرّف نجاحها بنتائج عميلها.</p>
+  </div>
+  <div>
+    <div class="db">
+      <div class="db-hdr">MANASETY.diff — client transformation</div>
+      <div class="db-c">@@ before Manasety @@</div>
+      <div class="db-r m"><span class="s">−</span><span class="t">تطوير بطيء يستغرق أشهراً</span></div>
+      <div class="db-r m"><span class="s">−</span><span class="t">حلول جاهزة لا تناسب عملك</span></div>
+      <div class="db-r m"><span class="s">−</span><span class="t">بيانات متفرقة بلا رؤية</span></div>
+      <div class="db-r m"><span class="s">−</span><span class="t">دعم ضعيف بعد التسليم</span></div>
+      <div class="db-c">@@ with Manasety @@</div>
+      <div class="db-r p"><span class="s">+</span><span class="t"><em>إطلاق في أسابيع</em> لا أشهر</span></div>
+      <div class="db-r p"><span class="s">+</span><span class="t"><em>نظام مخصص</em> لطبيعة عملك</span></div>
+      <div class="db-r p"><span class="s">+</span><span class="t"><em>ذكاء اصطناعي</em> يوحّد بياناتك</span></div>
+      <div class="db-r p"><span class="s">+</span><span class="t"><em>شراكة طويلة الأمد</em> معك</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- SERVICES -->
+<section class="sp rv" id="services">
+  <div class="sh-c">
+    <div class="stag">// 02 — خدماتنا</div>
+    <h2 class="sh">ماذا نبني لك</h2>
+    <p class="ss">حلول برمجية وذكاء اصطناعي مخصصة لشركتك</p>
+  </div>
+  <div class="srv-g">
+    <div class="srv"><div class="srv-ico">⚙️</div><div class="srv-n">أنظمة SaaS مخصصة</div><div class="srv-d">نبني منصات برمجية كاملة مصممة لعمليات شركتك — من إدارة العمليات إلى بوابات العملاء.</div><div class="srv-pl">// completion rate</div><div class="srv-tr"><div class="srv-fi" style="width:94%;background:linear-gradient(90deg,#1E3A8A,#2563EB,#09c)"></div></div></div>
+    <div class="srv"><div class="srv-ico">🤖</div><div class="srv-n">حلول الذكاء الاصطناعي</div><div class="srv-d">نُدمج نماذج الذكاء الاصطناعي في عملياتك — أتمتة المهام، تحليل البيانات، واتخاذ القرار الذكي.</div><div class="srv-pl">// AI adoption</div><div class="srv-tr"><div class="srv-fi" style="width:88%;background:linear-gradient(90deg,#1849A9,#2563EB)"></div></div></div>
+    <div class="srv"><div class="srv-ico">🔗</div><div class="srv-n">تكامل الأنظمة</div><div class="srv-d">نربط أدواتك المتفرقة في منظومة واحدة متكاملة — APIs، قواعد بيانات، وأنظمة خارجية.</div><div class="srv-pl">// integration success</div><div class="srv-tr"><div class="srv-fi" style="width:97%;background:#2563EB"></div></div></div>
+    <div class="srv"><div class="srv-ico">📊</div><div class="srv-n">لوحات تحكم وتحليلات</div><div class="srv-d">نُحوّل بياناتك إلى رؤى قابلة للتنفيذ — dashboards حية تُظهر ما يهم فعلاً.</div><div class="srv-pl">// data clarity</div><div class="srv-tr"><div class="srv-fi" style="width:91%;background:linear-gradient(90deg,#1456C0,#1D55D4)"></div></div></div>
+    <div class="srv"><div class="srv-ico">🛡️</div><div class="srv-n">بنية تحتية وأمن</div><div class="srv-d">نبني على أسس متينة — cloud infrastructure، DevOps، وأمان من الطبقة الأولى.</div><div class="srv-pl">// uptime</div><div class="srv-tr"><div class="srv-fi" style="width:99%;background:linear-gradient(90deg,#0D55BE,#2563EB)"></div></div></div>
+    <div class="srv"><div class="srv-ico">🎓</div><div class="srv-n">تدريب وتأهيل تقني</div><div class="srv-d">نُؤهّل فريقك على أحدث التقنيات — برامج تدريبية مخصصة بأسلوب عملي ومباشر.</div><div class="srv-pl">// satisfaction</div><div class="srv-tr"><div class="srv-fi" style="width:96%;background:linear-gradient(90deg,#C2410C,#F97316)"></div></div></div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- HOW -->
+<section class="sp rv" id="how">
+  <div class="sh-c">
+    <div class="stag">// 03 — كيف نعمل</div>
+    <h2 class="sh">من الفكرة إلى الإطلاق</h2>
+    <p class="ss">منهجية واضحة، تسليم محدد، نتائج قابلة للقياس</p>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="s-ln"><div class="s-dot">01</div><div class="s-con"></div></div>
+      <div class="s-b"><div class="s-tag">// discovery</div><div class="s-ti">نفهم عملك أولاً</div><div class="s-de">جلسة عميقة نكتشف فيها تحدياتك الحقيقية، أهدافك، وما الذي سيُحدث الفرق في شركتك.</div><div class="s-pr"><div class="s-fi" style="width:100%;background:var(--cyan)"></div></div></div>
+    </div>
+    <div class="step">
+      <div class="s-ln"><div class="s-dot" style="border-color:var(--blue2)">02</div><div class="s-con"></div></div>
+      <div class="s-b"><div class="s-tag">// architecture</div><div class="s-ti">نصمم الحل المثالي</div><div class="s-de">خارطة طريق تقنية واضحة — اختيار التقنيات، تصميم قاعدة البيانات، وخطة التنفيذ.</div><div class="s-pr"><div class="s-fi" style="width:80%;background:var(--blue2)"></div></div></div>
+    </div>
+    <div class="step">
+      <div class="s-ln"><div class="s-dot" style="border-color:#1849A9">03</div><div class="s-con"></div></div>
+      <div class="s-b"><div class="s-tag">// build</div><div class="s-ti">نبني بسرعة وجودة</div><div class="s-de">تطوير بمنهجية Agile — تسليمات أسبوعية، مراجعاتك مستمرة، ولا مفاجآت في النهاية.</div><div class="s-pr"><div class="s-fi" style="width:65%;background:#1849A9"></div></div></div>
+    </div>
+    <div class="step">
+      <div class="s-ln"><div class="s-dot" style="border-color:var(--ora)">04</div></div>
+      <div class="s-b"><div class="s-tag">// launch & grow</div><div class="s-ti">إطلاق وشراكة مستمرة</div><div class="s-de">يوم الإطلاق ليس النهاية — نظام يتطور معك ودعم لا ينقطع.</div><div class="s-pr"><div class="s-fi" style="width:100%;background:linear-gradient(90deg,#C2410C,#F97316)"></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CLIENTS -->
+<div class="cl-sec rv">
+  <div class="cl-lbl">// عملوا معنا</div>
+  <div class="cl-row">
+    <span class="cl-tag">سما تك</span>
+    <span class="cl-tag">LexOffice</span>
+    <span class="cl-tag">ShalabyVerse</span>
+    <span class="cl-tag">جمعية وثاق</span>
+    <span class="cl-tag">وأكثر...</span>
+  </div>
+</div>
+
+<!-- CTA -->
+<section class="cta-s rv" id="cta">
+  <div class="cta-df">
+    <div class="cd m"><span class="s">−</span><span class="t">الانتظار وضياع الفرص</span></div>
+    <div class="cd p"><span class="s">+</span><span class="t">ابدأ مشروعك اليوم مع منصتي</span></div>
+  </div>
+  <p class="cta-su">جلسة مجانية نفهم فيها وضعك ونحدد لك الخطوة الأولى —<br>بدون التزامات، بدون مبالغة.</p>
+  <div class="cta-bt">
+    <a href="mailto:hello@manasety.com" class="bc-p">احجز جلستك المجانية ←</a>
+    <a href="#services" class="bc-s">تعرف على خدماتنا</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-logo">
+    <svg viewBox="0 0 420 65" xmlns="http://www.w3.org/2000/svg" height="32">
+      <defs>
+        <linearGradient id="ff1" x1="0%" x2="100%"><stop offset="0%" stop-color="#1e3a8a"/><stop offset="100%" stop-color="#2563eb"/></linearGradient>
+        <linearGradient id="ff2" x1="0%" x2="100%"><stop offset="0%" stop-color="#2563eb"/><stop offset="100%" stop-color="#09c"/></linearGradient>
+        <linearGradient id="ffs" x1="0%" x2="100%"><stop offset="0%" stop-color="white" stop-opacity="0"/><stop offset="50%" stop-color="white" stop-opacity="0.28"/><stop offset="100%" stop-color="white" stop-opacity="0"/></linearGradient>
+        <clipPath id="ff-c1"><rect x="0" y="0"  width="52" height="8" rx="4"/></clipPath>
+        <clipPath id="ff-c2"><rect x="0" y="12" width="78" height="8" rx="4"/></clipPath>
+        <clipPath id="ff-c3"><rect x="0" y="24" width="40" height="8" rx="4"/></clipPath>
+        <clipPath id="ff-c4"><rect x="0" y="36" width="65" height="8" rx="4"/></clipPath>
+        <clipPath id="ff-c5"><rect x="0" y="48" width="58" height="8" rx="4"/></clipPath>
+      </defs>
+      <rect x="0" y="0"  width="52" height="8" rx="4" fill="url(#ff1)"/>
+      <rect x="0" y="12" width="78" height="8" rx="4" fill="url(#ff2)"/>
+      <rect x="0" y="24" width="40" height="8" rx="4" fill="#1849a9"/>
+      <rect x="0" y="36" width="65" height="8" rx="4" fill="url(#ff1)"/>
+      <rect x="0" y="48" width="58" height="8" rx="4" fill="url(#ff2)"/>
+      <rect class="bar-shimmer" clip-path="url(#ff-c1)" x="0" y="0"  width="52" height="8" fill="url(#ffs)" style="animation-delay:0s"/>
+      <rect class="bar-shimmer" clip-path="url(#ff-c2)" x="0" y="12" width="78" height="8" fill="url(#ffs)" style="animation-delay:.3s"/>
+      <rect class="bar-shimmer" clip-path="url(#ff-c3)" x="0" y="24" width="40" height="8" fill="url(#ffs)" style="animation-delay:.6s"/>
+      <rect class="bar-shimmer" clip-path="url(#ff-c4)" x="0" y="36" width="65" height="8" fill="url(#ffs)" style="animation-delay:.9s"/>
+      <rect class="bar-shimmer" clip-path="url(#ff-c5)" x="0" y="48" width="58" height="8" fill="url(#ffs)" style="animation-delay:1.2s"/>
+      <text x="92" y="45" font-family="'IBM Plex Sans Arabic',sans-serif" font-size="32" font-weight="700" fill="#0c2461" letter-spacing="-0.5">Manasety</text>
+    </svg>
+  </div>
+  <ul class="ft-lnk">
+    <li><a href="#diff">ما نقدمه</a></li>
+    <li><a href="#services">الخدمات</a></li>
+    <li><a href="#how">كيف نعمل</a></li>
+    <li><a href="mailto:hello@manasety.com">تواصل معنا</a></li>
+  </ul>
+  <span class="ft-cp">// Manasety · Software &amp; AI Solutions · 2025</span>
+</footer>
+
+<script>
+/* CURSOR */
+const c=document.getElementById('cur'),r=document.getElementById('cur-r');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
+(function t(){c.style.left=mx+'px';c.style.top=my+'px';rx+=(mx-rx)*.11;ry+=(my-ry)*.11;r.style.left=rx+'px';r.style.top=ry+'px';requestAnimationFrame(t)})();
+document.querySelectorAll('a,.srv,.stat-i').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{c.style.transform='translate(-50%,-50%) scale(2)';c.style.background='#F97316'});
+  el.addEventListener('mouseleave',()=>{c.style.transform='translate(-50%,-50%) scale(1)';c.style.background='#2563EB'});
+});
+
+/* NAV BLINK */
+const nb=document.getElementById('nav-blink');
+if(nb) setInterval(()=>{nb.style.opacity=nb.style.opacity==='0'?'1':'0'},550);
+
+/* HERO CARD PROGRESS BARS — تشتغل مع الـ page load مباشرة */
+window.addEventListener('load',()=>{
+  document.querySelectorAll('.hc-f').forEach((b,i)=>{
+    b.style.animation=`fillBar 1.4s cubic-bezier(.4,0,.2,1) ${.2+i*.2}s both`;
+  });
+});
+
+/* REVEAL ON SCROLL */
+const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('on')}),{threshold:.08});
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+
+/* TRIGGER FILL BARS ON SCROLL */
+const bObs=new IntersectionObserver(e=>e.forEach(x=>{
+  if(x.isIntersecting)x.target.querySelectorAll('.srv-fi,.s-fi,.stat-b').forEach((b,i)=>{
+    b.style.animation=`fillBar 1.2s cubic-bezier(.4,0,.2,1) ${i*.08}s both`;
+  });
+}),{threshold:.12});
+document.querySelectorAll('section,.stats,.cl-sec').forEach(s=>bObs.observe(s));
+</script>
+</body>
+</html>
