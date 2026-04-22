@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>منصتي — للبرمجيات وحلول الذكاء الاصطناعي</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230C2461'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-weight='800' font-size='20' fill='%23078FD2'%3EM%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Nunito:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -967,12 +968,14 @@ footer {
   padding: 4px 14px; border-radius: 20px;
   border: 1px solid rgba(7,143,210,.3);
   color: var(--cyan); margin-bottom: 16px;
+  direction: ltr;
 }
 .pricing-card-title { font-size: 22px; font-weight: 800; color: #F1F5F9; margin-bottom: 24px; }
 .pricing-list { list-style: none; display: flex; flex-direction: column; gap: 14px; margin-bottom: 28px; }
 .pricing-list li {
   display: flex; align-items: center; gap: 10px; justify-content: flex-end;
   font-size: 14px; font-weight: 600; color: rgba(241,245,249,.7);
+  direction: rtl;
 }
 .pricing-check {
   width: 22px; height: 22px; border-radius: 50%;
@@ -984,12 +987,12 @@ footer {
   display: inline-block; width: 100%; text-align: center;
   font-family: var(--ar); font-size: 15px; font-weight: 700;
   padding: 12px 24px; border-radius: 10px;
-  border: 1px solid rgba(7,143,210,.3);
-  background: rgba(7,143,210,.08);
-  color: var(--cyan); text-decoration: none;
-  transition: background .3s, border-color .3s, transform .3s;
+  border: none;
+  background: linear-gradient(135deg, var(--cyan), var(--blue));
+  color: #fff; text-decoration: none;
+  transition: background .3s, transform .3s, box-shadow .3s;
 }
-.pricing-btn:hover { background: rgba(7,143,210,.18); border-color: rgba(7,143,210,.5); transform: translateY(-2px); }
+.pricing-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(7,143,210,.3); }
 .pricing-note {
   margin-top: 32px; padding: 20px 28px;
   background: rgba(255,255,255,.03);
@@ -1180,10 +1183,315 @@ footer {
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
   .cursor-dot, .cursor-ring { display: none; }
   body { cursor: auto; }
+  .contact-grid { grid-template-columns: 1fr; gap: 20px; }
+  .contact-form { padding: 20px; }
+  .form-row { grid-template-columns: 1fr; gap: 12px; }
+  .form-actions { flex-direction: column; }
+  .form-submit, .form-copy { width: 100%; text-align: center; justify-content: center; }
+  .contact-card { padding: 16px; }
+  .contact-card-value { font-size: 11px; }
+  .contact-header { text-align: center; }
+  .contact-title { font-size: 28px; }
 }
 @media (hover: none) {
   .cursor-dot, .cursor-ring { display: none; }
   body { cursor: auto; }
+}
+
+/* ═══════ INLINE CTA BANNERS ═══════ */
+.inline-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 24px 32px;
+  margin: 0 56px;
+  background: linear-gradient(135deg, rgba(7,143,210,.06), rgba(24,73,169,.04));
+  border: 1px solid rgba(7,143,210,.12);
+  border-radius: 14px;
+  position: relative;
+  z-index: 1;
+  flex-wrap: wrap;
+}
+.inline-cta-text {
+  font-family: var(--ar);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--navy);
+}
+.inline-cta-btn {
+  font-family: var(--ar);
+  font-size: 14px;
+  font-weight: 700;
+  padding: 10px 24px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--orange), #E86B10);
+  color: #fff;
+  text-decoration: none;
+  transition: transform .3s, box-shadow .3s;
+  box-shadow: 0 2px 12px rgba(249,115,22,.2);
+  white-space: nowrap;
+}
+.inline-cta-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(249,115,22,.35);
+}
+.inline-cta-btn.secondary-cta {
+  background: transparent;
+  border: 1.5px solid var(--border);
+  color: var(--muted);
+  box-shadow: none;
+}
+.inline-cta-btn.secondary-cta:hover {
+  border-color: var(--cyan);
+  color: var(--navy);
+}
+@media (max-width: 1024px) {
+  .inline-cta { margin: 0 24px; padding: 20px 24px; }
+}
+@media (max-width: 640px) {
+  .inline-cta { margin: 0 16px; flex-direction: column; text-align: center; padding: 20px 16px; }
+}
+
+/* ═══════ SAAS PRODUCTS SECTION ═══════ */
+.saas-section {
+  padding: 100px 56px;
+  background: var(--navy);
+  position: relative; overflow: hidden;
+}
+.saas-section::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 70% 60% at 20% 20%, rgba(7,143,210,.2) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 50% at 80% 80%, rgba(24,73,169,.15) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 30% at 50% 50%, rgba(7,143,210,.08) 0%, transparent 50%);
+  pointer-events: none;
+}
+.saas-section::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+.saas-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+.saas-header { text-align: center; margin-bottom: 56px; }
+.saas-header .section-tag { color: var(--cyan); }
+.saas-header .section-tag::before { background: linear-gradient(90deg, var(--cyan), var(--blue)); display: none; }
+.saas-title {
+  font-size: clamp(28px, 4vw, 42px); font-weight: 800;
+  margin-bottom: 14px;
+  background: linear-gradient(135deg, #fff, var(--cyan));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.saas-sub { font-size: 16px; font-weight: 500; color: rgba(241,245,249,.55); line-height: 1.9; }
+.saas-offer {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: linear-gradient(135deg, rgba(249,115,22,.15), rgba(249,115,22,.05));
+  border: 1.5px solid rgba(249,115,22,.4);
+  border-radius: 100px;
+  padding: 10px 24px;
+  margin-top: 20px;
+  font-size: 15px; font-weight: 700;
+  color: var(--orange);
+  animation: borderGlow 3s ease-in-out infinite;
+  position: relative;
+  overflow: hidden;
+}
+@keyframes offerShine {
+  0% { left: -100%; }
+  50%, 100% { left: 200%; }
+}
+.saas-offer::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(249,115,22,.15), transparent);
+  animation: offerShine 3s ease-in-out infinite;
+}
+.saas-offer-icon { font-size: 18px; }
+.saas-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px;
+}
+.saas-card {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 20px;
+  overflow: hidden;
+  transition: transform .5s cubic-bezier(.16,1,.3,1), box-shadow .5s, border-color .4s;
+  position: relative;
+}
+.saas-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--cyan), var(--blue), var(--orange));
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform .5s cubic-bezier(.4,0,.2,1);
+}
+.saas-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 60px rgba(7,143,210,.2);
+  border-color: rgba(7,143,210,.3);
+}
+.saas-card:hover::before { transform: scaleX(1); transform-origin: left; }
+.saas-card-visual {
+  padding: 36px 32px 28px;
+  background: linear-gradient(160deg, rgba(7,143,210,.12), rgba(24,73,169,.06));
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+.saas-card-visual::before {
+  content: '';
+  position: absolute;
+  top: -50%; right: -30%;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(7,143,210,.15), transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.saas-card-visual::after {
+  content: '';
+  position: absolute;
+  bottom: -40%; left: -20%;
+  width: 160px; height: 160px;
+  background: radial-gradient(circle, rgba(249,115,22,.08), transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.saas-card-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  position: relative; z-index: 1;
+  filter: drop-shadow(0 4px 12px rgba(7,143,210,.3));
+  transition: transform .4s cubic-bezier(.4,0,.2,1);
+}
+.saas-card:hover .saas-card-icon { transform: scale(1.15) rotate(-5deg); }
+.saas-card-badge {
+  display: inline-block;
+  font-family: var(--en);
+  font-size: 10px; font-weight: 800;
+  letter-spacing: 2px; text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 20px;
+  background: rgba(249,115,22,.15);
+  border: 1px solid rgba(249,115,22,.3);
+  color: var(--orange);
+  margin-bottom: 12px;
+  position: relative; z-index: 1;
+}
+.saas-card-name {
+  font-size: 24px; font-weight: 800;
+  color: #F1F5F9;
+  margin-bottom: 10px;
+  position: relative; z-index: 1;
+}
+.saas-card-tagline {
+  font-size: 14px; font-weight: 500;
+  color: rgba(241,245,249,.55);
+  line-height: 1.8;
+  position: relative; z-index: 1;
+}
+.saas-card-body {
+  padding: 28px 32px 32px;
+}
+.saas-features {
+  list-style: none;
+  display: flex; flex-direction: column;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+.saas-features li {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 14px; font-weight: 600;
+  color: rgba(241,245,249,.75);
+  transition: color .3s, transform .3s;
+}
+.saas-features li:hover {
+  color: #fff;
+  transform: translateX(-4px);
+}
+.saas-feat-check {
+  width: 24px; height: 24px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--cyan), var(--blue));
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 11px; flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(7,143,210,.3);
+}
+.saas-card-actions {
+  display: flex; gap: 12px;
+}
+.saas-btn {
+  flex: 1;
+  text-align: center;
+  font-family: var(--ar); font-size: 15px; font-weight: 700;
+  padding: 14px 20px; border-radius: 12px;
+  text-decoration: none;
+  transition: transform .3s cubic-bezier(.4,0,.2,1), box-shadow .3s;
+}
+.saas-btn-primary {
+  background: linear-gradient(135deg, var(--orange), #E86B10);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(249,115,22,.3);
+}
+.saas-btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 32px rgba(249,115,22,.4);
+}
+.saas-btn-secondary {
+  background: rgba(255,255,255,.06);
+  border: 1.5px solid rgba(255,255,255,.12);
+  color: rgba(241,245,249,.7);
+}
+.saas-btn-secondary:hover {
+  border-color: var(--cyan);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(7,143,210,.15);
+}
+.saas-bottom-cta {
+  text-align: center;
+  margin-top: 48px;
+  padding: 28px 32px;
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.06);
+  border-radius: 16px;
+}
+.saas-bottom-cta p {
+  font-size: 16px; font-weight: 600;
+  color: rgba(241,245,249,.5);
+  margin-bottom: 16px;
+}
+.saas-bottom-cta-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--ar); font-size: 16px; font-weight: 700;
+  padding: 14px 36px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--cyan), var(--blue));
+  color: #fff;
+  text-decoration: none;
+  transition: transform .3s, box-shadow .3s;
+  box-shadow: 0 4px 20px rgba(7,143,210,.25);
+}
+.saas-bottom-cta-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 32px rgba(7,143,210,.35);
+}
+@media (max-width: 1024px) {
+  .saas-section { padding: 72px 24px; }
+  .saas-grid { grid-template-columns: 1fr; max-width: 520px; margin: 0 auto; }
+}
+@media (max-width: 640px) {
+  .saas-card-visual { padding: 28px 20px 22px; }
+  .saas-card-body { padding: 22px 20px 26px; }
+  .saas-card-actions { flex-direction: column; }
+  .saas-card-name { font-size: 20px; }
 }
 
 /* hide system cursor on desktop */
@@ -1286,9 +1594,9 @@ footer {
   <ul class="nav-links">
     <li><a href="#diff">ما نقدمه</a></li>
     <li><a href="#services">الخدمات</a></li>
+    <li><a href="#saas">أنظمتنا الجاهزة</a></li>
     <li><a href="#how">كيف نعمل</a></li>
     <li><a href="#pricing">الأسعار</a></li>
-    <li><a href="#faq">الأسئلة</a></li>
     <li><a href="#contact">تواصل</a></li>
   </ul>
   <a href="#contact" class="nav-cta">ابدأ الآن</a>
@@ -1321,11 +1629,11 @@ footer {
 
   <div class="hero-content">
     <div class="hero-badge">SOFTWARE & AI SOLUTIONS</div>
-    <h1>نبني حلول ذكية تحوّل<br>طريقة عمل <span>شركتك</span></h1>
-    <p class="hero-sub">نبني حلول برمجية مخصصة وأنظمة ذكاء اصطناعي تحوّل طريقة عمل شركتك — من الفكرة إلى الإطلاق في أسابيع لا أشهر.</p>
+    <h1>نبني لك <span>أنظمة وتطبيقات</span><br>تخدم شركتك وتنمّي أعمالك</h1>
+    <p class="hero-sub">سواء كنت تحتاج نظام إدارة، تطبيق جوال، أو حلول ذكاء اصطناعي — نصمم لك الحل المناسب من الصفر أو نوفر لك أنظمة جاهزة تبدأ بها فوراً.</p>
     <div class="hero-btns">
-      <a href="#cta" class="btn-primary">ابدأ مشروعك ←</a>
-      <a href="#how" class="btn-secondary">كيف نعمل</a>
+      <a href="#contact" class="btn-primary">ابدأ مشروعك ←</a>
+      <a href="#saas" class="btn-secondary">أنظمتنا الجاهزة</a>
     </div>
   </div>
 </section>
@@ -1361,22 +1669,22 @@ footer {
   <div class="diff-section">
     <div>
       <div class="section-tag">01 — THE DIFFERENCE</div>
-      <h2 class="section-title">لا نبيع برمجيات —<br><span>نبيع التحوّل.</span></h2>
-      <p class="section-sub" style="margin-top:16px">كل مشروع نبنيه ينطلق من سؤال واحد: ما الذي سيتغيّر في عملك بعد يوم التسليم؟ منصتي تُعرّف نجاحها بنتائج عميلها.</p>
+      <h2 class="section-title">ما الفرق بين منصتي<br><span>وأي شركة برمجة؟</span></h2>
+      <p class="section-sub" style="margin-top:16px">نفهم عملك أولاً، ثم نبني لك نظام يخدمك فعلاً — مش مجرد موقع شكلي. نسلّم بسرعة، وندعمك بعد التسليم كشريك تقني.</p>
     </div>
     <div>
       <div class="diff-box">
-        <div class="diff-header">MANASETY.diff — client transformation</div>
-        <div class="diff-comment">@@ before Manasety @@</div>
-        <div class="diff-row minus"><span class="diff-sign">-</span><span class="diff-text">تطوير بطيء يستغرق أشهراً</span></div>
-        <div class="diff-row minus"><span class="diff-sign">-</span><span class="diff-text">حلول جاهزة لا تناسب عملك</span></div>
-        <div class="diff-row minus"><span class="diff-sign">-</span><span class="diff-text">بيانات متفرقة بلا رؤية</span></div>
-        <div class="diff-row minus"><span class="diff-sign">-</span><span class="diff-text">دعم ضعيف بعد التسليم</span></div>
-        <div class="diff-comment">@@ with Manasety @@</div>
-        <div class="diff-row plus"><span class="diff-sign">+</span><span class="diff-text"><em>إطلاق في أسابيع</em> لا أشهر</span></div>
-        <div class="diff-row plus"><span class="diff-sign">+</span><span class="diff-text"><em>نظام مخصص</em> لطبيعة عملك</span></div>
-        <div class="diff-row plus"><span class="diff-sign">+</span><span class="diff-text"><em>ذكاء اصطناعي</em> يوحّد بياناتك</span></div>
-        <div class="diff-row plus"><span class="diff-sign">+</span><span class="diff-text"><em>شراكة طويلة الأمد</em> معك</span></div>
+        <div class="diff-header">MANASETY.diff — what changes for you</div>
+        <div class="diff-comment">@@ بدون منصتي @@</div>
+        <div class="diff-row minus"><span class="diff-sign">-</span><span class="diff-text">شغلك على ورق وإكسل وكل حاجة متفرقة</span></div>
+        <div class="diff-row minus"><span class="diff-sign">-</span><span class="diff-text">تطوير بطيء وتكلفة مش واضحة</span></div>
+        <div class="diff-row minus"><span class="diff-sign">-</span><span class="diff-text">نظام جاهز مش مناسب لطبيعة شغلك</span></div>
+        <div class="diff-row minus"><span class="diff-sign">-</span><span class="diff-text">بعد التسليم مفيش دعم حقيقي</span></div>
+        <div class="diff-comment">@@ مع منصتي @@</div>
+        <div class="diff-row plus"><span class="diff-sign">+</span><span class="diff-text"><em>نظام مخصص</em> يناسب طريقة شغلك بالظبط</span></div>
+        <div class="diff-row plus"><span class="diff-sign">+</span><span class="diff-text"><em>تسليم سريع</em> في أسابيع مش أشهر</span></div>
+        <div class="diff-row plus"><span class="diff-sign">+</span><span class="diff-text"><em>كل بياناتك</em> في مكان واحد بتقارير ذكية</span></div>
+        <div class="diff-row plus"><span class="diff-sign">+</span><span class="diff-text"><em>شريك تقني</em> معاك بعد التسليم وللأبد</span></div>
       </div>
     </div>
   </div>
@@ -1497,6 +1805,12 @@ footer {
   </div>
 </section>
 
+<!-- Inline CTA after How We Work -->
+<div class="inline-cta rv">
+  <span class="inline-cta-text">جاهز تبدأ مشروعك؟ تواصل معنا الآن</span>
+  <a href="#contact" class="inline-cta-btn">تواصل معنا</a>
+</div>
+
 <!-- ═══════ CLIENTS ═══════ -->
 <div class="clients-section rv">
   <div class="clients-label">TRUSTED BY</div>
@@ -1507,6 +1821,13 @@ footer {
     <span class="client-tag">جمعية وثاق</span>
     <span class="client-tag">وأكثر...</span>
   </div>
+</div>
+
+<!-- Inline CTA after Clients -->
+<div class="inline-cta rv">
+  <span class="inline-cta-text">اكتشف خدماتنا وكيف نقدر نساعدك</span>
+  <a href="#services" class="inline-cta-btn secondary-cta">الخدمات</a>
+  <a href="#saas" class="inline-cta-btn">أنظمتنا الجاهزة</a>
 </div>
 
 <!-- ═══════ ABOUT US ═══════ -->
@@ -1573,6 +1894,80 @@ footer {
     </div>
   </div>
 </section>
+
+<!-- Inline CTA after Mobile -->
+<div class="inline-cta rv">
+  <span class="inline-cta-text">محتاج تطبيق جوال أو نظام لشركتك؟</span>
+  <a href="#contact" class="inline-cta-btn">احكِلنا عن مشروعك</a>
+</div>
+
+<!-- ═══════ SAAS PRODUCTS ═══════ -->
+<section class="saas-section rv" id="saas">
+  <div class="saas-inner">
+    <div class="saas-header">
+      <div class="section-tag" style="justify-content:center;">OUR PLATFORMS</div>
+      <h2 class="saas-title">منصات جاهزة للاشتراك</h2>
+      <p class="saas-sub">أنظمة احترافية بنيناها وجاهزة للاستخدام فوراً — قابلة للتعديل حسب طبيعة عملك، بدون انتظار.</p>
+      <div class="saas-offer"><span class="saas-offer-icon">&#128293;</span> خصم 50% على الاشتراك السنوي — عرض لفترة محدودة</div>
+    </div>
+    <div class="saas-grid">
+      <!-- LexOffice - Lawyers System -->
+      <div class="saas-card rv rv-delay-1">
+        <div class="saas-card-visual">
+          <div class="saas-card-badge">LEGAL TECH</div>
+          <div class="saas-card-icon">&#9878;&#65039;</div>
+          <div class="saas-card-name">LexOffice — نظام المحاماة</div>
+          <div class="saas-card-tagline">نظام متكامل لإدارة مكاتب المحاماة — القضايا، الجلسات، التوكيلات، الماليات، والتقارير في مكان واحد.</div>
+        </div>
+        <div class="saas-card-body">
+          <ul class="saas-features">
+            <li><span class="saas-feat-check">&#10003;</span>إدارة القضايا والجلسات والأحكام</li>
+            <li><span class="saas-feat-check">&#10003;</span>متابعة التوكيلات والتنفيذ</li>
+            <li><span class="saas-feat-check">&#10003;</span>نظام مالي متكامل وفواتير</li>
+            <li><span class="saas-feat-check">&#10003;</span>تنبيهات ذكية وتقارير تفصيلية</li>
+            <li><span class="saas-feat-check">&#10003;</span>ذكاء اصطناعي لتلخيص المستندات</li>
+            <li><span class="saas-feat-check">&#10003;</span>نماذج قانونية جاهزة للطباعة</li>
+          </ul>
+          <div class="saas-card-actions">
+            <a href="lexoffice.html" class="saas-btn saas-btn-secondary">تعرّف أكثر ←</a>
+            <a href="#contact" class="saas-btn saas-btn-primary">اشترك الآن</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gym System -->
+      <div class="saas-card rv rv-delay-2">
+        <div class="saas-card-visual">
+          <div class="saas-card-badge">FITNESS TECH</div>
+          <div class="saas-card-icon">&#127947;&#65039;</div>
+          <div class="saas-card-name">GymPro — نظام إدارة الجيم</div>
+          <div class="saas-card-tagline">نظام شامل لإدارة الصالات الرياضية — الاشتراكات، الحضور بالبصمة، الماليات، والتقارير اللحظية.</div>
+        </div>
+        <div class="saas-card-body">
+          <ul class="saas-features">
+            <li><span class="saas-feat-check">&#10003;</span>إدارة الأعضاء والاشتراكات</li>
+            <li><span class="saas-feat-check">&#10003;</span>تسجيل الحضور بالبصمة تلقائياً</li>
+            <li><span class="saas-feat-check">&#10003;</span>نظام مالي وإغلاق يومي</li>
+            <li><span class="saas-feat-check">&#10003;</span>كروت إهداء وعروض ترويجية</li>
+            <li><span class="saas-feat-check">&#10003;</span>دعم متعدد الفروع والبراندات</li>
+            <li><span class="saas-feat-check">&#10003;</span>تطبيق سطح مكتب للعمل بدون إنترنت</li>
+          </ul>
+          <div class="saas-card-actions">
+            <a href="gym-system.html" class="saas-btn saas-btn-secondary">تعرّف أكثر ←</a>
+            <a href="#contact" class="saas-btn saas-btn-primary">اشترك الآن</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="saas-bottom-cta">
+      <p>محتاج نظام مخصص لمجالك؟ نقدر نبنيه لك من الصفر</p>
+      <a href="#contact" class="saas-bottom-cta-btn">تواصل معنا ←</a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
 
 <!-- ═══════ PRICING ═══════ -->
 <section class="pricing-section rv" id="pricing">
@@ -1809,8 +2204,10 @@ footer {
   <ul class="footer-links">
     <li><a href="#diff">ما نقدمه</a></li>
     <li><a href="#services">الخدمات</a></li>
+    <li><a href="#saas">أنظمتنا الجاهزة</a></li>
     <li><a href="#pricing">الأسعار</a></li>
     <li><a href="#contact">تواصل</a></li>
+    <li><a href="contact.html">صفحة التواصل</a></li>
   </ul>
   <span class="footer-copy">Manasety &middot; Software & AI Solutions &middot; 2025</span>
 </footer>
@@ -1964,6 +2361,45 @@ if (window.matchMedia('(hover: hover)').matches) {
   }, { passive: true });
 }
 </script>
-<script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="0ee1ae9b-c9d8-4f80-94d5-1039c2e06caa";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
+<!-- Crisp Chat Widget -->
+<style>
+.crisp-label {
+  position: fixed;
+  bottom: 90px;
+  left: 20px;
+  z-index: 9990;
+  background: var(--navy);
+  color: #fff;
+  font-family: var(--ar);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 16px;
+  border-radius: 20px;
+  box-shadow: 0 4px 16px rgba(12,36,97,.2);
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeUp .6s ease 2.5s forwards;
+}
+.crisp-label::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 24px;
+  width: 12px;
+  height: 12px;
+  background: var(--navy);
+  transform: rotate(45deg);
+  border-radius: 2px;
+}
+</style>
+<div class="crisp-label">تحدث معنا</div>
+<script type="text/javascript">
+window.$crisp=[];
+window.CRISP_WEBSITE_ID="0ee1ae9b-c9d8-4f80-94d5-1039c2e06caa";
+window.$crisp.push(["config", "position:reverse", true]);
+window.$crisp.push(["config", "container:index", 1]);
+(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();
+</script>
 </body>
 </html>
