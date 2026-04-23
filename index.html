@@ -4,7 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>منصتي — للبرمجيات وحلول الذكاء الاصطناعي</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230C2461'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-weight='800' font-size='20' fill='%23078FD2'%3EM%3C/text%3E%3C/svg%3E">
+<link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="shortcut icon" href="favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Nunito:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -1168,6 +1172,8 @@ footer {
   .services-grid { grid-template-columns: 1fr 1fr; }
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
   .hero { padding: 100px 24px 60px; }
+  .hero > div { grid-template-columns: 1fr !important; }
+  .hero > div > div:last-child { display: none; }
   .float-card { display: none; }
   .clients-section { padding: 36px 24px; }
   .cta-section { padding: 64px 24px; }
@@ -1594,46 +1600,84 @@ footer {
   <ul class="nav-links">
     <li><a href="#diff">ما نقدمه</a></li>
     <li><a href="#services">الخدمات</a></li>
-    <li><a href="#saas">أنظمتنا الجاهزة</a></li>
+    <li><a href="saas.html">أنظمتنا الجاهزة</a></li>
     <li><a href="#how">كيف نعمل</a></li>
-    <li><a href="#pricing">الأسعار</a></li>
-    <li><a href="#contact">تواصل</a></li>
+    <li><a href="contact-page.html">تواصل</a></li>
   </ul>
   <a href="#contact" class="nav-cta">ابدأ الآن</a>
 </nav>
 
 <!-- ═══════ HERO ═══════ -->
-<section class="hero" id="hero">
-  <div class="hero-float-cards">
-    <div class="float-card fc-1">
-      <div class="fc-label">deployment</div>
-      <div class="fc-value">100<span>%</span></div>
-      <div class="fc-bar"><div class="fc-bar-fill" style="width:100%"></div></div>
+<section class="hero" id="hero" style="text-align:right;">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;max-width:1200px;width:100%;position:relative;z-index:1;">
+    <!-- Right: Text & CTA -->
+    <div style="order:1;">
+      <div class="hero-badge">SOFTWARE & AI SOLUTIONS</div>
+      <h1 style="font-size:clamp(32px,5vw,56px);font-weight:800;line-height:1.3;color:var(--navy);margin-bottom:24px;opacity:0;animation:fadeUp .8s cubic-bezier(.16,1,.3,1) .5s both;">بطل تبني <span style="background:linear-gradient(135deg,var(--blue),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">"مواقع"</span>.. وابدأ<br>ابن <span style="background:linear-gradient(135deg,var(--blue),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">"بيزنس"</span> ذكي بيشتغل بدالك.</h1>
+      <p class="hero-sub" style="margin:0 0 32px;text-align:right;">منصتي بتحول أفكارك المعقدة لأنظمة تشغيل متكاملة بتوفر وقتك وتزود أرباحك. إحنا بنشيل عنك "هَمّ التكنولوجيا" عشان تتفرغ أنت لإدارة وتكبير شركتك.</p>
+      <div class="hero-btns" style="justify-content:flex-start;">
+        <a href="#contact" class="btn-primary">صمّم نظامك الآن ←</a>
+        <a href="#services" class="btn-secondary">شوف مشاريع نفذناها</a>
+      </div>
+      <div style="display:flex;gap:24px;margin-top:28px;flex-wrap:wrap;opacity:0;animation:fadeUp .8s cubic-bezier(.16,1,.3,1) 1.1s both;">
+        <span style="font-size:14px;font-weight:600;color:var(--tx2);display:flex;align-items:center;gap:6px;"><span style="color:var(--orange);">&#9733;</span> تحويل الأفكار لواقع رقمي</span>
+        <span style="font-size:14px;font-weight:600;color:var(--tx2);display:flex;align-items:center;gap:6px;"><span style="color:var(--orange);">&#9733;</span> أنظمة أوتوماتيكية بالكامل</span>
+        <span style="font-size:14px;font-weight:600;color:var(--tx2);display:flex;align-items:center;gap:6px;"><span style="color:var(--orange);">&#9733;</span> ضمان تشغيل 24/7</span>
+      </div>
     </div>
-    <div class="float-card fc-2">
-      <div class="fc-label">AI integration</div>
-      <div class="fc-value">87<span>%</span></div>
-      <div class="fc-bar"><div class="fc-bar-fill" style="width:87%"></div></div>
-    </div>
-    <div class="float-card fc-3">
-      <div class="fc-label">automation</div>
-      <div class="fc-value">73<span>%</span></div>
-      <div class="fc-bar"><div class="fc-bar-fill" style="width:73%"></div></div>
-    </div>
-    <div class="float-card fc-4">
-      <div class="fc-label">growth</div>
-      <div class="fc-value">+64<span>%</span></div>
-      <div class="fc-bar"><div class="fc-bar-fill" style="width:64%"></div></div>
-    </div>
-  </div>
-
-  <div class="hero-content">
-    <div class="hero-badge">SOFTWARE & AI SOLUTIONS</div>
-    <h1>نبني لك <span>أنظمة وتطبيقات</span><br>تخدم شركتك وتنمّي أعمالك</h1>
-    <p class="hero-sub">سواء كنت تحتاج نظام إدارة، تطبيق جوال، أو حلول ذكاء اصطناعي — نصمم لك الحل المناسب من الصفر أو نوفر لك أنظمة جاهزة تبدأ بها فوراً.</p>
-    <div class="hero-btns">
-      <a href="#contact" class="btn-primary">ابدأ مشروعك ←</a>
-      <a href="#saas" class="btn-secondary">أنظمتنا الجاهزة</a>
+    <!-- Left: SaaS Dashboard Mockup -->
+    <div style="order:2;position:relative;opacity:0;animation:slideLeft .8s cubic-bezier(.16,1,.3,1) .8s both;">
+      <div style="background:var(--white);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow-xl);overflow:hidden;">
+        <div style="background:linear-gradient(135deg,#F8FAFC,#F1F5F9);padding:12px 18px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border);">
+          <div style="display:flex;gap:6px;">
+            <span style="width:10px;height:10px;border-radius:50%;background:#EF4444;"></span>
+            <span style="width:10px;height:10px;border-radius:50%;background:#F59E0B;"></span>
+            <span style="width:10px;height:10px;border-radius:50%;background:#22C55E;"></span>
+          </div>
+          <span style="font-family:var(--en);font-size:11px;color:var(--muted);margin-right:auto;">dashboard.manasety.com</span>
+        </div>
+        <div style="padding:24px;">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:20px;">
+            <div style="background:linear-gradient(135deg,rgba(7,143,210,.08),rgba(24,73,169,.04));border-radius:10px;padding:16px;text-align:center;">
+              <div style="font-family:var(--en);font-size:22px;font-weight:900;color:var(--navy);">+247</div>
+              <div style="font-size:11px;color:var(--muted);margin-top:4px;">عميل نشط</div>
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(22,163,74,.08),rgba(22,163,74,.04));border-radius:10px;padding:16px;text-align:center;">
+              <div style="font-family:var(--en);font-size:22px;font-weight:900;color:var(--green);">98%</div>
+              <div style="font-size:11px;color:var(--muted);margin-top:4px;">رضا العملاء</div>
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(249,115,22,.08),rgba(249,115,22,.04));border-radius:10px;padding:16px;text-align:center;">
+              <div style="font-family:var(--en);font-size:22px;font-weight:900;color:var(--orange);">3x</div>
+              <div style="font-size:11px;color:var(--muted);margin-top:4px;">سرعة التسليم</div>
+            </div>
+          </div>
+          <div style="background:var(--bg);border-radius:10px;padding:16px;border:1px solid var(--border);">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+              <span style="font-size:12px;font-weight:700;color:var(--navy);">أداء النظام</span>
+              <span style="font-family:var(--en);font-size:11px;color:var(--green);font-weight:700;">LIVE</span>
+            </div>
+            <div style="display:flex;gap:4px;align-items:end;height:48px;">
+              <div style="flex:1;background:linear-gradient(180deg,var(--cyan),var(--blue));border-radius:3px;height:65%;"></div>
+              <div style="flex:1;background:linear-gradient(180deg,var(--cyan),var(--blue));border-radius:3px;height:80%;"></div>
+              <div style="flex:1;background:linear-gradient(180deg,var(--cyan),var(--blue));border-radius:3px;height:55%;"></div>
+              <div style="flex:1;background:linear-gradient(180deg,var(--cyan),var(--blue));border-radius:3px;height:90%;"></div>
+              <div style="flex:1;background:linear-gradient(180deg,var(--cyan),var(--blue));border-radius:3px;height:70%;"></div>
+              <div style="flex:1;background:linear-gradient(180deg,var(--cyan),var(--blue));border-radius:3px;height:95%;"></div>
+              <div style="flex:1;background:linear-gradient(180deg,var(--orange),#E86B10);border-radius:3px;height:100%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Floating notification -->
+      <div style="position:absolute;top:-16px;left:-16px;background:var(--white);border:1px solid var(--border);border-radius:12px;padding:12px 16px;box-shadow:var(--shadow-lg);animation:float 4s ease-in-out infinite;z-index:2;">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--green),#15803D);display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;">&#10003;</span>
+          <div>
+            <div style="font-size:11px;font-weight:700;color:var(--navy);">نظام جديد</div>
+            <div style="font-size:10px;color:var(--muted);">تم الإطلاق بنجاح</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -1669,8 +1713,12 @@ footer {
   <div class="diff-section">
     <div>
       <div class="section-tag">01 — THE DIFFERENCE</div>
-      <h2 class="section-title">ما الفرق بين منصتي<br><span>وأي شركة برمجة؟</span></h2>
-      <p class="section-sub" style="margin-top:16px">نفهم عملك أولاً، ثم نبني لك نظام يخدمك فعلاً — مش مجرد موقع شكلي. نسلّم بسرعة، وندعمك بعد التسليم كشريك تقني.</p>
+      <h2 class="section-title">ليه منصتي مش مجرد<br><span>شركة برمجة؟</span></h2>
+      <p class="section-sub" style="margin-top:16px">في منصتي، إحنا مش بنبيع "أكواد" أو واجهات شكلية، إحنا بنبني <strong>"أدوات نمو"</strong> لبيزنس ناجح. بنستثمر في فهم دقيق لنموذج عملك أولاً، عشان نسلمك نظام ذكي يخدم أهدافك فعلاً وفي وقت قياسي. دورنا مبيخلصش عند التسليم، إحنا بنفضل معاك كـ <strong>"شريك تقني"</strong> بيضمن استقرار وتطوير نظامك في كل خطوة.</p>
+      <div style="margin-top:28px;">
+        <p style="font-size:18px;font-weight:800;color:var(--navy);margin-bottom:16px;">ماتضيعش وقت في حلول تقليدية، ابني سيستم يخدم أهدافك فعلاً</p>
+        <a href="#contact" class="btn-primary" style="display:inline-flex;align-items:center;gap:10px;">احجز استشارتك المجانية الآن ←</a>
+      </div>
     </div>
     <div>
       <div class="diff-box">
@@ -1692,6 +1740,8 @@ footer {
 
 <div class="divider"></div>
 
+<div class="divider"></div>
+
 <!-- ═══════ SERVICES ═══════ -->
 <section class="section-pad rv" id="services">
   <div class="section-center">
@@ -1702,43 +1752,45 @@ footer {
   <div class="services-grid">
     <div class="service-card rv rv-delay-1">
       <div class="service-icon">&#9881;&#65039;</div>
-      <div class="service-name">أنظمة SaaS مخصصة</div>
-      <div class="service-desc">نبني منصات برمجية كاملة مصممة لعمليات شركتك — من إدارة العمليات إلى بوابات العملاء.</div>
+      <div class="service-name">أنظمة مخصصة حسب نشاطك</div>
+      <div class="service-desc">نظام يُبنى خصيصاً ليناسب دورة عملك الفريدة، بعيداً عن القوالب الجاهزة المحدودة. نبتكر لك الأدوات التي تمنحك السيطرة الكاملة والتميز في سوقك.</div>
       <div class="service-bar-label">COMPLETION RATE</div>
       <div class="service-bar-track"><div class="service-bar-fill" data-width="94%" style="background:linear-gradient(90deg,#0C2461,#1849A9,#078FD2)"></div></div>
+      <a href="#contact" style="display:inline-block;margin-top:16px;font-family:var(--ar);font-size:13px;font-weight:700;color:var(--cyan);text-decoration:none;transition:color .3s;">صمّم نظامك الخاص ←</a>
     </div>
     <div class="service-card rv rv-delay-2">
+      <div class="service-icon">&#9729;&#65039;</div>
+      <div class="service-name">أنظمة سحابية جاهزة</div>
+      <div class="service-desc">امتلك نظامك المتكامل باشتراك مرن يناسب ميزانيتك. نتولى عنك الاستضافة والدعم الفني بالكامل، لتبدأ عملك فوراً وبدون أي تكاليف تأسيس.</div>
+      <div class="service-bar-label">UPTIME</div>
+      <div class="service-bar-track"><div class="service-bar-fill" data-width="99%" style="background:linear-gradient(90deg,#1849A9,#078FD2)"></div></div>
+      <a href="saas.html" style="display:inline-block;margin-top:16px;font-family:var(--ar);font-size:13px;font-weight:700;color:var(--cyan);text-decoration:none;transition:color .3s;">ابدأ تجربتك المجانية الان ←</a>
+    </div>
+    <div class="service-card rv rv-delay-3">
       <div class="service-icon">&#129302;</div>
-      <div class="service-name">حلول الذكاء الاصطناعي</div>
-      <div class="service-desc">نُدمج نماذج الذكاء الاصطناعي في عملياتك — أتمتة المهام، تحليل البيانات، واتخاذ القرار الذكي.</div>
+      <div class="service-name">أتمتة العمليات بالذكاء الاصطناعي</div>
+      <div class="service-desc">حوّل المهام الروتينية لعمليات آلية ذكية. ندمج تقنيات الذكاء الاصطناعي في شركتك لتقليل الخطأ البشري، تسريع الرد على العملاء، ورفع كفاءة فريقك بأقل مجهود.</div>
       <div class="service-bar-label">AI ADOPTION</div>
       <div class="service-bar-track"><div class="service-bar-fill" data-width="88%" style="background:linear-gradient(90deg,#1849A9,#078FD2)"></div></div>
     </div>
-    <div class="service-card rv rv-delay-3">
-      <div class="service-icon">&#128279;</div>
-      <div class="service-name">تكامل الأنظمة</div>
-      <div class="service-desc">نربط أدواتك المتفرقة في منظومة واحدة متكاملة — APIs، قواعد بيانات، وأنظمة خارجية.</div>
-      <div class="service-bar-label">INTEGRATION SUCCESS</div>
-      <div class="service-bar-track"><div class="service-bar-fill" data-width="97%" style="background:#1849A9"></div></div>
-    </div>
     <div class="service-card rv rv-delay-1">
       <div class="service-icon">&#128202;</div>
-      <div class="service-name">لوحات تحكم وتحليلات</div>
-      <div class="service-desc">نُحوّل بياناتك إلى رؤى قابلة للتنفيذ — dashboards حية تُظهر ما يهم فعلاً.</div>
+      <div class="service-name">تقارير وتحليلات لنمو أعمالك</div>
+      <div class="service-desc">بنصمم لك لوحات تحكم حية بتعرض لك أداء شركتك في لحظتها، عشان تاخد قراراتك بناءً على رؤية واضحة مش مجرد توقعات.</div>
       <div class="service-bar-label">DATA CLARITY</div>
       <div class="service-bar-track"><div class="service-bar-fill" data-width="91%" style="background:linear-gradient(90deg,#0C2461,#1849A9)"></div></div>
     </div>
     <div class="service-card rv rv-delay-2">
       <div class="service-icon">&#128737;&#65039;</div>
-      <div class="service-name">بنية تحتية وأمن</div>
-      <div class="service-desc">نبني على أسس متينة — cloud infrastructure، DevOps، وأمان من الطبقة الأولى.</div>
+      <div class="service-name">بنية سحابية آمنة ومستقرة</div>
+      <div class="service-desc">بنبني لك السيستم على سيرفرات عالمية بتضمن لك أعلى سرعة وأقوى حماية. بنهتم بكل تفاصيل الأمان والنسخ الاحتياطي، عشان تركز في شغلك وأنت مطمن إن نظامك شغال بكفاءة 24/7.</div>
       <div class="service-bar-label">UPTIME</div>
       <div class="service-bar-track"><div class="service-bar-fill" data-width="99%" style="background:linear-gradient(90deg,#1849A9,#078FD2)"></div></div>
     </div>
     <div class="service-card rv rv-delay-3">
       <div class="service-icon">&#127891;</div>
-      <div class="service-name">تدريب وتأهيل تقني</div>
-      <div class="service-desc">نُؤهّل فريقك على أحدث التقنيات — برامج تدريبية مخصصة بأسلوب عملي ومباشر.</div>
+      <div class="service-name">دعم التشغيل ونقل الخبرة</div>
+      <div class="service-desc">بنقف معاك في مرحلة الإطلاق. بنوفر تدريب عملي ومباشر لفريقك عشان يتقن التعامل مع الأنظمة الجديدة، وبنفضل معاك لحد ما نتأكد إن السيستم بقى جزء أساسي وسهل من روتينهم اليومي.</div>
       <div class="service-bar-label">SATISFACTION</div>
       <div class="service-bar-track"><div class="service-bar-fill" data-width="96%" style="background:linear-gradient(90deg,#E86B10,#F97316)"></div></div>
     </div>
@@ -1805,40 +1857,35 @@ footer {
   </div>
 </section>
 
-<!-- Inline CTA after How We Work -->
-<div class="inline-cta rv">
-  <span class="inline-cta-text">جاهز تبدأ مشروعك؟ تواصل معنا الآن</span>
-  <a href="#contact" class="inline-cta-btn">تواصل معنا</a>
-</div>
 
 <!-- ═══════ CLIENTS ═══════ -->
 <div class="clients-section rv">
   <div class="clients-label">TRUSTED BY</div>
   <div class="clients-row">
     <span class="client-tag">سما تك</span>
-    <span class="client-tag">LexOffice</span>
     <span class="client-tag">ShalabyVerse</span>
     <span class="client-tag">جمعية وثاق</span>
+    <span class="client-tag">IPI</span>
+    <span class="client-tag">المشتريات</span>
     <span class="client-tag">وأكثر...</span>
+  </div>
+  <div style="text-align:center;margin-top:24px;">
+    <a href="#contact" style="font-family:var(--ar);font-size:16px;font-weight:700;color:var(--navy);text-decoration:none;display:inline-flex;align-items:center;gap:8px;padding:10px 28px;border-radius:10px;border:1.5px solid var(--border);background:var(--white);transition:border-color .3s,color .3s,transform .3s;">جاهز تكون شريك النجاح الجاي؟ ←</a>
   </div>
 </div>
 
-<!-- Inline CTA after Clients -->
-<div class="inline-cta rv">
-  <span class="inline-cta-text">اكتشف خدماتنا وكيف نقدر نساعدك</span>
-  <a href="#services" class="inline-cta-btn secondary-cta">الخدمات</a>
-  <a href="#saas" class="inline-cta-btn">أنظمتنا الجاهزة</a>
-</div>
 
-<!-- ═══════ ABOUT US ═══════ -->
+<!-- ═══════ WHY MANASETY ═══════ -->
 <section class="about-section rv" id="about">
   <div class="about-content">
-    <h2 class="about-title">من نحن</h2>
+    <h2 class="about-title">ليه منصتي مش مجرد شركة برمجة؟</h2>
     <p class="about-text">
-      <strong>Manasety</strong> هو مزوّد حلول برمجية متخصّص في بناء أنظمة ومنصات تشغيل للشركات،
-      وليس مجرد مواقع إلكترونية. نبدأ دائمًا بفهم البزنس قبل كتابة أي سطر كود لأن النظام الجيد هو الذي يخدم
-      طريقة العمل، لا العكس.
+      في منصتي، إحنا مش بنبيع <strong>"أكواد"</strong> أو واجهات شكلية، إحنا بنبني <strong>"أدوات نمو"</strong> لبيزنس ناجح. بنستثمر في فهم دقيق لنموذج عملك أولاً، عشان نسلمك نظام ذكي يخدم أهدافك فعلاً وفي وقت قياسي. دورنا مبيخلصش عند التسليم، إحنا بنفضل معاك كـ <strong>"شريك تقني"</strong> بيضمن استقرار وتطوير نظامك في كل خطوة.
     </p>
+    <div style="margin-top:40px;">
+      <p style="font-size:20px;font-weight:800;color:#fff;margin-bottom:20px;">ماتضيعش وقت في حلول تقليدية، ابني سيستم يخدم أهدافك فعلاً</p>
+      <a href="#contact" style="display:inline-flex;align-items:center;gap:10px;font-family:var(--ar);font-size:16px;font-weight:700;padding:14px 36px;border-radius:12px;background:linear-gradient(135deg,var(--orange),#E86B10);color:#fff;text-decoration:none;transition:transform .3s,box-shadow .3s;box-shadow:0 4px 20px rgba(249,115,22,.3);">احجز استشارتك المجانية الآن ←</a>
+    </div>
   </div>
 </section>
 
@@ -1891,15 +1938,16 @@ footer {
           <div class="mobile-feat-icon">✓</div>
         </div>
       </div>
+      <!-- CTA inside the card -->
+      <div style="grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:16px;padding:20px 32px;background:linear-gradient(135deg,rgba(7,143,210,.04),rgba(24,73,169,.02));border:1px solid var(--border);border-radius:12px;flex-wrap:wrap;">
+        <span style="font-family:var(--ar);font-size:16px;font-weight:700;color:var(--navy);">محتاج تطبيق جوال أو نظام لشركتك؟</span>
+        <a href="#contact" style="font-family:var(--ar);font-size:14px;font-weight:700;padding:10px 24px;border-radius:8px;background:linear-gradient(135deg,var(--orange),#E86B10);color:#fff;text-decoration:none;transition:transform .3s,box-shadow .3s;box-shadow:0 2px 12px rgba(249,115,22,.2);">احكِلنا عن مشروعك</a>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- Inline CTA after Mobile -->
-<div class="inline-cta rv">
-  <span class="inline-cta-text">محتاج تطبيق جوال أو نظام لشركتك؟</span>
-  <a href="#contact" class="inline-cta-btn">احكِلنا عن مشروعك</a>
-</div>
+
 
 <!-- ═══════ SAAS PRODUCTS ═══════ -->
 <section class="saas-section rv" id="saas">
@@ -1911,7 +1959,7 @@ footer {
       <div class="saas-offer"><span class="saas-offer-icon">&#128293;</span> خصم 50% على الاشتراك السنوي — عرض لفترة محدودة</div>
     </div>
     <div class="saas-grid">
-      <!-- LexOffice - Lawyers System -->
+      <!-- LexOffice -->
       <div class="saas-card rv rv-delay-1">
         <div class="saas-card-visual">
           <div class="saas-card-badge">LEGAL TECH</div>
@@ -1934,8 +1982,7 @@ footer {
           </div>
         </div>
       </div>
-
-      <!-- Gym System -->
+      <!-- GymPro -->
       <div class="saas-card rv rv-delay-2">
         <div class="saas-card-visual">
           <div class="saas-card-badge">FITNESS TECH</div>
@@ -1959,7 +2006,6 @@ footer {
         </div>
       </div>
     </div>
-
     <div class="saas-bottom-cta">
       <p>محتاج نظام مخصص لمجالك؟ نقدر نبنيه لك من الصفر</p>
       <a href="#contact" class="saas-bottom-cta-btn">تواصل معنا ←</a>
@@ -1968,54 +2014,6 @@ footer {
 </section>
 
 <div class="divider"></div>
-
-<!-- ═══════ PRICING ═══════ -->
-<section class="pricing-section rv" id="pricing">
-  <div class="pricing-inner">
-    <div class="pricing-header">
-      <h2 class="pricing-title">الأسعار</h2>
-      <p class="pricing-sub">باقات مرنة حسب نطاق العمل — ويتم تحديد التكلفة بعد جلسة مختصرة لفهم المتطلبات.</p>
-    </div>
-    <div class="pricing-grid">
-      <!-- Starter -->
-      <div class="pricing-card">
-        <span class="pricing-badge">Starter</span>
-        <h3 class="pricing-card-title">باقة الانطلاق</h3>
-        <ul class="pricing-list">
-          <li><span>حل تقني أساسي</span><span class="pricing-check">✓</span></li>
-          <li><span>منصة/نظام بسيط</span><span class="pricing-check">✓</span></li>
-          <li><span>مناسب للشركات الناشئة</span><span class="pricing-check">✓</span></li>
-        </ul>
-        <a href="#contact" class="pricing-btn">اطلب عرض</a>
-      </div>
-      <!-- Business -->
-      <div class="pricing-card featured">
-        <span class="pricing-badge">Business</span>
-        <h3 class="pricing-card-title">باقة الأعمال</h3>
-        <ul class="pricing-list">
-          <li><span>منصة تفاعلية + لوحة تحكم</span><span class="pricing-check">✓</span></li>
-          <li><span>تقارير أساسية</span><span class="pricing-check">✓</span></li>
-          <li><span>دعم بعد التسليم</span><span class="pricing-check">✓</span></li>
-        </ul>
-        <a href="#contact" class="pricing-btn">تواصل الآن</a>
-      </div>
-      <!-- Enterprise -->
-      <div class="pricing-card">
-        <span class="pricing-badge">Enterprise</span>
-        <h3 class="pricing-card-title">باقة المؤسسات</h3>
-        <ul class="pricing-list">
-          <li><span>نظام مخصص بالكامل</span><span class="pricing-check">✓</span></li>
-          <li><span>تقارير متقدمة + أتمتة</span><span class="pricing-check">✓</span></li>
-          <li><span>قابلية توسع عالية</span><span class="pricing-check">✓</span></li>
-        </ul>
-        <a href="#contact" class="pricing-btn">اطلب جلسة</a>
-      </div>
-    </div>
-    <div class="pricing-note">
-      <strong>ملاحظة:</strong> يتم تحديد النطاق والتكلفة بعد جلسة قصيرة لفهم طريقة التشغيل والمتطلبات والأولويات.
-    </div>
-  </div>
-</section>
 
 <!-- ═══════ FAQ ═══════ -->
 <section class="faq-section rv" id="faq">
@@ -2117,28 +2115,24 @@ footer {
         <input type="hidden" name="_subject" value="طلب جديد من موقع Manasety">
         <input type="hidden" name="_next" value="">
         <div class="form-actions">
-          <a href="https://wa.me/966532180937" target="_blank" class="form-copy" style="display:inline-flex;align-items:center;gap:8px;text-decoration:none;">
-            <svg viewBox="0 0 24 24" fill="#25D366" width="20" height="20" style="width:20px;height:20px;flex-shrink:0;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-            تواصل واتساب
-          </a>
           <button type="submit" class="form-submit">إرسال الطلب</button>
         </div>
         <p class="form-note">سيتم إرسال طلبك مباشرة إلى فريق Manasety.</p>
       </form>
       <div class="contact-cards">
-        <a href="https://wa.me/966532180937" class="contact-card" target="_blank">
+        <a href="https://wa.me/201044203322" class="contact-card" target="_blank">
           <div class="contact-card-text">
             <div class="contact-card-label">WhatsApp</div>
-            <div class="contact-card-value">+966 532180937</div>
+            <div class="contact-card-value">+20 10 44 20 33 22</div>
           </div>
           <div class="contact-card-icon wa"><svg viewBox="0 0 24 24" fill="#fff" style="width:22px;height:22px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></div>
         </a>
-        <a href="tel:+966597388618" class="contact-card">
+        <a href="tel:+201044203322" class="contact-card">
           <div class="contact-card-text">
             <div class="contact-card-label">مكالمة</div>
-            <div class="contact-card-value">0597388618 | 0551919337</div>
+            <div class="contact-card-value">+20 10 44 20 33 22</div>
           </div>
-          <div class="contact-card-icon phone">📞</div>
+          <div class="contact-card-icon phone">&#128222;</div>
         </a>
         <a href="mailto:hello@manasety.com" class="contact-card">
           <div class="contact-card-text">
@@ -2147,7 +2141,6 @@ footer {
           </div>
           <div class="contact-card-icon email">@</div>
         </a>
-        <p class="contact-note">ملاحظة: يمكنك لاحقًا استبدال Placeholder بروابط فعلية.</p>
       </div>
     </div>
   </div>
@@ -2204,10 +2197,9 @@ footer {
   <ul class="footer-links">
     <li><a href="#diff">ما نقدمه</a></li>
     <li><a href="#services">الخدمات</a></li>
-    <li><a href="#saas">أنظمتنا الجاهزة</a></li>
-    <li><a href="#pricing">الأسعار</a></li>
+    <li><a href="saas.html">أنظمتنا الجاهزة</a></li>
     <li><a href="#contact">تواصل</a></li>
-    <li><a href="contact.html">صفحة التواصل</a></li>
+    <li><a href="contact-page.html">صفحة التواصل</a></li>
   </ul>
   <span class="footer-copy">Manasety &middot; Software & AI Solutions &middot; 2025</span>
 </footer>
@@ -2361,13 +2353,34 @@ if (window.matchMedia('(hover: hover)').matches) {
   }, { passive: true });
 }
 </script>
-<!-- Crisp Chat Widget -->
+<!-- Floating WhatsApp Button -->
 <style>
-.crisp-label {
+.whatsapp-float {
   position: fixed;
-  bottom: 90px;
-  left: 20px;
+  bottom: 24px;
+  left: 24px;
   z-index: 9990;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  direction: ltr;
+}
+.whatsapp-float-btn {
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #25D366, #128C7E);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 20px rgba(37,211,102,.4);
+  transition: transform .3s cubic-bezier(.4,0,.2,1), box-shadow .3s;
+  animation: float 3s ease-in-out infinite;
+}
+.whatsapp-float:hover .whatsapp-float-btn {
+  transform: scale(1.1);
+  box-shadow: 0 8px 32px rgba(37,211,102,.5);
+}
+.whatsapp-float-btn svg { width: 32px; height: 32px; }
+.whatsapp-float-label {
   background: var(--navy);
   color: #fff;
   font-family: var(--ar);
@@ -2376,30 +2389,29 @@ if (window.matchMedia('(hover: hover)').matches) {
   padding: 8px 16px;
   border-radius: 20px;
   box-shadow: 0 4px 16px rgba(12,36,97,.2);
-  pointer-events: none;
+  white-space: nowrap;
   opacity: 0;
-  transform: translateY(10px);
-  animation: fadeUp .6s ease 2.5s forwards;
+  transform: translateX(-10px);
+  animation: fadeIn .6s ease 2.5s forwards;
 }
-.crisp-label::after {
-  content: '';
-  position: absolute;
-  bottom: -6px;
-  left: 24px;
-  width: 12px;
-  height: 12px;
-  background: var(--navy);
-  transform: rotate(45deg);
-  border-radius: 2px;
+.whatsapp-float-number {
+  display: block;
+  font-family: var(--en);
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255,255,255,.7);
+  margin-top: 2px;
+  letter-spacing: 1px;
 }
 </style>
-<div class="crisp-label">تحدث معنا</div>
-<script type="text/javascript">
-window.$crisp=[];
-window.CRISP_WEBSITE_ID="0ee1ae9b-c9d8-4f80-94d5-1039c2e06caa";
-window.$crisp.push(["config", "position:reverse", true]);
-window.$crisp.push(["config", "container:index", 1]);
-(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();
-</script>
+<a href="https://wa.me/201044203322" target="_blank" class="whatsapp-float" title="تواصل واتساب">
+  <div class="whatsapp-float-label">
+    تحدث معنا
+    <span class="whatsapp-float-number">+20 10 44 20 33 22</span>
+  </div>
+  <div class="whatsapp-float-btn">
+    <svg viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </div>
+</a>
 </body>
 </html>
