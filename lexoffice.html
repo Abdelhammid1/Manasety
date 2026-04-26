@@ -4,7 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LexOffice — نظام إدارة مكاتب المحاماة | منصتي</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230C2461'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-weight='800' font-size='20' fill='%23078FD2'%3EM%3C/text%3E%3C/svg%3E">
+<link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="shortcut icon" href="favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Nunito:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -426,7 +430,7 @@ section { position: relative; z-index: 1; }
   color: rgba(241,245,249,.85);
 }
 
-.pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.pricing-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
 .pricing-card {
   background: rgba(255,255,255,.03);
   border: 1px solid rgba(255,255,255,.08);
@@ -839,85 +843,113 @@ footer {
 
     <div class="pricing-grid">
 
-      <!-- Starter Plan -->
+      <!-- Basic Plan -->
       <div class="pricing-card">
-        <span class="pricing-badge">STARTER</span>
-        <h3 class="pricing-card-title">باقة الانطلاق</h3>
+        <span class="pricing-badge">BASIC</span>
+        <h3 class="pricing-card-title">باقة أول الطريق</h3>
         <div class="pricing-price">
-          <span class="pricing-amount">299</span>
+          <span class="pricing-amount">297</span>
           <span class="pricing-currency">ج.م</span>
           <span class="pricing-period">/ شهرياً</span>
         </div>
         <div class="pricing-annual">
-          <span class="pricing-annual-old">2,990 ج.م/سنوياً</span>
-          <span class="pricing-annual-new">1,495 ج.م/سنوياً</span>
+          <span class="pricing-annual-old">3,564 ج.م/سنوياً</span>
+          <span class="pricing-annual-new">1,782 ج.م/سنوياً</span>
+          <span class="pricing-annual-save">وفّر 50%</span>
+        </div>
+        <ul class="pricing-list">
+          <li><span>محامي واحد</span><span class="pricing-check">&#10003;</span></li>
+          <li><span>حتى 50 قضية</span><span class="pricing-check">&#10003;</span></li>
+          <li><span>3 جيجابايت تخزين</span><span class="pricing-check">&#10003;</span></li>
+          <li><span>إدارة القضايا والجلسات</span><span class="pricing-check">&#10003;</span></li>
+          <li><span>سجل الأحكام والاستئنافات</span><span class="pricing-check">&#10003;</span></li>
+          <li><span>نماذج قانونية جاهزة</span><span class="pricing-check">&#10003;</span></li>
+          <li><span>إشعارات داخل النظام (In-app)</span><span class="pricing-check">&#10003;</span></li>
+          <li><span>3 عناصر Dashboard</span><span class="pricing-check">&#10003;</span></li>
+        </ul>
+        <a href="contact-page.html" class="pricing-btn">ابدأ التجربة المجانية</a>
+      </div>
+
+      <!-- Starter Plan -->
+      <div class="pricing-card">
+        <span class="pricing-badge">STARTER</span>
+        <h3 class="pricing-card-title">باقة بداية الطريق</h3>
+        <div class="pricing-price">
+          <span class="pricing-amount">497</span>
+          <span class="pricing-currency">ج.م</span>
+          <span class="pricing-period">/ شهرياً</span>
+        </div>
+        <div class="pricing-annual">
+          <span class="pricing-annual-old">5,964 ج.م/سنوياً</span>
+          <span class="pricing-annual-new">2,982 ج.م/سنوياً</span>
           <span class="pricing-annual-save">وفّر 50%</span>
         </div>
         <ul class="pricing-list">
           <li><span>حتى 3 محامين</span><span class="pricing-check">&#10003;</span></li>
-          <li><span>حتى 50 قضية</span><span class="pricing-check">&#10003;</span></li>
+          <li><span>حتى 200 قضية</span><span class="pricing-check">&#10003;</span></li>
           <li><span>5 جيجابايت تخزين</span><span class="pricing-check">&#10003;</span></li>
           <li><span>إدارة القضايا والجلسات</span><span class="pricing-check">&#10003;</span></li>
-          <li><span>لوحة تحكم أساسية</span><span class="pricing-check">&#10003;</span></li>
-          <li><span>تنبيهات بريد إلكتروني</span><span class="pricing-check">&#10003;</span></li>
-          <li><span>نماذج قانونية جاهزة</span><span class="pricing-check">&#10003;</span></li>
+          <li><span>تقارير ورقم متابعة ومتابعة تنفيذ</span><span class="pricing-check">&#10003;</span></li>
+          <li><span>نماذج قانونية + صفحة مخصصة</span><span class="pricing-check">&#10003;</span></li>
+          <li><span>إشعارات داخل النظام + بريد إلكتروني</span><span class="pricing-check">&#10003;</span></li>
+          <li><span>5 عناصر Dashboard</span><span class="pricing-check">&#10003;</span></li>
         </ul>
-        <a href="index.html#contact" class="pricing-btn">ابدأ التجربة المجانية</a>
+        <a href="contact-page.html" class="pricing-btn">ابدأ التجربة المجانية</a>
       </div>
 
       <!-- Professional Plan -->
       <div class="pricing-card featured">
         <span class="pricing-popular">الأكثر طلباً</span>
         <span class="pricing-badge">PROFESSIONAL</span>
-        <h3 class="pricing-card-title">الباقة الاحترافية</h3>
+        <h3 class="pricing-card-title">باقة المحترف الأول</h3>
         <div class="pricing-price">
-          <span class="pricing-amount">599</span>
+          <span class="pricing-amount">697</span>
           <span class="pricing-currency">ج.م</span>
           <span class="pricing-period">/ شهرياً</span>
         </div>
         <div class="pricing-annual">
-          <span class="pricing-annual-old">5,990 ج.م/سنوياً</span>
-          <span class="pricing-annual-new">2,995 ج.م/سنوياً</span>
+          <span class="pricing-annual-old">8,364 ج.م/سنوياً</span>
+          <span class="pricing-annual-new">4,182 ج.م/سنوياً</span>
           <span class="pricing-annual-save">وفّر 50%</span>
         </div>
         <ul class="pricing-list">
-          <li><span>حتى 10 محامين</span><span class="pricing-check">&#10003;</span></li>
-          <li><span>حتى 200 قضية</span><span class="pricing-check">&#10003;</span></li>
-          <li><span>25 جيجابايت تخزين</span><span class="pricing-check">&#10003;</span></li>
-          <li><span>كل مميزات باقة الانطلاق</span><span class="pricing-check">&#10003;</span></li>
-          <li><span>متابعة التنفيذ</span><span class="pricing-check">&#10003;</span></li>
-          <li><span>ذكاء اصطناعي (تلخيص + تذكيرات)</span><span class="pricing-check">&#10003;</span></li>
-          <li><span>تنبيهات SMS</span><span class="pricing-check">&#10003;</span></li>
-          <li><span>تقارير متقدمة</span><span class="pricing-check">&#10003;</span></li>
+          <li><span>حتى 6 محامين</span><span class="pricing-check">&#10003;</span></li>
+          <li><span>قضايا غير محدودة</span><span class="pricing-check">&#10003;</span></li>
+          <li><span>10 جيجابايت تخزين</span><span class="pricing-check">&#10003;</span></li>
+          <li><span>إدارة القضايا والمحكمات والمراسلات</span><span class="pricing-check">&#10003;</span></li>
+          <li><span>تقارير متقدمة + متابعة تنفيذ</span><span class="pricing-check">&#10003;</span></li>
+          <li><span>إنشاء تلقائي وثائق تفصيلية</span><span class="pricing-check">&#10003;</span></li>
+          <li><span>إشعارات In-app + بريد + SMS</span><span class="pricing-check">&#10003;</span></li>
+          <li><span>تخصيص بالذكاء الاصطناعي (AI)</span><span class="pricing-check">&#10003;</span></li>
+          <li><span>7 عناصر Dashboard</span><span class="pricing-check">&#10003;</span></li>
         </ul>
-        <a href="index.html#contact" class="pricing-btn btn-orange">ابدأ التجربة المجانية</a>
+        <a href="contact-page.html" class="pricing-btn btn-orange">ابدأ التجربة المجانية</a>
       </div>
 
-      <!-- Enterprise Plan -->
+      <!-- Business Plan -->
       <div class="pricing-card">
-        <span class="pricing-badge">ENTERPRISE</span>
+        <span class="pricing-badge">BUSINESS</span>
         <h3 class="pricing-card-title">باقة المؤسسات</h3>
         <div class="pricing-price">
-          <span class="pricing-amount">999</span>
-          <span class="pricing-currency">ج.م</span>
-          <span class="pricing-period">/ شهرياً</span>
+          <span class="pricing-amount" style="font-size:28px;">تخصيص</span>
+          <span class="pricing-currency"></span>
+          <span class="pricing-period">حسب الاتفاق</span>
         </div>
         <div class="pricing-annual">
-          <span class="pricing-annual-old">9,990 ج.م/سنوياً</span>
-          <span class="pricing-annual-new">4,995 ج.م/سنوياً</span>
-          <span class="pricing-annual-save">وفّر 50%</span>
+          <span class="pricing-annual-new">تواصل معنا للتفاصيل</span>
         </div>
         <ul class="pricing-list">
           <li><span>عدد غير محدود من المحامين</span><span class="pricing-check">&#10003;</span></li>
-          <li><span>عدد غير محدود من القضايا</span><span class="pricing-check">&#10003;</span></li>
+          <li><span>قضايا غير محدودة</span><span class="pricing-check">&#10003;</span></li>
           <li><span>تخزين غير محدود</span><span class="pricing-check">&#10003;</span></li>
-          <li><span>كل مميزات الباقة الاحترافية</span><span class="pricing-check">&#10003;</span></li>
-          <li><span>تنبيهات واتساب</span><span class="pricing-check">&#10003;</span></li>
-          <li><span>واجهة برمجية API</span><span class="pricing-check">&#10003;</span></li>
-          <li><span>دعم فني أولوية</span><span class="pricing-check">&#10003;</span></li>
-          <li><span>تخصيص كامل</span><span class="pricing-check">&#10003;</span></li>
+          <li><span>كل مميزات باقة المحترف</span><span class="pricing-check">&#10003;</span></li>
+          <li><span>دعم فني 24/7 + حساب مخصص</span><span class="pricing-check">&#10003;</span></li>
+          <li><span>عناصر Widgets غير محدودة</span><span class="pricing-check">&#10003;</span></li>
+          <li><span>سيرفر خاص (Dedicated)</span><span class="pricing-check">&#10003;</span></li>
+          <li><span>ربط API كامل</span><span class="pricing-check">&#10003;</span></li>
+          <li><span>تاريخ مع الشركة أكبر</span><span class="pricing-check">&#10003;</span></li>
         </ul>
-        <a href="index.html#contact" class="pricing-btn">ابدأ التجربة المجانية</a>
+        <a href="contact-page.html" class="pricing-btn">تواصل معنا</a>
       </div>
 
     </div>
@@ -926,7 +958,7 @@ footer {
 
     <div class="pricing-note">
       الأسعار بالجنيه المصري وتشمل ضريبة القيمة المضافة. <strong>خصم 50% على الاشتراك السنوي</strong> متاح لفترة محدودة.<br>
-      هل تحتاج باقة مخصصة؟ <a href="index.html#contact" style="color:var(--cyan);text-decoration:underline;">تواصل معنا</a>
+      هل تحتاج باقة مخصصة؟ <a href="contact-page.html" style="color:var(--cyan);text-decoration:underline;">تواصل معنا</a>
     </div>
   </div>
 </section>
@@ -937,7 +969,7 @@ footer {
     <h2 class="cta-title">ابدأ <span>تجربتك المجانية</span></h2>
     <p class="cta-sub">جرّب LexOffice لمدة 14 يوم مجاناً واكتشف كيف يمكن لنظامنا تحويل مكتبك إلى منظومة رقمية متكاملة — بدون بطاقة ائتمان، بدون التزامات.</p>
     <div class="cta-btns">
-      <a href="index.html#contact" class="btn-primary">تواصل معنا الآن &larr;</a>
+      <a href="contact-page.html" class="btn-primary">تواصل معنا الآن &larr;</a>
       <a href="index.html" class="btn-secondary">العودة للرئيسية</a>
     </div>
   </div>
@@ -981,7 +1013,7 @@ footer {
     <li><a href="index.html#services">الخدمات</a></li>
     <li><a href="index.html#saas">أنظمتنا الجاهزة</a></li>
     <li><a href="index.html#pricing">الأسعار</a></li>
-    <li><a href="index.html#contact">تواصل</a></li>
+    <li><a href="contact-page.html">تواصل معنا</a></li>
   </ul>
   <span class="footer-copy">Manasety &middot; Software & AI Solutions &middot; 2025</span>
 </footer>

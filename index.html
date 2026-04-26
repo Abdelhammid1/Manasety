@@ -911,7 +911,7 @@ footer {
 .store-label { font-family: var(--en); font-size: 12px; font-weight: 600; color: var(--muted); letter-spacing: 1px; margin-top: 4px; }
 .mobile-features { display: flex; flex-direction: column; gap: 16px; }
 .mobile-feat {
-  display: flex; align-items: center; gap: 16px; justify-content: flex-end;
+  display: flex; align-items: center; gap: 16px; flex-direction: row-reverse; justify-content: flex-end;
   padding: 20px 24px; border-radius: 12px;
   border: 1px solid var(--border);
   background: var(--white);
@@ -924,7 +924,7 @@ footer {
   display: flex; align-items: center; justify-content: center;
   color: #fff; font-size: 16px; flex-shrink: 0;
 }
-.mobile-feat-text { text-align: right; }
+.mobile-feat-text { text-align: center; flex: 1; }
 .mobile-feat-title { font-size: 16px; font-weight: 700; color: var(--navy); }
 .mobile-feat-desc { font-size: 13px; color: var(--muted); margin-top: 2px; }
 
@@ -1352,6 +1352,7 @@ footer {
   position: relative;
   overflow: hidden;
   border-bottom: 1px solid rgba(255,255,255,.06);
+  text-align: center;
 }
 .saas-card-visual::before {
   content: '';
@@ -1406,6 +1407,7 @@ footer {
 }
 .saas-card-body {
   padding: 28px 32px 32px;
+  text-align: center;
 }
 .saas-features {
   list-style: none;
@@ -1414,7 +1416,7 @@ footer {
   margin-bottom: 28px;
 }
 .saas-features li {
-  display: flex; align-items: center; gap: 12px;
+  display: flex; align-items: center; gap: 12px; justify-content: center;
   font-size: 14px; font-weight: 600;
   color: rgba(241,245,249,.75);
   transition: color .3s, transform .3s;
@@ -1617,7 +1619,7 @@ footer {
       <p class="hero-sub" style="margin:0 0 32px;text-align:right;">منصتي بتحول أفكارك المعقدة لأنظمة تشغيل متكاملة بتوفر وقتك وتزود أرباحك. إحنا بنشيل عنك "هَمّ التكنولوجيا" عشان تتفرغ أنت لإدارة وتكبير شركتك.</p>
       <div class="hero-btns" style="justify-content:flex-start;">
         <a href="#contact" class="btn-primary">صمّم نظامك الآن ←</a>
-        <a href="sass.html" class="btn-secondary">شوف مشاريع نفذناها</a>
+        <a href="saas.html" class="btn-secondary">شوف مشاريع نفذناها</a>
       </div>
       <div style="display:flex;gap:24px;margin-top:28px;flex-wrap:wrap;opacity:0;animation:fadeUp .8s cubic-bezier(.16,1,.3,1) 1.1s both;">
         <span style="font-size:14px;font-weight:600;color:var(--tx2);display:flex;align-items:center;gap:6px;"><span style="color:var(--orange);">&#9733;</span> تحويل الأفكار لواقع رقمي</span>
@@ -1634,36 +1636,74 @@ footer {
             <span style="width:10px;height:10px;border-radius:50%;background:#F59E0B;"></span>
             <span style="width:10px;height:10px;border-radius:50%;background:#22C55E;"></span>
           </div>
-          <span style="font-family:var(--en);font-size:11px;color:var(--muted);margin-right:auto;">dashboard.manasety.com</span>
+          <span style="font-family:var(--en);font-size:11px;color:var(--muted);margin-right:auto;">dashboard.manasety.ai</span>
         </div>
         <div style="padding:24px;">
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:20px;">
-            <div style="background:linear-gradient(135deg,rgba(7,143,210,.08),rgba(24,73,169,.04));border-radius:10px;padding:16px;text-align:center;">
-              <div style="font-family:var(--en);font-size:22px;font-weight:900;color:var(--navy);">+247</div>
-              <div style="font-size:11px;color:var(--muted);margin-top:4px;">عميل نشط</div>
+          <!-- Top row: Revenue & Conversion -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+            <div style="background:linear-gradient(135deg,rgba(7,143,210,.08),rgba(24,73,169,.04));border-radius:10px;padding:14px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <span style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;">Revenue</span>
+                <span style="font-family:var(--en);font-size:10px;color:var(--green);font-weight:800;">&#9650; 24%</span>
+              </div>
+              <div style="font-family:var(--en);font-size:24px;font-weight:900;color:var(--navy);margin-top:4px;">48.5K</div>
+              <div style="display:flex;gap:2px;align-items:end;height:24px;margin-top:8px;">
+                <div style="flex:1;background:rgba(7,143,210,.2);border-radius:2px;height:40%;"></div>
+                <div style="flex:1;background:rgba(7,143,210,.25);border-radius:2px;height:55%;"></div>
+                <div style="flex:1;background:rgba(7,143,210,.3);border-radius:2px;height:45%;"></div>
+                <div style="flex:1;background:rgba(7,143,210,.4);border-radius:2px;height:70%;"></div>
+                <div style="flex:1;background:rgba(7,143,210,.5);border-radius:2px;height:60%;"></div>
+                <div style="flex:1;background:rgba(7,143,210,.6);border-radius:2px;height:85%;"></div>
+                <div style="flex:1;background:linear-gradient(180deg,var(--cyan),var(--blue));border-radius:2px;height:100%;"></div>
+              </div>
             </div>
-            <div style="background:linear-gradient(135deg,rgba(22,163,74,.08),rgba(22,163,74,.04));border-radius:10px;padding:16px;text-align:center;">
-              <div style="font-family:var(--en);font-size:22px;font-weight:900;color:var(--green);">98%</div>
-              <div style="font-size:11px;color:var(--muted);margin-top:4px;">رضا العملاء</div>
-            </div>
-            <div style="background:linear-gradient(135deg,rgba(249,115,22,.08),rgba(249,115,22,.04));border-radius:10px;padding:16px;text-align:center;">
-              <div style="font-family:var(--en);font-size:22px;font-weight:900;color:var(--orange);">3x</div>
-              <div style="font-size:11px;color:var(--muted);margin-top:4px;">سرعة التسليم</div>
+            <div style="background:linear-gradient(135deg,rgba(22,163,74,.08),rgba(22,163,74,.04));border-radius:10px;padding:14px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <span style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;">Conversion</span>
+                <span style="font-family:var(--en);font-size:10px;color:var(--green);font-weight:800;">&#9650; 8.3%</span>
+              </div>
+              <div style="font-family:var(--en);font-size:24px;font-weight:900;color:var(--green);margin-top:4px;">12.8%</div>
+              <!-- Mini line chart -->
+              <svg viewBox="0 0 120 28" style="width:100%;height:24px;margin-top:8px;">
+                <polyline points="0,22 15,18 30,20 45,14 60,16 75,10 90,8 105,6 120,3" fill="none" stroke="#16A34A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <polyline points="0,22 15,18 30,20 45,14 60,16 75,10 90,8 105,6 120,3" fill="url(#greenFade)" stroke="none"/>
+                <defs><linearGradient id="greenFade" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#16A34A" stop-opacity=".2"/><stop offset="100%" stop-color="#16A34A" stop-opacity="0"/></linearGradient></defs>
+              </svg>
             </div>
           </div>
-          <div style="background:var(--bg);border-radius:10px;padding:16px;border:1px solid var(--border);">
+          <!-- Analytics Chart -->
+          <div style="background:var(--bg);border-radius:10px;padding:16px;border:1px solid var(--border);margin-bottom:12px;">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-              <span style="font-size:12px;font-weight:700;color:var(--navy);">أداء النظام</span>
-              <span style="font-family:var(--en);font-size:11px;color:var(--green);font-weight:700;">LIVE</span>
+              <span style="font-size:12px;font-weight:700;color:var(--navy);">Analytics Overview</span>
+              <div style="display:flex;gap:8px;align-items:center;">
+                <span style="width:8px;height:8px;border-radius:50%;background:var(--cyan);"></span>
+                <span style="font-family:var(--en);font-size:10px;color:var(--muted);">Traffic</span>
+                <span style="width:8px;height:8px;border-radius:50%;background:var(--orange);margin-right:4px;"></span>
+                <span style="font-family:var(--en);font-size:10px;color:var(--muted);">Sales</span>
+              </div>
             </div>
-            <div style="display:flex;gap:4px;align-items:end;height:48px;">
-              <div style="flex:1;background:linear-gradient(180deg,var(--cyan),var(--blue));border-radius:3px;height:65%;"></div>
-              <div style="flex:1;background:linear-gradient(180deg,var(--cyan),var(--blue));border-radius:3px;height:80%;"></div>
-              <div style="flex:1;background:linear-gradient(180deg,var(--cyan),var(--blue));border-radius:3px;height:55%;"></div>
-              <div style="flex:1;background:linear-gradient(180deg,var(--cyan),var(--blue));border-radius:3px;height:90%;"></div>
-              <div style="flex:1;background:linear-gradient(180deg,var(--cyan),var(--blue));border-radius:3px;height:70%;"></div>
-              <div style="flex:1;background:linear-gradient(180deg,var(--cyan),var(--blue));border-radius:3px;height:95%;"></div>
-              <div style="flex:1;background:linear-gradient(180deg,var(--orange),#E86B10);border-radius:3px;height:100%;"></div>
+            <svg viewBox="0 0 280 60" style="width:100%;height:56px;">
+              <!-- Traffic line -->
+              <polyline points="0,45 30,38 60,42 90,30 120,35 150,22 180,25 210,15 240,18 270,8" fill="none" stroke="var(--cyan)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <polyline points="0,45 30,38 60,42 90,30 120,35 150,22 180,25 210,15 240,18 270,8 280,8 280,60 0,60" fill="url(#cyanFade)" stroke="none"/>
+              <!-- Sales line -->
+              <polyline points="0,52 30,48 60,50 90,42 120,44 150,35 180,30 210,28 240,22 270,14" fill="none" stroke="var(--orange)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4,3"/>
+              <defs><linearGradient id="cyanFade" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#078FD2" stop-opacity=".15"/><stop offset="100%" stop-color="#078FD2" stop-opacity="0"/></linearGradient></defs>
+            </svg>
+          </div>
+          <!-- Bottom stats row -->
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+            <div style="text-align:center;padding:8px;">
+              <div style="font-family:var(--en);font-size:16px;font-weight:900;color:var(--navy);">14.2K</div>
+              <div style="font-size:10px;color:var(--muted);margin-top:2px;">Visitors</div>
+            </div>
+            <div style="text-align:center;padding:8px;border-right:1px solid var(--border);border-left:1px solid var(--border);">
+              <div style="font-family:var(--en);font-size:16px;font-weight:900;color:var(--cyan);">3.4K</div>
+              <div style="font-size:10px;color:var(--muted);margin-top:2px;">Leads</div>
+            </div>
+            <div style="text-align:center;padding:8px;">
+              <div style="font-family:var(--en);font-size:16px;font-weight:900;color:var(--green);">892</div>
+              <div style="font-size:10px;color:var(--muted);margin-top:2px;">Customers</div>
             </div>
           </div>
         </div>
@@ -1684,61 +1724,21 @@ footer {
 
 <!-- ═══════ STATS ═══════ -->
 <div class="stats-section rv">
-  <div class="stats-grid">
-    <div class="stat-item">
-      <div class="stat-number" data-count="30">0<span>+</span></div>
-      <div class="stat-bar" style="background:linear-gradient(90deg,#0C2461,#1849A9,#078FD2)"></div>
-      <div class="stat-label">مشروع منجز</div>
+  <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:20px 48px;max-width:1000px;margin:0 auto;padding:24px;">
+    <div style="display:flex;align-items:center;gap:10px;font-size:15px;font-weight:700;color:var(--navy);">
+      <span style="font-size:20px;">&#9889;</span> "تقليل التدخل البشري حتى 80%"
     </div>
-    <div class="stat-item">
-      <div class="stat-number" data-count="150">0<span>+</span></div>
-      <div class="stat-bar" style="background:linear-gradient(90deg,#0C2461,#1849A9)"></div>
-      <div class="stat-label">متدرب مؤهّل</div>
+    <div style="display:flex;align-items:center;gap:10px;font-size:15px;font-weight:700;color:var(--navy);">
+      <span style="font-size:20px;">&#128339;</span> "تسليم في متوسط 14 يوم"
     </div>
-    <div class="stat-item">
-      <div class="stat-number" data-count="3">0<span>&times;</span></div>
-      <div class="stat-bar" style="background:linear-gradient(90deg,#1849A9,#078FD2)"></div>
-      <div class="stat-label">سرعة التسليم</div>
+    <div style="display:flex;align-items:center;gap:10px;font-size:15px;font-weight:700;color:var(--navy);">
+      <span style="font-size:20px;">&#128279;</span> "ربط كل أدوات شغلك في نظام واحد"
     </div>
-    <div class="stat-item">
-      <div class="stat-number" data-count="96">0<span>%</span></div>
-      <div class="stat-bar" style="background:linear-gradient(90deg,#1849A9,#078FD2,#16A34A)"></div>
-      <div class="stat-label">رضا العملاء</div>
+    <div style="display:flex;align-items:center;gap:10px;font-size:15px;font-weight:700;color:var(--navy);">
+      <span style="font-size:20px;">&#127758;</span> "عملاء من 3 دول"
     </div>
   </div>
 </div>
-
-<!-- ═══════ DIFF SECTION ═══════ -->
-<section class="section-pad rv" id="diff">
-  <div class="diff-section">
-    <div>
-      <div class="section-tag">01 — THE DIFFERENCE</div>
-      <h2 class="section-title">ليه منصتي مش مجرد<br><span>شركة برمجة؟</span></h2>
-      <p class="section-sub" style="margin-top:16px">في منصتي، إحنا مش بنبيع "أكواد" أو واجهات شكلية، إحنا بنبني <strong>"أدوات نمو"</strong> لبيزنس ناجح. بنستثمر في فهم دقيق لنموذج عملك أولاً، عشان نسلمك نظام ذكي يخدم أهدافك فعلاً وفي وقت قياسي. دورنا مبيخلصش عند التسليم، إحنا بنفضل معاك كـ <strong>"شريك تقني"</strong> بيضمن استقرار وتطوير نظامك في كل خطوة.</p>
-      <div style="margin-top:28px;">
-        <p style="font-size:18px;font-weight:800;color:var(--navy);margin-bottom:16px;">ماتضيعش وقت في حلول تقليدية، ابني سيستم يخدم أهدافك فعلاً</p>
-        <a href="#contact" class="btn-primary" style="display:inline-flex;align-items:center;gap:10px;">احجز استشارتك المجانية الآن ←</a>
-      </div>
-    </div>
-    <div>
-      <div class="diff-box">
-        <div class="diff-header">MANASETY.diff — what changes for you</div>
-        <div class="diff-comment">@@ بدون منصتي @@</div>
-        <div class="diff-row minus"><span class="diff-sign">-</span><span class="diff-text">شغلك على ورق وإكسل وكل حاجة متفرقة</span></div>
-        <div class="diff-row minus"><span class="diff-sign">-</span><span class="diff-text">تطوير بطيء وتكلفة مش واضحة</span></div>
-        <div class="diff-row minus"><span class="diff-sign">-</span><span class="diff-text">نظام جاهز مش مناسب لطبيعة شغلك</span></div>
-        <div class="diff-row minus"><span class="diff-sign">-</span><span class="diff-text">بعد التسليم مفيش دعم حقيقي</span></div>
-        <div class="diff-comment">@@ مع منصتي @@</div>
-        <div class="diff-row plus"><span class="diff-sign">+</span><span class="diff-text"><em>نظام مخصص</em> يناسب طريقة شغلك بالظبط</span></div>
-        <div class="diff-row plus"><span class="diff-sign">+</span><span class="diff-text"><em>تسليم سريع</em> في أسابيع مش أشهر</span></div>
-        <div class="diff-row plus"><span class="diff-sign">+</span><span class="diff-text"><em>كل بياناتك</em> في مكان واحد بتقارير ذكية</span></div>
-        <div class="diff-row plus"><span class="diff-sign">+</span><span class="diff-text"><em>شريك تقني</em> معاك بعد التسليم وللأبد</span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
 
 <div class="divider"></div>
 
@@ -2134,10 +2134,10 @@ footer {
           </div>
           <div class="contact-card-icon phone">&#128222;</div>
         </a>
-        <a href="mailto:hello@manasety.com" class="contact-card">
+        <a href="mailto:hello@manasety.ai" class="contact-card">
           <div class="contact-card-text">
             <div class="contact-card-label">Email</div>
-            <div class="contact-card-value">hello@manasety.com</div>
+            <div class="contact-card-value">hello@manasety.ai</div>
           </div>
           <div class="contact-card-icon email">@</div>
         </a>
@@ -2155,7 +2155,7 @@ footer {
     </div>
     <p class="cta-sub">جلسة مجانية نفهم فيها وضعك ونحدد لك الخطوة الأولى —<br>بدون التزامات، بدون مبالغة.</p>
     <div class="cta-btns">
-      <a href="mailto:hello@manasety.com" class="cta-btn-primary">احجز جلستك المجانية ←</a>
+      <a href="mailto:hello@manasety.ai" class="cta-btn-primary">احجز جلستك المجانية ←</a>
       <a href="#services" class="cta-btn-secondary">تعرف على خدماتنا</a>
     </div>
   </div>
@@ -2198,10 +2198,9 @@ footer {
     <li><a href="#diff">ما نقدمه</a></li>
     <li><a href="#services">الخدمات</a></li>
     <li><a href="saas.html">أنظمتنا الجاهزة</a></li>
-    <li><a href="#contact">تواصل</a></li>
-    <li><a href="contact-page.html">صفحة التواصل</a></li>
+    <li><a href="contact-page.html">تواصل معنا</a></li>
   </ul>
-  <span class="footer-copy">Manasety &middot; Software & AI Solutions &middot; 2025</span>
+  <span class="footer-copy">Manasety &middot; Software & AI Solutions &middot; 2026</span>
 </footer>
 
 <script>
