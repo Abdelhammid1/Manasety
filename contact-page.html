@@ -853,7 +853,6 @@ footer {
       <form id="contactForm" action="https://api.web3forms.com/submit" method="POST">
         <input type="hidden" name="access_key" value="6d0c6f28-7862-4aa7-a557-dc3a986e2de4">
         <input type="hidden" name="subject" value="طلب جديد من موقع Manasety">
-        <input type="hidden" name="redirect" value="https://manasety.ai/thank-you.html">
         <div class="form-row">
           <div class="form-group">
             <label>الاسم <span class="required">*</span></label>
@@ -983,6 +982,26 @@ const nb = document.getElementById('nav-blink');
 if(nb) setInterval(() => { nb.style.opacity = nb.style.opacity === '0' ? '1' : '0'; }, 550);
 const fb = document.getElementById('ft-blink');
 if(fb) setInterval(() => { fb.style.opacity = fb.style.opacity === '0' ? '1' : '0'; }, 550);
+
+/* Form submit handler */
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+  contactForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    fetch(this.action, {
+      method: 'POST',
+      body: new FormData(this),
+    }).then(r => r.json()).then(data => {
+      if (data.success) {
+        window.location.href = 'thank-you.html';
+      } else {
+        alert('حدث خطأ أثناء الإرسال. حاول مرة أخرى.');
+      }
+    }).catch(() => {
+      alert('حدث خطأ في الاتصال. حاول مرة أخرى.');
+    });
+  });
+}
 
 /* Nav scroll effect */
 window.addEventListener('scroll', () => {
