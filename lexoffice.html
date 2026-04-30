@@ -464,17 +464,21 @@ section { position: relative; z-index: 1; }
 }
 .pricing-card-title { font-size: 22px; font-weight: 800; color: #F1F5F9; margin-bottom: 20px; }
 
-.pricing-price { margin-bottom: 8px; direction: ltr; text-align: right; }
+.pricing-price {
+  margin-bottom: 8px; direction: ltr;
+  display: flex; align-items: baseline; justify-content: flex-start;
+  gap: 6px; min-height: 56px;
+}
 .pricing-amount {
   font-family: var(--en); font-size: 40px; font-weight: 900;
   background: linear-gradient(135deg, var(--cyan), #60A5FA);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-clip: text;
+  line-height: 1;
 }
 .pricing-currency {
   font-size: 16px; font-weight: 700;
   color: rgba(241,245,249,.5);
-  margin-right: 4px;
 }
 .pricing-period {
   font-size: 14px; font-weight: 600;
@@ -485,6 +489,7 @@ section { position: relative; z-index: 1; }
   display: flex; align-items: center; gap: 8px;
   margin-bottom: 24px;
   flex-wrap: wrap;
+  min-height: 32px;
 }
 .pricing-annual-old {
   font-family: var(--en); font-size: 14px; font-weight: 700;
@@ -503,13 +508,20 @@ section { position: relative; z-index: 1; }
   border-radius: 6px;
   border: 1px solid rgba(249,115,22,.3);
 }
+.pricing-amount.is-text {
+  font-size: 28px;
+  line-height: 1.2;
+}
+.pricing-card-title { min-height: 30px; }
 
-.pricing-list { list-style: none; display: flex; flex-direction: column; gap: 14px; margin-bottom: 28px; flex: 1; }
+.pricing-list { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 28px; flex: 1; }
 .pricing-list li {
   display: flex; align-items: center; gap: 10px; justify-content: flex-end;
   font-size: 14px; font-weight: 600; color: rgba(241,245,249,.7);
-  direction: rtl;
+  direction: rtl; line-height: 1.55;
+  min-height: 44px;
 }
+.pricing-list li > span:first-child { flex: 1; }
 .pricing-check {
   width: 22px; height: 22px; border-radius: 50%;
   background: linear-gradient(135deg, var(--cyan), var(--blue));
@@ -891,7 +903,7 @@ footer {
           <li><span>إدارة القضايا والجلسات</span><span class="pricing-check">&#10003;</span></li>
           <li><span>تقارير ورقم متابعة ومتابعة تنفيذ</span><span class="pricing-check">&#10003;</span></li>
           <li><span>نماذج قانونية + صفحة مخصصة</span><span class="pricing-check">&#10003;</span></li>
-          <li><span>إشعارات داخل النظام + بريد إلكتروني</span><span class="pricing-check">&#10003;</span></li>
+          <li><span>إشعارات + بريد إلكتروني</span><span class="pricing-check">&#10003;</span></li>
           <li><span>5 عناصر Dashboard</span><span class="pricing-check">&#10003;</span></li>
         </ul>
         <a href="contact-page.html" class="pricing-btn">ابدأ التجربة المجانية</a>
@@ -916,10 +928,10 @@ footer {
           <li><span>حتى 6 محامين</span><span class="pricing-check">&#10003;</span></li>
           <li><span>قضايا غير محدودة</span><span class="pricing-check">&#10003;</span></li>
           <li><span>10 جيجابايت تخزين</span><span class="pricing-check">&#10003;</span></li>
-          <li><span>إدارة القضايا والمحكمات والمراسلات</span><span class="pricing-check">&#10003;</span></li>
+          <li><span>إدارة المحاكم والمراسلات</span><span class="pricing-check">&#10003;</span></li>
           <li><span>تقارير متقدمة + متابعة تنفيذ</span><span class="pricing-check">&#10003;</span></li>
           <li><span>إنشاء تلقائي وثائق تفصيلية</span><span class="pricing-check">&#10003;</span></li>
-          <li><span>إشعارات In-app + بريد + SMS</span><span class="pricing-check">&#10003;</span></li>
+          <li><span>إشعارات In-app + بريد إلكتروني</span><span class="pricing-check">&#10003;</span></li>
           <li><span>تخصيص بالذكاء الاصطناعي (AI)</span><span class="pricing-check">&#10003;</span></li>
           <li><span>7 عناصر Dashboard</span><span class="pricing-check">&#10003;</span></li>
         </ul>
@@ -931,8 +943,7 @@ footer {
         <span class="pricing-badge">BUSINESS</span>
         <h3 class="pricing-card-title">باقة المؤسسات</h3>
         <div class="pricing-price">
-          <span class="pricing-amount" style="font-size:28px;">تخصيص</span>
-          <span class="pricing-currency"></span>
+          <span class="pricing-amount is-text">تخصيص</span>
           <span class="pricing-period">حسب الاتفاق</span>
         </div>
         <div class="pricing-annual">

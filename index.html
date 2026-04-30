@@ -381,6 +381,27 @@ nav.scrolled {
   color: var(--muted);
 }
 
+/* Stats banner — single line on desktop, wraps on mobile */
+.stats-banner {
+  display: flex; flex-wrap: nowrap;
+  align-items: center; justify-content: center;
+  gap: clamp(16px, 3vw, 48px);
+  padding: 22px 24px;
+  max-width: 1200px; margin: 0 auto;
+}
+.stat-pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: clamp(12px, 1.2vw, 15px);
+  font-weight: 700; color: var(--navy);
+  white-space: nowrap; flex-shrink: 0;
+}
+.stat-pill > span:first-child { font-size: clamp(14px, 1.5vw, 20px); }
+@media (max-width: 768px) {
+  .stats-banner { flex-wrap: wrap; gap: 14px 24px; padding: 20px 16px; }
+  .stat-pill { font-size: 13px; }
+  .stat-pill > span:first-child { font-size: 16px; }
+}
+
 /* ═══════ SECTION SHARED ═══════ */
 section { position: relative; z-index: 1; }
 .section-pad { padding: 100px 56px; }
@@ -1738,19 +1759,11 @@ footer {
 
 <!-- ═══════ STATS ═══════ -->
 <div class="stats-section rv">
-  <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:20px 48px;max-width:1000px;margin:0 auto;padding:24px;">
-    <div style="display:flex;align-items:center;gap:10px;font-size:15px;font-weight:700;color:var(--navy);">
-      <span style="font-size:20px;">&#9889;</span> "تقليل التدخل البشري حتى 80%"
-    </div>
-    <div style="display:flex;align-items:center;gap:10px;font-size:15px;font-weight:700;color:var(--navy);">
-      <span style="font-size:20px;">&#128339;</span> "تسليم في متوسط 14 يوم"
-    </div>
-    <div style="display:flex;align-items:center;gap:10px;font-size:15px;font-weight:700;color:var(--navy);">
-      <span style="font-size:20px;">&#128279;</span> "ربط كل أدوات شغلك في نظام واحد"
-    </div>
-    <div style="display:flex;align-items:center;gap:10px;font-size:15px;font-weight:700;color:var(--navy);">
-      <span style="font-size:20px;">&#127758;</span> "عملاء من 3 دول"
-    </div>
+  <div class="stats-banner">
+    <div class="stat-pill"><span>&#9889;</span><span>"تقليل التدخل البشري حتى 80%"</span></div>
+    <div class="stat-pill"><span>&#128339;</span><span>"تسليم في متوسط 14 يوم"</span></div>
+    <div class="stat-pill"><span>&#128279;</span><span>"ربط كل أدوات شغلك في نظام واحد"</span></div>
+    <div class="stat-pill"><span>&#127758;</span><span>"عملاء من 3 دول"</span></div>
   </div>
 </div>
 
