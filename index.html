@@ -2439,6 +2439,17 @@ if (window.matchMedia('(hover: hover)').matches) {
   letter-spacing: 1px;
    direction: ltr;
 }
+@media (max-width: 768px) {
+  .whatsapp-float {
+    right: auto;
+    left: 16px;
+    bottom: 80px;
+    flex-direction: row-reverse;
+  }
+  .whatsapp-float-label {
+    transform: translateX(10px);
+  }
+}
 </style>
 <a href="https://wa.me/201044203322" target="_blank" class="whatsapp-float" title="تواصل واتساب">
   <div class="whatsapp-float-label">
