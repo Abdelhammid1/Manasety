@@ -1,2 +1,8 @@
 .DS_Store
 *.DS_Store
+*.broken
+*.broken-duplicated
+*.bak
+*.backup-*
+_snippets/
+contact-page.backup.html
