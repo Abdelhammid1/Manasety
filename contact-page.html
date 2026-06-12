@@ -165,7 +165,7 @@ nav.scrolled {
 /* ═══════ HERO SECTION ═══════ */
 .contact-hero {
   position: relative; z-index: 1;
-  padding: 160px 48px 80px;
+  padding: 118px 48px 42px;
   text-align: center;
   overflow: hidden;
 }
@@ -201,7 +201,7 @@ nav.scrolled {
   animation: pulse 2s ease-in-out infinite;
 }
 .contact-hero h1 {
-  font-size: clamp(36px, 5.5vw, 60px);
+  font-size: clamp(34px, 4.8vw, 54px);
   font-weight: 800;
   color: var(--navy);
   margin-bottom: 20px;
@@ -218,58 +218,21 @@ nav.scrolled {
   font-size: 18px; font-weight: 500;
   color: var(--tx2);
   line-height: 1.9;
-  max-width: 640px;
+  max-width: 720px;
   margin: 0 auto;
   position: relative;
   opacity: 0; animation: fadeUp .8s cubic-bezier(.16,1,.3,1) .6s both;
-}
-
-/* ═══════ PHONE BANNER ═══════ */
-.phone-banner {
-  position: relative; z-index: 1;
-  max-width: 700px;
-  margin: -20px auto 0;
-  padding: 28px 40px;
-  background: linear-gradient(135deg, var(--navy), var(--blue), var(--cyan));
-  background-size: 200% 200%;
-  animation: gradientMove 6s ease infinite;
-  border-radius: 20px;
-  text-align: center;
-  box-shadow: 0 12px 48px rgba(12,36,97,.25);
-  opacity: 0; animation: fadeUp .8s cubic-bezier(.16,1,.3,1) .8s both, gradientMove 6s ease infinite;
-}
-.phone-banner-label {
-  font-size: 14px; font-weight: 600;
-  color: rgba(255,255,255,.7);
-  margin-bottom: 8px;
-}
-.phone-banner-number {
-  font-family: var(--en);
-  font-size: clamp(28px, 4vw, 42px);
-  font-weight: 900;
-  color: #fff;
-  letter-spacing: 3px;
-  direction: ltr;
-  display: inline-block;
-}
-.phone-banner-number a {
-  color: inherit;
-  text-decoration: none;
-  transition: text-shadow .3s;
-}
-.phone-banner-number a:hover {
-  text-shadow: 0 0 20px rgba(255,255,255,.5);
 }
 
 /* ═══════ MAIN CONTENT ═══════ */
 .contact-main {
   position: relative; z-index: 1;
   max-width: 1200px;
-  margin: 64px auto 0;
+  margin: 36px auto 0;
   padding: 0 48px 80px;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 48px;
+  gap: 32px;
   align-items: start;
 }
 
@@ -309,10 +272,7 @@ nav.scrolled {
   cursor: pointer;
 }
 .info-card:nth-child(1) { opacity: 0; animation: slideInRight .6s cubic-bezier(.16,1,.3,1) 1.2s both; }
-.info-card:nth-child(2) { opacity: 0; animation: slideInRight .6s cubic-bezier(.16,1,.3,1) 1.3s both; }
-.info-card:nth-child(3) { opacity: 0; animation: slideInRight .6s cubic-bezier(.16,1,.3,1) 1.4s both; }
-.info-card:nth-child(4) { opacity: 0; animation: slideInRight .6s cubic-bezier(.16,1,.3,1) 1.5s both; }
-.info-card:nth-child(5) { opacity: 0; animation: slideInRight .6s cubic-bezier(.16,1,.3,1) 1.6s both; }
+.info-card:nth-child(2) { opacity: 0; animation: slideInRight .6s cubic-bezier(.16,1,.3,1) 1.35s both; }
 .info-card:hover {
   transform: translateY(-3px);
   box-shadow: var(--shadow-lg);
@@ -389,6 +349,308 @@ nav.scrolled {
   color: #fff;
   transform: translateX(-3px);
 }
+
+/* Combined phone card */
+.info-card-phone {
+  align-items: flex-start;
+  cursor: default;
+}
+.info-card-phone .info-card-label {
+  margin-bottom: 10px;
+}
+.info-card-phone-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.info-card-phone-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: var(--bg);
+  transition: background .25s;
+}
+.info-card-phone-row:hover {
+  background: rgba(7,143,210,.1);
+}
+.phone-country {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--tx2);
+  white-space: nowrap;
+}
+.info-card-phone-row .info-card-value {
+  font-size: 14px;
+}
+
+/* Social pills row */
+.social-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 4px;
+  opacity: 0; animation: slideInRight .6s cubic-bezier(.16,1,.3,1) 1.5s both;
+}
+.social-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--navy);
+  transition: all .3s cubic-bezier(.4,0,.2,1);
+  flex: 1;
+  justify-content: center;
+}
+.social-pill svg {
+  width: 18px; height: 18px;
+}
+.social-pill:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--cyan);
+}
+
+
+/* ═══════ PREMIUM CONTACT ADDITIONS ═══════ */
+.availability-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  margin: 0 auto 20px;
+  border-radius: 999px;
+  background: rgba(22,163,74,.08);
+  border: 1px solid rgba(22,163,74,.16);
+  color: #15803D;
+  font-size: 14px;
+  font-weight: 800;
+  opacity: 0;
+  animation: fadeUp .8s cubic-bezier(.16,1,.3,1) .3s both;
+}
+.availability-pill span {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--green);
+  box-shadow: 0 0 0 5px rgba(22,163,74,.12);
+}
+.company-card {
+  position: relative;
+  padding: 28px;
+  border-radius: 22px;
+  overflow: hidden;
+  color: #fff;
+  background: linear-gradient(135deg, var(--navy), var(--blue));
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  animation: slideInRight .7s cubic-bezier(.16,1,.3,1) .9s both;
+}
+.company-card::before {
+  content: '';
+  position: absolute;
+  inset: -80px auto auto -80px;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: rgba(7,143,210,.45);
+  filter: blur(12px);
+}
+.company-card::after {
+  content: '';
+  position: absolute;
+  inset: auto -70px -90px auto;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.08);
+}
+.company-card > * { position: relative; z-index: 1; }
+.company-kicker {
+  font-family: var(--en);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.72);
+  margin-bottom: 10px;
+}
+.company-card h2 {
+  font-family: var(--en);
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: -.5px;
+  margin-bottom: 8px;
+}
+.company-card p {
+  color: rgba(255,255,255,.82);
+  font-size: 15px;
+  line-height: 1.8;
+  max-width: 440px;
+}
+.company-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+.company-meta span {
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.1);
+  border: 1px solid rgba(255,255,255,.14);
+  color: rgba(255,255,255,.9);
+  font-size: 13px;
+  font-weight: 800;
+}
+.contact-methods-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.contact-method-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 132px;
+  padding: 18px;
+  background: rgba(255,255,255,.9);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  text-decoration: none;
+  box-shadow: 0 2px 16px rgba(12,36,97,.05);
+  transition: transform .3s cubic-bezier(.4,0,.2,1), box-shadow .3s, border-color .3s;
+  opacity: 0;
+  animation: slideInRight .6s cubic-bezier(.16,1,.3,1) 1.05s both;
+}
+.contact-method-card:nth-child(2) { animation-delay: 1.13s; }
+.contact-method-card:nth-child(3) { animation-delay: 1.21s; }
+.contact-method-card:nth-child(4) { animation-delay: 1.29s; }
+.contact-method-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+  border-color: rgba(7,143,210,.4);
+}
+.method-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(7,143,210,.09);
+  color: var(--cyan);
+}
+.method-icon svg { width: 21px; height: 21px; }
+.method-title {
+  color: var(--navy);
+  font-size: 15px;
+  font-weight: 900;
+}
+.method-value {
+  color: var(--muted);
+  font-family: var(--en);
+  font-size: 13px;
+  font-weight: 700;
+  direction: ltr;
+  line-height: 1.5;
+}
+.method-value.ar {
+  font-family: var(--ar);
+  direction: rtl;
+}
+.trust-panel {
+  padding: 22px;
+  border-radius: 20px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  opacity: 0;
+  animation: slideInRight .6s cubic-bezier(.16,1,.3,1) 1.35s both;
+}
+.trust-panel h3 {
+  color: var(--navy);
+  font-size: 18px;
+  font-weight: 900;
+  margin-bottom: 14px;
+}
+.trust-list {
+  display: grid;
+  gap: 10px;
+}
+.trust-list div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--tx2);
+  font-size: 14px;
+  font-weight: 700;
+}
+.trust-list div::before {
+  content: '✓';
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(22,163,74,.1);
+  color: var(--green);
+  font-family: var(--en);
+  font-weight: 900;
+  flex-shrink: 0;
+}
+.form-note {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 8px;
+  margin-bottom: 24px;
+}
+.form-note span {
+  padding: 9px 10px;
+  border-radius: 12px;
+  background: rgba(7,143,210,.06);
+  color: var(--blue);
+  font-size: 12px;
+  font-weight: 800;
+  text-align: center;
+}
+.after-submit-steps {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 8px;
+  margin-top: 14px;
+}
+.after-submit-steps span {
+  padding: 10px;
+  border-radius: 12px;
+  background: var(--bg);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+  text-align: center;
+}
+.footer-social-mini {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.footer-social-mini a {
+  color: var(--muted);
+  font-family: var(--en);
+  font-size: 12px;
+  font-weight: 800;
+  text-decoration: none;
+}
+.footer-social-mini a:hover { color: var(--navy); }
 
 /* ═══════ FORM SIDE ═══════ */
 .form-section {
@@ -715,20 +977,32 @@ footer {
   .contact-hero { padding: 120px 24px 60px; }
   .contact-main { grid-template-columns: 1fr; padding: 0 24px 60px; margin-top: 48px; }
   .social-section { padding: 0 24px 60px; }
-  .phone-banner { margin: -10px 24px 0; }
   footer { padding: 24px; flex-direction: column; align-items: flex-start; }
 }
 @media (max-width: 640px) {
   .contact-hero h1 { font-size: 32px; }
   .contact-hero p { font-size: 15px; }
-  .phone-banner { padding: 20px 24px; border-radius: 14px; }
-  .phone-banner-number { font-size: 24px; letter-spacing: 1px; }
   .form-wrapper { padding: 24px; }
   .form-row { grid-template-columns: 1fr; }
   .info-card { padding: 16px 18px; }
   .social-icon { width: 56px; height: 56px; border-radius: 14px; }
   .social-icon svg { width: 24px; height: 24px; }
 }
+
+@media (max-width: 1024px) {
+  .contact-hero { padding: 108px 24px 36px; }
+  .contact-main { margin-top: 28px; gap: 28px; }
+}
+@media (max-width: 640px) {
+  .availability-pill { font-size: 12px; padding: 7px 12px; }
+  .company-card { padding: 22px; }
+  .company-card h2 { font-size: 24px; }
+  .contact-methods-grid { grid-template-columns: 1fr; }
+  .contact-method-card { min-height: auto; }
+  .form-note, .after-submit-steps { grid-template-columns: 1fr; }
+  .footer-social-mini { width: 100%; }
+}
+
 </style>
 </head>
 <body>
@@ -787,134 +1061,83 @@ footer {
 
 <!-- ═══════ HERO ═══════ -->
 <section class="contact-hero">
-  <div class="hero-badge">CONTACT US</div>
-  <h1>تواصل <span>معنا</span></h1>
-  <p>نحب نسمع عن مشروعك. تواصل معنا بالطريقة اللي تناسبك وهنرد عليك في أقرب وقت.</p>
+  <div class="hero-badge">CONTACT MANASETY</div>
+  <div class="availability-pill"><span></span> متاحون لاستقبال مشاريع جديدة</div>
+  <h1>خلينا نبدأ <span>محادثة واضحة</span></h1>
+  <p>اختر طريقة التواصل المناسبة أو ارسل تفاصيل احتياجك، وسنراجع الطلب ونرد عليك خلال 24 ساعة.</p>
 </section>
-
-<!-- ═══════ PHONE BANNER ═══════ -->
-<div class="phone-banner">
-  <div class="phone-banner-label">اتصل بنا مباشرة</div>
-  <div class="phone-banner-numbers" style="display:flex;gap:24px;justify-content:center;flex-wrap:wrap;">
-    <div class="phone-banner-number">🇸🇦 <a href="tel:+966551919337">+966 55 191 9337</a></div>
-    <div class="phone-banner-number">🇪🇬 <a href="tel:+201044203322">+20 10 44 20 33 22</a></div>
-  </div>
-</div>
 
 <!-- ═══════ MAIN CONTENT ═══════ -->
 <div class="contact-main">
 
   <!-- RIGHT: Contact Info Cards -->
   <div class="contact-info">
-    <h2 class="info-heading">طرق التواصل</h2>
-    <p class="info-sub">اختار الطريقة اللي تناسبك وفريقنا هيكون جاهز يساعدك</p>
+    <div class="company-card">
+      <div class="company-kicker">Software & AI Solutions</div>
+      <h2>Manasety</h2>
+      <p>نبني أنظمة مخصصة وحلول ذكاء اصطناعي تساعد الشركات على تنظيم العمليات، تقليل العمل اليدوي، وربط الفرق والبيانات في مكان واحد.</p>
+      <div class="company-meta">
+        <span>مصر 🇪🇬</span>
+        <span>السعودية 🇸🇦</span>
+        <span>B2B Systems</span>
+      </div>
+    </div>
 
-    <div style="display:flex;flex-direction:column;gap:14px;">
-      <!-- WhatsApp Saudi -->
-      <a href="https://wa.me/966551919337" target="_blank" class="info-card">
-        <div class="info-card-arrow">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+    <div class="contact-methods-grid">
+      <a href="https://wa.me/966551919337" target="_blank" class="contact-method-card">
+        <div class="method-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.52 3.48A11.77 11.77 0 0 0 12.07 0C5.48 0 .12 5.36.12 11.95c0 2.11.55 4.17 1.6 5.98L0 24l6.22-1.63a11.94 11.94 0 0 0 5.85 1.49h.01c6.59 0 11.95-5.36 11.95-11.95 0-3.19-1.24-6.19-3.51-8.43Z"/><path d="M8.5 7.4c-.25-.55-.52-.56-.76-.57h-.65c-.22 0-.58.08-.88.41s-1.15 1.12-1.15 2.73 1.18 3.17 1.34 3.39c.16.22 2.28 3.65 5.63 4.97 2.79 1.1 3.36.88 3.96.82.61-.06 1.96-.8 2.24-1.57.28-.77.28-1.43.2-1.57-.08-.14-.3-.22-.63-.39s-1.96-.97-2.26-1.08c-.3-.11-.52-.16-.74.17-.22.33-.85 1.08-1.04 1.3-.19.22-.38.25-.71.08-.33-.17-1.39-.51-2.65-1.63-.98-.87-1.64-1.95-1.83-2.28-.19-.33-.02-.51.14-.67.14-.14.33-.38.5-.58.17-.19.22-.33.33-.55.11-.22.06-.41-.03-.58-.08-.16-.72-1.78-1.01-2.4Z"/></svg>
         </div>
-        <div class="info-card-content">
-          <div class="info-card-label">WhatsApp 🇸🇦 السعودية</div>
-          <div class="info-card-value">+966 55 191 9337</div>
-        </div>
-        <div class="info-card-icon whatsapp">
-          <svg viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        </div>
+        <div class="method-title">للتواصل من داخل السعودية</div>
+        <div class="method-value">+966 55 191 9337</div>
       </a>
 
-      <!-- WhatsApp Egypt -->
-      <a href="https://wa.me/201044203322" target="_blank" class="info-card">
-        <div class="info-card-arrow">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+      <a href="tel:+201044203322" class="contact-method-card">
+        <div class="method-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
         </div>
-        <div class="info-card-content">
-          <div class="info-card-label">WhatsApp 🇪🇬 مصر</div>
-          <div class="info-card-value">+20 10 44 20 33 22</div>
-        </div>
-        <div class="info-card-icon whatsapp">
-          <svg viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        </div>
+        <div class="method-title">للتواصل من داخل مصر</div>
+        <div class="method-value">+20 10 44 20 33 22</div>
       </a>
 
-      <!-- Phone Saudi -->
-      <a href="tel:+966551919337" class="info-card">
-        <div class="info-card-arrow">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+      <a href="mailto:hello@manasety.ai" class="contact-method-card">
+        <div class="method-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
         </div>
-        <div class="info-card-content">
-          <div class="info-card-label">مكالمة 🇸🇦 السعودية</div>
-          <div class="info-card-value">+966 55 191 9337</div>
-        </div>
-        <div class="info-card-icon phone">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        </div>
+        <div class="method-title">البريد الإلكتروني</div>
+        <div class="method-value">hello@manasety.ai</div>
       </a>
 
-      <!-- Phone Egypt -->
-      <a href="tel:+201044203322" class="info-card">
-        <div class="info-card-arrow">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+      <div class="contact-method-card">
+        <div class="method-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
         </div>
-        <div class="info-card-content">
-          <div class="info-card-label">مكالمة 🇪🇬 مصر</div>
-          <div class="info-card-value">+20 10 44 20 33 22</div>
-        </div>
-        <div class="info-card-icon phone">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        </div>
-      </a>
+        <div class="method-title">نطاق العمل</div>
+        <div class="method-value ar">نخدم مصر والسعودية والخليج</div>
+      </div>
+    </div>
 
-      <!-- Email -->
-      <a href="mailto:hello@manasety.ai" class="info-card">
-        <div class="info-card-arrow">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
-        </div>
-        <div class="info-card-content">
-          <div class="info-card-label">البريد الإلكتروني</div>
-          <div class="info-card-value">hello@manasety.ai</div>
-        </div>
-        <div class="info-card-icon email">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        </div>
-      </a>
-
-      <!-- Facebook -->
-      <a href="https://www.facebook.com/ManasetyAI" target="_blank" class="info-card">
-        <div class="info-card-arrow">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
-        </div>
-        <div class="info-card-content">
-          <div class="info-card-label">Facebook</div>
-          <div class="info-card-value">Manasety</div>
-        </div>
-        <div class="info-card-icon facebook">
-          <svg viewBox="0 0 24 24" fill="#fff"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-        </div>
-      </a>
-
-      <!-- Instagram -->
-      <a href="https://www.instagram.com/manasetyai/" target="_blank" class="info-card">
-        <div class="info-card-arrow">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
-        </div>
-        <div class="info-card-content">
-          <div class="info-card-label">Instagram</div>
-          <div class="info-card-value">@manasety</div>
-        </div>
-        <div class="info-card-icon instagram">
-          <svg viewBox="0 0 24 24" fill="#fff"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-        </div>
-      </a>
+    <div class="trust-panel">
+      <h3>لماذا يتواصل معنا العملاء؟</h3>
+      <div class="trust-list">
+        <div>أنظمة مخصصة حسب طريقة عمل الشركة</div>
+        <div>حلول ذكاء اصطناعي قابلة للتطبيق فعليًا</div>
+        <div>تنفيذ واضح وتسليم على مراحل</div>
+        <div>دعم وتطوير بعد التسليم</div>
+      </div>
     </div>
   </div>
 
   <!-- LEFT: Contact Form -->
   <div class="form-section">
     <div class="form-wrapper">
-      <h2 class="form-heading">أرسل لنا طلبك</h2>
-      <p class="form-sub">عبي البيانات وفريقنا هيتواصل معك خلال 24 ساعة</p>
+      <h2 class="form-heading">ارسل تفاصيل احتياجك</h2>
+      <p class="form-sub">اكتب لنا المطلوب بشكل مختصر، وسنرجع لك بخطوة واضحة.</p>
+      <div class="form-note">
+        <span>رد خلال 24 ساعة</span>
+        <span>استشارة أولية مجانية</span>
+        <span>خصوصية تامة</span>
+      </div>
 
       <form id="contactForm" action="https://api.web3forms.com/submit" method="POST">
         <input type="hidden" name="access_key" value="6d0c6f28-7862-4aa7-a557-dc3a986e2de4">
@@ -943,20 +1166,25 @@ footer {
             </select>
           </div>
           <div class="form-group">
-            <label>رقم الجوال</label>
-            <input type="tel" name="phone" placeholder="+20 10 XX XX XX XX" dir="ltr" style="text-align:left;">
+            <label>رقم الجوال <span class="required">*</span></label>
+            <input type="tel" name="phone" placeholder="رقم الجوال مع كود الدولة" dir="ltr" style="text-align:left;" required>
           </div>
         </div>
 
         <div class="form-group">
-          <label>وصف مختصر للاحتياج</label>
-          <textarea name="description" placeholder="اكتب لنا عن مشروعك أو الخدمة اللي تحتاجها..."></textarea>
+          <label>وصف مختصر للاحتياج <span class="required">*</span></label>
+          <textarea name="description" placeholder="اكتب لنا عن مشروعك أو الخدمة اللي تحتاجها..." required></textarea>
         </div>
 
         <button type="submit" class="form-submit">
           إرسال الطلب
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
         </button>
+        <div class="after-submit-steps">
+          <span>1. نراجع الطلب</span>
+          <span>2. نتواصل معك</span>
+          <span>3. نحدد الحل المناسب</span>
+        </div>
       </form>
     </div>
   </div>
