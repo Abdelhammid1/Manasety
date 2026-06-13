@@ -1672,32 +1672,133 @@ fbq('track','PageView');
 </nav>
 
 <!-- ═══════ HERO ═══════ -->
-<section class="hero" id="hero">
-  <div class="hero-content">
+<section class="hero" id="hero" style="text-align:right;">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;max-width:1200px;width:100%;position:relative;z-index:1;">
+    <!-- Right: Text & CTA -->
+    <div style="order:1;">
     <div class="hero-badge">BUSINESS SYSTEMS & AI SOLUTIONS</div>
     <h1>تقنية تدير أعمالك —<br><span>لا مجرد واجهة</span></h1>
     <p class="hero-sub">نصمم ونبني أنظمة رقمية وحلول ذكاء اصطناعي مخصصة تساعد الشركات على تنظيم العمليات، تقليل العمل اليدوي، ربط الفرق والبيانات، واتخاذ قرارات أفضل.</p>
-    <div class="hero-btns">
-      <a href="#contact" class="btn-primary">احجز استشارة مجانية ←</a>
-      <a href="#solutions" class="btn-secondary">شاهد حلولنا</a>
+      <div class="hero-btns" style="justify-content:flex-start;">
+        <a href="#contact" class="btn-primary">احجز استشارة مجانية ←</a>
+        <a href="saas.html" class="btn-secondary">شاهد حلولنا</a>
+      </div>
+      <div style="display:flex;gap:24px;margin-top:28px;flex-wrap:wrap;opacity:0;animation:fadeUp .8s cubic-bezier(.16,1,.3,1) 1.1s both;">
+        <span style="font-size:14px;font-weight:600;color:var(--tx2);display:flex;align-items:center;gap:6px;"><span style="color:var(--orange);">&#9733;</span> تحويل الأفكار لواقع رقمي</span>
+        <span style="font-size:14px;font-weight:600;color:var(--tx2);display:flex;align-items:center;gap:6px;"><span style="color:var(--orange);">&#9733;</span> أنظمة أوتوماتيكية بالكامل</span>
+        <span style="font-size:14px;font-weight:600;color:var(--tx2);display:flex;align-items:center;gap:6px;"><span style="color:var(--orange);">&#9733;</span> ضمان تشغيل 24/7</span>
+      </div>
+    </div>
+    <!-- Left: SaaS Dashboard Mockup -->
+    <div style="order:2;position:relative;opacity:0;animation:slideLeft .8s cubic-bezier(.16,1,.3,1) .8s both;">
+      <div style="background:var(--white);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow-xl);overflow:hidden;">
+        <div style="background:linear-gradient(135deg,#F8FAFC,#F1F5F9);padding:12px 18px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border);">
+          <div style="display:flex;gap:6px;">
+            <span style="width:10px;height:10px;border-radius:50%;background:#EF4444;"></span>
+            <span style="width:10px;height:10px;border-radius:50%;background:#F59E0B;"></span>
+            <span style="width:10px;height:10px;border-radius:50%;background:#22C55E;"></span>
+          </div>
+          <span style="font-family:var(--en);font-size:11px;color:var(--muted);margin-right:auto;">dashboard.manasety.ai</span>
+        </div>
+        <div style="padding:24px;">
+          <!-- Top row: Revenue & Conversion -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+            <div style="background:linear-gradient(135deg,rgba(7,143,210,.08),rgba(24,73,169,.04));border-radius:10px;padding:14px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <span style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;">Revenue</span>
+                <span style="font-family:var(--en);font-size:10px;color:var(--green);font-weight:800;">&#9650; 24%</span>
+              </div>
+              <div style="font-family:var(--en);font-size:24px;font-weight:900;color:var(--navy);margin-top:4px;">48.5K</div>
+              <div style="display:flex;gap:2px;align-items:end;height:24px;margin-top:8px;">
+                <div style="flex:1;background:rgba(7,143,210,.2);border-radius:2px;height:40%;"></div>
+                <div style="flex:1;background:rgba(7,143,210,.25);border-radius:2px;height:55%;"></div>
+                <div style="flex:1;background:rgba(7,143,210,.3);border-radius:2px;height:45%;"></div>
+                <div style="flex:1;background:rgba(7,143,210,.4);border-radius:2px;height:70%;"></div>
+                <div style="flex:1;background:rgba(7,143,210,.5);border-radius:2px;height:60%;"></div>
+                <div style="flex:1;background:rgba(7,143,210,.6);border-radius:2px;height:85%;"></div>
+                <div style="flex:1;background:linear-gradient(180deg,var(--cyan),var(--blue));border-radius:2px;height:100%;"></div>
+              </div>
+            </div>
+            <div style="background:linear-gradient(135deg,rgba(22,163,74,.08),rgba(22,163,74,.04));border-radius:10px;padding:14px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <span style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;">Conversion</span>
+                <span style="font-family:var(--en);font-size:10px;color:var(--green);font-weight:800;">&#9650; 8.3%</span>
+              </div>
+              <div style="font-family:var(--en);font-size:24px;font-weight:900;color:var(--green);margin-top:4px;">12.8%</div>
+              <!-- Mini line chart -->
+              <svg viewBox="0 0 120 28" style="width:100%;height:24px;margin-top:8px;">
+                <polyline points="0,22 15,18 30,20 45,14 60,16 75,10 90,8 105,6 120,3" fill="none" stroke="#16A34A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <polyline points="0,22 15,18 30,20 45,14 60,16 75,10 90,8 105,6 120,3" fill="url(#greenFade)" stroke="none"/>
+                <defs><linearGradient id="greenFade" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#16A34A" stop-opacity=".2"/><stop offset="100%" stop-color="#16A34A" stop-opacity="0"/></linearGradient></defs>
+              </svg>
+            </div>
+          </div>
+          <!-- Analytics Chart -->
+          <div style="background:var(--bg);border-radius:10px;padding:16px;border:1px solid var(--border);margin-bottom:12px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+              <span style="font-size:12px;font-weight:700;color:var(--navy);">Analytics Overview</span>
+              <div style="display:flex;gap:8px;align-items:center;">
+                <span style="width:8px;height:8px;border-radius:50%;background:var(--cyan);"></span>
+                <span style="font-family:var(--en);font-size:10px;color:var(--muted);">Traffic</span>
+                <span style="width:8px;height:8px;border-radius:50%;background:var(--orange);margin-right:4px;"></span>
+                <span style="font-family:var(--en);font-size:10px;color:var(--muted);">Sales</span>
+              </div>
+            </div>
+            <svg viewBox="0 0 280 60" style="width:100%;height:56px;">
+              <!-- Traffic line -->
+              <polyline points="0,45 30,38 60,42 90,30 120,35 150,22 180,25 210,15 240,18 270,8" fill="none" stroke="var(--cyan)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <polyline points="0,45 30,38 60,42 90,30 120,35 150,22 180,25 210,15 240,18 270,8 280,8 280,60 0,60" fill="url(#cyanFade)" stroke="none"/>
+              <!-- Sales line -->
+              <polyline points="0,52 30,48 60,50 90,42 120,44 150,35 180,30 210,28 240,22 270,14" fill="none" stroke="var(--orange)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4,3"/>
+              <defs><linearGradient id="cyanFade" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#078FD2" stop-opacity=".15"/><stop offset="100%" stop-color="#078FD2" stop-opacity="0"/></linearGradient></defs>
+            </svg>
+          </div>
+          <!-- Bottom stats row -->
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+            <div style="text-align:center;padding:8px;">
+              <div style="font-family:var(--en);font-size:16px;font-weight:900;color:var(--navy);">14.2K</div>
+              <div style="font-size:10px;color:var(--muted);margin-top:2px;">Visitors</div>
+            </div>
+            <div style="text-align:center;padding:8px;border-right:1px solid var(--border);border-left:1px solid var(--border);">
+              <div style="font-family:var(--en);font-size:16px;font-weight:900;color:var(--cyan);">3.4K</div>
+              <div style="font-size:10px;color:var(--muted);margin-top:2px;">Leads</div>
+            </div>
+            <div style="text-align:center;padding:8px;">
+              <div style="font-family:var(--en);font-size:16px;font-weight:900;color:var(--green);">892</div>
+              <div style="font-size:10px;color:var(--muted);margin-top:2px;">Customers</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Floating notification -->
+      <div style="position:absolute;top:-16px;left:-16px;background:var(--white);border:1px solid var(--border);border-radius:12px;padding:12px 16px;box-shadow:var(--shadow-lg);animation:float 4s ease-in-out infinite;z-index:2;">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--green),#15803D);display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;">&#10003;</span>
+          <div>
+            <div style="font-size:11px;font-weight:700;color:var(--navy);">نظام جديد</div>
+            <div style="font-size:10px;color:var(--muted);">تم الإطلاق بنجاح</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
+
 <!-- ═══════ STATS ═══════ -->
 <div class="stats-section rv">
   <div class="stats-banner">
-    <div class="stat-pill"><span>&#9889;</span><span>"تقليل التدخل البشري حتى 80%"</span></div>
-    <div class="stat-pill"><span>&#128339;</span><span>"تسليم في متوسط 14 يوم"</span></div>
-    <div class="stat-pill"><span>&#128279;</span><span>"ربط كل أدوات شغلك في نظام واحد"</span></div>
-    <div class="stat-pill"><span>&#127758;</span><span>"عملاء من 3 دول"</span></div>
+    <div class="stat-pill"><span>🏢</span><span>نفهم البيزنس قبل كتابة أي كود</span></div>
+    <div class="stat-pill"><span>🔗</span><span>ربط العمليات والبيانات في منصة واحدة</span></div>
+   <div class="stat-pill"><span>🔄</span><span>أتمتة المهام المتكررة</span></div>
+    <div class="stat-pill"><span>🌍</span><span>نخدم شركات في مصر والسعودية</span></div>
   </div>
 </div>
 
 <div class="divider"></div>
 
 <!-- ═══════ CHALLENGES ═══════ -->
-<section class="section-pad rv" id="challenges">
+<!-- <section class="section-pad rv" id="challenges">
   <div class="section-center">
     <div class="section-tag">CHALLENGES</div>
     <h2 class="section-title">التحديات التي <span>نحلها</span></h2>
@@ -1726,7 +1827,7 @@ fbq('track','PageView');
   </div>
 </section>
 
-<div class="divider"></div>
+<div class="divider"></div> -->
 
 <!-- ═══════ SERVICES ═══════ -->
 <section class="section-pad rv" id="services">
@@ -1791,30 +1892,31 @@ fbq('track','PageView');
     <p class="section-sub">أنظمة بنيناها بالكامل وجاهزة للتطبيق الفوري — قابلة للتعديل حسب طبيعة عملك</p>
   </div>
   <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px;" class="solutions-grid-wrap">
-    <!-- المحامي -->
+         <!-- مرصود -->
     <div class="service-card rv rv-delay-1" style="display:flex;flex-direction:column;">
+      <div style="width:56px;height:56px;background:linear-gradient(135deg,rgba(249,115,22,.12),rgba(232,107,16,.08));border:1px solid rgba(249,115,22,.2);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;margin-bottom:16px;">📊</div>
+<div class="service-name">مرصود</div>
+<div style="font-size:12px;font-weight:700;color:var(--orange);margin-bottom:10px;">نظام إدارة الأعمال الذكي</div>
+<div class="service-desc" style="flex:1;">محاسبة متكاملة، مخزون وPOS، فواتير وموردين، رواتب وموارد بشرية، إدارة مشاريع ومهام، وCRM — كل العمليات في نظام واحد مع قيد محاسبي حقيقي.</div>
+      <a href="https://marsoud.manasety.ai" style="display:inline-flex;align-items:center;gap:6px;margin-top:20px;font-family:var(--ar);font-size:13px;font-weight:700;color:var(--orange);text-decoration:none;">اعرف أكثر ←</a>
+    </div>
+    <!-- المحامي -->
+    <div class="service-card rv rv-delay-2" style="display:flex;flex-direction:column;">
       <div style="width:56px;height:56px;background:linear-gradient(135deg,rgba(12,36,97,.12),rgba(24,73,169,.08));border:1px solid rgba(12,36,97,.15);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;margin-bottom:16px;">⚖️</div>
       <div class="service-name">المحامي</div>
       <div style="font-size:12px;font-weight:700;color:var(--cyan);margin-bottom:10px;">نظام إدارة مكاتب المحاماة</div>
       <div class="service-desc" style="flex:1;">إدارة القضايا والجلسات، العملاء، المستندات، المالية، الصلاحيات، وتنبيهات ذكية — كل ما يحتاجه مكتب المحاماة في مكان واحد.</div>
-      <a href="lexoffice.html" style="display:inline-flex;align-items:center;gap:6px;margin-top:20px;font-family:var(--ar);font-size:13px;font-weight:700;color:var(--cyan);text-decoration:none;">اعرف أكثر ←</a>
+      <a href="lexoffice.manasety.ai" style="display:inline-flex;align-items:center;gap:6px;margin-top:20px;font-family:var(--ar);font-size:13px;font-weight:700;color:var(--cyan);text-decoration:none;">اعرف أكثر ←</a>
     </div>
     <!-- ActiveFit -->
-    <div class="service-card rv rv-delay-2" style="display:flex;flex-direction:column;">
+    <div class="service-card rv rv-delay-3" style="display:flex;flex-direction:column;">
       <div style="width:56px;height:56px;background:linear-gradient(135deg,rgba(7,143,210,.12),rgba(24,73,169,.08));border:1px solid rgba(7,143,210,.15);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;margin-bottom:16px;">🏋️</div>
       <div class="service-name">ActiveFit</div>
       <div style="font-size:12px;font-weight:700;color:var(--cyan);margin-bottom:10px;">نظام إدارة الصالات الرياضية</div>
       <div class="service-desc" style="flex:1;">الاشتراكات، الحضور بـ QR، الموظفين، المالية، الإغلاق اليومي، والفروع — إدارة شاملة لصالتك الرياضية.</div>
-      <a href="gym-system.html" style="display:inline-flex;align-items:center;gap:6px;margin-top:20px;font-family:var(--ar);font-size:13px;font-weight:700;color:var(--cyan);text-decoration:none;">اعرف أكثر ←</a>
+      <a href="activefit.manasety.ai" style="display:inline-flex;align-items:center;gap:6px;margin-top:20px;font-family:var(--ar);font-size:13px;font-weight:700;color:var(--cyan);text-decoration:none;">اعرف أكثر ←</a>
     </div>
-    <!-- مرصود -->
-    <div class="service-card rv rv-delay-3" style="display:flex;flex-direction:column;">
-      <div style="width:56px;height:56px;background:linear-gradient(135deg,rgba(249,115,22,.12),rgba(232,107,16,.08));border:1px solid rgba(249,115,22,.2);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;margin-bottom:16px;">📊</div>
-      <div class="service-name">مرصود</div>
-      <div style="font-size:12px;font-weight:700;color:var(--orange);margin-bottom:10px;">نظام المحاسبة الذكي</div>
-      <div class="service-desc" style="flex:1;">قيود يومية، فواتير، موردين وعملاء، رواتب، أصول ثابتة، تقارير مالية، ومساعد ذكاء اصطناعي — محاسبة كاملة بذكاء.</div>
-      <a href="#contact" style="display:inline-flex;align-items:center;gap:6px;margin-top:20px;font-family:var(--ar);font-size:13px;font-weight:700;color:var(--orange);text-decoration:none;">اعرف أكثر ←</a>
-    </div>
+
   </div>
 </section>
 
@@ -1843,11 +1945,7 @@ fbq('track','PageView');
       <div class="service-name">Workflow Automation</div>
       <div class="service-desc">أتمتة الإجراءات المتكررة وربط الأدوات لتقليل العمل اليدوي — فريقك يركز على ما يهم فعلاً.</div>
     </div>
-    <div class="service-card rv rv-delay-4">
-      <div class="service-icon">🧠</div>
-      <div class="service-name">Business-Specific AI Assistants</div>
-      <div class="service-desc">مساعدون مدربون على بيانات شركتك وإجراءاتك لدعم الفريق والعملاء — ذكاء اصطناعي يعرف عملك.</div>
-    </div>
+  
   </div>
 </section>
 
@@ -1871,12 +1969,8 @@ fbq('track','PageView');
       <div class="service-name">حلول مصممة لأعمالك</div>
       <div class="service-desc">لا قوالب جاهزة — كل نظام يُبنى بناءً على فهم عميق لطبيعة عملك وأهدافك.</div>
     </div>
+
     <div class="service-card rv rv-delay-3" style="text-align:center;">
-      <div class="service-icon" style="margin:0 auto 18px;">🔄</div>
-      <div class="service-name">منظومة عمل مترابطة</div>
-      <div class="service-desc">نربط كل أدوات وأقسام شركتك في منظومة واحدة متكاملة تعمل بتناسق تام.</div>
-    </div>
-    <div class="service-card rv rv-delay-4" style="text-align:center;">
       <div class="service-icon" style="margin:0 auto 18px;">🌍</div>
       <div class="service-name">خبرة بالسوق العربي</div>
       <div class="service-desc">نفهم احتياجات ومتطلبات الأعمال في السوق العربي — من اللغة إلى نماذج العمل المحلية.</div>
@@ -1915,7 +2009,7 @@ fbq('track','PageView');
         <div class="step-tag">ARCHITECTURE</div>
         <div class="step-title">نصمم الحل المثالي</div>
         <div class="step-desc">خارطة طريق تقنية واضحة — اختيار التقنيات، تصميم قاعدة البيانات، وخطة التنفيذ.</div>
-        <div class="step-progress"><div class="step-progress-fill" data-width="80%" style="background:var(--blue)"></div></div>
+        <div class="step-progress"><div class="step-progress-fill" data-width="100%" style="background:var(--blue)"></div></div>
       </div>
     </div>
     <div class="step rv rv-delay-3">
@@ -1927,7 +2021,7 @@ fbq('track','PageView');
         <div class="step-tag">BUILD</div>
         <div class="step-title">نبني بسرعة وجودة</div>
         <div class="step-desc">تطوير بمنهجية Agile — تسليمات أسبوعية، مراجعاتك مستمرة، ولا مفاجآت في النهاية.</div>
-        <div class="step-progress"><div class="step-progress-fill" data-width="65%" style="background:var(--navy)"></div></div>
+        <div class="step-progress"><div class="step-progress-fill" data-width="100%" style="background:var(--navy)"></div></div>
       </div>
     </div>
     <div class="step rv rv-delay-4">
@@ -2035,17 +2129,17 @@ fbq('track','PageView');
 
 
 
-<!-- ═══════ SAAS PRODUCTS ═══════ -->
-<section class="saas-section rv" id="saas">
+ <!-- ═══════ SAAS PRODUCTS ═══════ 
+ <section class="saas-section rv" id="saas">
   <div class="saas-inner">
     <div class="saas-header">
       <div class="section-tag" style="justify-content:center;">OUR PLATFORMS</div>
       <h2 class="saas-title">منصات جاهزة للاشتراك</h2>
-      <p class="saas-sub">أنظمة احترافية بنيناها وجاهزة للاستخدام فوراً — قابلة للتعديل حسب طبيعة عملك، بدون انتظار.</p>
+      <p class="saas-sub">أنظمة احترافية بنيناها وجاهزة للاستخدام فوراً، قابلة للتعديل حسب طبيعة عملك، بدون انتظار.</p>
       <div class="saas-offer"><span class="saas-offer-icon">&#128293;</span> خصم 50% على الاشتراك السنوي — عرض لفترة محدودة</div>
     </div>
     <div class="saas-grid" style="justify-content:center;">
-      <!-- المحامي -->
+    المحامي 
       <div class="saas-card rv rv-delay-1">
         <div class="saas-card-visual">
           <div class="saas-card-badge">LEGAL TECH</div>
@@ -2067,7 +2161,7 @@ fbq('track','PageView');
           </div>
         </div>
       </div>
-      <!-- ActiveFit -->
+      <!-- ActiveFit 
       <div class="saas-card rv rv-delay-2">
         <div class="saas-card-visual">
           <div class="saas-card-badge">FITNESS TECH</div>
@@ -2089,7 +2183,7 @@ fbq('track','PageView');
           </div>
         </div>
       </div>
-      <!-- مرصود -->
+      <!-- مرصود 
       <div class="saas-card rv rv-delay-3">
         <div class="saas-card-visual">
           <div class="saas-card-badge">FINTECH</div>
@@ -2119,7 +2213,7 @@ fbq('track','PageView');
   </div>
 </section>
 
-<div class="divider"></div>
+<div class="divider"></div> -->
 
 <!-- ═══════ FAQ ═══════ -->
 <section class="faq-section rv" id="faq">
@@ -2188,7 +2282,7 @@ fbq('track','PageView');
     <div class="contact-grid">
       <form class="contact-form" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
         <input type="hidden" name="access_key" value="6d0c6f28-7862-4aa7-a557-dc3a986e2de4">
-        <input type="hidden" name="subject" value="طلب جديد من موقع Manasety">
+        <input type="hidden" name="subject" value="طلب جديد من موقع منصتي">
         <div class="form-row">
           <div class="form-group">
             <label class="form-label">اسم الشركة</label>
@@ -2213,19 +2307,19 @@ fbq('track','PageView');
           </div>
           <div class="form-group">
             <label class="form-label">رقم الجوال</label>
-            <input type="tel" name="phone" class="form-input" placeholder="20+ ..." dir="ltr">
+            <input type="tel" name="phone" class="form-input" placeholder="رقم الجوال" dir="ltr">
           </div>
         </div>
         <div class="form-group full" style="margin-bottom:0;">
           <label class="form-label">وصف مختصر للاحتياج</label>
           <textarea name="message" class="form-textarea" placeholder="اكتب احتياجك باختصار.."></textarea>
         </div>
-        <input type="hidden" name="_subject" value="طلب جديد من موقع Manasety">
+        <input type="hidden" name="_subject" value="طلب جديد من موقع منصتي">
         <input type="hidden" name="_next" value="">
         <div class="form-actions">
           <button type="submit" class="form-submit">إرسال الطلب</button>
         </div>
-        <p class="form-note">سيتم إرسال طلبك مباشرة إلى فريق Manasety.</p>
+        <p class="form-note">سيتم إرسال طلبك مباشرة إلى فريق منصتي.</p>
       </form>
       
       <div class="contact-cards">
@@ -2322,7 +2416,7 @@ fbq('track','PageView');
   <ul class="footer-links">
     <li><a href="#services">الخدمات</a></li>
     <li><a href="#solutions">حلولنا</a></li>
-    <li><a href="#saas">المنصات</a></li>
+    <li><a href="#saas">خدماتنا الجاهزة</a></li>
     <li><a href="contact-page.html">تواصل معنا</a></li>
   </ul>
   <span class="footer-copy">Manasety &middot; Software & AI Solutions &middot; 2026</span>
@@ -2556,7 +2650,7 @@ if (window.matchMedia('(hover: hover)').matches) {
 <!-- ═══════ FLOATING WHATSAPP COUNTRY SWITCHER ═══════ -->
 <div class="whatsapp-country-float">
   <button class="whatsapp-main-btn" type="button" aria-label="WhatsApp">
-    <span>واتساب</span>
+    <span>احجز استشارة مجانية</span>
     <svg viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
   </button>
 
