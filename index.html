@@ -1036,7 +1036,31 @@ footer {
   color: rgba(241,245,249,.6); line-height: 1.8;
 }
 .pricing-note strong { color: var(--cyan); }
+.mn-custom-project-note {
+  max-width: 900px;
+  margin: 28px auto 0;
+  padding: 18px 22px;
+  border: 1px solid rgba(7, 143, 210, 0.22);
+  border-radius: 16px;
+  background: rgba(240, 249, 255, 0.75);
+  text-align: center;
+  color: #24364b;
+  font-weight: 700;
+  line-height: 1.9;
+}
 
+.mn-custom-project-note strong {
+  display: block;
+  color: #0C2461;
+  font-size: 17px;
+  margin-bottom: 4px;
+}
+
+.mn-custom-project-note span {
+  display: block;
+  color: #5f7288;
+  font-size: 14px;
+}
 /* ═══════ FAQ ═══════ */
 .faq-section {
   padding: 100px 56px;
@@ -1883,9 +1907,92 @@ fbq('track','PageView');
 
 <div class="divider"></div>
 
-
-   <!-- ═══════ PRICING ═══════ -->
+<!-- ═══════ PRICING ═══════ -->
 <div class="divider"></div>
+<section class="section-pad rv" id="pricing">
+  <div class="section-center">
+    <div class="section-tag">PACKAGES</div>
+    <h2 class="section-title">باقات تناسب <span>مرحلة شركتك</span></h2>
+    <p class="section-sub">باقات محددة حسب حجم النظام ومستوى تعقيده — سعر ثابت للمشروع كامل، والمشاريع الخاصة يتم تسعيرها بعد دراسة المتطلبات.</p>
+  </div>
+
+  <div class="mn-price-grid">
+
+    <!-- Starter -->
+    <div class="mn-price-card rv rv-delay-1">
+      <div class="mn-price-name">Starter</div>
+      <div class="mn-price-for">أول نظام رقمي ينظم شغلك اليومي</div>
+      <div class="mn-price-oldwrap"><span class="mn-price-old">24,000</span><span class="mn-price-discount">خصم 50%</span></div>
+      <div class="mn-price-amount"><span class="mn-price-num">12,000</span><span class="mn-price-per">جنيه / للمشروع كامل</span></div>
+      <ul class="mn-price-list">
+        <li>لاندينج بيدج</li>
+        <li>نظام إدارة مخصص لعملك</li>
+        <li>تنظيم وإدارة العمليات اليومية</li>
+        <li>إدارة العملاء والبيانات</li>
+        <li>تدريب فريقك + صيانة لمدة شهر</li>
+      </ul>
+      <div class="mn-price-examples">
+        <span class="mn-price-examples-label">مناسبة لحجم زي:</span>
+        <span class="mn-price-ex">عيادة فردية تسجّل المرضى والكشوفات</span>
+        <span class="mn-price-ex">متجر صغير يدير المنتجات والفواتير</span>
+      </div>
+      <a href="#contact" class="mn-price-btn mn-price-btn-ghost">ابدأ بالباقة دي ←</a>
+    </div>
+
+    <!-- Growth -->
+    <div class="mn-price-card mn-price-card-featured rv rv-delay-2">
+      <div class="mn-price-flag">🔥 الأفضل</div>
+      <div class="mn-price-name">Growth</div>
+      <div class="mn-price-for">لشركة بتكبر وعايزة تنظيم أقوى بين الأقسام</div>
+      <div class="mn-price-oldwrap"><span class="mn-price-old">50,000</span><span class="mn-price-discount">خصم 50%</span></div>
+      <div class="mn-price-amount"><span class="mn-price-num">25,000</span><span class="mn-price-per">جنيه / للمشروع كامل</span></div>
+      <ul class="mn-price-list">
+        <li>كل اللي في Starter +</li>
+        <li>إدارة أكثر من قسم داخل الشركة</li>
+        <li>إدارة الإيرادات والمصروفات</li>
+        <li>صلاحيات متعددة للموظفين</li>
+        <li>أولوية أعلى في الدعم</li>
+      </ul>
+      <div class="mn-price-examples">
+        <span class="mn-price-examples-label">مناسبة لحجم زي:</span>
+        <span class="mn-price-ex">عيادة بفريق وحسابات ورواتب</span>
+        <span class="mn-price-ex">مكتب محاماة فيه فريق وقضايا متعددة</span>
+      </div>
+      <a href="#contact" class="mn-price-btn mn-price-btn-solid">احجز مكانك ←</a>
+    </div>
+
+    <!-- Enterprise -->
+    <div class="mn-price-card rv rv-delay-3">
+      <div class="mn-price-name">Enterprise</div>
+      <div class="mn-price-for">لنظام أكبر يدير إدارات أو فروع متعددة</div>
+      <div class="mn-price-oldwrap"><span class="mn-price-old">80,000</span><span class="mn-price-discount">خصم 50%</span></div>
+      <div class="mn-price-amount"><span class="mn-price-num">40,000</span><span class="mn-price-per">جنيه / للمشروع كامل</span></div>
+      <ul class="mn-price-list">
+        <li>كل اللي في Growth +</li>
+        <li>إدارة فروع أو إدارات متعددة</li>
+        <li>صلاحيات متقدمة حسب هيكل الشركة</li>
+        <li>لوحات متابعة للإدارة العليا</li>
+        <li>تقارير تنفيذية ومؤشرات أداء</li>
+      </ul>
+      <div class="mn-price-examples">
+        <span class="mn-price-examples-label">مناسبة لحجم زي:</span>
+        <span class="mn-price-ex">مركز طبي يجمع عدة عيادات بمالك ودكاترة</span>
+        <span class="mn-price-ex">مؤسسة تحتاج متابعة الأداء عبر أكثر من فرع</span>
+      </div>
+      <a href="#contact" class="mn-price-btn mn-price-btn-ghost">تواصل معنا ←</a>
+    </div>
+
+  </div>
+
+  <div class="mn-custom-project-note">
+    <strong>عندك مشروع أكبر أو متطلبات خاصة؟</strong>
+    <span>المشاريع التي تشمل عمليات معقدة، تكاملات خارجية، تطبيقات موبايل، أو أكثر من نظام مترابط يتم دراستها وتسعيرها بشكل مخصص خارج الباقات.</span>
+  </div>
+
+  <p class="mn-price-note">🔥 الأسعار الحالية تأسيسية لأول 20 عميل — هترتفع بعد اكتمال العدد.</p>
+</section>
+   <!-- ═══════ PRICING ═══════ -->
+<!-- <div class="divider"></div>
 <section class="section-pad rv" id="pricing">
   <div class="section-center">
     <div class="section-tag">PACKAGES</div>
@@ -1893,10 +2000,10 @@ fbq('track','PageView');
     <p class="section-sub">باقات محددة بحجم النظام ومستوى تعقيده — سعر ثابت للمشروع كامل، والأمثلة لتوضيح الحجم</p>
   </div>
 
-  <div class="mn-price-grid">
+  <div class="mn-price-grid"> -->
 
     <!-- Starter -->
-    <div class="mn-price-card rv rv-delay-1">
+    <!-- <div class="mn-price-card rv rv-delay-1">
       <div class="mn-price-name">Starter</div>
       <div class="mn-price-for">أول نظام لنشاط بيبدأ يترقمن</div>
       <div class="mn-price-oldwrap"><span class="mn-price-old">24,000</span><span class="mn-price-discount">خصم 50%</span></div>
@@ -1914,10 +2021,10 @@ fbq('track','PageView');
         <span class="mn-price-ex">متجر صغير يدير منتجاته وفواتيره</span>
       </div>
       <a href="#contact" class="mn-price-btn mn-price-btn-ghost">ابدأ بالباقة دي ←</a>
-    </div>
+    </div> -->
 
     <!-- Growth (الأكثر طلباً) -->
-    <div class="mn-price-card mn-price-card-featured rv rv-delay-2">
+    <!-- <div class="mn-price-card mn-price-card-featured rv rv-delay-2">
       <div class="mn-price-flag">🔥 االأفضل</div>
       <div class="mn-price-name">Growth</div>
       <div class="mn-price-for">لنشاط بيكبر وعايز تحكم وأقسام</div>
@@ -1935,10 +2042,10 @@ fbq('track','PageView');
         <span class="mn-price-ex">مكتب محاماة فيه فريق وقضايا متعددة</span>
       </div>
       <a href="#contact" class="mn-price-btn mn-price-btn-solid">احجز مكانك ←</a>
-    </div>
+    </div> -->
 
     <!-- Enterprise -->
-    <div class="mn-price-card rv rv-delay-3">
+    <!-- <div class="mn-price-card rv rv-delay-3">
       <div class="mn-price-name">Business Enterprise</div>
       <div class="mn-price-for">نظام مؤسسي متعدد الفروع والإدارات</div>
       <div class="mn-price-oldwrap"><span class="mn-price-old">80,000</span><span class="mn-price-discount">خصم 50%</span></div>
@@ -1960,7 +2067,7 @@ fbq('track','PageView');
   </div>
 
   <p class="mn-price-note">🔥 الأسعار الحالية تأسيسية لأول 20 عميل — هترتفع بعد اكتمال العدد.</p>
-</section>
+</section> -->
 
 
    <!-- ====== PORTFOLIO SECTION ====== -->
