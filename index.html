@@ -208,6 +208,12 @@ nav.scrolled {
   transition: transform .3s cubic-bezier(.4,0,.2,1), box-shadow .3s;
   box-shadow: 0 2px 12px rgba(12,36,97,.2);
 }
+.nav-toggle { display: none; background: none; border: none; cursor: pointer; flex-direction: column; gap: 5px; padding: 8px; }
+.nav-toggle span { display: block; width: 26px; height: 3px; background: var(--navy); border-radius: 2px; transition: .3s; }
+.nav-open .nav-toggle span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+.nav-open .nav-toggle span:nth-child(2) { opacity: 0; }
+.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
 .nav-cta:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 24px rgba(12,36,97,.3);
@@ -1219,8 +1225,24 @@ footer {
 
 /* ═══════ RESPONSIVE ═══════ */
 @media (max-width: 1024px) {
-  nav { padding: 0 24px; }
-  .nav-links { display: none; }
+  nav { padding: 0 24px; position: relative; }
+  .nav-toggle { display: flex; }
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%; right: 24px; left: 24px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    background: #fff;
+    padding: 12px 20px;
+    border-radius: 12px;
+    box-shadow: 0 12px 40px rgba(12,36,97,.15);
+    border: 1px solid rgba(12,36,97,.08);
+  }
+  .nav-open .nav-links { display: flex; }
+  .nav-links li { width: 100%; }
+  .nav-links a { display: block; padding: 12px 0; font-size: 16px; width: 100%; }
   .section-pad { padding: 72px 24px; }
   .diff-section { grid-template-columns: 1fr; gap: 36px; }
   .services-grid { grid-template-columns: 1fr 1fr; }
@@ -1695,6 +1717,7 @@ fbq('track','PageView');
     <li><a href="contact.html">تواصل معنا</a></li>
   </ul>
   <a href="#contact" class="nav-cta">احجز استشارة مجانية</a>
+  <button class="nav-toggle" aria-label="القائمة" onclick="document.getElementById('nav').classList.toggle('nav-open')"><span></span><span></span><span></span></button>
 </nav>
 
 <!-- ═══════ HERO ═══════ -->
