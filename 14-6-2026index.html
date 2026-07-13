@@ -2771,8 +2771,8 @@ if (window.matchMedia('(hover: hover)').matches) {
   </button>
 
   <div class="whatsapp-float-menu">
-    <a href="https://wa.me/966551919337" target="_blank">🇸🇦 السعودية</a>
-    <a href="https://wa.me/201044203322" target="_blank">🇪🇬 مصر</a>
+    <a href="https://wa.me/966551919337?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%20%F0%9F%91%8B%20%D8%AC%D8%A7%D9%8A%20%D9%85%D9%86%20%D9%85%D9%88%D9%82%D8%B9%20Manasety%D8%8C%20%D9%85%D8%AD%D8%AA%D8%A7%D8%AC%20%D8%A7%D8%B3%D8%AA%D8%B4%D8%A7%D8%B1%D8%A9%20%D9%85%D8%AC%D8%A7%D9%86%D9%8A%D8%A9" target="_blank" data-wa-source="landing-website">🇸🇦 السعودية</a>
+    <a href="https://wa.me/201044203322?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%20%F0%9F%91%8B%20%D8%AC%D8%A7%D9%8A%20%D9%85%D9%86%20%D9%85%D9%88%D9%82%D8%B9%20Manasety%D8%8C%20%D9%85%D8%AD%D8%AA%D8%A7%D8%AC%20%D8%A7%D8%B3%D8%AA%D8%B4%D8%A7%D8%B1%D8%A9%20%D9%85%D8%AC%D8%A7%D9%86%D9%8A%D8%A9" target="_blank" data-wa-source="landing-website">🇪🇬 مصر</a>
   </div>
 </div>
    <script>
@@ -2813,7 +2813,18 @@ if (window.matchMedia('(hover: hover)').matches) {
   // WhatsApp
   document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp"]').forEach(function(el) {
     el.addEventListener('click', function() {
-      gtag('event', 'click_whatsapp', { event_category: 'Contact' });
+      var source = el.getAttribute('data-wa-source') || 'landing-website';
+      if (typeof gtag === 'function') {
+        gtag('event', 'click_whatsapp', { event_category: 'Contact', event_label: source });
+      }
+      if (typeof fbq === 'function') {
+        fbq('track', 'Lead', {
+          content_name: 'WhatsApp Click',
+          content_category: 'Landing Page WhatsApp',
+          source: source
+        });
+        fbq('trackCustom', 'WhatsAppClick', { source: source });
+      }
     });
   });
 </script>
