@@ -847,6 +847,20 @@ footer {
   opacity: .5;
   letter-spacing: .5px;
 }
+.footer-legal {
+  flex-basis: 100%;
+  text-align: center;
+  font-family: var(--ar);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--muted);
+  opacity: .75;
+  padding-top: 18px;
+  margin-top: 8px;
+  border-top: 1px solid var(--border);
+  line-height: 1.7;
+}
+.footer-legal strong { color: var(--navy); font-weight: 700; }
 
 /* ═══════ MAGNETIC CURSOR ═══════ */
 .cursor-dot {
@@ -1728,7 +1742,7 @@ fbq('track','PageView');
     <div style="order:1;">
     <div class="hero-badge">A FULL SOFTWARE TEAM · NOT ONE DEV</div>
     <h1>بدل ما توظف مبرمج لوحده،<br><span>خد شركة برمجة كاملة</span></h1>
-    <p class="hero-sub">فريق متخصص كامل (Business Analyst + Product Owner + تطوير + تدريب ودعم) يبني نظامك المخصص بالكامل — بسعر ثابت للمشروع كامل، وعرض تأسيسي بخصم 50% يبدأ من <strong style="color:var(--navy);">12,000 جنيه</strong>.</p>
+    <p class="hero-sub">فريق متخصص كامل (Business Analyst + Product Owner + تطوير + تدريب ودعم) يبني نظامك المخصص بالكامل — بسعر ثابت للمشروع كامل يبدأ من <strong style="color:var(--navy);">12,000 جنيه</strong>.</p>
       <div class="hero-btns" style="justify-content:flex-start;">
         <a href="#contact" class="btn-primary">احجز استشارة مجانية ←</a>
         <a href="#portfolio" class="btn-secondary">استعرض أعمالنا</a>
@@ -1951,7 +1965,6 @@ fbq('track','PageView');
     <div class="mn-price-card rv rv-delay-1">
       <div class="mn-price-name">Starter</div>
       <div class="mn-price-for">أول نظام رقمي ينظم شغلك اليومي</div>
-      <div class="mn-price-oldwrap"><span class="mn-price-old">24,000</span><span class="mn-price-discount">خصم 50%</span></div>
       <div class="mn-price-amount"><span class="mn-price-num">12,000</span><span class="mn-price-per">جنيه / للمشروع كامل</span></div>
       <ul class="mn-price-list">
         <li>لاندينج بيدج</li>
@@ -1973,7 +1986,6 @@ fbq('track','PageView');
       <div class="mn-price-flag">🔥 الأفضل</div>
       <div class="mn-price-name">Growth</div>
       <div class="mn-price-for">لشركة بتكبر وعايزة تنظيم أقوى بين الأقسام</div>
-      <div class="mn-price-oldwrap"><span class="mn-price-old">50,000</span><span class="mn-price-discount">خصم 50%</span></div>
       <div class="mn-price-amount"><span class="mn-price-num">25,000</span><span class="mn-price-per">جنيه / للمشروع كامل</span></div>
       <ul class="mn-price-list">
         <li>كل اللي في Starter +</li>
@@ -1994,7 +2006,6 @@ fbq('track','PageView');
     <div class="mn-price-card rv rv-delay-3">
       <div class="mn-price-name">Enterprise</div>
       <div class="mn-price-for">لنظام أكبر يدير فروع متعددة</div>
-      <div class="mn-price-oldwrap"><span class="mn-price-old">80,000</span><span class="mn-price-discount">خصم 50%</span></div>
       <div class="mn-price-amount"><span class="mn-price-num">40,000</span><span class="mn-price-per">جنيه / للمشروع كامل</span></div>
       <ul class="mn-price-list">
         <li>كل اللي في Growth +</li>
@@ -2012,7 +2023,6 @@ fbq('track','PageView');
     </div>
 
   </div>
-  <p class="mn-price-note">🔥 الأسعار الحالية تأسيسية لأول 20 عميل — هترتفع بعد اكتمال العدد.</p>
 
   <div class="mn-custom-project-note">
     <strong>عندك مشروع أكبر أو متطلبات خاصة؟</strong>
@@ -2278,8 +2288,7 @@ fbq('track','PageView');
   <div class="mn-ea-wrap">
     <span class="mn-ea-tag">EARLY ADOPTERS</span>
     <h2 class="mn-ea-h2">انضم كأول مستخدمي منصتي</h2>
-    <p class="mn-ea-sub">نحن في مرحلة التوسع الأولى — احصل على سعر تأسيسي وادعمنا في بناء المنتج</p>
-    <div class="mn-ea-badge">🔥 أول 20 عميل فقط بالسعر التأسيسي</div>
+    <p class="mn-ea-sub">نحن في مرحلة التوسع الأولى — كن جزءاً من رحلتنا وادعمنا في بناء المنتج</p>
     <div class="mn-ea-cta">
       <a href="#contact" class="mn-ea-btn">احجز استشارة مجانية ←</a>
     </div>
@@ -2736,6 +2745,54 @@ fbq('track','PageView');
   </div>
 </section>
 
+<!-- ═══════ ABOUT / BRAND ═══════ -->
+<section class="brand-info rv" id="about">
+  <div class="brand-info-wrap">
+    <div class="brand-info-tag">من نحن</div>
+    <h3 class="brand-info-title">منصتي — علامة تجارية تحت مظلة شركة شلبي انتليجنس</h3>
+    <p class="brand-info-desc">
+      <strong>منصتي</strong> هي علامة تجارية تابعة لشركة <strong>شلبي انتليجنس للبرمجيات وحلول الذكاء الاصطناعي ذ.م.م</strong>، متخصصة في بناء الأنظمة المخصصة وحلول الذكاء الاصطناعي التي تخدم الشركات في المنطقة العربية.
+    </p>
+  </div>
+</section>
+
+<style>
+.brand-info { padding: 64px 56px; background: var(--white); border-top: 1px solid var(--border); direction: rtl; }
+.brand-info-wrap { max-width: 820px; margin: 0 auto; text-align: center; }
+.brand-info-tag {
+  display: inline-block;
+  font-family: var(--en);
+  font-size: 11px; font-weight: 800;
+  letter-spacing: 2.5px;
+  color: var(--cyan);
+  padding: 6px 14px;
+  border-radius: 6px;
+  background: rgba(7,143,210,.08);
+  margin-bottom: 18px;
+}
+.brand-info-title {
+  font-family: var(--ar);
+  font-size: clamp(20px, 2.6vw, 28px);
+  font-weight: 800;
+  color: var(--navy);
+  line-height: 1.4;
+  margin-bottom: 16px;
+}
+.brand-info-desc {
+  font-family: var(--ar);
+  font-size: 16px;
+  line-height: 1.9;
+  color: var(--muted);
+  max-width: 720px;
+  margin: 0 auto;
+}
+.brand-info-desc strong { color: var(--navy); font-weight: 700; }
+@media (max-width: 768px) {
+  .brand-info { padding: 48px 24px; }
+  .brand-info-desc { font-size: 15px; }
+}
+</style>
+
 <!-- ═══════ FOOTER ═══════ -->
 <footer>
   <div class="footer-logo">
@@ -2776,6 +2833,9 @@ fbq('track','PageView');
     <li><a href="contact.html">تواصل معنا</a></li>
   </ul>
   <span class="footer-copy">Manasety &middot; Software & AI Solutions &middot; 2026</span>
+  <div class="footer-legal">
+    منصتي علامة تجارية تابعة لشركة <strong>شلبي انتليجنس للبرمجيات وحلول الذكاء الاصطناعي ذ.م.م</strong>
+  </div>
 </footer>
 
 <script>

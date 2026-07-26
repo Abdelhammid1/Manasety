@@ -504,6 +504,29 @@ nav.scrolled {
   line-height: 1.8;
   max-width: 440px;
 }
+.company-entity {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,.15);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.company-entity-label {
+  font-family: var(--en);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.55);
+}
+.company-entity-name {
+  font-family: var(--ar);
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.6;
+}
 .company-meta {
   display: flex;
   flex-wrap: wrap;
@@ -900,6 +923,20 @@ footer {
   opacity: .5;
   letter-spacing: .5px;
 }
+.footer-legal {
+  flex-basis: 100%;
+  text-align: center;
+  font-family: var(--ar);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--muted);
+  opacity: .75;
+  padding-top: 18px;
+  margin-top: 8px;
+  border-top: 1px solid var(--border);
+  line-height: 1.7;
+}
+.footer-legal strong { color: var(--navy); font-weight: 700; }
 
 /* ═══════ FLOATING WHATSAPP ═══════ */
 /* .whatsapp-country-float {
@@ -1101,7 +1138,10 @@ footer {
       <div class="company-kicker">Software & AI Solutions</div>
       <h2>منصتي</h2>
       <p>نبني أنظمة مخصصة وحلول ذكاء اصطناعي تساعد الشركات على تنظيم العمليات، تقليل العمل اليدوي، وربط الفرق والبيانات في مكان واحد.</p>
-
+      <div class="company-entity">
+        <span class="company-entity-label">الكيان القانوني</span>
+        <span class="company-entity-name">شركة شلبي انتليجنس للبرمجيات وحلول الذكاء الاصطناعي ذ.م.م</span>
+      </div>
     </div>
 
     <div class="contact-methods-grid">
@@ -1263,6 +1303,9 @@ footer {
     <li><a href="contact.html">تواصل معنا</a></li>
   </ul>
   <span class="footer-copy">Manasety &middot; Software & AI Solutions &middot; 2026</span>
+  <div class="footer-legal">
+    منصتي علامة تجارية تابعة لشركة <strong>شلبي انتليجنس للبرمجيات وحلول الذكاء الاصطناعي ذ.م.م</strong>
+  </div>
 </footer>
 
 
