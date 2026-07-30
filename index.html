@@ -2964,14 +2964,40 @@ function toggleFaq(header) {
   if (!isOpen) item.classList.add('open');
 }
 
-/* ═══════ FORM SUBMIT (Web3Forms) ═══════ */
+/* ═══════ FORM SUBMIT (Marsoud CRM + Web3Forms) ═══════ */
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {
   contactForm.addEventListener('submit', function(e) {
     e.preventDefault();
+    var fd = new FormData(this);
+
+    /* ═══ Send lead to Marsoud CRM (fire-and-forget) ═══ */
+    var pkg = fd.get('package') || '';
+    var company = fd.get('company') || '';
+    var message = fd.get('message') || '';
+    var messageParts = [];
+    if (message) messageParts.push(message);
+    if (company) messageParts.push('اسم الشركة: ' + company);
+    if (pkg) messageParts.push('الباقة المطلوبة: ' + pkg);
+    var marsoudPayload = {
+      name: fd.get('name') || '',
+      phone: fd.get('phone') || '',
+      service: fd.get('service') || 'استشارة',
+      message: messageParts.join('\n')
+    };
+    fetch('https://marsoud.com/api/v1/public/contact-lead', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Contact-Form-Token': '9e9ea382bbcbd98b13a7d791876d0069aa47a3f840a2fea034a88711213ee7b7'
+      },
+      body: JSON.stringify(marsoudPayload)
+    }).catch(function(){ /* silent — web3forms is the source of truth for UX */ });
+
+    /* ═══ Send to web3forms (source of truth for UX + email backup) ═══ */
     fetch(this.action, {
       method: 'POST',
-      body: new FormData(this),
+      body: fd,
     }).then(r => r.json()).then(data => {
       if (data.success) {
         /* ═══ Meta Pixel: Lead event للتحليلات ═══ */
