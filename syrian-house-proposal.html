@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta name="facebook-domain-verification" content="rakz6coyf8znt856mdjcjputqivqsk" />
+   <!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RB896Z7ZBD"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-RB896Z7ZBD');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>عرض فني — نظام إدارة الطلبات والعمليات المتكامل | البيت السوري × Manasety</title>
+<link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="shortcut icon" href="favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Nunito:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   MANASETY — عرض فني (البيت السوري)
+   Brand: #0C2461 · #1849A9 · #078FD2 · #F2F2F2
+   Fonts: Baloo Bhaijaan 2 (AR) · Nunito (EN)
+   مبني على نفس نظام هوية manasety.ai
+   ═══════════════════════════════════════════ */
+:root {
+  --navy: #0C2461;
+  --blue: #1849A9;
+  --cyan: #078FD2;
+  --light: #F2F2F2;
+  --white: #FFFFFF;
+  --bg: #F4F6F9;
+  --tx: #0C2461;
+  --tx2: #334155;
+  --muted: #64748B;
+  --border: #E2E8F0;
+  --orange: #F97316;
+  --green: #16A34A;
+  --red: #DC2626;
+  --r: 16px;
+  --ar: 'Baloo Bhaijaan 2', cursive, sans-serif;
+  --en: 'Nunito', sans-serif;
+  --shadow: 0 4px 24px rgba(12,36,97,.08);
+  --shadow-lg: 0 12px 48px rgba(12,36,97,.12);
+  --shadow-xl: 0 24px 64px rgba(12,36,97,.16);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--tx);
+  font-family: var(--ar);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; }
+}
+::selection { background: var(--cyan); color: #fff; }
+a { color: inherit; }
+img { max-width: 100%; display: block; }
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--navy), var(--cyan)); border-radius: 4px; }
+
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 56px; }
+@media (max-width: 768px) { .wrap { padding: 0 22px; } }
+
+/* reveal on scroll — same mechanism as site's .rv/.on */
+.rv { opacity: 0; transform: translateY(36px); transition: opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1); }
+.rv.on { opacity: 1; transform: translateY(0); }
+.rv-delay-1 { transition-delay: .08s; }
+.rv-delay-2 { transition-delay: .16s; }
+.rv-delay-3 { transition-delay: .24s; }
+
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background:
+    radial-gradient(ellipse 90% 70% at 15% 5%, rgba(7,143,210,.10) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 60% at 85% 25%, rgba(24,73,169,.08) 0%, transparent 55%);
+  pointer-events: none; z-index: 0;
+}
+
+/* ═══════ SCROLL PROGRESS ═══════ */
+.scrollbar { position: fixed; top: 0; inset-inline-start: 0; height: 3px; background: linear-gradient(90deg, var(--navy), var(--cyan)); z-index: 999; width: 0%; }
+
+/* ═══════ NAV ═══════ */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  height: 76px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 56px;
+  background: rgba(244,246,249,.85);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-bottom: 1px solid rgba(226,232,240,.6);
+  transition: box-shadow .4s, background .4s;
+}
+nav.scrolled { background: rgba(255,255,255,.92); box-shadow: 0 2px 20px rgba(12,36,97,.08); }
+.nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.nav-logo-text { font-family: var(--en); font-size: 20px; font-weight: 800; color: var(--navy); letter-spacing: -.3px; }
+.nav-logo-sub { display:block; font-family: var(--ar); font-size: 11px; font-weight: 600; color: var(--muted); margin-top:1px; }
+.nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
+.nav-links a {
+  font-family: var(--ar); font-size: 14.5px; font-weight: 600; color: var(--muted);
+  text-decoration: none; position: relative; transition: color .3s;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -4px; right: 0; width: 0; height: 2px;
+  background: linear-gradient(90deg, var(--navy), var(--cyan)); border-radius: 1px;
+  transition: width .3s cubic-bezier(.4,0,.2,1);
+}
+.nav-links a:hover { color: var(--navy); }
+.nav-links a:hover::after { width: 100%; }
+.nav-toggle { display: none; background: none; border: none; cursor: pointer; flex-direction: column; gap: 5px; padding: 8px; }
+.nav-toggle span { display: block; width: 26px; height: 3px; background: var(--navy); border-radius: 2px; transition: .3s; }
+.nav-open .nav-toggle span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+.nav-open .nav-toggle span:nth-child(2) { opacity: 0; }
+.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+@media (max-width: 1024px) {
+  nav { padding: 0 24px; }
+  .nav-toggle { display: flex; }
+  .nav-links {
+    display: none; position: absolute; top: 100%; right: 24px; left: 24px;
+    flex-direction: column; align-items: stretch; gap: 0;
+    background: var(--white); border: 1px solid var(--border); border-radius: 14px;
+    box-shadow: var(--shadow-lg); padding: 10px; margin-top: 10px;
+  }
+  .nav-open .nav-links { display: flex; }
+  .nav-links a { padding: 13px 14px; border-bottom: 1px solid var(--border); }
+  .nav-links li:last-child a { border-bottom: none; }
+}
+
+/* ═══════ HERO ═══════ */
+.hero { position: relative; z-index: 1; padding: 68px 0 76px; overflow: hidden; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--en); font-size: 12px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--cyan); padding: 8px 20px;
+  background: rgba(7,143,210,.06); border: 1px solid rgba(7,143,210,.18);
+  border-radius: 100px; margin-bottom: 30px;
+}
+.hero-badge::before { content: ''; width: 6px; height: 6px; background: var(--cyan); border-radius: 50%; }
+.hero h1 { font-size: clamp(32px, 5vw, 54px); font-weight: 800; line-height: 1.25; color: var(--navy); max-width: 880px; }
+.hero h1 span { background: linear-gradient(135deg, var(--blue), var(--cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.hero-sub { font-size: 17px; font-weight: 500; color: var(--tx2); line-height: 1.9; max-width: 620px; margin-top: 22px; }
+.hero-meta { display: flex; flex-wrap: wrap; gap: 0; margin-top: 44px; background: var(--white); border: 1px solid var(--border); border-radius: var(--r); box-shadow: var(--shadow); overflow: hidden; }
+.meta-item { flex: 1 1 220px; padding: 20px 26px; border-inline-end: 1px solid var(--border); }
+.meta-item:last-child { border-inline-end: none; }
+.meta-label { font-family: var(--en); font-size: 10.5px; letter-spacing: 1.5px; color: var(--muted); text-transform: uppercase; margin-bottom: 7px; }
+.meta-value { font-size: 15.5px; font-weight: 700; color: var(--navy); }
+@media (max-width: 640px) { .meta-item { border-inline-end: none; border-bottom: 1px solid var(--border); flex: 1 1 45%; } .meta-item:last-child{border-bottom:none} }
+
+/* ═══════ SECTION SHARED ═══════ */
+section { position: relative; z-index: 1; }
+.section-pad { padding: 88px 0; border-bottom: 1px solid var(--border); }
+@media (max-width: 768px) { .section-pad { padding: 60px 0; } }
+.section-tag {
+  font-family: var(--en); font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--cyan); display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
+}
+.section-tag::before { content: ''; width: 24px; height: 2px; background: linear-gradient(90deg, var(--cyan), var(--blue)); border-radius: 1px; }
+.section-title { font-size: clamp(26px, 4vw, 38px); font-weight: 800; line-height: 1.3; color: var(--navy); margin-bottom: 14px; }
+.section-title span { background: linear-gradient(135deg, var(--blue), var(--cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.section-sub { font-size: 16px; font-weight: 500; color: var(--tx2); line-height: 1.85; max-width: 640px; margin-bottom: 44px; }
+
+/* ═══════ FEATURE GRID (service-card pattern) ═══════ */
+.feat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+@media (max-width: 900px) { .feat-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .feat-grid { grid-template-columns: 1fr; } }
+.feat-card {
+  background: var(--white); border: 1px solid var(--border); border-radius: var(--r);
+  padding: 28px; position: relative; overflow: hidden;
+  transition: transform .5s cubic-bezier(.16,1,.3,1), box-shadow .5s, border-color .4s;
+}
+.feat-card::before {
+  content: ''; position: absolute; top: 0; right: 0; left: 0; height: 3px;
+  background: linear-gradient(90deg, var(--navy), var(--blue), var(--cyan));
+  transform: scaleX(0); transform-origin: right; transition: transform .5s cubic-bezier(.4,0,.2,1);
+}
+.feat-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+.feat-card:hover::before { transform: scaleX(1); transform-origin: left; }
+.feat-num { font-family: var(--en); font-size: 12px; font-weight: 800; color: var(--cyan); display: block; margin-bottom: 14px; }
+.feat-card h3 { font-size: 16.5px; font-weight: 700; color: var(--navy); margin-bottom: 9px; }
+.feat-card p { font-size: 14px; color: var(--muted); line-height: 1.75; }
+
+/* ═══════ ROLE TABLE ═══════ */
+.role-table { width: 100%; border-collapse: collapse; background: var(--white); border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; box-shadow: var(--shadow); }
+.role-table th { text-align: start; font-family: var(--en); font-size: 11px; letter-spacing: 1.3px; text-transform: uppercase; color: var(--muted); font-weight: 700; padding: 15px 20px; background: var(--bg); border-bottom: 1px solid var(--border); }
+.role-table td { padding: 18px 20px; border-bottom: 1px solid var(--border); font-size: 14.5px; vertical-align: top; color: var(--tx2); }
+.role-table tr:last-child td { border-bottom: none; }
+.role-table tr:hover td { background: rgba(7,143,210,.03); }
+.role-name { font-weight: 700; color: var(--navy); display: flex; align-items: center; gap: 10px; }
+.role-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--cyan); flex: none; box-shadow: 0 0 0 4px rgba(7,143,210,.14); }
+.role-dot.b { background: var(--orange); box-shadow: 0 0 0 4px rgba(249,115,22,.14); }
+@media (max-width: 720px) {
+  .role-table thead { display: none; }
+  .role-table, .role-table tbody, .role-table tr, .role-table td { display: block; width: 100%; }
+  .role-table tr { border-bottom: 1px solid var(--border); padding: 16px 20px; }
+  .role-table td { padding: 4px 0; border-bottom: none; }
+  .role-table td::before { content: attr(data-label); display: block; font-family: var(--en); font-size: 10px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--cyan); margin: 8px 0 4px; }
+  .role-table td:first-child::before { display: none; }
+}
+
+/* ═══════ DUO / COMPARE (diff-box pattern) ═══════ */
+.duo { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+@media (max-width: 700px) { .duo { grid-template-columns: 1fr; } }
+.duo-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--r); padding: 26px; box-shadow: var(--shadow); }
+.duo-card h3 { font-size: 16.5px; color: var(--navy); margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+.duo-card p { color: var(--muted); font-size: 14.3px; line-height: 1.75; }
+.note-box { margin-top: 18px; padding: 16px 18px; border-inline-start: 3px solid var(--cyan); background: rgba(7,143,210,.05); border-radius: 0 12px 12px 0; font-size: 14.3px; color: var(--tx2); }
+
+.diff-box { background: var(--white); border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; box-shadow: var(--shadow); margin-top: 28px; }
+.diff-header { background: linear-gradient(135deg, #F8FAFC, #F1F5F9); padding: 12px 20px; font-family: var(--en); font-size: 11px; font-weight: 700; color: var(--muted); letter-spacing: 1.5px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+.diff-header::before { content: ''; width: 8px; height: 8px; background: var(--green); border-radius: 50%; box-shadow: 0 0 8px rgba(22,163,74,.4); }
+.diff-row { display: flex; align-items: center; gap: 12px; padding: 16px 20px; transition: background .3s; }
+.diff-row.minus { background: rgba(220,38,38,.03); border-inline-start: 3px solid var(--red); }
+.diff-row.plus { background: rgba(22,163,74,.03); border-inline-start: 3px solid var(--green); }
+.diff-sign { font-family: var(--en); font-size: 15px; font-weight: 800; width: 16px; flex-shrink: 0; }
+.diff-row.minus .diff-sign { color: var(--red); }
+.diff-row.plus .diff-sign { color: var(--green); }
+.diff-text { font-size: 14.3px; font-weight: 600; color: var(--tx2); }
+.diff-row.plus .diff-text { color: var(--navy); }
+.diff-row.plus .diff-text strong { color: var(--blue); font-weight: 800; }
+
+/* ═══════ JOURNEY (signature element) ═══════ */
+.journey-rail { position: relative; display: flex; justify-content: space-between; margin-bottom: 0; }
+.journey-rail::before { content: ''; position: absolute; top: 17px; inset-inline-start: 0; inset-inline-end: 0; height: 2px; background: var(--border); }
+.journey-track { position: absolute; top: 17px; inset-inline-start: 0; height: 2px; background: linear-gradient(90deg, var(--navy), var(--cyan)); width: 0%; transition: width .4s ease; }
+.j-node { position: relative; display: flex; flex-direction: column; align-items: center; flex: 1; cursor: pointer; background: none; border: none; color: inherit; font-family: inherit; padding: 0; }
+.j-dot { width: 36px; height: 36px; border-radius: 50%; background: var(--white); border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-family: var(--en); font-size: 13px; font-weight: 800; color: var(--muted); transition: all .25s; z-index: 2; }
+.j-node.active .j-dot { background: linear-gradient(135deg, var(--navy), var(--cyan)); border-color: transparent; color: #fff; box-shadow: 0 6px 18px rgba(7,143,210,.35); }
+.j-label { margin-top: 12px; font-size: 12.5px; font-weight: 600; color: var(--muted); text-align: center; max-width: 110px; transition: color .25s; }
+.j-node.active .j-label { color: var(--navy); font-weight: 800; }
+@media (max-width: 780px) {
+  .journey-rail { flex-direction: column; align-items: flex-start; gap: 0; }
+  .journey-rail::before { top: 0; bottom: 0; inset-inline-end: auto; inset-inline-start: 17px; width: 2px; height: 100%; }
+  .journey-track { top: 0; inset-inline-start: 17px; width: 2px; height: 0%; }
+  .j-node { flex-direction: row; align-items: center; gap: 16px; padding: 12px 0; width: 100%; }
+  .j-label { margin-top: 0; text-align: start; max-width: none; }
+}
+.journey-panel { margin-top: 32px; background: var(--white); border: 1px solid var(--border); border-radius: var(--r); box-shadow: var(--shadow); padding: 32px; min-height: 160px; }
+.jp-step { display: none; }
+.jp-step.active { display: block; animation: jfade .4s ease; }
+@keyframes jfade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.jp-title { font-weight: 800; font-size: 20px; color: var(--navy); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+.jp-title .idx { font-family: var(--en); color: var(--cyan); font-size: 13px; font-weight: 700; }
+.jp-body ul { padding-inline-start: 20px; margin-top: 8px; }
+.jp-body li { margin-bottom: 8px; font-size: 15px; color: var(--tx2); line-height: 1.7; }
+.jp-body p { font-size: 15px; color: var(--tx2); margin-bottom: 8px; line-height: 1.8; }
+.jp-live { margin-top: 16px; padding: 14px 18px; border-inline-start: 3px solid var(--orange); background: rgba(249,115,22,.06); border-radius: 0 12px 12px 0; font-size: 13.8px; color: var(--tx2); }
+.j-arrows { display: flex; gap: 10px; margin-top: 24px; }
+.j-arrow { border: 1.5px solid var(--border); background: var(--white); color: var(--navy); width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 17px; display: flex; align-items: center; justify-content: center; transition: .2s; }
+.j-arrow:hover { border-color: var(--cyan); color: var(--cyan); box-shadow: var(--shadow); }
+.j-arrow:disabled { opacity: .35; cursor: not-allowed; }
+
+/* ═══════ FORMULA / FLOW ═══════ */
+.flow-formula {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
+  font-family: var(--en); font-size: 14.5px; font-weight: 700;
+  background: var(--white); border: 1px solid var(--border); border-radius: var(--r);
+  box-shadow: var(--shadow); padding: 26px 28px; margin-bottom: 36px;
+}
+.flow-formula .op { color: var(--muted); font-weight: 800; }
+.flow-formula .term { background: var(--bg); padding: 9px 16px; border-radius: 10px; border: 1px solid var(--border); color: var(--tx2); }
+.flow-formula .result { background: linear-gradient(135deg, var(--blue), var(--cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; border-color: rgba(7,143,210,.25); }
+
+.perk-list { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 700px) { .perk-list { grid-template-columns: 1fr; } }
+.perk { display: flex; gap: 14px; padding: 18px 20px; background: var(--white); border: 1px solid var(--border); border-radius: 14px; box-shadow: var(--shadow); }
+.perk .role-dot { margin-top: 6px; }
+.perk h4 { font-size: 15px; color: var(--navy); margin-bottom: 5px; font-weight: 700; }
+.perk p { font-size: 13.5px; color: var(--muted); line-height: 1.65; }
+
+.link-map { display: flex; flex-direction: column; gap: 0; background: var(--white); border: 1px solid var(--border); border-radius: var(--r); box-shadow: var(--shadow); overflow: hidden; }
+.link-row { display: flex; align-items: center; gap: 16px; padding: 16px 22px; border-bottom: 1px solid var(--border); font-size: 14.3px; }
+.link-row:last-child { border-bottom: none; }
+.link-row .src { flex: 1; color: var(--muted); }
+.link-row .arrow { flex: none; color: var(--orange); font-family: var(--en); font-weight: 800; }
+.link-row .dst { flex: 1; font-weight: 700; color: var(--navy); }
+@media (max-width: 640px) { .link-row { flex-wrap: wrap; } .link-row .src, .link-row .dst { flex: 1 1 100%; } }
+
+/* ═══════ SCOPE TABLE ═══════ */
+.scope-table { width: 100%; border-collapse: collapse; background: var(--white); border: 1px solid var(--border); border-radius: var(--r); box-shadow: var(--shadow); overflow: hidden; }
+.scope-table td { padding: 18px 22px; border-bottom: 1px solid var(--border); font-size: 14.3px; vertical-align: top; }
+.scope-table tr:last-child td { border-bottom: none; }
+.scope-table td:first-child { width: 230px; font-weight: 800; color: var(--navy); }
+.scope-table td:last-child { color: var(--muted); line-height: 1.7; }
+@media (max-width: 640px) {
+  .scope-table, .scope-table tbody, .scope-table tr, .scope-table td { display: block; width: 100%; }
+  .scope-table td:first-child { padding-bottom: 6px; }
+  .scope-table tr { padding: 14px 22px; }
+  .scope-table td { padding: 0; }
+}
+
+.out-scope { border: 1.5px dashed var(--border); border-radius: var(--r); padding: 26px 28px; margin-top: 22px; background: var(--white); }
+.out-scope ul { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 12px 22px; }
+@media (max-width: 640px) { .out-scope ul { grid-template-columns: 1fr; } }
+.out-scope li { display: flex; gap: 10px; font-size: 13.8px; color: var(--muted); }
+.out-scope li::before { content: '—'; color: var(--muted); flex: none; }
+
+/* ═══════ TIMELINE ═══════ */
+.tl { position: relative; padding-inline-start: 30px; margin-top: 8px; }
+.tl::before { content: ''; position: absolute; top: 6px; bottom: 6px; inset-inline-start: 7px; width: 2px; background: var(--border); }
+.tl-item { position: relative; padding-bottom: 32px; }
+.tl-item:last-child { padding-bottom: 0; }
+.tl-item::before { content: ''; position: absolute; inset-inline-start: -30px; top: 3px; width: 16px; height: 16px; border-radius: 50%; background: var(--white); border: 3px solid var(--cyan); }
+.tl-period { font-family: var(--en); font-size: 11.5px; font-weight: 800; color: var(--orange); letter-spacing: .8px; margin-bottom: 6px; text-transform: uppercase; }
+.tl-item h4 { font-size: 16.5px; color: var(--navy); margin-bottom: 6px; font-weight: 800; }
+.tl-item p { color: var(--muted); font-size: 14px; line-height: 1.7; }
+.tl-foot { margin-top: 26px; color: var(--muted); font-size: 13.5px; border-inline-start: 3px solid var(--cyan); padding-inline-start: 14px; line-height: 1.7; }
+
+/* ═══════ NEXT STEPS ═══════ */
+.next-list { display: flex; flex-direction: column; gap: 4px; }
+.next-item { display: flex; gap: 20px; align-items: flex-start; padding: 22px; background: var(--white); border: 1px solid var(--border); border-radius: 14px; margin-bottom: 12px; box-shadow: var(--shadow); }
+.next-num { font-family: var(--en); font-size: 15px; font-weight: 800; color: #fff; background: linear-gradient(135deg, var(--navy), var(--cyan)); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex: none; }
+.next-text h4 { font-size: 16px; color: var(--navy); margin-bottom: 5px; font-weight: 700; }
+.next-text p { color: var(--muted); font-size: 14px; }
+
+/* ═══════ CTA STRIP ═══════ */
+.cta-strip { background: var(--navy); border-radius: var(--r); padding: 48px; text-align: center; position: relative; overflow: hidden; }
+.cta-strip::before { content:''; position:absolute; inset:0; background: radial-gradient(ellipse 60% 80% at 30% 20%, rgba(7,143,210,.35), transparent 60%); }
+.cta-strip h3 { position: relative; color: #fff; font-size: clamp(20px,3vw,28px); font-weight: 800; margin-bottom: 10px; }
+.cta-strip p { position: relative; color: rgba(255,255,255,.7); font-size: 15px; max-width: 480px; margin: 0 auto 26px; }
+.cta-btn-primary {
+  position: relative; display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--ar); font-size: 15.5px; font-weight: 700; padding: 14px 34px; border-radius: 12px;
+  background: linear-gradient(135deg, var(--orange), #E86B10); color: #fff; text-decoration: none;
+  transition: transform .3s, box-shadow .3s; box-shadow: 0 4px 24px rgba(249,115,22,.35);
+}
+.cta-btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 36px rgba(249,115,22,.45); }
+
+/* ═══════ FOOTER ═══════ */
+footer {
+  background: var(--white); border-top: 1px solid var(--border); padding: 32px 56px;
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+  position: relative; z-index: 1;
+}
+@media (max-width: 768px) { footer { padding: 28px 22px; } }
+.footer-logo { display: flex; align-items: center; gap: 10px; }
+.footer-logo-text { font-family: var(--en); font-size: 18px; font-weight: 800; color: var(--navy); }
+.footer-links { display: flex; gap: 22px; list-style: none; }
+.footer-links a { font-family: var(--ar); font-size: 13.5px; font-weight: 600; color: var(--muted); text-decoration: none; transition: color .3s; }
+.footer-links a:hover { color: var(--navy); }
+.footer-copy { font-family: var(--en); font-size: 12px; font-weight: 600; color: var(--muted); opacity: .5; letter-spacing: .5px; }
+.footer-legal {
+  flex-basis: 100%; text-align: center; font-family: var(--ar); font-size: 12px; font-weight: 500;
+  color: var(--muted); opacity: .8; padding-top: 18px; margin-top: 8px; border-top: 1px solid var(--border); line-height: 1.7;
+}
+.footer-legal strong { color: var(--navy); font-weight: 700; }
+</style>
+</head>
+<body>
+
+<div class="scrollbar" id="scrollbar"></div>
+
+<nav id="nav">
+  <a href="#" class="nav-logo">
+    <svg viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg" style="height:38px;width:38px;flex-shrink:0;">
+      <defs>
+        <linearGradient id="ng1" x1="0" y1="132" x2="463" y2="132" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#1e3a8a"/><stop offset="1" stop-color="#1849A9"/></linearGradient>
+        <linearGradient id="ng2" x1="0" y1="227" x2="692" y2="227" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#1849A9"/><stop offset="1" stop-color="#078FD2"/></linearGradient>
+        <linearGradient id="ng3" x1="0" y1="418" x2="213" y2="418" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#1e3a8a"/><stop offset="1" stop-color="#1849A9"/></linearGradient>
+        <linearGradient id="ng4" x1="0" y1="513" x2="629" y2="513" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#1849A9"/><stop offset="1" stop-color="#078FD2"/></linearGradient>
+      </defs>
+      <g fill="#0c2461">
+        <path d="M597.03,153.05h1.63v-.05c-.54.02-1.09.05-1.63.05ZM598.66,153v.05s.02-.02.02-.05h-.02Z"/>
+        <path d="M790.86,42.63c-6.08-13.27-14.68-23.68-25.78-31.26C753.98,3.8,740.86,0,725.71,0c-12.18,0-23.28,2.84-33.29,8.53-10.01,5.68-19.42,14.14-28.22,25.38-8.77,11.22-17.1,25.36-24.96,42.41-2.69,5.68-5.96,11.17-9.74,16.43-3.81,5.29-8.33,9.61-13.59,13-5.29,3.39-11.71,5.07-19.28,5.07l-86.08.42v41.82s87.56-.02,88.1-.05h.02c14.95-.49,27.23-4.13,36.9-10.92,8.48-5.93,15.47-13.15,21.03-21.62,3.68,5.04,8.18,9.61,13.49,13.72,7.83,6.08,16.83,10.7,26.99,13.79,10.16,3.11,21.03,4.67,32.67,4.67,20.29,0,37.07-5.54,50.34-16.63,13.25-11.1,19.89-27.21,19.89-48.32,0-16.78-3.04-31.78-9.14-45.05ZM753.32,105.55c-6.5,4.87-14.48,7.32-23.95,7.32-10.82,0-20.91-2.3-30.25-6.92-9.34-4.6-16.98-10.68-22.93-18.26,5.68-13.52,12.58-24.81,20.71-33.88,8.11-9.07,17.72-13.62,28.82-13.62,8.92,0,16.09,2.25,21.53,6.7,5.41,4.47,9.39,10.08,11.96,16.86s3.86,13.94,3.86,21.53c0,8.65-3.24,15.42-9.74,20.29Z"/>
+        <path d="M349,439.11v-.02c-.4.02,0,.02,0,.02Z"/>
+        <path d="M779.91,209.39c-4.2-4.32-9.96-6.47-17.25-6.47s-12.73,2.15-17.05,6.47c-4.32,4.35-6.5,10.16-6.5,17.47s2.17,12.73,6.5,17.05c4.32,4.32,10.01,6.48,17.05,6.48s13.05-2.15,17.25-6.48c4.2-4.32,6.3-10.01,6.3-17.05s-2.1-13.12-6.3-17.47ZM696.08,439.09v.02h3.24c-1.09,0-2.17,0-3.24-.02Z"/>
+        <path d="M798.99,345.52c-.69-8.5-1.56-16.76-2.64-24.76-1.09-7.96-2.3-14.41-3.66-19.28-1.88-9.47-4.87-16.04-8.92-19.67-4.05-3.66-9.19-5.49-15.42-5.49-4.35,0-8.33.74-11.99,2.22-3.66,1.48-6.7,3.04-9.12,4.67,2.15,8.92,4.45,19.35,6.9,31.26,2.42,11.91,4.47,23.87,6.08,35.91,1.63,12.06,2.3,23.35,2.03,33.91-3.24,2.17-7.98,4.28-14.21,6.3-6.23,2.03-13.32,3.66-21.3,4.87-7.98,1.21-26.99,1.83-26.99,1.83-10.01,0-18.41-1.36-25.18-4.08-6.77-2.69-11.76-7.44-15-14.19-.07-.17-.17-.35-.25-.54,1.53-6.25,2.27-12.97,2.27-20.17,0-16.78-3.53-31.11-10.55-43.03-7.04-11.91-16.93-20.98-29.63-27.21-12.73-6.23-27.36-9.34-43.84-9.34-12.73,0-25.31,1.98-37.76,5.91-12.46,3.9-24.37,10.4-35.74,19.47-11.34,9.07-22.12,21.38-32.25,36.95-9,13.77-17.4,30.32-25.18,49.72-4.89-2-8.67-4.3-11.37-6.89-4.47-4.37-7.07-9.52-7.76-15.42,0-.05,0-.12-.02-.17-.02-.62-.94-44.09-.94-44.09-.27-5.68-2.1-9.89-5.49-12.58-3.39-2.72-7.64-4.05-12.78-4.05-3.78,0-7.24.32-10.35,1.01-3.11.67-5.49,1.56-7.09,2.62l-1.24,49.53c-.27,13.27-3.9,22.69-10.95,28.22-7.04,5.56-17.87,8.33-32.47,8.33h-85.26v41.82l88.13-.02c9.56-.1,18.68-1.53,27.38-4.25,9.05-2.84,16.71-7.09,22.93-12.78,4.2-3.86,7.24-8.4,9.09-13.64,3.14,4.82,7.29,9.02,12.41,12.63,9.47,6.62,23.21,11.29,41.2,13.99,18.02,2.72,40.95,4.08,68.83,4.08,45.45,0,78.61-6.77,99.45-20.32,3.21-2.08,6.15-4.3,8.87-6.7,4.47,8.21,11.54,14.68,21.16,19.5,9.32,4.65,21.25,7.17,35.74,7.49,1.06.02,7.71.02,7.71.02,14.06,0,27.95-1.56,41.62-4.67,13.67-3.11,24.69-7.24,33.07-12.38,8.95-5.68,14.75-12.46,17.47-20.31,2.69-7.83,4.05-18.66,4.05-32.47,0-7.29-.35-15.22-1.01-23.75ZM600.49,389.16c-15.03,6.5-37.02,9.74-65.99,9.74-13.25,0-24.96-.4-35.09-1.21-4.15-.35-8.18-.69-12.04-1.06,5.73-13.99,11.84-25.6,18.31-34.87,7.86-11.22,15.89-19.94,24.17-26.17,8.23-6.23,16.29-10.48,24.15-12.78,7.83-2.3,15.27-3.46,22.32-3.46,13.82,0,25.04,3.58,33.71,10.75,8.65,7.19,12.97,16.58,12.97,28.22,0,14.06-7.51,24.34-22.51,30.84Z"/>
+        <path d="M775.63,492.29c-4.05-4.05-9.61-6.1-16.63-6.1s-12.58,2.05-16.66,6.1c-4.05,4.05-6.08,9.61-6.08,16.63s2.03,12.26,6.08,16.43c4.08,4.2,9.61,6.3,16.66,6.3s12.58-2.1,16.63-6.3c4.08-4.18,6.1-9.66,6.1-16.43s-2.03-12.58-6.1-16.63ZM715.16,492.29c-4.05-4.05-9.61-6.1-16.66-6.1s-12.16,2.05-16.24,6.1c-4.05,4.05-6.08,9.61-6.08,16.63s2.03,12.26,6.08,16.43c4.08,4.2,9.49,6.3,16.24,6.3s12.6-2.1,16.66-6.3c4.05-4.18,6.08-9.66,6.08-16.43s-2.03-12.58-6.08-16.63Z"/>
+        <path d="M800,655.06c0,13.81-1.36,24.64-4.05,32.5-2.72,7.83-8.53,14.61-17.47,20.29-8.38,5.14-19.43,9.27-33.07,12.38-13.67,3.11-27.56,4.67-41.62,4.67,0,0-27.75-1.36-36.13-4.05-8.38-2.72-15.42-6.92-21.11-12.6-4.6-4.6-8.13-10.18-10.6-16.73-1.48,6.38-4.67,11.84-9.49,16.34-6.1,5.68-13.59,9.94-22.54,12.78-8.92,2.84-18.14,4.28-27.61,4.28h-45.87l-520.2.25c-5.66,0-10.23-4.57-10.23-10.23v-21.33c0-5.66,4.57-10.26,10.23-10.26l475.96-.25h89.29c12.73,0,22.66-2.77,29.85-8.33,7.17-5.54,10.87-14.95,11.15-28.2l.82-49.53c1.9-.82,4.4-1.63,7.51-2.45,3.11-.82,6.57-1.21,10.36-1.21,5.14,0,9.39,1.36,12.78,4.05,3.39,2.72,5.21,6.9,5.49,12.58l.82,38.16c.54,12.46,4.4,21.4,11.57,26.79,7.17,5.44,17.13,8.13,29.83,8.13,0,0,23.08-.62,31.07-1.83,7.98-1.21,15.08-2.84,21.3-4.87,6.23-2.03,10.97-4.13,14.21-6.3.27-10.55-.4-21.85-2.03-33.88-1.63-12.04-3.66-24.02-6.08-35.93-2.45-11.91-4.75-22.32-6.9-31.26,2.42-1.61,5.46-3.16,9.12-4.67,3.66-1.48,7.64-2.22,11.99-2.22,6.2,0,11.37,1.83,15.42,5.49,4.05,3.66,7.02,10.21,8.92,19.67,1.36,4.87,2.57,11.32,3.66,19.3,1.09,7.98,1.95,16.24,2.64,24.76.67,8.53,1.01,16.43,1.01,23.73Z"/>
+        <path d="M622.18,760.61c-4.05-4.05-9.59-6.08-16.63-6.08s-12.18,2.03-16.24,6.08c-4.05,4.08-6.08,9.61-6.08,16.66s2.03,12.23,6.08,16.43c4.05,4.2,9.47,6.3,16.24,6.3s12.58-2.1,16.63-6.3c4.08-4.2,6.1-9.69,6.1-16.43s-2.03-12.58-6.1-16.66ZM682.68,760.61c-4.05-4.05-9.61-6.08-16.66-6.08s-12.58,2.03-16.63,6.08c-4.05,4.08-6.1,9.61-6.1,16.66s2.05,12.23,6.1,16.43c4.05,4.2,9.59,6.3,16.63,6.3s12.6-2.1,16.66-6.3c4.05-4.2,6.08-9.69,6.08-16.43s-2.03-12.58-6.08-16.66Z"/>
+      </g>
+      <path fill="url(#ng1)" d="M15.09,111.23h448.38v41.81H15.09C6.76,153.04,0,146.28,0,137.95v-11.64C0,117.99,6.76,111.23,15.09,111.23Z"/>
+      <path fill="url(#ng2)" d="M15.09,206.58h676.93v41.81H15.09C6.76,248.39,0,241.63,0,233.31v-11.64C0,213.34,6.76,206.58,15.09,206.58Z"/>
+      <path fill="#1849a9" d="M15.09,301.93h328.24v41.81H15.09C6.76,343.75,0,336.99,0,328.66v-11.64C0,308.69,6.76,301.93,15.09,301.93Z"/>
+      <path fill="url(#ng3)" d="M15.09,397.29h198.73v41.81H15.09C6.76,439.1,0,432.34,0,424.01v-11.64C0,404.05,6.76,397.29,15.09,397.29Z"/>
+      <path fill="url(#ng4)" d="M15.09,492.64h614.01v41.81H15.09C6.76,534.45,0,527.69,0,519.37v-11.64C0,499.4,6.76,492.64,15.09,492.64Z"/>
+      <path fill="#1849a9" d="M15.09,587.99h554.33v41.81H15.09C6.76,629.81,0,623.05,0,614.72v-11.64C0,594.75,6.76,587.99,15.09,587.99Z"/>
+    </svg>
+    <span>
+      <span class="nav-logo-text">Manasety<span style="color:#078FD2;">_</span></span>
+      <span class="nav-logo-sub">عرض فني — البيت السوري</span>
+    </span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#features">المميزات</a></li>
+    <li><a href="#interfaces">الواجهات</a></li>
+    <li><a href="#journey">رحلة الطلب</a></li>
+    <li><a href="#connections">الترابط</a></li>
+    <li><a href="#scope">نطاق العمل</a></li>
+    <li><a href="#timeline">الخطة الزمنية</a></li>
+  </ul>
+  <button class="nav-toggle" aria-label="القائمة" onclick="document.getElementById('nav').classList.toggle('nav-open')"><span></span><span></span><span></span></button>
+</nav>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-badge">عرض فني · النسخة 3.0</div>
+    <h1 class="rv">نظام إدارة الطلبات والعمليات المتكامل<br><span>البيت السوري</span></h1>
+    <p class="hero-sub rv rv-delay-1">نظام واحد مبني خصيصًا لمحلك، بيربط الطلب والمطبخ والتوصيل والمخزون والرواتب في مكان واحد — وانت شايف كل حاجة لحظة بلحظة من غير ما تستنى حد يجمعهالك.</p>
+    <div class="hero-meta rv rv-delay-2">
+      <div class="meta-item"><div class="meta-label">مُقدَّم إلى</div><div class="meta-value">السيد علي برجكلي</div></div>
+      <div class="meta-item"><div class="meta-label">تاريخ الإصدار</div><div class="meta-value">12 أغسطس 2026</div></div>
+      <div class="meta-item"><div class="meta-label">النسخة</div><div class="meta-value">3.0</div></div>
+      <div class="meta-item"><div class="meta-label">مُقدَّم من</div><div class="meta-value">شلبي إنتليجنس للبرمجيات وحلول الذكاء الاصطناعي</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad" id="features">
+  <div class="wrap">
+    <div class="section-tag rv">لمحة سريعة</div>
+    <h2 class="section-title rv">أبرز المميزات اللي هتحصل عليها</h2>
+    <p class="section-sub rv">مش مجرد أدوات منفصلة — كل ميزة هنا جزء من نظام واحد متكامل شغال لصالحك.</p>
+    <div class="feat-grid">
+      <div class="feat-card rv"><span class="feat-num">01</span><h3>وداعًا لحظر واتساب</h3><p>نظام واحد متكامل بدل الرسائل اليدوية، وبدون أي تكلفة على كل رسالة.</p></div>
+      <div class="feat-card rv"><span class="feat-num">02</span><h3>قناتين للطلب بنفس الحساب</h3><p>تطبيق مخصص لمحلك + بوت تيليجرام، وكل الطلبات بتتسجل في مكان واحد.</p></div>
+      <div class="feat-card rv"><span class="feat-num">03</span><h3>تتبع الطلب لحظة بلحظة</h3><p>من لحظة ما العميل يطلب لحد ما يوصله، من غير أي رسالة تُبعت يدوي.</p></div>
+      <div class="feat-card rv"><span class="feat-num">04</span><h3>كل حاجة مربوطة ببعض تلقائيًا</h3><p>عملية البيع بتحدّث المخزون، وتحسب التكلفة، وتحدّث التقرير المالي في نفس اللحظة.</p></div>
+      <div class="feat-card rv"><span class="feat-num">05</span><h3>تعرف تكلفة كل صنف بالظبط</h3><p>مع اقتراح سعر بيع مناسب، وتنبيه لو سعر أي مكوّن اتغيّر.</p></div>
+      <div class="feat-card rv"><span class="feat-num">06</span><h3>واجهة مخصصة لكل طرف</h3><p>المطبخ، التوصيل، الكاشير، وانت كصاحب المحل — كل واحد شغال في شاشته هو بس.</p></div>
+      <div class="feat-card rv"><span class="feat-num">07</span><h3>الرواتب بتتحسب لوحدها</h3><p>مباشرة من بيانات الحضور والانصراف.</p></div>
+      <div class="feat-card rv"><span class="feat-num">08</span><h3>تعرف تربح كام في أي وقت</h3><p>تقرير ربح وخسارة جاهز فورًا، من غير ما تستنى حد يجمعهولك آخر الشهر.</p></div>
+      <div class="feat-card rv"><span class="feat-num">09</span><h3>تقارير ذكية</h3><p>أكتر المنتجات مبيعًا، أوقات الذروة، وأكتر الفئات طلبًا من العملاء.</p></div>
+      <div class="feat-card rv"><span class="feat-num">10</span><h3>نظام مخصص ليك انت بس</h3><p>على سيرفر عالمي شغال 24 ساعة، تدخل عليه من أي مكان في العالم.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad" id="interfaces">
+  <div class="wrap">
+    <div class="section-tag rv">خمس واجهات، نظام واحد</div>
+    <h2 class="section-title rv">واجهات النظام</h2>
+    <p class="section-sub rv">النظام مش شاشة واحدة للكل — كل طرف عنده واجهته المخصصة اللي تناسب شغله بالظبط.</p>
+    <table class="role-table rv">
+      <thead><tr><th>الطرف</th><th>الواجهة</th><th>نوعها</th></tr></thead>
+      <tbody>
+        <tr><td data-label="الطرف"><span class="role-name"><span class="role-dot"></span>العميل</span></td><td data-label="الواجهة">تطبيق العميل + بوت تيليجرام</td><td data-label="نوعها">تطبيق يتحمّل على الموبايل، بالإضافة لبوت تيليجرام — الاتنين بنفس الحساب</td></tr>
+        <tr><td data-label="الطرف"><span class="role-name"><span class="role-dot"></span>المطبخ</span></td><td data-label="الواجهة">تطبيق المطبخ</td><td data-label="نوعها">تطبيق على الموبايل أو التابلت</td></tr>
+        <tr><td data-label="الطرف"><span class="role-name"><span class="role-dot"></span>مندوب التوصيل</span></td><td data-label="الواجهة">تطبيق التوصيل</td><td data-label="نوعها">تطبيق على الموبايل</td></tr>
+        <tr><td data-label="الطرف"><span class="role-name"><span class="role-dot b"></span>الكاشير</span></td><td data-label="الواجهة">لوحة تحكم الكاشير</td><td data-label="نوعها">من المتصفح على أي جهاز — ويب بس</td></tr>
+        <tr><td data-label="الطرف"><span class="role-name"><span class="role-dot b"></span>صاحب المحل (الأدمن)</span></td><td data-label="الواجهة">لوحة التحكم الإدارية</td><td data-label="نوعها">من المتصفح، من أي جهاز وأي مكان — ويب بس</td></tr>
+      </tbody>
+    </table>
+
+    <div style="height:52px"></div>
+    <h3 class="rv" style="font-size:19px;color:var(--navy);margin-bottom:20px;">العميل عنده طريقتين للطلب</h3>
+    <div class="duo rv">
+      <div class="duo-card"><h3><span class="role-dot"></span>بوت تيليجرام</h3><p>للي يفضل يطلب من المحادثة العادية — يكتب طلبه زي ما هو متعود، والبوت الذكي يفهمه.</p></div>
+      <div class="duo-card"><h3><span class="role-dot b"></span>تطبيق العميل</h3><p>واجهة مخصصة زي أي تطبيق طلبات — منيو بالصور، سلة، تتبع الطلب، وسجل الطلبات القديمة.</p></div>
+    </div>
+    <div class="note-box rv">الاتنين بيسجلوا في نفس حساب العميل بالظبط — لو طلب من تيليجرام النهاردة ومن التطبيق بكرة، هو نفس الحساب، نفس السجل، ونفس نقاط أي عروض لاحقًا.</div>
+
+    <div style="height:52px"></div>
+    <h3 class="rv" style="font-size:19px;color:var(--navy);margin-bottom:6px;">الفرق بين تطبيق الويب والتطبيق اللي بينزل من المتجر</h3>
+    <p class="rv" style="color:var(--tx2);font-size:15px;margin-bottom:0;">عشان تكون الصورة واضحة قدامك، في نوعين من التطبيقات:</p>
+    <div class="diff-box rv">
+      <div class="diff-header">COMPARISON.DIFF</div>
+      <div class="diff-row minus"><span class="diff-sign">−</span><span class="diff-text">تطبيق من App Store / Google Play: يتراجع ويتوافق عليه من Apple و Google الأول، وياخد وقت وممكن يترفض</span></div>
+      <div class="diff-row minus"><span class="diff-sign">−</span><span class="diff-text">أي تحديث محتاج المستخدم يحمّله بنفسه، وعليه رسوم اشتراك سنوية للمتاجر</span></div>
+      <div class="diff-row plus"><span class="diff-sign">+</span><span class="diff-text"><strong>تطبيق ويب (اللي هنعمله):</strong> بيشتغل من المتصفح، وتقدر "تثبته" على شاشة الموبايل زي أي تطبيق عادي — أيقونة، فتح بضغطة</span></div>
+      <div class="diff-row plus"><span class="diff-sign">+</span><span class="diff-text">أي تحديث بيحصل تلقائي من غير ما حد يحمّل نسخة جديدة، ومفيش رسوم متاجر</span></div>
+    </div>
+    <div class="note-box rv">اخترنا تطبيق الويب لأنه بيدّي نفس التجربة تقريبًا للمستخدم، بيتسلم أسرع، ومفيش عليه رسوم أو موافقات متاجر بتأخر الشغل.</div>
+  </div>
+</section>
+
+<section class="section-pad" id="journey">
+  <div class="wrap">
+    <div class="section-tag rv">خطوة بخطوة</div>
+    <h2 class="section-title rv">رحلة الطلب الكاملة</h2>
+    <p class="section-sub rv">نفس الرحلة، سواء العميل طلب من تيليجرام أو من التطبيق. دوس على أي خطوة تفاصيلها تفتح تحت.</p>
+
+    <div class="journey-rail rv" id="journeyRail">
+      <div class="journey-track" id="journeyTrack"></div>
+      <button class="j-node active" data-step="0"><span class="j-dot">01</span><span class="j-label">العميل يطلب</span></button>
+      <button class="j-node" data-step="1"><span class="j-dot">02</span><span class="j-label">طريقة الاستلام</span></button>
+      <button class="j-node" data-step="2"><span class="j-dot">03</span><span class="j-label">تأكيد الطلب</span></button>
+      <button class="j-node" data-step="3"><span class="j-dot">04</span><span class="j-label">التجهيز</span></button>
+      <button class="j-node" data-step="4"><span class="j-dot">05</span><span class="j-label">التسليم</span></button>
+      <button class="j-node" data-step="5"><span class="j-dot">06</span><span class="j-label">التسوية والتقفيل</span></button>
+    </div>
+
+    <div class="journey-panel rv">
+      <div class="jp-step active" data-step="0">
+        <div class="jp-title"><span class="idx">01 /06</span>العميل يطلب</div>
+        <div class="jp-body"><ul>
+          <li>لو أول مرة (من أي قناة): النظام بياخد اسمه ورقمه وعنوانه، وينشئله حساب — مرة واحدة بس.</li>
+          <li>لو عميل قديم: بياخد بياناته المحفوظة، ويأكدها أو يعدلها قبل ما يخلص الطلب.</li>
+          <li>يختار من المنيو بالصور، أو (لو من تيليجرام) يكتب طلبه عادي والبوت الذكي يفهمه.</li>
+        </ul></div>
+      </div>
+      <div class="jp-step" data-step="1">
+        <div class="jp-title"><span class="idx">02 /06</span>طريقة الاستلام</div>
+        <div class="jp-body"><ul>
+          <li>استلام من المحل، أو توصيل.</li>
+          <li>النظام بيسأل: فاتورة ورقية ولا الديجيتال كفاية؟</li>
+        </ul></div>
+      </div>
+      <div class="jp-step" data-step="2">
+        <div class="jp-title"><span class="idx">03 /06</span>تأكيد الطلب</div>
+        <div class="jp-body">
+          <p>الطلب بياخد رقم مرجعي، وحالته تبقى "استلمنا طلبك" — وتقدر تتابعها لحظة بلحظة من نفس القناة اللي طلبت منها.</p>
+          <div class="jp-live">في نفس اللحظة: النظام بيحسب مكونات الطلب، يخصمها من المخزون، ويحسب تكلفة الطلب الفعلية — كل ده تلقائي، من غير ما حد يدخل يسجل حاجة يدوي.</div>
+        </div>
+      </div>
+      <div class="jp-step" data-step="3">
+        <div class="jp-title"><span class="idx">04 /06</span>التجهيز</div>
+        <div class="jp-body"><p>تطبيق المطبخ بيستلم الطلب فورًا. المطبخ بيدوس "بدأت التجهيز" ثم "خلصت" — وفي كل مرة، العميل ياخد تحديث تلقائي أيًا كانت القناة اللي بيتابع بيها.</p></div>
+      </div>
+      <div class="jp-step" data-step="4">
+        <div class="jp-title"><span class="idx">05 /06</span>التسليم</div>
+        <div class="jp-body"><ul>
+          <li>استلام من المحل: الكاشير يسلّم ويحصّل الفلوس مباشرة.</li>
+          <li>توصيل: تطبيق التوصيل يورّي المندوب طلباته هو بس، يسلّم ويحصّل الفلوس، وبعدها تقييم متبادل بين المندوب والعميل.</li>
+        </ul></div>
+      </div>
+      <div class="jp-step" data-step="5">
+        <div class="jp-title"><span class="idx">06 /06</span>التسوية والتقفيل</div>
+        <div class="jp-body"><p>كل الفلوس المحصّلة — من الكاشير ومن المناديب — بتتجمع في تقفيل واحد، من آخر تقفيل لحد اللي بعده.</p></div>
+      </div>
+      <div class="j-arrows">
+        <button class="j-arrow" id="jPrev" aria-label="السابق">‹</button>
+        <button class="j-arrow" id="jNext" aria-label="التالي">›</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad" id="connections">
+  <div class="wrap">
+    <div class="section-tag rv">مافيش حاجة لوحدها</div>
+    <h2 class="section-title rv">إزاي كل حاجة في النظام مرتبطة ببعض</h2>
+    <p class="section-sub rv">أي حاجة بتحصل في النظام مش بتفضل لوحدها — كل عملية بتحدّث الصورة الكاملة فورًا، وانت من لوحة التحكم بتاعتك تقدر تشوف كل ده لحظة بلحظة.</p>
+
+    <div class="flow-formula rv">
+      <span class="term">الإيراد</span><span class="op">−</span>
+      <span class="term">تكلفة البضاعة المباعة</span><span class="op">−</span>
+      <span class="term">المصاريف التشغيلية</span><span class="op">=</span>
+      <span class="term result">صافي الربح / الخسارة</span>
+    </div>
+
+    <div class="perk-list rv">
+      <div class="perk"><span class="role-dot"></span><div><h4>كل عملية بيع = إيراد</h4><p>أي طلب يتسلم ويتحصل فلوسه بيتسجل تلقائي كإيراد.</p></div></div>
+      <div class="perk"><span class="role-dot"></span><div><h4>كل عملية بيع = خصم مخزون + تكلفة بضاعة مباعة</h4><p>مكونات الصنف بتتخصم من المخزون فورًا، ومحرك التكلفة بيحسب تكلفة الطلب حسب سعر المكونات وقتها.</p></div></div>
+      <div class="perk"><span class="role-dot b"></span><div><h4>الرواتب + المصاريف اليدوية = مصاريف تشغيلية</h4><p>مرتبات الموظفين + أي مصروف تاني بتسجله يدوي (إيجار، فواتير) بتتجمع كمصاريف تشغيلية.</p></div></div>
+      <div class="perk"><span class="role-dot b"></span><div><h4>في الآخر: صافي الربح أو الخسارة</h4><p>معروض جاهز في أي وقت تدخل فيه على لوحة التحكم — مش لازم تستنى حد يجمعهولك.</p></div></div>
+    </div>
+
+    <div style="height:24px"></div>
+    <h3 class="rv" style="font-size:18px;color:var(--navy);margin-bottom:20px;">خريطة الترابط</h3>
+    <div class="link-map rv">
+      <div class="link-row"><span class="src">كل طلب يتباع</span><span class="arrow">←</span><span class="dst">الإيراد + استهلاك المخزون</span></div>
+      <div class="link-row"><span class="src">استهلاك المخزون + أسعار المكونات</span><span class="arrow">←</span><span class="dst">تكلفة البضاعة المباعة</span></div>
+      <div class="link-row"><span class="src">الحضور والانصراف</span><span class="arrow">←</span><span class="dst">حساب الرواتب</span></div>
+      <div class="link-row"><span class="src">الرواتب + المصاريف اليدوية</span><span class="arrow">←</span><span class="dst">المصاريف التشغيلية</span></div>
+      <div class="link-row"><span class="src">الإيراد + تكلفة البضاعة + المصاريف</span><span class="arrow">←</span><span class="dst">تقرير الربح والخسارة النهائي</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad">
+  <div class="wrap">
+    <div class="section-tag rv">البنية التحتية</div>
+    <h2 class="section-title rv">ليه سيرفر عالمي بدل جهاز في المحل</h2>
+    <p class="section-sub rv">بدل ما تشتري جهاز بإمكانيات عالية وتدفع تمنه كامل مقدمًا، وتقلق لو اتعطل مين هيصلحه، هنستأجرلك سيرفر سحابي (Cloud Server) بمعايير عالمية:</p>
+    <div class="perk-list rv">
+      <div class="perk"><span class="role-dot"></span><div><h4>شغال دايمًا</h4><p>24 ساعة كل يوم، من غير انقطاع.</p></div></div>
+      <div class="perk"><span class="role-dot"></span><div><h4>وصول من أي مكان</h4><p>تدخل على نظامك وبياناتك من المحل، من البيت، أو وانت مسافر.</p></div></div>
+      <div class="perk"><span class="role-dot b"></span><div><h4>نسخ احتياطي دوري</h4><p>بياناتك بتتاخد نسخة احتياطية تلقائيًا، عشان لو حصلت أي مشكلة تكون محفوظة.</p></div></div>
+      <div class="perk"><span class="role-dot b"></span><div><h4>مخصص ليك انت بس</h4><p>مبني لاحتياجات محلك بالظبط — مش نسخة عامة بيستخدمها ناس تانية.</p></div></div>
+    </div>
+    <div class="note-box rv" style="margin-top:24px">التكلفة اشتراك شهري بسيط، بدل ما تدفع تمن جهاز غالي مرة واحدة.</div>
+  </div>
+</section>
+
+<section class="section-pad" id="scope">
+  <div class="wrap">
+    <div class="section-tag rv">نطاق العمل</div>
+    <h2 class="section-title rv">اللي هيشمله النظام</h2>
+    <table class="scope-table rv">
+      <tbody>
+        <tr><td>الطلب (تطبيق العميل + تيليجرام)</td><td>قناتين للطلب بنفس الحساب: تطبيق مخصص بواجهة كاملة، وبوت تيليجرام للي يفضل المحادثة. منيو بالصور، سلة، تتبع الطلب، سجل الطلبات القديمة.</td></tr>
+        <tr><td>نقطة البيع (الكاشير)</td><td>لوحة ويب: الطلبات الجاهزة، تحصيل الفلوس، فاتورة عند الطلب، تعيين مندوب.</td></tr>
+        <tr><td>تطبيق المطبخ</td><td>استلام الطلبات أول بأول، تسجيل بدء وانتهاء التجهيز.</td></tr>
+        <tr><td>المخزون</td><td>خصم تلقائي للمواد الخام مع كل عملية بيع.</td></tr>
+        <tr><td>حساب تكلفة كل صنف</td><td>تكلفة كل صنف من مكوناته، اقتراح سعر بيع، تتبع تغيّر أسعار المكونات.</td></tr>
+        <tr><td>تطبيق التوصيل</td><td>كل مندوب يشوف طلباته هو بس، يسجل التسليم والتحصيل، تقييم متبادل مع العميل.</td></tr>
+        <tr><td>حضور وانصراف الموظفين</td><td>تسجيل يومي لكل موظف.</td></tr>
+        <tr><td>الرواتب</td><td>حساب تلقائي من الحضور، خصومات بنسبة بسيطة، إصدار تفاصيل الراتب.</td></tr>
+        <tr><td>تسجيل المصاريف</td><td>شاشة بسيطة لأي مصروف تاني — إيجار، فواتير، صيانة.</td></tr>
+        <tr><td>التقارير والتحليلات</td><td>تقرير الربح والخسارة (يومي/شهري)، أكتر المنتجات مبيعًا، أكتر الفئات طلبًا، أوقات الذروة، وتقارير مالية تفصيلية أخرى.</td></tr>
+        <tr><td>لوحة التحكم الإدارية</td><td>واجهة ويب واحدة لصاحب المحل يدير منها المنيو والأسعار والمخزون والموظفين والتقارير — من أي مكان.</td></tr>
+      </tbody>
+    </table>
+
+    <div style="height:44px"></div>
+    <h3 class="rv" style="font-size:18px;color:var(--navy);margin-bottom:6px;">حاجات مش هتدخل في المرحلة دي</h3>
+    <div class="out-scope rv">
+      <ul>
+        <li>أكتر من فرع واحد.</li>
+        <li>حساب الفاقد أثناء التصنيع.</li>
+        <li>تتبع موقع المندوب لحظة بلحظة على الخريطة.</li>
+        <li>قواعد التأمينات والضرائب الرسمية الكاملة.</li>
+        <li>نشر تطبيق العميل على متاجر Apple و Google (هيشتغل كتطبيق ويب مباشرة، زي ما اتشرح فوق).</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad" id="timeline">
+  <div class="wrap">
+    <div class="section-tag rv">4 شهور، 5 مراحل</div>
+    <h2 class="section-title rv">المدة والخطة الزمنية</h2>
+    <p class="section-sub rv">المشروع هياخد 4 شهور، مقسمة لمراحل كل مرحلة أسبوعين.</p>
+    <div class="tl rv">
+      <div class="tl-item"><div class="tl-period">الشهر الأول</div><h4>الأساس</h4><p>المنطق الأساسي للطلب (منيو، سلة، تتبع) + واجهتي تيليجرام والتطبيق + نقطة البيع الأساسية.</p></div>
+      <div class="tl-item"><div class="tl-period">الشهر التاني</div><h4>التشغيل</h4><p>تطبيق المطبخ + البوت الذكي + المخزون + تطبيق التوصيل.</p></div>
+      <div class="tl-item"><div class="tl-period">الشهر التالت</div><h4>التكلفة</h4><p>حساب تكلفة كل صنف بالتفصيل.</p></div>
+      <div class="tl-item"><div class="tl-period">الشهر الرابع — أول أسبوعين</div><h4>الفريق</h4><p>الحضور والانصراف + الرواتب.</p></div>
+      <div class="tl-item"><div class="tl-period">الشهر الرابع — آخر أسبوعين</div><h4>الإطلاق</h4><p>التقارير والتحليلات + تسجيل المصاريف + لوحة التحكم الإدارية + اختبار شامل + بدء التشغيل.</p></div>
+    </div>
+    <p class="tl-foot rv">بناء تطبيق العميل وتيليجرام مع بعض في نفس الشهر ممكن لأن الاتنين بيستخدموا نفس المنطق الخلفي (المنيو، السلة، الحساب) — فرق العمل الإضافي هو واجهة العرض بس.</p>
+  </div>
+</section>
+
+<section class="section-pad" id="next" style="border-bottom:none">
+  <div class="wrap">
+    <div class="section-tag rv">وبعدين</div>
+    <h2 class="section-title rv">الخطوات الجاية</h2>
+    <div class="next-list rv">
+      <div class="next-item"><div class="next-num">1</div><div class="next-text"><h4>اعتماد العرض</h4><p>حضرتك تراجع العرض ده وتوافق عليه.</p></div></div>
+      <div class="next-item"><div class="next-num">2</div><div class="next-text"><h4>العرض المالي</h4><p>هنبعتلك العرض المالي على نفس النطاق المكتوب فوق.</p></div></div>
+      <div class="next-item"><div class="next-num">3</div><div class="next-text"><h4>التعاقد والبدء</h4><p>بعد الاتفاق على السعر، هنوقع العقد ونبدأ الشغل فعليًا.</p></div></div>
+    </div>
+
+    <div style="height:12px"></div>
+    <div class="cta-strip rv">
+      <h3>جاهز نبدأ نظامك؟</h3>
+      <p>اعتمد العرض دلوقتي وهنبعتلك العرض المالي على نفس النطاق المتفق عليه.</p>
+      <a href="mailto:hello@manasety.ai" class="cta-btn-primary">تواصل معنا ←</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">
+    <svg viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg" style="height:28px;width:28px;">
+      <g fill="#0c2461">
+        <path d="M790.86,42.63c-6.08-13.27-14.68-23.68-25.78-31.26C753.98,3.8,740.86,0,725.71,0c-12.18,0-23.28,2.84-33.29,8.53-10.01,5.68-19.42,14.14-28.22,25.38-8.77,11.22-17.1,25.36-24.96,42.41-2.69,5.68-5.96,11.17-9.74,16.43-3.81,5.29-8.33,9.61-13.59,13-5.29,3.39-11.71,5.07-19.28,5.07l-86.08.42v41.82s87.56-.02,88.1-.05h.02c14.95-.49,27.23-4.13,36.9-10.92,8.48-5.93,15.47-13.15,21.03-21.62,3.68,5.04,8.18,9.61,13.49,13.72,7.83,6.08,16.83,10.7,26.99,13.79,10.16,3.11,21.03,4.67,32.67,4.67,20.29,0,37.07-5.54,50.34-16.63,13.25-11.1,19.89-27.21,19.89-48.32,0-16.78-3.04-31.78-9.14-45.05ZM753.32,105.55c-6.5,4.87-14.48,7.32-23.95,7.32-10.82,0-20.91-2.3-30.25-6.92-9.34-4.6-16.98-10.68-22.93-18.26,5.68-13.52,12.58-24.81,20.71-33.88,8.11-9.07,17.72-13.62,28.82-13.62,8.92,0,16.09,2.25,21.53,6.7,5.41,4.47,9.39,10.08,11.96,16.86s3.86,13.94,3.86,21.53c0,8.65-3.24,15.42-9.74,20.29Z"/>
+        <path d="M798.99,345.52c-.69-8.5-1.56-16.76-2.64-24.76-1.09-7.96-2.3-14.41-3.66-19.28-1.88-9.47-4.87-16.04-8.92-19.67-4.05-3.66-9.19-5.49-15.42-5.49-4.35,0-8.33.74-11.99,2.22-3.66,1.48-6.7,3.04-9.12,4.67,2.15,8.92,4.45,19.35,6.9,31.26,2.42,11.91,4.47,23.87,6.08,35.91,1.63,12.06,2.3,23.35,2.03,33.91-3.24,2.17-7.98,4.28-14.21,6.3-6.23,2.03-13.32,3.66-21.3,4.87-7.98,1.21-26.99,1.83-26.99,1.83-10.01,0-18.41-1.36-25.18-4.08-6.77-2.69-11.76-7.44-15-14.19-.07-.17-.17-.35-.25-.54,1.53-6.25,2.27-12.97,2.27-20.17,0-16.78-3.53-31.11-10.55-43.03-7.04-11.91-16.93-20.98-29.63-27.21-12.73-6.23-27.36-9.34-43.84-9.34-12.73,0-25.31,1.98-37.76,5.91-12.46,3.9-24.37,10.4-35.74,19.47-11.34,9.07-22.12,21.38-32.25,36.95-9,13.77-17.4,30.32-25.18,49.72-4.89-2-8.67-4.3-11.37-6.89-4.47-4.37-7.07-9.52-7.76-15.42,0-.05,0-.12-.02-.17-.02-.62-.94-44.09-.94-44.09-.27-5.68-2.1-9.89-5.49-12.58-3.39-2.72-7.64-4.05-12.78-4.05-3.78,0-7.24.32-10.35,1.01-3.11.67-5.49,1.56-7.09,2.62l-1.24,49.53c-.27,13.27-3.9,22.69-10.95,28.22-7.04,5.56-17.87,8.33-32.47,8.33h-85.26v41.82l88.13-.02c9.56-.1,18.68-1.53,27.38-4.25,9.05-2.84,16.71-7.09,22.93-12.78,4.2-3.86,7.24-8.4,9.09-13.64,3.14,4.82,7.29,9.02,12.41,12.63,9.47,6.62,23.21,11.29,41.2,13.99,18.02,2.72,40.95,4.08,68.83,4.08,45.45,0,78.61-6.77,99.45-20.32,3.21-2.08,6.15-4.3,8.87-6.7,4.47,8.21,11.54,14.68,21.16,19.5,9.32,4.65,21.25,7.17,35.74,7.49,1.06.02,7.71.02,7.71.02,14.06,0,27.95-1.56,41.62-4.67,13.67-3.11,24.69-7.24,33.07-12.38,8.95-5.68,14.75-12.46,17.47-20.31,2.69-7.83,4.05-18.66,4.05-32.47,0-7.29-.35-15.22-1.01-23.75ZM600.49,389.16c-15.03,6.5-37.02,9.74-65.99,9.74-13.25,0-24.96-.4-35.09-1.21-4.15-.35-8.18-.69-12.04-1.06,5.73-13.99,11.84-25.6,18.31-34.87,7.86-11.22,15.89-19.94,24.17-26.17,8.23-6.23,16.29-10.48,24.15-12.78,7.83-2.3,15.27-3.46,22.32-3.46,13.82,0,25.04,3.58,33.71,10.75,8.65,7.19,12.97,16.58,12.97,28.22,0,14.06-7.51,24.34-22.51,30.84Z"/>
+        <path d="M800,655.06c0,13.81-1.36,24.64-4.05,32.5-2.72,7.83-8.53,14.61-17.47,20.29-8.38,5.14-19.43,9.27-33.07,12.38-13.67,3.11-27.56,4.67-41.62,4.67,0,0-27.75-1.36-36.13-4.05-8.38-2.72-15.42-6.92-21.11-12.6-4.6-4.6-8.13-10.18-10.6-16.73-1.48,6.38-4.67,11.84-9.49,16.34-6.1,5.68-13.59,9.94-22.54,12.78-8.92,2.84-18.14,4.28-27.61,4.28h-45.87l-520.2.25c-5.66,0-10.23-4.57-10.23-10.23v-21.33c0-5.66,4.57-10.26,10.23-10.26l475.96-.25h89.29c12.73,0,22.66-2.77,29.85-8.33,7.17-5.54,10.87-14.95,11.15-28.2l.82-49.53c1.9-.82,4.4-1.63,7.51-2.45,3.11-.82,6.57-1.21,10.36-1.21,5.14,0,9.39,1.36,12.78,4.05,3.39,2.72,5.21,6.9,5.49,12.58l.82,38.16c.54,12.46,4.4,21.4,11.57,26.79,7.17,5.44,17.13,8.13,29.83,8.13,0,0,23.08-.62,31.07-1.83,7.98-1.21,15.08-2.84,21.3-4.87,6.23-2.03,10.97-4.13,14.21-6.3.27-10.55-.4-21.85-2.03-33.88-1.63-12.04-3.66-24.02-6.08-35.93-2.45-11.91-4.75-22.32-6.9-31.26,2.42-1.61,5.46-3.16,9.12-4.67,3.66-1.48,7.64-2.22,11.99-2.22,6.2,0,11.37,1.83,15.42,5.49,4.05,3.66,7.02,10.21,8.92,19.67,1.36,4.87,2.57,11.32,3.66,19.3,1.09,7.98,1.95,16.24,2.64,24.76.67,8.53,1.01,16.43,1.01,23.73Z"/>
+      </g>
+      <path fill="#1849A9" d="M15.09,111.23h448.38v41.81H15.09C6.76,153.04,0,146.28,0,137.95v-11.64C0,117.99,6.76,111.23,15.09,111.23Z"/>
+      <path fill="#078FD2" d="M15.09,206.58h676.93v41.81H15.09C6.76,248.39,0,241.63,0,233.31v-11.64C0,213.34,6.76,206.58,15.09,206.58Z"/>
+      <path fill="#1849a9" d="M15.09,301.93h328.24v41.81H15.09C6.76,343.75,0,336.99,0,328.66v-11.64C0,308.69,6.76,301.93,15.09,301.93Z"/>
+      <path fill="#1849A9" d="M15.09,397.29h198.73v41.81H15.09C6.76,439.1,0,432.34,0,424.01v-11.64C0,404.05,6.76,397.29,15.09,397.29Z"/>
+      <path fill="#078FD2" d="M15.09,492.64h614.01v41.81H15.09C6.76,534.45,0,527.69,0,519.37v-11.64C0,499.4,6.76,492.64,15.09,492.64Z"/>
+      <path fill="#1849a9" d="M15.09,587.99h554.33v41.81H15.09C6.76,629.81,0,623.05,0,614.72v-11.64C0,594.75,6.76,587.99,15.09,587.99Z"/>
+    </svg>
+    <span class="footer-logo-text">منصتي<span style="color:#078FD2;">_</span></span>
+  </div>
+  <span class="footer-copy">Manasety &middot; Software &amp; AI Solutions &middot; 2026</span>
+  <div class="footer-legal">عرض فني مُعد خصيصًا لمشروع البيت السوري · النسخة 3.0 · 12 أغسطس 2026 — منصتي علامة تجارية تابعة لشركة <strong>شلبي انتليجنس للبرمجيات وحلول الذكاء الاصطناعي ذ.م.م</strong></div>
+</footer>
+
+<script>
+// scroll progress
+const bar = document.getElementById('scrollbar');
+function updateBar(){
+  const h = document.documentElement;
+  const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+  bar.style.width = scrolled + '%';
+}
+document.addEventListener('scroll', updateBar, {passive:true});
+updateBar();
+
+// nav scrolled state
+const navEl = document.getElementById('nav');
+document.addEventListener('scroll', () => { navEl.classList.toggle('scrolled', window.scrollY > 10); }, {passive:true});
+
+// close mobile nav on link click
+document.querySelectorAll('.nav-links a').forEach(a => a.addEventListener('click', () => navEl.classList.remove('nav-open')));
+
+// reveal on scroll (same mechanism as manasety.ai)
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); });
+}, { threshold: 0.12 });
+document.querySelectorAll('.rv').forEach(el => revealObs.observe(el));
+
+// journey interaction
+const jNodes = [...document.querySelectorAll('.j-node')];
+const jSteps = [...document.querySelectorAll('.jp-step')];
+const jTrack = document.getElementById('journeyTrack');
+const jPrev = document.getElementById('jPrev');
+const jNext = document.getElementById('jNext');
+let current = 0;
+const isMobile = () => window.innerWidth <= 780;
+function setStep(i){
+  current = Math.max(0, Math.min(jNodes.length-1, i));
+  jNodes.forEach(n => n.classList.toggle('active', +n.dataset.step === current));
+  jSteps.forEach(s => s.classList.toggle('active', +s.dataset.step === current));
+  const pct = (current/(jNodes.length-1))*100;
+  if (isMobile()) { jTrack.style.height = pct + '%'; jTrack.style.width = '2px'; }
+  else { jTrack.style.width = pct + '%'; jTrack.style.height = '2px'; }
+  jPrev.disabled = current === 0;
+  jNext.disabled = current === jNodes.length - 1;
+}
+jNodes.forEach(n => n.addEventListener('click', () => setStep(+n.dataset.step)));
+jPrev.addEventListener('click', () => setStep(current-1));
+jNext.addEventListener('click', () => setStep(current+1));
+window.addEventListener('resize', () => setStep(current));
+setStep(0);
+</script>
+</body>
+</html>
