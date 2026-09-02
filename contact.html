@@ -1336,19 +1336,20 @@ if (contactForm) {
     e.preventDefault();
     var fd = new FormData(this);
 
-    /* ═══ Send lead to Marsoud CRM (fire-and-forget) ═══ */
-    var pkg = fd.get('package') || '';
-    var company = fd.get('company') || '';
-    var description = fd.get('description') || '';
-    var messageParts = [];
-    if (description) messageParts.push(description);
-    if (company) messageParts.push('اسم الشركة: ' + company);
-    if (pkg) messageParts.push('الباقة المطلوبة: ' + pkg);
+    /* ═══ Send lead to Marsoud CRM (fire-and-forget) ═══
+     * MARSOUD-CONTACT-LEAD-01 — send structured fields (company,
+     * package, description separated) + source="contact_page" so
+     * sales can tell dedicated contact-page leads from homepage
+     * form leads. Server dedupes on (phone, description) within
+     * 2 min so accidental double-submit is harmless. */
     var marsoudPayload = {
       name: fd.get('name') || '',
       phone: fd.get('phone') || '',
-      service: fd.get('service') || 'استشارة',
-      message: messageParts.join('\n')
+      company_name: fd.get('company') || '',
+      service_type: fd.get('service') || 'استشارة',
+      package: fd.get('package') || '',
+      description: fd.get('description') || '',
+      source: 'contact_page'
     };
     fetch('https://marsoud.com/api/v1/public/contact-lead', {
       method: 'POST',

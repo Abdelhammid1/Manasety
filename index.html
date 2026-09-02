@@ -2971,19 +2971,20 @@ if (contactForm) {
     e.preventDefault();
     var fd = new FormData(this);
 
-    /* ═══ Send lead to Marsoud CRM (fire-and-forget) ═══ */
-    var pkg = fd.get('package') || '';
-    var company = fd.get('company') || '';
-    var message = fd.get('message') || '';
-    var messageParts = [];
-    if (message) messageParts.push(message);
-    if (company) messageParts.push('اسم الشركة: ' + company);
-    if (pkg) messageParts.push('الباقة المطلوبة: ' + pkg);
+    /* ═══ Send lead to Marsoud CRM (fire-and-forget) ═══
+     * MARSOUD-CONTACT-LEAD-01 — send structured fields (company,
+     * package, description separated) + source="landing_form" so
+     * sales can filter homepage leads from contact-page leads.
+     * Server dedupes on (phone, description) within 2 min, so
+     * double-clicking Submit no longer creates ghost Leads. */
     var marsoudPayload = {
       name: fd.get('name') || '',
       phone: fd.get('phone') || '',
-      service: fd.get('service') || 'استشارة',
-      message: messageParts.join('\n')
+      company_name: fd.get('company') || '',
+      service_type: fd.get('service') || 'استشارة',
+      package: fd.get('package') || '',
+      description: fd.get('message') || '',
+      source: 'landing_form'
     };
     fetch('https://marsoud.com/api/v1/public/contact-lead', {
       method: 'POST',
