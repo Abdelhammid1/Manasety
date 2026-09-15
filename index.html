@@ -1766,6 +1766,42 @@ fbq('track','PageView');
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;max-width:1200px;width:100%;position:relative;z-index:1;">
     <!-- Right: Text & CTA -->
     <div style="order:1;">
+
+<!-- ═══════ INSTALLMENT OFFER (ad visitors only) ═══════ -->
+
+<style>
+
+.offer-banner{margin:0 0 28px;padding:18px 22px;max-width:560px;border-radius:14px;background:var(--navy);color:#fff;border-right:5px solid var(--orange);box-shadow:var(--shadow-lg)}
+
+.offer-banner-kicker{font-size:13px;font-weight:700;color:#FDBA74;margin-bottom:4px}
+
+.offer-banner-main{font-size:clamp(20px,2.4vw,26px);font-weight:800;line-height:1.35;margin-bottom:6px}
+
+.offer-banner-note{font-size:14px;font-weight:500;line-height:1.7;color:rgba(241,245,249,.78);margin-bottom:14px}
+
+.offer-banner-btn{display:inline-block;padding:10px 22px;border-radius:10px;background:linear-gradient(135deg,var(--orange),#E86B10);color:#fff;font-size:15px;font-weight:700;text-decoration:none}
+
+.offer-banner-btn:focus-visible{outline:3px solid #FDBA74;outline-offset:2px}
+
+@media (max-width:640px){.offer-banner{padding:16px 18px}}
+
+</style>
+
+<div id="offer-banner" class="offer-banner" hidden>
+
+  <p class="offer-banner-kicker">عرض خاص لمتابعي الإعلان</p>
+
+  <p class="offer-banner-main">ادفع 20% مقدم، وقسّط الباقي على 6 شهور</p>
+
+  <p class="offer-banner-note">بنفس أسعار الموقع، من غير فوايد، ولا غرامات تأخير، ولا شيكات أو وصولات ضمان.</p>
+
+  <a class="offer-banner-btn" href="https://wa.me/201044203322" target="_blank" data-wa-source="installment-offer-banner">اسأل عن العرض على واتساب</a>
+
+</div>
+
+<!-- البانر مكتوب في الـ HTML من الأول (hidden) علشان سكريبت التتبع الموجود يلقط زرار الواتساب اللي فيه ويطلق عليه Lead زي باقي الزراير. -->
+
+       
     <div class="hero-badge">A FULL SOFTWARE TEAM · NOT ONE DEV</div>
     <h1>نبني، ندرّب،<br><span>ونبقى معك حتى تتأكد أن كل شيء يعمل</span></h1>
     <p class="hero-sub"><strong style="color:var(--navy);">سعر ثابت، تسليم حقيقي</strong>، وفريق يبقى بجانبك حتى آخر يوم تُحل فيه أي مشكلة.</p>
@@ -2958,7 +2994,7 @@ if (contactForm) {
       company_name: fd.get('company') || '',
       service_type: fd.get('service') || 'استشارة',
       package: fd.get('package') || '',
-      description: fd.get('message') || '',
+      description: (fd.get('offer') ? '[عرض التقسيط 20%] ' : '') + (fd.get('message') || ''),
       source: 'landing_form'
     };
     fetch('https://marsoud.com/api/v1/public/contact-lead', {
@@ -2979,7 +3015,7 @@ if (contactForm) {
         /* ═══ Meta Pixel: Lead event للتحليلات ═══ */
         if (typeof fbq === 'function') {
           fbq('track', 'Lead', {
-            content_name: window.__selectedPackage || 'General Inquiry',
+            content_name: window.__selectedPackage || (fd.get('offer') ? 'Installment Offer' : 'General Inquiry'),
             content_category: 'Landing Page'
           });
         }
@@ -3004,6 +3040,38 @@ if (window.matchMedia('(hover: hover)').matches) {
   }, { passive: true });
 }
 </script>
+
+   <!-- ═══════ SOCIAL FLOAT ═══════ -->
+<style>
+.social-float{position:fixed;left:24px;bottom:20px;z-index:9990;display:flex;flex-direction:column;gap:12px}
+.social-float[hidden]{display:none}
+.social-float a{width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,.25);transition:transform .2s}
+.social-float a:hover{transform:translateY(-2px)}
+.social-float a:focus-visible{outline:3px solid var(--cyan);outline-offset:2px}
+.social-float svg{width:24px;height:24px;fill:#fff}
+.sf-ig{background:#E1306C}
+.sf-tt{background:#010101}
+.sf-fb{background:#1877F2}
+@media (max-width:640px){
+  .social-float{left:16px;bottom:18px;gap:10px}
+  .social-float a{width:42px;height:42px}
+  .social-float svg{width:20px;height:20px}
+}
+</style>
+<div class="social-float" id="social-float">
+  <!-- Instagram -->
+  <a class="sf-ig" href="INSTAGRAM_URL" target="_blank" rel="noopener" aria-label="منصتي على إنستجرام">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+  </a>
+  <!-- TikTok -->
+  <a class="sf-tt" href="TIKTOK_URL" target="_blank" rel="noopener" aria-label="منصتي على تيك توك">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.75a4.85 4.85 0 01-1.01-.06z"/></svg>
+  </a>
+  <!-- Facebook -->
+  <a class="sf-fb" href="FACEBOOK_URL" target="_blank" rel="noopener" aria-label="منصتي على فيسبوك">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 13.5h2.5l1-4H14v-2c0-1.03 0-2 2-2h1.5V2.14c-.326-.043-1.557-.14-2.857-.14C11.928 2 10 3.657 10 6.7v2.8H7v4h3V22h4v-8.5z"/></svg>
+  </a>
+</div>
 <!-- Floating WhatsApp Button -->
 <style>
 /* .whatsapp-country-float {
@@ -3103,8 +3171,8 @@ if (window.matchMedia('(hover: hover)').matches) {
   </button>
 
   <div class="whatsapp-float-menu">
-    <a href="https://wa.me/966561197859?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%20%F0%9F%91%8B%20%D8%AC%D8%A7%D9%8A%20%D9%85%D9%86%20%D9%85%D9%88%D9%82%D8%B9%20Manasety%D8%8C%20%D9%85%D8%AD%D8%AA%D8%A7%D8%AC%20%D8%A7%D8%B3%D8%AA%D8%B4%D8%A7%D8%B1%D8%A9%20%D9%85%D8%AC%D8%A7%D9%86%D9%8A%D8%A9" target="_blank" data-wa-source="landing-website">🇸🇦 السعودية</a>
-    <a href="https://wa.me/201044203322?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%20%F0%9F%91%8B%20%D8%AC%D8%A7%D9%8A%20%D9%85%D9%86%20%D9%85%D9%88%D9%82%D8%B9%20Manasety%D8%8C%20%D9%85%D8%AD%D8%AA%D8%A7%D8%AC%20%D8%A7%D8%B3%D8%AA%D8%B4%D8%A7%D8%B1%D8%A9%20%D9%85%D8%AC%D8%A7%D9%86%D9%8A%D8%A9" target="_blank" data-wa-source="landing-website">🇪🇬 مصر</a>
+     <a href="https://wa.me/966561197859?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%20%F0%9F%91%8B%20%D8%AC%D8%A7%D9%8A%20%D9%85%D9%86%20%D9%85%D9%88%D9%82%D8%B9%20%D9%85%D9%86%D8%B5%D8%AA%D9%8A%D8%8C%20%D9%85%D8%AD%D8%AA%D8%A7%D8%AC%20%D8%A7%D8%B3%D8%AA%D8%B4%D8%A7%D8%B1%D8%A9%20%D9%85%D8%AC%D8%A7%D9%86%D9%8A%D8%A9" target="_blank" data-wa-source="landing-website">🇸🇦 السعودية</a>
+<a href="https://wa.me/201044203322?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%20%F0%9F%91%8B%20%D8%AC%D8%A7%D9%8A%20%D9%85%D9%86%20%D9%85%D9%88%D9%82%D8%B9%20%D9%85%D9%86%D8%B5%D8%AA%D9%8A%D8%8C%20%D9%85%D8%AD%D8%AA%D8%A7%D8%AC%20%D8%A7%D8%B3%D8%AA%D8%B4%D8%A7%D8%B1%D8%A9%20%D9%85%D8%AC%D8%A7%D9%86%D9%8A%D8%A9" target="_blank" data-wa-source="landing-website">🇪🇬 مصر</a>
   </div>
 </div>
    <script>
@@ -3160,5 +3228,78 @@ if (window.matchMedia('(hover: hover)').matches) {
     });
   });
 </script>
+   <!-- ═══════ INSTALLMENT OFFER LOGIC ═══════ -->
+
+<script>
+
+(function () {
+
+  var KEY = 'manasety_offer';
+
+  try {
+
+    var params = new URLSearchParams(window.location.search);
+
+    if ((params.get('utm_campaign') || '').toLowerCase() === 'manasety_installment') {
+
+      sessionStorage.setItem(KEY, 'installment');
+
+    }
+
+    if (sessionStorage.getItem(KEY) !== 'installment') return;
+
+  } catch (e) { return; }
+
+  // 1) إظهار البانر
+
+  var banner = document.getElementById('offer-banner');
+
+  if (banner) banner.hidden = false;
+     var sf = document.getElementById('social-float'); if (sf) sf.hidden = true;
+
+  // 2) رسالة واتساب العرض + مصدر مميز لـ GA والـ Pixel
+
+  var msg = encodeURIComponent('السلام عليكم 👋 جاي من إعلان عرض التقسيط (20% مقدم)، وعايز أعرف تفاصيل العرض');
+
+  document.querySelectorAll('a[href*="wa.me"]').forEach(function (a) {
+
+    a.href = a.href.split('?')[0] + '?text=' + msg;
+
+    if (a.getAttribute('data-wa-source') === 'landing-website') {
+
+      a.setAttribute('data-wa-source', 'installment-offer');
+
+    }
+
+  });
+
+  // 3) الفورم: خانة مخفية + عنوان إيميل مميز في Web3Forms
+
+  var form = document.getElementById('contactForm');
+
+  if (form) {
+
+    var field = document.createElement('input');
+
+    field.type = 'hidden';
+
+    field.name = 'offer';
+
+    field.value = 'عرض التقسيط 20% مقدم';
+
+    form.appendChild(field);
+
+    form.querySelectorAll('input[name="subject"], input[name="_subject"]').forEach(function (i) {
+
+      i.value = 'طلب جديد من منصتي - عرض التقسيط';
+
+    });
+
+  }
+
+})();
+
+</script>
+
 </body>
 </html>
