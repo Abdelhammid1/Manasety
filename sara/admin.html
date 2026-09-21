@@ -16,32 +16,30 @@
 
   <!-- ============ LOGIN GATE ============ -->
   <div id="gate" class="gate">
-    <div class="card">
-      <h2>Manasety Birthday Admin</h2>
-      <p>
-        Sign in with a GitHub Personal Access Token that has
-        <code>Contents: Read + Write</code> on
-        <code>zyadwael/birthday-media</code>.
-      </p>
-
-      <form id="pat-form" style="margin-top: 20px;">
-        <div class="field">
-          <label for="pat-input">GitHub PAT</label>
-          <input id="pat-input" type="password" autocomplete="off" spellcheck="false" placeholder="github_pat_xxx…" />
-          <span class="error" id="pat-error"></span>
-        </div>
-        <button id="pat-submit" type="submit" class="btn btn-primary" style="width: 100%;">Continue</button>
-      </form>
-
-      <div class="setup-note" style="margin-top: 28px; text-align: left;">
-        <p style="margin-bottom: 8px;"><strong>Where does the token come from?</strong></p>
-        <ol>
-          <li>GitHub → Settings → Developer settings → <em>Fine-grained tokens</em> → Generate new token</li>
-          <li>Repository access: <code>Only select repositories</code> → pick <code>birthday-media</code></li>
-          <li>Permissions → Repository permissions → <code>Contents: Read and write</code></li>
-          <li>Copy the token (starts with <code>github_pat_</code>) and paste above</li>
-        </ol>
+    <div class="gate-card">
+      <div class="gate-icon" aria-hidden="true">
+        <svg viewBox="0 0 64 64" width="52" height="52" fill="none">
+          <path d="M32 54s-20-11.5-20-27a11 11 0 0 1 20-6.3A11 11 0 0 1 52 27c0 15.5-20 27-20 27z"
+                stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        </svg>
       </div>
+      <div class="gate-brand">Manasety</div>
+      <div class="gate-sub">Birthday admin</div>
+
+      <form id="pat-form" class="gate-form">
+        <input
+          id="pat-input"
+          type="password"
+          autocomplete="off"
+          spellcheck="false"
+          placeholder="Enter access code"
+          aria-label="Access code"
+        />
+        <span class="error" id="pat-error"></span>
+        <button id="pat-submit" type="submit" class="btn btn-primary gate-submit">
+          Continue
+        </button>
+      </form>
     </div>
   </div>
 
@@ -49,20 +47,29 @@
   <div id="admin-app" hidden>
 
     <!-- Dashboard screen -->
-    <div id="dashboard" class="admin-shell screen">
-      <div class="admin-header">
-        <h1>Birthdays</h1>
-        <div class="actions">
+    <div id="dashboard" class="dash-shell screen">
+      <header class="dash-topbar">
+        <div class="dash-brand">
+          <span class="dash-brand-mark">🌸</span>
+          <span class="dash-brand-name">Manasety</span>
+        </div>
+        <div class="dash-topbar-actions">
           <span class="who" id="whoami"></span>
-          <button id="new-btn" type="button" class="btn btn-primary">+ New birthday</button>
           <button id="signout-btn" type="button" class="btn btn-ghost">Sign out</button>
         </div>
-      </div>
-      <div class="card">
-        <h2>Existing birthdays</h2>
-        <p class="dash-note" id="dash-note">Loading…</p>
-        <ul class="dash-list" id="dash-list"></ul>
-      </div>
+      </header>
+
+      <section class="dash-hero">
+        <div>
+          <h1 class="dash-title">Birthdays</h1>
+          <p class="dash-subtitle" id="dash-note">Loading…</p>
+        </div>
+        <button id="new-btn" type="button" class="btn btn-primary dash-new-btn">
+          <span aria-hidden="true">＋</span> New birthday
+        </button>
+      </section>
+
+      <ul class="dash-grid" id="dash-list"></ul>
     </div>
 
     <!-- Editor screen -->
