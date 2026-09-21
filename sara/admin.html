@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Manasety · Birthday Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+  href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700&family=Cairo:wght@400;600;700&display=swap"
+  rel="stylesheet"
+/>
+<link rel="stylesheet" href="css/admin.css" />
+</head>
+<body>
+
+  <!-- ============ LOGIN GATE ============ -->
+  <div id="gate" class="gate">
+    <div class="card">
+      <h2>Manasety Birthday Admin</h2>
+      <p>
+        Sign in with a GitHub Personal Access Token that has
+        <code>Contents: Read + Write</code> on
+        <code>zyadwael/birthday-media</code>.
+      </p>
+
+      <form id="pat-form" style="margin-top: 20px;">
+        <div class="field">
+          <label for="pat-input">GitHub PAT</label>
+          <input id="pat-input" type="password" autocomplete="off" spellcheck="false" placeholder="github_pat_xxx…" />
+          <span class="error" id="pat-error"></span>
+        </div>
+        <button id="pat-submit" type="submit" class="btn btn-primary" style="width: 100%;">Continue</button>
+      </form>
+
+      <div class="setup-note" style="margin-top: 28px; text-align: left;">
+        <p style="margin-bottom: 8px;"><strong>Where does the token come from?</strong></p>
+        <ol>
+          <li>GitHub → Settings → Developer settings → <em>Fine-grained tokens</em> → Generate new token</li>
+          <li>Repository access: <code>Only select repositories</code> → pick <code>birthday-media</code></li>
+          <li>Permissions → Repository permissions → <code>Contents: Read and write</code></li>
+          <li>Copy the token (starts with <code>github_pat_</code>) and paste above</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ SIGNED-IN APP (shell — inner screens toggle) ============ -->
+  <div id="admin-app" hidden>
+
+    <!-- Dashboard screen -->
+    <div id="dashboard" class="admin-shell screen">
+      <div class="admin-header">
+        <h1>Birthdays</h1>
+        <div class="actions">
+          <span class="who" id="whoami"></span>
+          <button id="new-btn" type="button" class="btn btn-primary">+ New birthday</button>
+          <button id="signout-btn" type="button" class="btn btn-ghost">Sign out</button>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Existing birthdays</h2>
+        <p class="dash-note" id="dash-note">Loading…</p>
+        <ul class="dash-list" id="dash-list"></ul>
+      </div>
+    </div>
+
+    <!-- Editor screen -->
+    <div id="editor" class="admin-shell screen" hidden>
+      <div class="admin-header">
+        <h1 id="editor-title">New birthday</h1>
+        <div class="actions">
+          <button id="back-btn" type="button" class="btn btn-ghost">← Cancel</button>
+        </div>
+      </div>
+
+      <form id="editor-form" class="card" novalidate>
+
+        <div class="section-block">
+          <h2>Basics</h2>
+          <div class="field">
+            <label for="f-name">Name</label>
+            <input type="text" id="f-name" placeholder="Medo" dir="auto" />
+            <span class="error" data-for="f-name"></span>
+          </div>
+          <div class="field">
+            <label for="f-slug">URL slug</label>
+            <input type="text" id="f-slug" placeholder="medo" />
+            <span class="hint">Will be published at <code id="slug-preview">&lt;slug&gt;.manasety.ai</code></span>
+            <span class="error" data-for="f-slug"></span>
+          </div>
+        </div>
+
+        <details class="section-block">
+          <summary>Advanced text (labels, buttons, wrong-answer modal)</summary>
+          <div class="field"><label>Cover eyebrow</label><input id="f-eyebrowText" placeholder="A Special Day" /></div>
+          <div class="field"><label>Cover subtitle</label><input id="f-celebrationSub" placeholder="✨ Let the celebration begin" /></div>
+          <div class="field"><label>Start button text</label><input id="f-startButtonText" placeholder="ابدأ الكويز" dir="auto" /></div>
+          <div class="field"><label>Wrong-answer emoji</label><input id="f-wrongEmoji" placeholder="😠" /></div>
+          <div class="field"><label>Wrong-answer message</label><input id="f-wrongMessage" placeholder="طب مفيش عييد ميلاد 🎂" dir="auto" /></div>
+          <div class="field"><label>Try again button</label><input id="f-wrongButtonText" placeholder="حاول تاني" dir="auto" /></div>
+          <div class="field"><label>Confirm answers button</label><input id="f-confirmButtonText" placeholder="تأكيد الإجابات" dir="auto" /></div>
+          <div class="field"><label>Celebrate button</label><input id="f-celebrateButtonText" placeholder="CELEBRATE! 🎉" /></div>
+        </details>
+
+        <div class="section-block">
+          <h2>Quiz</h2>
+          <p class="hint">The wrong-answer modal fires when the user clicks a wrong option. Correct ones stay selected.</p>
+          <div id="quiz-builder"></div>
+          <button type="button" id="add-question-btn" class="btn btn-outline" style="margin-top: 12px;">+ Add question</button>
+          <span class="error" data-for="quiz"></span>
+        </div>
+
+        <div class="section-block">
+          <h2>Memories</h2>
+          <p class="hint">Photos that appear in the grid after the quiz. Each can have a small date caption.</p>
+          <div id="memories-builder"></div>
+          <button type="button" id="add-memory-btn" class="btn btn-outline" style="margin-top: 12px;">+ Add photo</button>
+        </div>
+
+        <div class="section-block">
+          <h2>Love letter</h2>
+          <div class="field"><label>Section eyebrow</label><input id="f-letterEyebrow" placeholder="✦ من القلب" dir="auto" /></div>
+          <div class="field"><label>Recipient name</label><input id="f-letterName" placeholder="ميدو حبيبي" dir="auto" /></div>
+          <div class="field">
+            <label>Arabic body</label>
+            <textarea id="f-letterAr" dir="rtl" rows="5" placeholder="…"></textarea>
+          </div>
+          <div class="field">
+            <label>English body</label>
+            <textarea id="f-letterEn" rows="5" placeholder="…"></textarea>
+          </div>
+          <div class="field"><label>Signature (English)</label><input id="f-signatureEn" placeholder="Your girl ❤️" /></div>
+          <div class="field"><label>Signature (Arabic)</label><input id="f-signatureAr" placeholder="ندي" dir="auto" /></div>
+        </div>
+
+        <div class="section-block">
+          <h2>Video</h2>
+          <div class="field">
+            <label for="f-video-file">Upload a video file</label>
+            <input type="file" id="f-video-file" accept="video/mp4,video/webm,video/quicktime" />
+            <span class="hint">MP4 or WebM. Warn above 25 MB, refuse above 50 MB.</span>
+          </div>
+          <div id="video-existing" class="video-existing" hidden>
+            <span class="hint">Currently attached: <code id="video-existing-path"></code></span>
+            <button type="button" id="video-remove-btn" class="btn btn-ghost">Remove</button>
+          </div>
+          <div class="field">
+            <label for="f-video-url">…or paste a YouTube / embed URL</label>
+            <input type="url" id="f-video-url" placeholder="https://youtube.com/watch?v=…" />
+            <span class="hint">If both are set, the uploaded file wins.</span>
+          </div>
+        </div>
+
+        <div id="publish-progress" class="progress" hidden>
+          <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+          <p class="progress-text" id="progress-text">Preparing…</p>
+        </div>
+        <span class="error" data-for="publish" id="publish-error"></span>
+
+        <button type="submit" id="publish-btn" class="btn btn-primary" style="width: 100%; margin-top: 24px; padding: 16px;">
+          Publish
+        </button>
+      </form>
+    </div>
+
+    <!-- Success screen -->
+    <div id="success" class="admin-shell screen" hidden>
+      <div class="card" style="text-align: center;">
+        <h2 style="font-size: 26px;">🎉 Published</h2>
+        <p>The birthday is live at:</p>
+        <p style="margin: 16px 0;"><a id="success-link" target="_blank" rel="noopener"><code id="success-url"></code></a></p>
+        <p class="hint">Files are now on GitHub; the CDN cache may take ~1 min to catch up.</p>
+        <div style="display:flex; justify-content: center; gap: 12px; margin-top: 24px; flex-wrap: wrap;">
+          <button id="copy-url-btn" type="button" class="btn btn-primary">Copy link</button>
+          <button id="edit-again-btn" type="button" class="btn btn-outline">Edit again</button>
+          <button id="back-to-dash-btn" type="button" class="btn btn-ghost">Back to dashboard</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /#admin-app -->
+
+  <script type="module" src="js/admin-auth.js"></script>
+  <script type="module" src="js/admin-list.js"></script>
+  <script type="module" src="js/admin-form.js"></script>
+
+</body>
+</html>

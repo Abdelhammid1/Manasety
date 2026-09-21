@@ -1,0 +1,387 @@
+/* ============================================================================
+   Admin panel — clean, focused UI. Uses the same design tokens as the
+   public template but a simpler, non-decorative layout.
+   ========================================================================== */
+
+:root {
+  --bg-1: #fdeef2;
+  --bg-2: #f7d9e1;
+  --plum: #4a1f2e;
+  --plum-2: #6b2b3f;
+  --rose: #a13b58;
+  --gold: #c9a86a;
+  --cream: #fbf7f1;
+  --ink: #2a1520;
+  --muted: #7a5765;
+  --line: rgba(74, 31, 46, 0.15);
+  --shadow: 0 20px 60px -20px rgba(74, 31, 46, 0.25);
+  --danger: #b83a4b;
+  --success: #2e6b3e;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  background: linear-gradient(180deg, var(--bg-1), var(--bg-2));
+  color: var(--ink);
+  font-family: 'Cormorant Garamond', 'Cairo', serif;
+}
+
+.admin-shell {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px 80px;
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 24px;
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  margin-bottom: 28px;
+}
+.admin-header h1 {
+  font-family: 'Playfair Display', serif;
+  color: var(--plum);
+  font-size: 22px;
+  font-weight: 700;
+}
+.admin-header .who {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  color: var(--muted);
+  font-size: 14px;
+  margin-right: 16px;
+}
+.admin-header .actions { display: flex; align-items: center; gap: 12px; }
+
+/* ---------- Cards ---------- */
+.card {
+  background: #fff;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  padding: 28px 24px;
+  box-shadow: var(--shadow);
+  margin-bottom: 20px;
+}
+.card h2 {
+  font-family: 'Playfair Display', serif;
+  color: var(--plum);
+  font-weight: 700;
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+.card p { font-family: 'Cormorant Garamond', serif; font-size: 16px; color: var(--muted); line-height: 1.6; margin-bottom: 12px; }
+.card code {
+  background: var(--bg-1);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'SF Mono', 'Consolas', monospace;
+  font-size: 13px;
+  color: var(--plum);
+}
+
+/* ---------- Login gate ---------- */
+.gate {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 20px;
+}
+.gate .card { max-width: 460px; width: 100%; text-align: center; }
+
+/* ---------- Form primitives ---------- */
+.field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; text-align: left; }
+.field label {
+  font-family: 'Playfair Display', serif;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.field input[type="text"],
+.field input[type="password"],
+.field input[type="number"],
+.field textarea,
+.field select {
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--bg-1);
+  font-family: 'Cormorant Garamond', 'Cairo', serif;
+  font-size: 16px;
+  color: var(--ink);
+  transition: border-color 0.15s, background 0.15s;
+  width: 100%;
+}
+.field input:focus,
+.field textarea:focus,
+.field select:focus {
+  outline: none;
+  border-color: var(--rose);
+  background: #fff;
+}
+.field .hint {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  color: var(--muted);
+  font-size: 13px;
+}
+.field .error {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  color: var(--danger);
+  font-size: 13px;
+  min-height: 16px;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  appearance: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'Playfair Display', 'Cairo', serif;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 999px;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--plum), var(--plum-2));
+  color: #fff;
+  box-shadow: 0 8px 20px -8px rgba(74, 31, 46, 0.5);
+}
+.btn-primary:hover:not(:disabled) { transform: translateY(-1px); }
+.btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+.btn-outline {
+  background: transparent;
+  color: var(--plum);
+  border: 1.5px solid var(--plum);
+}
+.btn-outline:hover { background: var(--plum); color: #fff; }
+.btn-ghost {
+  background: transparent;
+  color: var(--muted);
+  padding: 8px 14px;
+  font-size: 13px;
+}
+.btn-ghost:hover { color: var(--plum); }
+.btn-danger { background: var(--danger); color: #fff; }
+.btn-danger:hover { background: #922e3d; }
+
+/* ---------- Setup note (before there's real content) ---------- */
+.setup-note {
+  border-left: 3px solid var(--gold);
+  padding-left: 16px;
+  margin: 20px 0;
+}
+.setup-note ol { margin-left: 20px; }
+.setup-note li { margin-bottom: 6px; font-family: 'Cormorant Garamond', serif; font-size: 15px; }
+
+/* ---------- Dashboard list ---------- */
+.dash-note {
+  font-style: italic;
+  color: var(--muted);
+  margin: 8px 0 20px;
+}
+.dash-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+.dash-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--bg-1);
+  flex-wrap: wrap;
+}
+.dash-row-main { display: flex; flex-direction: column; gap: 4px; min-width: 140px; }
+.dash-name {
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  color: var(--plum);
+  font-size: 17px;
+}
+.dash-slug { font-size: 13px; color: var(--muted); }
+.dash-row-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+
+/* ---------- Editor form sections ---------- */
+.section-block {
+  padding: 24px 0;
+  border-top: 1px solid var(--line);
+  margin-top: 24px;
+}
+.section-block:first-of-type { border-top: none; margin-top: 0; padding-top: 0; }
+.section-block > h2 {
+  font-family: 'Playfair Display', serif;
+  color: var(--plum);
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 12px;
+}
+.section-block > p.hint { margin-bottom: 12px; }
+details.section-block {
+  border-top: 1px solid var(--line);
+  padding: 16px 0;
+  margin-top: 24px;
+}
+details.section-block summary {
+  font-family: 'Playfair Display', serif;
+  color: var(--plum);
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 6px 0;
+  list-style: none;
+}
+details.section-block summary::before {
+  content: "▸ ";
+  color: var(--gold);
+  transition: transform 0.2s ease;
+  display: inline-block;
+}
+details[open].section-block summary::before { content: "▾ "; }
+details.section-block > .field:first-of-type { margin-top: 16px; }
+
+/* ---------- Quiz builder rows ---------- */
+.q-row {
+  background: var(--bg-1);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+.q-row-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.q-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.q-options { display: flex; flex-direction: column; gap: 8px; margin-bottom: 8px; }
+.q-option-row { display: flex; align-items: center; gap: 8px; }
+.q-option-row input[type="radio"] { flex-shrink: 0; accent-color: var(--rose); width: 18px; height: 18px; }
+.q-option-row input[type="text"] { flex: 1; padding: 8px 12px; font-size: 15px; }
+.q-opt-remove {
+  padding: 4px 10px;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1;
+}
+
+/* ---------- Memory rows ---------- */
+.mem-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  background: var(--bg-1);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 12px;
+}
+.mem-thumb {
+  width: 80px; height: 80px;
+  border-radius: 10px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, var(--bg-2), #efc8d2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mem-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.mem-thumb-placeholder {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  color: var(--plum);
+  font-size: 14px;
+}
+.mem-fields { flex: 1; display: flex; flex-direction: column; gap: 12px; }
+.mem-fields .field { margin-bottom: 0; }
+.mem-remove {
+  padding: 4px 10px;
+  font-size: 18px;
+  line-height: 1;
+  color: var(--muted);
+  align-self: flex-start;
+}
+
+/* ---------- Video ---------- */
+.video-existing {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-1);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-bottom: 12px;
+  gap: 10px;
+}
+
+/* ---------- Publish progress ---------- */
+.progress { margin-top: 20px; }
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: var(--bg-1);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--rose), var(--plum));
+  width: 0%;
+  transition: width 0.3s ease;
+}
+.progress-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  color: var(--muted);
+  font-size: 14px;
+  margin-top: 8px;
+  text-align: center;
+}
+
+/* ---------- Small: invalid state on inputs ---------- */
+.field input.invalid,
+.field textarea.invalid {
+  border-color: var(--danger) !important;
+  background: #fff5f6;
+}
+
+/* ---------- Delete button — subtle until hovered ---------- */
+.dash-delete { color: var(--danger); }
+.dash-delete:hover { background: var(--danger); color: #fff; }
+.dash-delete:disabled { opacity: 0.5; cursor: wait; }
+
+/* ---------- Screen visibility toggle ---------- */
+.screen[hidden] { display: none !important; }
+
+/* ---------- Success link ---------- */
+#success-link { color: var(--rose); text-decoration: none; }
+#success-link:hover { text-decoration: underline; }
+
+/* ---------- Header actions responsive ---------- */
+@media (max-width: 640px) {
+  .admin-header { flex-direction: column; gap: 12px; align-items: flex-start; }
+  .admin-header .actions { flex-wrap: wrap; }
+  .dash-row { flex-direction: column; align-items: stretch; }
+  .dash-row-actions { justify-content: flex-end; }
+}

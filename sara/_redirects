@@ -1,0 +1,6 @@
+# Cloudflare Pages routing.
+# The wildcard *.manasety.ai domain serves this deployment for every subdomain,
+# but admin.manasety.ai should specifically load admin.html — everything else
+# renders the public template (which reads the subdomain to pick a birthday).
+
+admin.manasety.ai/*   /admin.html   200

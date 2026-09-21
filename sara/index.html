@@ -6,424 +6,12 @@
 <title>Happy Birthday</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,600;1,700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<link
+  href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,600;1,700&family=Cairo:wght@400;600;700&display=swap"
+  rel="stylesheet"
+/>
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
-<style>
-  :root {
-    --bg-1: #fdeef2;
-    --bg-2: #f7d9e1;
-    --bg-3: #efc8d2;
-    --plum: #4a1f2e;
-    --plum-2: #6b2b3f;
-    --rose: #a13b58;
-    --pink-soft: #f7e3ea;
-    --ink: #2a1520;
-    --muted: #7a5765;
-    --card: #ffffff;
-    --border: rgba(74, 31, 46, 0.15);
-    --shadow: 0 20px 60px -20px rgba(74, 31, 46, 0.25);
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html, body {
-    background: linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 50%, var(--bg-1) 100%);
-    color: var(--ink);
-    font-family: 'Cormorant Garamond', 'Cairo', serif;
-    height: 100%;
-    overflow-x: hidden;
-  }
-  /* Default: button-driven pages are locked to viewport, no scrolling */
-  body { overflow-y: hidden; }
-  /* Once the final flow unlocks, allow vertical scroll */
-  body.scrollable { overflow-y: auto; height: auto; min-height: 100vh; }
-
-  body::before {
-    content: "";
-    position: fixed; inset: 0;
-    background-image:
-      radial-gradient(circle at 15% 20%, rgba(255,255,255,0.5), transparent 30%),
-      radial-gradient(circle at 85% 70%, rgba(239,200,210,0.4), transparent 35%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .petals {
-    position: fixed; inset: 0;
-    pointer-events: none;
-    overflow: hidden;
-    z-index: 1;
-  }
-  .petal {
-    position: absolute;
-    top: -30px;
-    font-size: 22px;
-    opacity: 0.7;
-    animation: fall linear infinite;
-  }
-  @keyframes fall {
-    0%   { transform: translateY(-30px) rotate(0deg); }
-    100% { transform: translateY(105vh) rotate(360deg); }
-  }
-
-  main { position: relative; z-index: 2; }
-
-  /* ---------- Section shell ---------- */
-  section.screen {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 60px 24px;
-  }
-  .container {
-    width: 100%;
-    max-width: 560px;
-    text-align: center;
-  }
-
-  /* ---------- Hero ---------- */
-  .eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 14px;
-    font-family: 'Playfair Display', serif;
-    letter-spacing: 0.32em;
-    font-size: 12px;
-    color: var(--plum);
-    text-transform: uppercase;
-    margin-bottom: 28px;
-  }
-  .eyebrow::before, .eyebrow::after {
-    content: "";
-    width: 32px; height: 1px;
-    background: var(--plum);
-    opacity: 0.6;
-  }
-  h1.title {
-    font-family: 'Playfair Display', serif;
-    font-weight: 700;
-    font-size: clamp(44px, 8vw, 68px);
-    line-height: 1.05;
-    color: var(--plum);
-    margin-bottom: 20px;
-  }
-  h1.title em {
-    font-style: italic;
-    background: linear-gradient(135deg, #b0284a, #7a1f38);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    font-weight: 700;
-  }
-  .subtitle {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 20px;
-    color: var(--muted);
-    margin-bottom: 40px;
-  }
-
-  /* ---------- Buttons ---------- */
-  .btn {
-    appearance: none;
-    border: none;
-    cursor: pointer;
-    font-family: 'Cairo', 'Playfair Display', sans-serif;
-    font-weight: 600;
-    padding: 18px 42px;
-    border-radius: 999px;
-    font-size: 16px;
-    letter-spacing: 0.05em;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-  .btn-primary {
-    background: linear-gradient(135deg, var(--plum) 0%, var(--plum-2) 100%);
-    color: #fff;
-    box-shadow: 0 12px 30px -10px rgba(74, 31, 46, 0.5);
-  }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 18px 40px -12px rgba(74, 31, 46, 0.6); }
-  .btn-outline {
-    background: transparent;
-    color: var(--plum);
-    border: 1.5px solid var(--plum);
-    padding: 16px 40px;
-  }
-  .btn-outline:hover { background: var(--plum); color: #fff; }
-
-  /* ---------- Quiz ---------- */
-  .quiz-head {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(28px, 5vw, 40px);
-    font-weight: 700;
-    color: var(--plum);
-    margin-bottom: 8px;
-  }
-  .quiz-head em { font-style: normal; color: var(--rose); }
-  .quiz-sub {
-    font-family: 'Cairo', sans-serif;
-    color: var(--plum-2);
-    margin-bottom: 32px;
-    font-size: 15px;
-  }
-  .quiz-card {
-    background: var(--card);
-    border-radius: 24px;
-    padding: 32px 24px;
-    box-shadow: var(--shadow);
-    text-align: right;
-    direction: rtl;
-  }
-  .q-label {
-    font-family: 'Cairo', serif;
-    font-size: 11px;
-    letter-spacing: 0.3em;
-    color: var(--muted);
-    margin-bottom: 8px;
-  }
-  .q-text {
-    font-family: 'Cairo', sans-serif;
-    font-size: 17px;
-    color: var(--ink);
-    margin-bottom: 18px;
-    font-weight: 600;
-  }
-  .options { display: flex; flex-direction: column; gap: 12px; margin-bottom: 30px; }
-  .option {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    background: #fff;
-    border: 1.5px solid var(--border);
-    border-radius: 16px;
-    padding: 14px 18px;
-    cursor: pointer;
-    font-family: 'Cairo', sans-serif;
-    font-size: 15px;
-    color: var(--ink);
-    transition: all 0.2s ease;
-  }
-  .option:hover { border-color: var(--plum); background: var(--pink-soft); }
-  .option.selected {
-    border-color: var(--plum);
-    background: var(--pink-soft);
-    box-shadow: 0 0 0 3px rgba(161, 59, 88, 0.15);
-  }
-  .radio {
-    width: 18px; height: 18px;
-    border-radius: 50%;
-    border: 1.5px solid var(--border);
-    flex-shrink: 0;
-    position: relative;
-    transition: all 0.2s;
-  }
-  .option.selected .radio {
-    border-color: var(--plum);
-    background: var(--plum);
-    box-shadow: inset 0 0 0 3px #fff;
-  }
-  .q-divider { height: 1px; background: var(--border); margin: 24px 0; }
-
-  /* ---------- Wrong-answer modal ---------- */
-  .modal-backdrop {
-    position: fixed; inset: 0;
-    background: rgba(74, 31, 46, 0.35);
-    backdrop-filter: blur(4px);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 100;
-    padding: 20px;
-  }
-  .modal-backdrop.show { display: flex; animation: fadeIn 0.25s ease; }
-  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-  .modal {
-    background: #fff;
-    border-radius: 20px;
-    padding: 40px 28px;
-    max-width: 340px;
-    width: 100%;
-    text-align: center;
-    border: 2px solid var(--plum);
-    box-shadow: 0 30px 60px rgba(0,0,0,0.25);
-    animation: pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-  @keyframes pop { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-  .modal .emoji { font-size: 60px; margin-bottom: 20px; }
-  .modal .msg {
-    font-family: 'Cairo', sans-serif;
-    font-size: 18px;
-    color: var(--ink);
-    margin-bottom: 24px;
-    direction: rtl;
-    font-weight: 600;
-  }
-
-  /* ---------- Celebrate section ---------- */
-  #celebrate-screen h1.title em::after { content: " 🎂"; }
-  .celebrate-btn { position: relative; }
-  .celebrate-btn::before { content: "🎉"; margin-right: 8px; }
-
-  /* ---------- Memories ---------- */
-  #memories .eyebrow { justify-content: center; }
-  .memories-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(32px, 5vw, 44px);
-    font-weight: 700;
-    color: var(--plum);
-    margin-bottom: 40px;
-  }
-  .memories-title em { font-style: italic; color: var(--rose); }
-  .memories-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-  }
-  .memory {
-    background: #fff;
-    border-radius: 18px;
-    overflow: hidden;
-    box-shadow: var(--shadow);
-    transition: transform 0.3s ease;
-  }
-  .memory:hover { transform: translateY(-4px); }
-  .memory .img-wrap {
-    aspect-ratio: 1 / 1;
-    background: linear-gradient(135deg, #f7d9e1, #efc8d2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--plum);
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-size: 14px;
-    overflow: hidden;
-  }
-  .memory .img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .memory .caption {
-    padding: 14px 16px;
-    font-family: 'Cairo', sans-serif;
-    font-size: 13px;
-    color: var(--muted);
-    letter-spacing: 0.1em;
-    text-align: right;
-    text-transform: uppercase;
-  }
-
-  /* ---------- Letter ---------- */
-  .letter-eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    color: var(--rose);
-    font-size: 15px;
-    margin-bottom: 24px;
-  }
-  .letter-name {
-    font-family: 'Cairo', sans-serif;
-    font-size: 32px;
-    font-weight: 700;
-    color: var(--plum);
-    margin-bottom: 12px;
-    text-align: right;
-    direction: rtl;
-  }
-  .letter-line { height: 1px; background: var(--plum); opacity: 0.4; margin: 20px 0; }
-  .letter-ar {
-    font-family: 'Cairo', sans-serif;
-    font-size: 17px;
-    line-height: 2;
-    color: var(--ink);
-    text-align: right;
-    direction: rtl;
-    margin-bottom: 24px;
-  }
-  .letter-en {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 18px;
-    line-height: 1.9;
-    color: var(--ink);
-    margin-bottom: 20px;
-  }
-  .signature {
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-size: 24px;
-    color: var(--rose);
-    text-align: right;
-    margin-top: 30px;
-  }
-  .signature .name {
-    font-family: 'Cairo', sans-serif;
-    display: block;
-    font-size: 22px;
-    font-style: normal;
-    color: var(--plum);
-    margin-top: 4px;
-  }
-
-  /* ---------- Video ---------- */
-  .video-wrap {
-    background: #fff;
-    border-radius: 22px;
-    padding: 14px;
-    box-shadow: var(--shadow);
-    margin-top: 30px;
-  }
-  .video-wrap video {
-    width: 100%;
-    border-radius: 14px;
-    display: block;
-    background: #f7e3ea;
-  }
-  .video-placeholder {
-    aspect-ratio: 9 / 16;
-    max-height: 500px;
-    margin: 0 auto;
-    background: linear-gradient(135deg, #f7d9e1, #efc8d2);
-    border-radius: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--plum);
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    text-align: center;
-    padding: 20px;
-  }
-
-  /* ---------- Page swap ---------- */
-  section.page { display: none; }
-  section.page.active {
-    display: flex;
-    align-items: flex-start;  /* combined with .container margin:auto → scroll-safe centering */
-    justify-content: center;
-    animation: fadePage 0.5s ease;
-    height: 100vh;
-    overflow-y: auto;   /* long pages (quiz) scroll INSIDE the page only */
-    overflow-x: hidden;
-  }
-  section.page.active > .container { margin: auto; }
-  @keyframes fadePage {
-    from { opacity: 0; transform: translateY(15px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  /* When the final flow is unlocked, its three sections stack and scroll together */
-  #final-flow { display: none; flex-direction: column; }
-  #final-flow.active { display: flex; animation: fadePage 0.5s ease; }
-  #final-flow .screen { min-height: auto; padding: 80px 24px; }
-  #final-flow .screen:first-child { min-height: 100vh; }
-
-  /* ---------- Responsive ---------- */
-  @media (max-width: 480px) {
-    .memories-grid { grid-template-columns: 1fr; }
-    .quiz-card { padding: 24px 18px; }
-  }
-</style>
+<link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
@@ -434,56 +22,26 @@
   <!-- ============ 1. HERO ============ -->
   <section class="screen page active" id="hero-screen">
     <div class="container">
-      <div class="eyebrow">A Special Day</div>
-      <h1 class="title">Today is<br><em>Sara's</em><br>Birthday</h1>
-      <p class="subtitle">✨ Let the celebration begin</p>
-      <button class="btn btn-primary" onclick="startQuiz()">ابدأ الكويز &nbsp;→</button>
+      <div class="eyebrow" id="hero-eyebrow">A Special Day</div>
+      <h1 class="title">Today is<br><em id="hero-name">Name's</em><br>Birthday</h1>
+      <p class="subtitle" id="hero-subtitle">✨ Let the celebration begin</p>
+      <button class="btn btn-primary" id="start-btn">ابدأ الكويز &nbsp;→</button>
     </div>
   </section>
 
   <!-- ============ 2. QUIZ ============ -->
   <section class="screen page" id="quiz-screen">
     <div class="container">
-      <h2 class="quiz-head"><em>Quick Quiz</em> for Sara!</h2>
-      <p class="quiz-sub">جاوبي صح عشان تعدي</p>
+      <h2 class="quiz-head">
+        <em>Quick Quiz</em> for <span id="quiz-title-name">Name</span>!
+      </h2>
+      <p class="quiz-sub" id="quiz-sub">جاوبي صح عشان تعدي</p>
 
       <div class="quiz-card">
-
-        <div class="question" data-q="0" data-correct="2">
-          <div class="q-label">السؤال الأول</div>
-          <div class="q-text">بتحبي ايه أكتر؟</div>
-          <div class="options">
-            <div class="option" data-i="0"><span>الشوكولاتة</span><div class="radio"></div></div>
-            <div class="option" data-i="1"><span>الورد</span><div class="radio"></div></div>
-            <div class="option" data-i="2"><span>انا</span><div class="radio"></div></div>
-          </div>
-        </div>
-
-        <div class="q-divider"></div>
-
-        <div class="question" data-q="1" data-correct="1">
-          <div class="q-label">السؤال الثاني</div>
-          <div class="q-text">لو جيت في يوم زعلانة.. هعمل ايه؟</div>
-          <div class="options">
-            <div class="option" data-i="0"><span>تسيبني في حالي</span><div class="radio"></div></div>
-            <div class="option" data-i="1"><span>تحضني وتقولي كل حاجة هتبقى تمام</span><div class="radio"></div></div>
-            <div class="option" data-i="2"><span>تقولي اتفرجي على فيلم</span><div class="radio"></div></div>
-          </div>
-        </div>
-
-        <div class="q-divider"></div>
-
-        <div class="question" data-q="2" data-correct="0">
-          <div class="q-label">السؤال الثالث</div>
-          <div class="q-text">لو كسرتي حاجة غالية عليّا.. هقولك ايه؟</div>
-          <div class="options">
-            <div class="option" data-i="0"><span>ولا يهمك حبيبتي، انتي أغلى</span><div class="radio"></div></div>
-            <div class="option" data-i="1"><span>معلش بس دي كانت غالية</span><div class="radio"></div></div>
-            <div class="option" data-i="2"><span>خلاص هزعل منك شوية</span><div class="radio"></div></div>
-          </div>
-        </div>
-
-        <button class="btn btn-primary" style="margin-top: 10px; width: 100%;" onclick="submitQuiz()">تأكيد الإجابات</button>
+        <div id="quiz-questions"></div>
+        <button class="btn btn-primary" id="submit-btn" style="margin-top: 10px; width: 100%;">
+          تأكيد الإجابات
+        </button>
       </div>
     </div>
   </section>
@@ -491,87 +49,57 @@
   <!-- ============ 3. CELEBRATE ============ -->
   <section class="screen page" id="celebrate-screen">
     <div class="container">
-      <div class="eyebrow">✦ A Celebration ✦</div>
-      <h1 class="title">Let's Celebrate<br><em>Sara!</em> 🎂</h1>
-      <button class="btn btn-outline celebrate-btn" onclick="celebrate()">CELEBRATE! 🎉</button>
+      <div class="eyebrow" id="celebrate-eyebrow">✦ A Celebration ✦</div>
+      <h1 class="title">
+        <span id="celebrate-prefix">Let's Celebrate</span><br>
+        <em id="celebrate-name">Name!</em>
+      </h1>
+      <button class="btn btn-outline celebrate-btn" id="celebrate-btn">CELEBRATE! 🎉</button>
     </div>
   </section>
 
   <!-- ============ 4-6. FINAL FLOW (scrolls together) ============ -->
   <div id="final-flow">
 
-  <section class="screen" id="memories">
-    <div class="container">
-      <div class="eyebrow">✦ Memories ✦</div>
-      <h2 class="memories-title">Our <em>Beautiful</em> Moments</h2>
-      <div class="memories-grid">
-        <div class="memory">
-          <div class="img-wrap"><span>photo 1</span></div>
-          <div class="caption">NOV 2024 · 23</div>
-        </div>
-        <div class="memory">
-          <div class="img-wrap"><span>photo 2</span></div>
-          <div class="caption">MAY 2025 · 04</div>
-        </div>
-        <div class="memory">
-          <div class="img-wrap"><span>photo 3</span></div>
-          <div class="caption">OCT 2024 · 24</div>
-        </div>
-        <div class="memory">
-          <div class="img-wrap"><span>photo 4</span></div>
-          <div class="caption">OCT 2024 · 06</div>
-        </div>
+    <section class="screen" id="memories">
+      <div class="container">
+        <div class="eyebrow" id="memories-eyebrow">✦ Memories ✦</div>
+        <h2 class="memories-title">
+          <span id="memories-title-prefix">Our Beautiful Moments</span>
+          <em id="memories-title-name" style="display:none"></em>
+        </h2>
+        <div class="memories-grid" id="memories-grid"></div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ============ 5. LETTER ============ -->
-  <section class="screen" id="letter">
-    <div class="container">
-      <div style="text-align: right; direction: rtl;">
-        <div class="letter-eyebrow">✦ من القلب</div>
-        <div class="letter-name">سارة حبيبتي</div>
-        <div class="letter-line"></div>
-        <p class="letter-ar">
-          كل سنة وانتي طيبة يا حبيبتي، وكل سنة وانتي السبب في كل الراحة والسعادة اللي بحس بيها.
-          يارب تفضلي دايماً معايا، ونعيش سوا أيام كتير حلوة وخفيفة، وأفضل أشوفك مبسوطة ومرتاحة طول العمر ❤️
-        </p>
-        <div class="letter-line"></div>
-        <p class="letter-en">
-          I really can't explain how much you mean to me. With you, everything feels softer, safer, and happier.
-          Your smile, your voice, and even the smallest details you do always make my heart feel full.
-        </p>
-        <p class="letter-en">
-          I hope we always stay this close, sharing our days, our little moments, and building beautiful memories together.
-          And no matter what happens, I just want you to know that you'll always have a very special place in my heart ❤️
-        </p>
-        <div class="signature">
-          Yours ❤️
-          <span class="name">— اسمك هنا</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ 6. VIDEO ============ -->
-  <section class="screen" id="video-screen">
-    <div class="container">
-      <div class="eyebrow">✦ A Message ✦</div>
-      <h2 class="memories-title">🎬 <em>Watch This</em></h2>
-      <div class="video-wrap">
-        <!-- Replace src with your video file, or keep placeholder -->
-        <video controls poster="" preload="metadata">
-          <source src="birthday.mp4" type="video/mp4" />
-          <!-- Fallback placeholder -->
-        </video>
-        <div class="video-placeholder" id="video-fallback" style="display:none;">
-          <div>
-            Drop your video file next to this page<br>and name it <strong>birthday.mp4</strong>
+    <!-- Letter -->
+    <section class="screen" id="letter">
+      <div class="container">
+        <div style="text-align: right; direction: rtl;">
+          <div class="letter-eyebrow" id="letter-eyebrow">✦ من القلب</div>
+          <div class="letter-name" id="letter-name"></div>
+          <div class="letter-line"></div>
+          <p class="letter-ar" id="letter-ar"></p>
+          <div class="letter-line"></div>
+          <p class="letter-en" id="letter-en"></p>
+          <div class="signature">
+            <span id="signature-en">Yours ❤️</span>
+            <span class="name" id="signature-ar"></span>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+
+    <!-- Video -->
+    <section class="screen" id="video-screen">
+      <div class="container">
+        <div class="eyebrow" id="video-eyebrow">✦ A Message ✦</div>
+        <h2 class="memories-title" id="video-title">🎬 <em>Watch This</em></h2>
+        <div class="video-wrap" id="video-container">
+          <!-- template.js injects <video> or <iframe> here -->
+        </div>
+      </div>
+    </section>
 
   </div><!-- /#final-flow -->
 
@@ -580,106 +108,13 @@
 <!-- ============ WRONG-ANSWER MODAL ============ -->
 <div class="modal-backdrop" id="wrong-modal">
   <div class="modal">
-    <div class="emoji">😠</div>
-    <div class="msg">طب مفيش عيييد ميلاد 🎂</div>
-    <button class="btn btn-primary" onclick="closeModal()">حاولي تاني</button>
+    <div class="emoji" id="wrong-emoji">😠</div>
+    <div class="msg"   id="wrong-message">طب مفيش عيييد ميلاد 🎂</div>
+    <button class="btn btn-primary" id="wrong-close-btn">حاولي تاني</button>
   </div>
 </div>
 
-<script>
-  /* ---------- Floating petals ---------- */
-  const glyphs = ['🌸','🌷','🌺','✿','🌹','❀'];
-  const petalsRoot = document.getElementById('petals');
-  for (let i = 0; i < 18; i++) {
-    const p = document.createElement('div');
-    p.className = 'petal';
-    p.textContent = glyphs[Math.floor(Math.random() * glyphs.length)];
-    p.style.left = Math.random() * 100 + 'vw';
-    p.style.animationDuration = (10 + Math.random() * 14) + 's';
-    p.style.animationDelay = (-Math.random() * 12) + 's';
-    p.style.fontSize = (14 + Math.random() * 20) + 'px';
-    p.style.opacity = (0.35 + Math.random() * 0.5).toFixed(2);
-    petalsRoot.appendChild(p);
-  }
-
-  /* ---------- Page navigation (one page at a time) ---------- */
-  function showPage(id) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-    window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
-  }
-
-  function startQuiz() { showPage('quiz-screen'); }
-
-  /* ---------- Quiz logic ---------- */
-  document.querySelectorAll('.question').forEach(q => {
-    q.querySelectorAll('.option').forEach(opt => {
-      opt.addEventListener('click', () => {
-        const correct = parseInt(q.dataset.correct, 10);
-        const chosen  = parseInt(opt.dataset.i, 10);
-
-        if (chosen !== correct) {
-          // Wrong pick → clear this question and show the modal immediately
-          q.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
-          openModal();
-          return;
-        }
-
-        // Right pick → mark it selected
-        q.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
-        opt.classList.add('selected');
-      });
-    });
-  });
-
-  function submitQuiz() {
-    const questions = document.querySelectorAll('.question');
-    for (const q of questions) {
-      if (!q.querySelector('.option.selected')) {
-        alert('اختاري إجابة لكل سؤال 🌸');
-        return;
-      }
-    }
-    // Small celebration confetti when answers confirmed
-    confetti({
-      particleCount: 120,
-      spread: 90,
-      origin: { y: 0.6 },
-      colors: ['#a13b58', '#f7d9e1', '#efc8d2', '#4a1f2e', '#ffffff']
-    });
-    showPage('celebrate-screen');
-  }
-
-  function openModal()  { document.getElementById('wrong-modal').classList.add('show'); }
-  function closeModal() { document.getElementById('wrong-modal').classList.remove('show'); }
-
-  /* ---------- Celebrate button ---------- */
-  function celebrate() {
-    // Big confetti burst
-    const duration = 3000;
-    const end = Date.now() + duration;
-    (function frame() {
-      confetti({ particleCount: 5, angle: 60,  spread: 55, origin: { x: 0 },
-        colors: ['#a13b58', '#f7d9e1', '#efc8d2', '#4a1f2e', '#ffd700'] });
-      confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 },
-        colors: ['#a13b58', '#f7d9e1', '#efc8d2', '#4a1f2e', '#ffd700'] });
-      if (Date.now() < end) requestAnimationFrame(frame);
-    })();
-
-    // Swap to the final flow (Memories → Letter → Video scroll together)
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById('final-flow').classList.add('active');
-    document.body.classList.add('scrollable');   // now the page can scroll
-    window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
-  }
-
-  /* ---------- Video fallback ---------- */
-  const vid = document.querySelector('#video-screen video');
-  vid.addEventListener('error', () => {
-    vid.style.display = 'none';
-    document.getElementById('video-fallback').style.display = 'flex';
-  });
-</script>
+<script type="module" src="js/template.js"></script>
 
 </body>
 </html>
