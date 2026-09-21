@@ -17,14 +17,19 @@ export function showScreen(id) {
   window.scrollTo({ top: 0 });
 }
 
-/** Public URL for a slug (uses the domain configured in config.js). */
+/**
+ * Public URL for a slug. Path-based by default so it works on ANY host
+ * without DNS setup: the URL is the current deployment directory + ?for=<slug>.
+ *
+ * If you later add a wildcard DNS record (`*.manasety.ai`) and want cleaner
+ * subdomain URLs, change this to:
+ *   return `https://${slug}.${CONFIG.domain}/`;
+ */
 export function publicUrlFor(slug) {
-  // Fall back to ?for= form when running on localhost or *.pages.dev.
-  const host = location.hostname;
-  if (host === "localhost" || host === "127.0.0.1" || host.endsWith(".pages.dev")) {
-    return `${location.origin}/?for=${slug}`;
-  }
-  return `https://${slug}.${CONFIG.domain}/`;
+  // Strip the trailing filename (admin.html, index.html) to get the folder,
+  // then append ?for=<slug>. Works on localhost, pages.dev, and manasety.ai/sara/.
+  const dir = location.pathname.replace(/[^/]*$/, "");
+  return `${location.origin}${dir}?for=${slug}`;
 }
 
 /* ---------- Row rendering ---------- */
