@@ -567,7 +567,11 @@ details.section-block > .field:first-of-type { margin-top: 16px; }
 .dash-delete:disabled { opacity: 0.5; cursor: wait; }
 
 /* ---------- Screen visibility toggle ---------- */
-.screen[hidden] { display: none !important; }
+.screen[hidden]  { display: none !important; }
+/* The gate and admin-app also override display via class rules, so we
+   need !important to make `hidden` win when JS toggles it. */
+.gate[hidden]    { display: none !important; }
+#admin-app[hidden] { display: none !important; }
 
 /* ---------- Success link ---------- */
 #success-link { color: var(--rose); text-decoration: none; }
