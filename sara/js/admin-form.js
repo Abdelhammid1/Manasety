@@ -84,7 +84,7 @@ $("f-slug")?.addEventListener("input", (e) => {
 function updateSlugPreview() {
   const slug = $("f-slug")?.value.trim();
   const preview = $("slug-preview");
-  if (preview) preview.textContent = slug ? `${slug}.${CONFIG.domain}` : `<slug>.${CONFIG.domain}`;
+  if (preview) preview.textContent = slug ? publicUrlFor(slug) : "";
 }
 
 /* ================== Quiz builder ================== */
@@ -106,13 +106,13 @@ function addQuestionRow(q) {
     </div>
     <div class="field">
       <label>Question</label>
-      <textarea class="q-text" rows="2" dir="auto" placeholder="بتحبي ايه أكتر؟"></textarea>
+      <textarea class="q-text" rows="2" dir="auto"></textarea>
     </div>
     <div class="q-options">
       ${[0, 1, 2].map((i) => `
         <div class="q-option-row">
           <input type="radio" name="${groupName}" value="${i}" ${i === q.correctIndex ? "checked" : ""} title="Mark as correct" />
-          <input type="text" class="q-option-text" dir="auto" placeholder="Option ${i + 1}" />
+          <input type="text" class="q-option-text" dir="auto" />
           <button type="button" class="btn btn-ghost q-opt-remove" data-action="remove-opt" title="Remove option">×</button>
         </div>
       `).join("")}
@@ -150,7 +150,7 @@ function addOptionInRow(row, val) {
   el.className = "q-option-row";
   el.innerHTML = `
     <input type="radio" name="${groupName}" value="${i}" title="Mark as correct" />
-    <input type="text" class="q-option-text" dir="auto" placeholder="Option ${i + 1}" />
+    <input type="text" class="q-option-text" dir="auto" />
     <button type="button" class="btn btn-ghost q-opt-remove" data-action="remove-opt" title="Remove option">×</button>
   `;
   el.querySelector(".q-option-text").value = val || "";
@@ -203,7 +203,7 @@ function addMemoryRow(m) {
       </div>
       <div class="field">
         <label>Date caption</label>
-        <input type="text" class="mem-date" value="${m.dateLabel || ""}" placeholder="NOV 2024 · 23" />
+        <input type="text" class="mem-date" value="${m.dateLabel || ""}" />
       </div>
     </div>
     <button type="button" class="btn btn-ghost mem-remove" data-action="remove-mem" title="Remove photo">×</button>

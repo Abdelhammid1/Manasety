@@ -115,18 +115,16 @@ html, body {
   from { opacity: 0; transform: translateY(16px) scale(0.98); }
   to   { opacity: 1; transform: translateY(0)   scale(1);    }
 }
-.gate-icon {
-  color: var(--rose);
-  display: flex;
-  justify-content: center;
-  margin-bottom: 18px;
-}
-.gate-brand {
-  font-family: 'Great Vibes', 'Playfair Display', cursive;
-  font-size: 46px;
-  color: var(--plum);
-  line-height: 1;
-  margin-bottom: 6px;
+.gate-logo {
+  display: block;
+  width: 110px;
+  height: 110px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow:
+    0 0 0 4px rgba(255, 255, 255, 0.6),
+    0 12px 32px -12px rgba(74, 31, 46, 0.35);
 }
 .gate-sub {
   font-family: 'Playfair Display', serif;
@@ -295,13 +293,28 @@ html, body {
   border-bottom: 1px solid var(--line);
   margin-bottom: 32px;
 }
-.dash-brand { display: flex; align-items: center; gap: 10px; }
-.dash-brand-mark { font-size: 22px; }
+.dash-brand { display: flex; align-items: center; gap: 12px; }
+.dash-brand-logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.7), 0 4px 12px -6px rgba(74, 31, 46, 0.3);
+}
 .dash-brand-name {
-  font-family: 'Great Vibes', 'Playfair Display', cursive;
-  font-size: 32px;
+  font-family: 'Cairo', 'Playfair Display', sans-serif;
+  font-weight: 700;
+  font-size: 22px;
   color: var(--plum);
   line-height: 1;
+}
+.dash-brand-latin {
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  margin-inline-start: 4px;
 }
 .dash-topbar-actions { display: flex; align-items: center; gap: 14px; }
 .dash-topbar-actions .who {

@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Manasety · Birthday Admin</title>
+<title>لمة · LAMMA — Birthday Admin</title>
+<link rel="icon" href="logo.jpg" type="image/jpeg" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link
@@ -17,13 +18,7 @@
   <!-- ============ LOGIN GATE ============ -->
   <div id="gate" class="gate">
     <div class="gate-card">
-      <div class="gate-icon" aria-hidden="true">
-        <svg viewBox="0 0 64 64" width="52" height="52" fill="none">
-          <path d="M32 54s-20-11.5-20-27a11 11 0 0 1 20-6.3A11 11 0 0 1 52 27c0 15.5-20 27-20 27z"
-                stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-        </svg>
-      </div>
-      <div class="gate-brand">Manasety</div>
+      <img class="gate-logo" src="logo.jpg" alt="لمة · LAMMA" />
       <div class="gate-sub">Birthday admin</div>
 
       <form id="pat-form" class="gate-form">
@@ -32,7 +27,6 @@
           type="password"
           autocomplete="off"
           spellcheck="false"
-          placeholder="Enter access code"
           aria-label="Access code"
         />
         <span class="error" id="pat-error"></span>
@@ -50,8 +44,8 @@
     <div id="dashboard" class="dash-shell screen">
       <header class="dash-topbar">
         <div class="dash-brand">
-          <span class="dash-brand-mark">🌸</span>
-          <span class="dash-brand-name">Manasety</span>
+          <img class="dash-brand-logo" src="logo.jpg" alt="لمة · LAMMA" />
+          <span class="dash-brand-name">لمة <span class="dash-brand-latin">· LAMMA</span></span>
         </div>
         <div class="dash-topbar-actions">
           <span class="who" id="whoami"></span>
@@ -87,27 +81,27 @@
           <h2>Basics</h2>
           <div class="field">
             <label for="f-name">Name</label>
-            <input type="text" id="f-name" placeholder="Medo" dir="auto" />
+            <input type="text" id="f-name" dir="auto" />
             <span class="error" data-for="f-name"></span>
           </div>
           <div class="field">
             <label for="f-slug">URL slug</label>
-            <input type="text" id="f-slug" placeholder="medo" />
-            <span class="hint">Will be published at <code id="slug-preview">&lt;slug&gt;.manasety.ai</code></span>
+            <input type="text" id="f-slug" />
+            <span class="hint">Will be published at <code id="slug-preview">&lt;slug&gt;</code></span>
             <span class="error" data-for="f-slug"></span>
           </div>
         </div>
 
         <details class="section-block">
           <summary>Advanced text (labels, buttons, wrong-answer modal)</summary>
-          <div class="field"><label>Cover eyebrow</label><input id="f-eyebrowText" placeholder="A Special Day" /></div>
-          <div class="field"><label>Cover subtitle</label><input id="f-celebrationSub" placeholder="✨ Let the celebration begin" /></div>
-          <div class="field"><label>Start button text</label><input id="f-startButtonText" placeholder="ابدأ الكويز" dir="auto" /></div>
-          <div class="field"><label>Wrong-answer emoji</label><input id="f-wrongEmoji" placeholder="😠" /></div>
-          <div class="field"><label>Wrong-answer message</label><input id="f-wrongMessage" placeholder="طب مفيش عييد ميلاد 🎂" dir="auto" /></div>
-          <div class="field"><label>Try again button</label><input id="f-wrongButtonText" placeholder="حاول تاني" dir="auto" /></div>
-          <div class="field"><label>Confirm answers button</label><input id="f-confirmButtonText" placeholder="تأكيد الإجابات" dir="auto" /></div>
-          <div class="field"><label>Celebrate button</label><input id="f-celebrateButtonText" placeholder="CELEBRATE! 🎉" /></div>
+          <div class="field"><label>Cover eyebrow</label><input id="f-eyebrowText" /></div>
+          <div class="field"><label>Cover subtitle</label><input id="f-celebrationSub" /></div>
+          <div class="field"><label>Start button text</label><input id="f-startButtonText" dir="auto" /></div>
+          <div class="field"><label>Wrong-answer emoji</label><input id="f-wrongEmoji" /></div>
+          <div class="field"><label>Wrong-answer message</label><input id="f-wrongMessage" dir="auto" /></div>
+          <div class="field"><label>Try again button</label><input id="f-wrongButtonText" dir="auto" /></div>
+          <div class="field"><label>Confirm answers button</label><input id="f-confirmButtonText" dir="auto" /></div>
+          <div class="field"><label>Celebrate button</label><input id="f-celebrateButtonText" /></div>
         </details>
 
         <div class="section-block">
@@ -127,18 +121,18 @@
 
         <div class="section-block">
           <h2>Love letter</h2>
-          <div class="field"><label>Section eyebrow</label><input id="f-letterEyebrow" placeholder="✦ من القلب" dir="auto" /></div>
-          <div class="field"><label>Recipient name</label><input id="f-letterName" placeholder="ميدو حبيبي" dir="auto" /></div>
+          <div class="field"><label>Section eyebrow</label><input id="f-letterEyebrow" dir="auto" /></div>
+          <div class="field"><label>Recipient name</label><input id="f-letterName" dir="auto" /></div>
           <div class="field">
             <label>Arabic body</label>
-            <textarea id="f-letterAr" dir="rtl" rows="5" placeholder="…"></textarea>
+            <textarea id="f-letterAr" dir="rtl" rows="5"></textarea>
           </div>
           <div class="field">
             <label>English body</label>
-            <textarea id="f-letterEn" rows="5" placeholder="…"></textarea>
+            <textarea id="f-letterEn" rows="5"></textarea>
           </div>
-          <div class="field"><label>Signature (English)</label><input id="f-signatureEn" placeholder="Your girl ❤️" /></div>
-          <div class="field"><label>Signature (Arabic)</label><input id="f-signatureAr" placeholder="ندي" dir="auto" /></div>
+          <div class="field"><label>Signature (English)</label><input id="f-signatureEn" /></div>
+          <div class="field"><label>Signature (Arabic)</label><input id="f-signatureAr" dir="auto" /></div>
         </div>
 
         <div class="section-block">
@@ -154,7 +148,7 @@
           </div>
           <div class="field">
             <label for="f-video-url">…or paste a YouTube / embed URL</label>
-            <input type="url" id="f-video-url" placeholder="https://youtube.com/watch?v=…" />
+            <input type="url" id="f-video-url" />
             <span class="hint">If both are set, the uploaded file wins.</span>
           </div>
         </div>
