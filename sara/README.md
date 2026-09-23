@@ -1,4 +1,4 @@
-# Manasety Birthday — Multi-Person Template
+# لمة · LAMMA Birthday — Multi-Person Template
 
 A shareable birthday invitation with a quiz, memories, love letter, and
 video. One deployed site serves **any number of birthdays**, each on its
