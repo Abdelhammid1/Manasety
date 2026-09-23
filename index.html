@@ -2995,7 +2995,8 @@ if (contactForm) {
       company_name: fd.get('company') || '',
       service_type: fd.get('service') || 'استشارة',
       package: fd.get('package') || '',
-      description: (fd.get('offer') ? '[عرض التقسيط 20%] ' : '') + (fd.get('message') || ''),
+      description: (fd.get('offer') ? '[' + fd.get('offer') + '] ' : '') + (fd.get('message') || ''),
+      ad_variant: fd.get('ad_variant') || '',
       source: 'landing_form'
     };
     fetch('https://marsoud.com/api/v1/public/contact-lead', {
@@ -3274,8 +3275,8 @@ if (window.matchMedia('(hover: hover)').matches) {
     note: 'بنفس أسعار الموقع، من غير فوايد، ولا غرامات تأخير، ولا شيكات أو وصولات ضمان.',
     waMessage: 'جاي من إعلان التقسيط وعايز أعرف تفاصيل أكتر من غير أي التزام',
     waSource: 'installment-offer-B',
-    formValue: 'عرض المرونة في الميزانية',
-    subjectValue: 'طلب جديد من منصتي - نظام حسب الميزانية'
+    formValue: 'إعلان B - بدون التزام',
+    subjectValue: 'طلب جديد من منصتي - إعلان B (بدون التزام)'
 
   } : {
 
@@ -3284,8 +3285,8 @@ if (window.matchMedia('(hover: hover)').matches) {
     note: 'بنفس أسعار الموقع، من غير فوايد، ولا غرامات تأخير، ولا شيكات أو وصولات ضمان.',
     waMessage: 'السلام عليكم 👋 جاي من إعلان عرض التقسيط 6 شهور، وعايز أعرف تفاصيل العرض',
     waSource: 'installment-offer-A',
-    formValue: 'عرض التقسيط - 6 شهور',
-    subjectValue: 'طلب جديد من منصتي - عرض التقسيط 6 شهور'
+    formValue: 'إعلان A - تقسيط 6 شهور',
+    subjectValue: 'طلب جديد من منصتي - إعلان A (تقسيط 6 شهور)'
 
   };
 
