@@ -9,7 +9,6 @@
       <div class="logo-tile">
         {% if cl.logo %}<img src="{{ cl.logo.url }}" alt="{{ cl.logo.alt or cl.name }}" loading="lazy" width="{{ cl.logo.width }}" height="{{ cl.logo.height }}">{% endif %}
         {% if cl.url %}<a href="{{ cl.url }}" target="_blank" rel="noopener" style="color:inherit;text-decoration:none"><b>{{ cl.name }}</b></a>{% else %}<b>{{ cl.name }}</b>{% endif %}
-        {% if cl.kind == 'partner' %}<small>{{ c.partner_label or 'شريك' }}</small>{% endif %}
       </div>
       {% endfor %}
     </div>
