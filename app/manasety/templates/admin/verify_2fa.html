@@ -1,0 +1,14 @@
+{% extends "admin/base.html" %}
+{% block title %}التحقق بخطوتين{% endblock %}
+{% block body %}
+<main class="auth">
+  <form class="card" method="post">
+    <h1 style="margin-bottom:8px">التحقق بخطوتين</h1>
+    <p style="color:var(--ink-3)">أدخل الرمز من تطبيق المصادقة، أو أحد رموز الاسترداد.</p>
+    {% with msgs = get_flashed_messages(with_categories=true) %}{% for cat, m in msgs %}<div class="flash {{ cat }}">{{ m }}</div>{% endfor %}{% endwith %}
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div class="field"><label for="code">الرمز</label><input id="code" name="code" required autocomplete="one-time-code" inputmode="numeric" class="ltr" autofocus></div>
+    <button class="btn dark" type="submit" style="width:100%">تحقق</button>
+  </form>
+</main>
+{% endblock %}

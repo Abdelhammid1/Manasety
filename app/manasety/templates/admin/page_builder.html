@@ -1,0 +1,89 @@
+{% extends "admin/base.html" %}
+{% from "admin/_macros.html" import block_field, csrf %}
+{% block title %}منشئ الصفحة{% endblock %}
+{% block content %}
+<div class="top">
+  <div class="grow">
+    <h1>منشئ الصفحة · {{ page.title }}</h1>
+    <p>آخر نشر: <span class="mono">{{ page.published_at.strftime('%Y-%m-%d %H:%M') if page.published_at else '—' }} UTC</span>
+      · {% if draft_differs %}<b style="color:#C2410C">تغييرات غير منشورة</b>{% else %}المسودة مطابقة للمنشور{% endif %}
+      {% if page.scheduled_at %} · نشر مجدول <span class="mono">{{ page.scheduled_at.strftime('%Y-%m-%d %H:%M') }} UTC</span>{% endif %}</p>
+  </div>
+  <a class="btn" href="{{ url_for('public.preview', token=page.preview_token, lang=lang) }}" target="_blank" rel="noopener">معاينة بالرابط</a>
+  <a class="btn" href="{{ url_for('admin_content.page_seo', slug=page.slug) }}">SEO الصفحة</a>
+  <a class="btn" href="{{ url_for('admin_content.revisions', slug=page.slug) }}">النسخ السابقة</a>
+  <form class="inline" method="post" action="{{ url_for('admin_content.publish', slug=page.slug) }}" data-confirm="نشر المسودة الحالية للزوار الآن؟">{{ csrf() }}<button class="btn primary" type="submit">نشر التغييرات</button></form>
+</div>
+
+<div class="cols">
+  <section class="card narrow" aria-label="الأقسام" style="padding:8px">
+    <div style="display:flex;align-items:center;gap:8px;padding:8px 10px 10px;border-bottom:1px solid var(--line-2);margin-bottom:6px">
+      <b style="color:var(--navy)">الأقسام</b><span style="color:var(--ink-3);font-size:12.5px">اسحب للترتيب (أو Alt + الأسهم)</span>
+      <span id="order-saved" class="pill ok" hidden>حُفظ الترتيب</span>
+    </div>
+    <ol class="sec-list" data-sortable="{{ url_for('admin_content.reorder', slug=page.slug) }}">
+      {% for s in sections %}
+      <li class="sec-row{% if selected and s.id == selected.id %} sel{% endif %}{% if not s.is_visible %} off{% endif %}" data-id="{{ s.id }}">
+        <span class="grip" aria-hidden="true">⋮⋮</span>
+        <a class="name" href="{{ url_for('admin_content.page_builder', slug=page.slug, s=s.id, lang=lang) }}"><b>{{ s.admin_label }}</b><span>{{ s.block_type }}{% if s.anchor %} · #{{ s.anchor }}{% endif %}</span></a>
+        <form method="post" action="{{ url_for('admin_content.toggle_section', slug=page.slug, sid=s.id) }}">{{ csrf() }}
+          <button class="btn sm" type="submit" aria-label="إظهار أو إخفاء {{ s.admin_label }}"><span class="pill {{ 'ok' if s.is_visible else 'off' }}">{{ 'ظاهر' if s.is_visible else 'مخفي' }}</span></button>
+        </form>
+      </li>
+      {% endfor %}
+    </ol>
+    <form method="post" action="{{ url_for('admin_content.add_section', slug=page.slug) }}" style="display:flex;gap:8px;padding:12px 6px 4px">{{ csrf() }}
+      <label for="new-block" class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden">نوع القسم</label>
+      <select id="new-block" name="block_type">{% for k, b in block_types.items() %}<option value="{{ k }}">{{ b.label }}</option>{% endfor %}</select>
+      <button class="btn dashed" type="submit">+ قسم</button>
+    </form>
+    <details style="padding:10px 6px">
+      <summary style="cursor:pointer;color:var(--ink-2)">جدولة النشر</summary>
+      <form method="post" action="{{ url_for('admin_content.schedule', slug=page.slug) }}" style="margin-top:8px">{{ csrf() }}
+        <label class="lbl" for="when">وقت النشر (بتوقيت جهازك)</label>
+        <input id="when" type="datetime-local" required data-tz-field>
+        <input type="hidden" name="when">
+        <div class="actions"><button class="btn" type="submit">جدولة المسودة الحالية</button></div>
+      </form>
+      {% if page.scheduled_at %}<form method="post" action="{{ url_for('admin_content.schedule', slug=page.slug) }}">{{ csrf() }}<input type="hidden" name="cancel" value="1"><button class="btn sm danger" type="submit">إلغاء الجدولة</button></form>{% endif %}
+      <form method="post" action="{{ url_for('admin_content.rotate_preview', slug=page.slug) }}" style="margin-top:10px">{{ csrf() }}<button class="btn sm" type="submit">تغيير رابط المعاينة</button></form>
+    </details>
+  </section>
+
+  {% if selected %}
+  <section class="card wide" aria-label="تحرير القسم">
+    <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:16px">
+      <h2 style="margin:0">{{ selected.admin_label }}</h2>
+      <span class="pill mono">{{ selected.block_type }}</span>
+      <nav class="tabs" style="margin-inline-start:auto" aria-label="اللغة">
+        {% for code, label in langs.items() %}<a class="{{ 'on' if code == lang }}" href="{{ url_for('admin_content.page_builder', slug=page.slug, s=selected.id, lang=code) }}"{% if code == lang %} aria-current="true"{% endif %}>{{ label }}</a>{% endfor %}
+      </nav>
+    </div>
+    {% if lang == 'en' and not setting('english_enabled') %}<div class="info">النسخة الإنجليزية غير مفعّلة بعد (الإعدادات). يمكنك تجهيز النصوص الآن.</div>{% endif %}
+    <div class="info">لأي رقم استخدم <code>[[fact:المفتاح]]</code> أو <code>[[if:المفتاح]]…[[/if]]</code> من «الأرقام والإحصاءات». الرقم لا يظهر قبل إدخال مصدره وتاريخ التحقق.</div>
+    <form method="post" action="{{ url_for('admin_content.save_section', slug=page.slug, sid=selected.id) }}">{{ csrf() }}
+      <input type="hidden" name="lang" value="{{ lang }}">
+      <div class="grid2">
+        <div class="field"><label for="admin_label">اسم القسم في اللوحة</label><input id="admin_label" name="admin_label" value="{{ selected.admin_label }}"></div>
+        <div class="field"><label for="anchor">الـ anchor (رابط #)</label><input id="anchor" name="anchor" value="{{ selected.anchor }}" class="ltr"><span class="help">#services و#portfolio و#ai و#contact مستخدمة في روابط خارجية؛ لا تغيّرها.</span></div>
+      </div>
+      {% set media = media_list() %}
+      {% for spec in specs %}{{ block_field(spec, lang, content, media) }}{% endfor %}
+      <div class="actions"><button class="btn dark" type="submit">حفظ المسودة</button></div>
+    </form>
+    <form method="post" action="{{ url_for('admin_content.delete_section', slug=page.slug, sid=selected.id) }}" data-confirm="حذف القسم من المسودة؟">{{ csrf() }}
+      <button class="btn sm danger" type="submit">حذف القسم</button>
+    </form>
+  </section>
+  {% endif %}
+</div>
+<script>
+  /* convert the local datetime to ISO with offset, so the server stores UTC correctly */
+  document.querySelectorAll('[data-tz-field]').forEach(function (inp) {
+    inp.form.addEventListener('submit', function () {
+      var d = new Date(inp.value); if (isNaN(d)) return;
+      inp.form.elements.when.value = d.toISOString();
+    });
+  });
+</script>
+{% endblock %}

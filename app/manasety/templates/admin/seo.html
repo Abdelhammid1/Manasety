@@ -1,0 +1,33 @@
+{% extends "admin/base.html" %}
+{% from "admin/_macros.html" import csrf %}
+{% block title %}الـ SEO{% endblock %}
+{% block content %}
+<div class="top"><div class="grow"><h1>الـ SEO والروابط</h1><p>Sitemap وrobots يُولَّدان تلقائيًا.</p></div>
+  <a class="btn" href="/sitemap.xml" target="_blank" rel="noopener">sitemap.xml</a>
+  <a class="btn" href="/robots.txt" target="_blank" rel="noopener">robots.txt</a>
+  <a class="btn" href="/blog/feed.xml" target="_blank" rel="noopener">RSS</a></div>
+<div class="info">بعد الإطلاق: قدّم <span class="mono">{{ site }}/sitemap.xml</span> في Search Console وراقب تقرير الفهرسة وCore Web Vitals. لا تحذف سجل تحقق النطاق.</div>
+
+<section class="card"><h2>تقرير الروابط الداخلية وجودة المقالات المنشورة</h2>
+  <div class="t-wrap"><table class="t"><thead><tr><th>المقال</th><th>ما ينقصه</th></tr></thead><tbody>
+  {% for r in report %}<tr><td><a href="{{ url_for('admin_articles.edit', aid=r.article.id) }}">{{ r.article.title }}</a></td>
+    <td>{% for f in r.failing %}<span class="pill warn">{{ f }}</span> {% else %}<span class="pill ok">مكتمل</span>{% endfor %}</td></tr>
+  {% else %}<tr><td colspan="2">لا توجد مقالات منشورة.</td></tr>{% endfor %}
+  </tbody></table></div>
+</section>
+
+<section class="card"><h2>فحص الروابط المعطلة</h2>
+  <form method="post" action="{{ url_for('admin_seo.broken_links') }}">{{ csrf() }}<button class="btn" type="submit">فحص الآن</button></form>
+  {% if broken.at %}<p>آخر فحص: <span class="mono">{{ broken.at }}</span></p>
+  <ul>{% for b in broken['items'] %}<li><span class="mono">{{ b.url }}</span> — <span class="pill bad">{{ b.status or 'لا استجابة' }}</span> في {{ b.pages|join('، ') }}</li>{% else %}<li><span class="pill ok">لا روابط معطلة</span></li>{% endfor %}</ul>{% endif %}
+</section>
+
+<section class="card"><h2>تقرير الباك لينكس</h2>
+  <div class="cols">
+    <div class="narrow"><h3>الصفحات التي تحصل على روابط</h3><ul>{% for url, n in by_target %}<li><span class="mono">{{ url }}</span> — {{ n }}</li>{% else %}<li>لا روابط منشورة بعد.</li>{% endfor %}</ul></div>
+    <div class="narrow"><h3>حسب القناة</h3><ul>{% for ch, n in by_channel.items() %}<li>{{ ch }} — {{ n }}</li>{% else %}<li>—</li>{% endfor %}</ul></div>
+    <div class="narrow"><h3>روابط ضاعت</h3><ul>{% for b in lost %}<li><a href="{{ url_for('admin_crud.edit', resource='backlinks', oid=b.id) }}" class="mono">{{ b.source_url }}</a></li>{% else %}<li>لا شيء</li>{% endfor %}</ul></div>
+  </div>
+  <p class="help" style="color:var(--ink-3)">لا نعد بعدد روابط معين، ولا نشتري روابط. قِس النمو من تقرير الروابط في Search Console.</p>
+</section>
+{% endblock %}

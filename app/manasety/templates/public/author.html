@@ -1,0 +1,15 @@
+{% extends "public/base.html" %}
+{% block title %}{{ author.name }} | {{ setting('brand_name_ar') }}{% endblock %}
+{% block description %}{{ author.job_title }}{% endblock %}
+{% block content %}
+<div class="wrap">
+  <div class="page-head">
+    <div class="author-box" style="border:0;margin:0;padding:0">
+      {% if author.photo %}<img src="{{ author.photo.url }}" alt="{{ author.photo.alt or author.name }}" style="width:88px;height:88px">{% endif %}
+      <div><h1 style="margin:0">{{ author.name }}</h1><p>{{ author.job_title }}</p></div>
+    </div>
+    {% if author.bio %}<div class="prose" style="margin-top:20px">{{ author.bio|rich }}</div>{% endif %}
+  </div>
+  {% if articles %}<div class="grid g3" style="padding-bottom:64px">{% for a in articles %}{% include "public/_post_card.html" %}{% endfor %}</div>{% endif %}
+</div>
+{% endblock %}

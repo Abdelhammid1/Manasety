@@ -1,0 +1,34 @@
+{% extends "admin/base.html" %}
+{% from "admin/_macros.html" import csrf %}
+{% block title %}المستخدمون{% endblock %}
+{% block content %}
+<div class="top"><div class="grow"><h1>المستخدمون والأدوار</h1><p>Admin وEditor يجب أن يفعّلوا التحقق بخطوتين قبل أي دخول.</p></div></div>
+<div class="t-wrap"><table class="t"><thead><tr><th>الاسم</th><th>البريد</th><th>الدور</th><th>2FA</th><th>الحالة</th><th>آخر دخول</th><th>إجراءات</th></tr></thead><tbody>
+{% for u in users %}
+<tr>
+  <td>{{ u.name }}</td><td class="mono">{{ u.email }}</td>
+  <td><form class="inline" method="post" action="{{ url_for('admin_core.user_update', uid=u.id) }}">{{ csrf() }}<input type="hidden" name="action" value="role">
+    <select name="role" onchange="this.form.submit()" aria-label="الدور" {% if u.id == current_user.id %}disabled{% endif %}>{% for k, v in roles.items() %}<option value="{{ k }}" {% if u.role == k %}selected{% endif %}>{{ v }}</option>{% endfor %}</select></form></td>
+  <td>{% if u.totp_enabled %}<span class="pill ok">مفعّل</span>{% elif u.requires_2fa %}<span class="pill bad">مطلوب</span>{% else %}<span class="pill off">اختياري</span>{% endif %}</td>
+  <td>{% if u.is_active_flag %}<span class="pill ok">نشط</span>{% else %}<span class="pill off">معطّل</span>{% endif %}</td>
+  <td class="mono">{{ u.last_login_at.strftime('%Y-%m-%d %H:%M') if u.last_login_at else '—' }}</td>
+  <td style="white-space:nowrap">
+    {% for action, label in [('reset_password', 'كلمة مرور مؤقتة'), ('reset_2fa', 'إعادة 2FA'), ('deactivate', 'تفعيل' if not u.is_active_flag else 'تعطيل')] %}
+    {% if not (u.id == current_user.id and action == 'deactivate') %}
+    <form class="inline" method="post" action="{{ url_for('admin_core.user_update', uid=u.id) }}" data-confirm="تأكيد: {{ label }}؟">{{ csrf() }}<input type="hidden" name="action" value="{{ action }}"><button class="btn sm" type="submit">{{ label }}</button></form>
+    {% endif %}{% endfor %}
+  </td>
+</tr>
+{% endfor %}
+</tbody></table></div>
+<form class="card" method="post" style="margin-top:16px">{{ csrf() }}
+  <h2>إضافة مستخدم</h2>
+  <div class="grid2">
+    <div class="field"><label for="n">الاسم</label><input id="n" name="name" required></div>
+    <div class="field"><label for="e">البريد</label><input id="e" type="email" name="email" required class="ltr"></div>
+    <div class="field"><label for="r">الدور</label><select id="r" name="role">{% for k, v in roles.items() %}<option value="{{ k }}">{{ v }}</option>{% endfor %}</select></div>
+  </div>
+  <p class="help" style="color:var(--ink-3)">Admin: كل شيء · Editor: الصفحة والمميزات والنشر · Marketer: المقالات والـ SEO والباك لينكس والتحليلات · Sales: الطلبات فقط.</p>
+  <div class="actions"><button class="btn dark" type="submit">إنشاء</button></div>
+</form>
+{% endblock %}

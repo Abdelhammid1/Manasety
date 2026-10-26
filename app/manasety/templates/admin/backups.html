@@ -1,0 +1,21 @@
+{% extends "admin/base.html" %}
+{% from "admin/_macros.html" import csrf %}
+{% block title %}النسخ الاحتياطي{% endblock %}
+{% block content %}
+<div class="top"><div class="grow"><h1>النسخ الاحتياطي</h1><p>نسخة يومية لقاعدة البيانات والوسائط تُرفع خارج السيرفر (deploy/backup.sh عبر cron).</p></div>
+  <form method="post" data-confirm="بدء نسخة احتياطية الآن؟">{{ csrf() }}<button class="btn dark" type="submit">نسخة احتياطية الآن</button></form></div>
+<div class="card">
+  {% if status %}
+  <dl class="grid2">
+    <div><dt class="lbl">آخر محاولة</dt><dd class="mono">{{ status.get('finished_at', '—') }}</dd></div>
+    <div><dt class="lbl">النتيجة</dt><dd>{% if status.get('ok') %}<span class="pill ok">ناجحة</span>{% else %}<span class="pill bad">فشلت</span>{% endif %}</dd></div>
+    <div><dt class="lbl">الملف</dt><dd class="mono">{{ status.get('file', '—') }}</dd></div>
+    <div><dt class="lbl">الحجم</dt><dd class="mono">{{ status.get('size', '—') }}</dd></div>
+    <div><dt class="lbl">الوجهة خارج السيرفر</dt><dd class="mono">{{ status.get('remote', '—') }}</dd></div>
+    <div><dt class="lbl">آخر اختبار استرجاع</dt><dd class="mono">{{ status.get('last_restore_test', 'لم يُسجَّل') }}</dd></div>
+  </dl>
+  {% if status.get('error') %}<div class="flash error">{{ status.error }}</div>{% endif %}
+  {% else %}<p>لم تُسجَّل أي نسخة بعد على هذا السيرفر.</p>{% endif %}
+</div>
+<div class="info">اختبار الاسترجاع الدوري: <code>deploy/restore-test.sh</code> على بيئة التجربة، ويكتب تاريخه هنا.</div>
+{% endblock %}

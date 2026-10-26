@@ -1,0 +1,6 @@
+# Deploy files run on Linux: keep LF regardless of the developer's OS.
+*.sh text eol=lf
+app/Dockerfile text eol=lf
+app/deploy/crontab text eol=lf
+app/deploy/**/*.conf text eol=lf
+app/deploy/*.conf text eol=lf

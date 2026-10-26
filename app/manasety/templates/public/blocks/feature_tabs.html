@@ -1,0 +1,33 @@
+{% set tabs = (c.tabs or []) | selectattr('module') | list %}
+<section class="section bg-white"{% if anchor %} id="{{ anchor }}"{% endif %}>
+  <div class="wrap">
+    <div class="head rv">
+      {% if c.eyebrow %}<span class="pill">{{ c.eyebrow }}</span>{% endif %}
+      <h2>{{ c.title|rt }}</h2>
+    </div>
+    <div class="tabs" role="tablist" aria-label="موديولات المنصة">
+      {% for t in tabs %}
+      <button class="tab" type="button" role="tab" id="tab-{{ loop.index }}" aria-controls="panel-{{ loop.index }}" aria-selected="{{ 'true' if loop.first else 'false' }}"{% if not loop.first %} tabindex="-1"{% endif %}>{{ t.label }}</button>
+      {% endfor %}
+    </div>
+    {% for t in tabs %}
+    {% set feats = features_for(t.module) | selectattr('status', 'equalto', 'ready') | list %}
+    <div class="tab-panel" role="tabpanel" id="panel-{{ loop.index }}" aria-labelledby="tab-{{ loop.index }}"{% if not loop.first %} hidden{% endif %}>
+      {% if t.intro %}<p class="intro">{{ t.intro|rt }}</p>{% endif %}
+      <ul class="flist">
+        {% for f in feats %}
+        <li><span class="ibox">{{ icon(f.icon) }}</span><span><b>{{ f.name }}</b><span>{{ f.description|rt }}</span></span></li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endfor %}
+    {% if c.soon_module %}
+    {% for f in features_for(c.soon_module) if f.status == 'soon' %}
+    <div class="soon-card">
+      <span class="ibox">{{ icon(f.icon) }}</span>
+      <p><b>{{ f.name }}</b><span class="badge-soon">قريبًا{% if f.public_release_date %} · {{ f.public_release_date|ar_date }}{% endif %}</span><br>{{ f.description|rt }}</p>
+    </div>
+    {% endfor %}
+    {% endif %}
+  </div>
+</section>

@@ -1,0 +1,15 @@
+{% extends "admin/base.html" %}
+{% block title %}الملفات المعروضة{% endblock %}
+{% block content %}
+<div class="top"><div class="grow"><h1>الملفات المعروضة</h1><p>الملف التعريفي ومعرض الأعمال. الإخفاء يزيل الملف من الصفحات فقط؛ الرابط المباشر يبقى شغالًا.</p></div>
+  <a class="btn primary" href="{{ url_for('admin_files.edit') }}">+ ملف</a></div>
+<div class="t-wrap"><table class="t"><thead><tr><th>اسم العرض</th><th>الرابط</th><th>الأماكن</th><th>في الصفحات</th><th>الرابط المباشر</th><th>التنزيلات</th></tr></thead><tbody>
+{% for f in files %}
+<tr><td><a href="{{ url_for('admin_files.edit', fid=f.id) }}">{{ f.display_name }}</a></td><td class="mono"><a href="{{ f.href }}" target="_blank" rel="noopener">{{ f.href }}</a></td>
+<td>{% for p in f.placements %}<span class="pill">{{ placements.get(p, p) }}</span> {% endfor %}</td>
+<td>{% if f.is_visible %}<span class="pill ok">ظاهر</span>{% else %}<span class="pill off">مخفي</span>{% endif %}</td>
+<td>{% if f.direct_link_enabled %}<span class="pill ok">يعمل</span>{% else %}<span class="pill bad">متوقف</span>{% endif %}</td>
+<td class="mono">{{ f.download_count }}</td></tr>
+{% else %}<tr><td colspan="6">لا توجد ملفات.</td></tr>{% endfor %}
+</tbody></table></div>
+{% endblock %}

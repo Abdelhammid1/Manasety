@@ -1,0 +1,20 @@
+{% if faq_items %}
+<section class="section bg-white"{% if anchor %} id="{{ anchor }}"{% endif %}>
+  <div class="wrap">
+    <div class="head center rv">
+      {% if c.eyebrow %}<span class="kicker">{{ c.eyebrow }}</span>{% endif %}
+      <h2>{{ c.title|rt }}</h2>
+      {% if c.subtitle %}<p>{{ c.subtitle|rt }}</p>{% endif %}
+    </div>
+    <div class="faq">
+      {% for f in faq_items %}
+      <details>
+        <summary>{{ f.question_en if lang == 'en' and f.question_en else f.question }}{{ icon('chevron') }}</summary>
+        <div class="answer">{{ (f.answer_html_en if lang == 'en' and f.answer_html_en else f.answer_html)|rich }}</div>
+      </details>
+      {% endfor %}
+    </div>
+    {% if c.more_label %}<p class="faq-more"><a href="/faq">{{ c.more_label }}</a></p>{% endif %}
+  </div>
+</section>
+{% endif %}

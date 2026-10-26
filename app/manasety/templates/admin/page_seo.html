@@ -1,0 +1,20 @@
+{% extends "admin/base.html" %}
+{% from "admin/_macros.html" import csrf %}
+{% block title %}SEO الصفحة{% endblock %}
+{% block content %}
+<div class="top"><div class="grow"><h1>SEO · {{ page.title }}</h1><p>يُحفظ في المسودة ويظهر بعد «نشر التغييرات».</p></div>
+  <a class="btn" href="{{ url_for('admin_content.page_builder', slug=page.slug) }}">رجوع</a></div>
+<form method="post">{{ csrf() }}
+  <div class="cols">
+  {% for code, label in langs.items() %}{% set v = (page.seo or {}).get(code, {}) %}
+    <div class="card narrow"><h2>{{ label }}</h2>
+      <div class="field"><label for="{{ code }}-title">Meta Title</label><input id="{{ code }}-title" name="{{ code }}__title" value="{{ v.get('title', '') }}" data-count="30-65"></div>
+      <div class="field"><label for="{{ code }}-desc">Meta Description</label><textarea id="{{ code }}-desc" name="{{ code }}__description" data-count="70-160">{{ v.get('description', '') }}</textarea></div>
+      <div class="field"><label for="{{ code }}-og">صورة المشاركة (OG) — مسار مثل /media/xxx.webp</label><input id="{{ code }}-og" name="{{ code }}__og_image" value="{{ v.get('og_image', '') }}" class="ltr"></div>
+      <div class="field"><label for="{{ code }}-sw">اسم المنتج في الـ Schema</label><input id="{{ code }}-sw" name="{{ code }}__software_name" value="{{ v.get('software_name', '') }}"></div>
+    </div>
+  {% endfor %}
+  </div>
+  <div class="actions"><button class="btn dark" type="submit">حفظ</button></div>
+</form>
+{% endblock %}

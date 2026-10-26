@@ -1,0 +1,21 @@
+{% set ring = c.ring or [] %}
+<section class="section"{% if anchor %} id="{{ anchor }}"{% endif %}>
+  <div class="wrap split">
+    <div class="rv">
+      {% if c.eyebrow %}<span class="pill">{{ c.eyebrow }}</span>{% endif %}
+      <h2 style="font-size:clamp(26px,3.4vw,38px);margin-bottom:24px">{{ c.title|rt }}</h2>
+      <div class="points">
+        {% for p in c.points or [] %}
+        <div class="point"><span class="ibox">{{ icon(p.icon) }}</span><div><h3>{{ p.title }}</h3><p>{{ p.text|rt }}</p></div></div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="ring" aria-hidden="true">
+      <div class="ring-core">{{ c.core_label }}</div>
+      {% for r in ring %}
+      {% set pos = ring_position(loop.index0, ring|length) %}
+      <span class="ring-node{% if r.on %} on{% endif %}" style="left:{{ pos[0] }}%;top:{{ pos[1] }}%">{{ r.label }}</span>
+      {% endfor %}
+    </div>
+  </div>
+</section>

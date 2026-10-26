@@ -1,0 +1,30 @@
+{% extends "admin/base.html" %}
+{% from "admin/_macros.html" import csrf %}
+{% block title %}ملف معروض{% endblock %}
+{% block content %}
+<div class="top"><div class="grow"><h1>{{ f.display_name or 'ملف جديد' }}</h1>{% if fid %}<p class="mono">{{ f.href }}</p>{% endif %}</div>
+  <a class="btn" href="{{ url_for('admin_files.index') }}">رجوع</a></div>
+<form class="card" method="post" enctype="multipart/form-data">{{ csrf() }}
+  <div class="grid2">
+    <div class="field"><label for="dn">اسم العرض</label><input id="dn" name="display_name" value="{{ f.display_name or '' }}" required><span class="help">يتغير بدون رفع الملف من جديد.</span></div>
+    <div class="field"><label for="dne">اسم العرض EN</label><input id="dne" name="display_name_en" value="{{ f.display_name_en or '' }}"></div>
+    {% if not fid %}<div class="field"><label for="pp">اسم الرابط (ثابت بعد الإنشاء)</label><input id="pp" name="public_path" class="ltr" placeholder="company-portfolio.pdf" required></div>{% endif %}
+    <div class="field"><label for="pos">الترتيب</label><input id="pos" type="number" name="position" value="{{ f.position or 0 }}"></div>
+    <div class="field"><label for="cv">صورة الغلاف (اختياري)</label><select id="cv" name="cover_id"><option value="">— بدون —</option>{% for m in images %}<option value="{{ m.id }}" {% if m.id == f.cover_id %}selected{% endif %}>#{{ m.id }} · {{ m.alt }}</option>{% endfor %}</select></div>
+    <div class="field"><label for="ex">أو رابط خارجي بدل الملف</label><input id="ex" name="external_url" value="{{ f.external_url or '' }}" class="ltr"></div>
+  </div>
+  <div class="field"><label for="ds">الوصف</label><textarea id="ds" name="description" rows="2">{{ f.description or '' }}</textarea></div>
+  <fieldset><legend>مكان العرض</legend>
+    {% for k, v in placements.items() %}<label class="check"><input type="checkbox" name="placements" value="{{ k }}" {% if k in (f.placements or []) %}checked{% endif %}> {{ v }}</label>{% endfor %}
+  </fieldset>
+  <label class="check"><input type="checkbox" name="is_visible" {% if f.is_visible %}checked{% endif %}> ظاهر في صفحات الموقع</label>
+  <label class="check"><input type="checkbox" name="show_counter" {% if f.show_counter %}checked{% endif %}> إظهار عدّاد التنزيلات</label>
+  <fieldset><legend>الرابط المباشر</legend>
+    <label class="check"><input type="checkbox" name="direct_link_enabled" {% if f.direct_link_enabled %}checked{% endif %}> الرابط المباشر يعمل</label>
+    {% if fid %}<div class="warn">الرابط {{ f.href }} يُرسَل في رسائل Sector Bot. إيقافه يكسر تلك الرسائل.</div>
+    <label class="check"><input type="checkbox" name="confirm_disable"> أفهم ذلك وأريد إيقاف الرابط المباشر</label>{% endif %}
+  </fieldset>
+  <div class="field"><label for="file">{{ 'استبدال الملف (يحتفظ بنفس الرابط)' if f.stored_filename else 'ملف PDF' }}</label><input id="file" type="file" name="file" accept="application/pdf"></div>
+  <div class="actions"><button class="btn dark" type="submit">حفظ</button></div>
+</form>
+{% endblock %}

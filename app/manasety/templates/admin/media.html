@@ -1,0 +1,27 @@
+{% extends "admin/base.html" %}
+{% from "admin/_macros.html" import csrf %}
+{% block title %}مكتبة الوسائط{% endblock %}
+{% block content %}
+<div class="top"><div class="grow"><h1>مكتبة الوسائط</h1><p>الصور تتحول تلقائيًا إلى WebP، والنص البديل إلزامي، والحد الأقصى للصورة {{ max_mb }} ميجا.</p></div></div>
+<form class="card" method="post" enctype="multipart/form-data">{{ csrf() }}
+  <h2>رفع ملف</h2>
+  <div class="grid2">
+    <div class="field"><label for="file">الملف (صورة / PDF / MP4)</label><input id="file" type="file" name="file" required accept="image/*,application/pdf,video/mp4"></div>
+    <div class="field"><label for="alt">النص البديل (alt) — إلزامي للصور</label><input id="alt" name="alt"></div>
+    <div class="field"><label for="alt_en">النص البديل EN</label><input id="alt_en" name="alt_en"></div>
+  </div>
+  <label class="check"><input type="checkbox" name="demo_checked"> أؤكد أن الصورة لا تحتوي اسم أو صورة أو درجة طالب حقيقي (بيانات تجريبية فقط).</label>
+  <div class="actions"><button class="btn dark" type="submit">رفع</button></div>
+</form>
+<nav class="filters" aria-label="نوع الملف">
+  {% for k, v in [('', 'الكل'), ('image', 'صور'), ('pdf', 'PDF'), ('video', 'فيديو')] %}<a class="btn sm{% if (kind or '') == k %} dark{% endif %}" href="?kind={{ k }}">{{ v }}</a>{% endfor %}
+</nav>
+<div class="media-grid">
+  {% for m in items %}
+  <a href="{{ url_for('admin_media.detail', mid=m.id) }}">
+    {% if m.kind == 'image' %}<img src="{{ url_for('admin_media.raw', mid=m.id) }}" alt="{{ m.alt }}" loading="lazy">{% else %}<span class="ph">{{ m.kind|upper }}</span>{% endif %}
+    <span>#{{ m.id }} · {{ m.alt or m.original_name }}</span>
+  </a>
+  {% else %}<p>لا توجد ملفات بعد.</p>{% endfor %}
+</div>
+{% endblock %}

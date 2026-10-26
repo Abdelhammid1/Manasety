@@ -1,0 +1,8 @@
+<a class="post-card" href="{{ a.path }}">
+  {% if a.cover %}<img src="{{ a.cover.url }}" alt="{{ a.cover.alt }}" loading="lazy" width="{{ a.cover.width }}" height="{{ a.cover.height }}">{% endif %}
+  <div class="pc-body">
+    <div class="post-meta">{% if a.category %}<span>{{ a.category.name }}</span>{% endif %}<time datetime="{{ a.published_at.date().isoformat() }}">{{ a.published_at|ar_date }}</time></div>
+    <h3>{{ a.title }}</h3>
+    {% if a.excerpt %}<p>{{ a.excerpt }}</p>{% endif %}
+  </div>
+</a>

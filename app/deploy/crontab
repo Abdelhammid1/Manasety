@@ -1,0 +1,6 @@
+# Install on the host: crontab -u root deploy/crontab   (paths assume /opt/manasety/app)
+* * * * *   cd /opt/manasety/app && docker compose exec -T web flask --app wsgi publish-scheduled > /dev/null 2>&1
+* * * * *   [ -f /opt/manasety/instance/backup-requested ] && rm -f /opt/manasety/instance/backup-requested && cd /opt/manasety/app && sh deploy/backup.sh >> /var/log/manasety-backup.log 2>&1
+15 3 * * *  cd /opt/manasety/app && sh deploy/backup.sh >> /var/log/manasety-backup.log 2>&1
+30 4 * * 1  cd /opt/manasety/app && docker compose exec -T web flask --app wsgi scan-links >> /var/log/manasety-links.log 2>&1
+45 4 * * 1  cd /opt/manasety/app && docker compose exec -T web flask --app wsgi check-backlinks >> /var/log/manasety-links.log 2>&1

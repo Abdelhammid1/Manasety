@@ -1,0 +1,13 @@
+{% extends "public/base.html" %}
+{% block title %}الصفحة غير موجودة | منصتي{% endblock %}
+{% set noindex = True %}
+{% block content %}
+<div class="center-page">
+  <div>
+    <p class="num" style="font-size:48px;color:var(--blue);margin:0">404</p>
+    <h1 style="font-size:28px">الصفحة غير موجودة</h1>
+    <p style="color:var(--ink-2)">ربما تغيّر الرابط. جرّب الصفحة الرئيسية أو المقالات.</p>
+    <p><a class="btn btn-primary" href="/">الرئيسية</a> <a class="btn btn-ghost" href="/blog">المقالات</a></p>
+  </div>
+</div>
+{% endblock %}

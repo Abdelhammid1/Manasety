@@ -1,0 +1,21 @@
+{% extends "admin/base.html" %}
+{% from "admin/_macros.html" import csrf %}
+{% block title %}ملف #{{ m.id }}{% endblock %}
+{% block content %}
+<div class="top"><div class="grow"><h1>ملف #{{ m.id }}</h1><p>{{ m.original_name }} · {{ m.mime }} · {{ (m.size / 1024)|round(1) }} KB{% if m.width %} · {{ m.width }}×{{ m.height }}{% endif %}</p></div>
+  <a class="btn" href="{{ url_for('admin_media.index') }}">رجوع</a></div>
+<div class="cols">
+  <div class="card narrow">
+    {% if m.kind == 'image' %}<img src="{{ url_for('admin_media.raw', mid=m.id) }}" alt="{{ m.alt }}" style="max-width:100%;border-radius:10px">{% else %}<a href="{{ url_for('admin_media.raw', mid=m.id) }}" target="_blank" rel="noopener">فتح الملف</a>{% endif %}
+    <p class="mono" style="margin-top:10px">{{ m.url }}</p>
+  </div>
+  <form class="card narrow" method="post">{{ csrf() }}
+    <div class="field"><label for="alt">النص البديل</label><input id="alt" name="alt" value="{{ m.alt }}"></div>
+    <div class="field"><label for="alt_en">النص البديل EN</label><input id="alt_en" name="alt_en" value="{{ m.alt_en }}"></div>
+    <div class="actions"><button class="btn dark" type="submit">حفظ</button></div>
+    <h3 style="margin-top:16px">مستخدم في</h3>
+    <ul>{% for u in usages %}<li>{{ u }}</li>{% else %}<li>غير مستخدم</li>{% endfor %}</ul>
+  </form>
+</div>
+{% if not usages %}<form method="post" action="{{ url_for('admin_media.delete', mid=m.id) }}" data-confirm="حذف الملف نهائيًا؟">{{ csrf() }}<button class="btn danger" type="submit">حذف</button></form>{% endif %}
+{% endblock %}

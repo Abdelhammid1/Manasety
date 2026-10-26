@@ -1,0 +1,31 @@
+{% extends "admin/base.html" %}
+{% from "admin/_macros.html" import csrf %}
+{% block title %}{{ res.label }}{% endblock %}
+{% block content %}
+<div class="top"><div class="grow"><h1>{{ res.label }}</h1><p>{{ rows|length }} عنصر</p></div>
+  <a class="btn primary" href="{{ url_for('admin_crud.edit', resource=resource) }}">+ {{ res.singular }}</a></div>
+{% if resource == 'clients' %}<div class="info">لا يظهر اسم أو شعار أي جهة للزوار قبل تسجيل: موافقة كتابية + تاريخها + ملف الإثبات.</div>{% endif %}
+{% if resource == 'facts' %}<div class="info">استخدم الرقم في أي نص بكتابة <code>[[fact:المفتاح]]</code>. الرقم بلا مصدر وتاريخ تحقق لا يُنشر.</div>{% endif %}
+{% if resource == 'integrations' %}<div class="warn">هذا السجل يحمي كل ما يعمل على الموقع. لا تُحذف التكاملات إلا بقرار Admin، ولا تُكتب هنا أي مفاتيح سرية.</div>{% endif %}
+{% if res.filters %}
+<form class="filters" method="get">
+  {% for key, choices in res.filters.items() %}
+  <label class="sr-only" for="flt-{{ key }}" style="position:absolute;width:1px;height:1px;overflow:hidden">{{ key }}</label>
+  <select id="flt-{{ key }}" name="{{ key }}" onchange="this.form.submit()"><option value="">الكل</option>{% for k, v in choices.items() %}<option value="{{ k }}" {% if active_filters.get(key) == k %}selected{% endif %}>{{ v }}</option>{% endfor %}</select>
+  {% endfor %}
+</form>
+{% endif %}
+<div class="t-wrap"><table class="t"><thead><tr>{% for col in res.columns %}<th>{{ col[1] }}</th>{% endfor %}<th></th></tr></thead>
+<tbody{% if res.sortable %} data-sortable="{{ url_for('admin_crud.reorder', resource=resource) }}"{% endif %}>
+{% for o in rows %}
+<tr data-id="{{ o.id }}">
+  {% for col in res.columns %}<td class="trim">{% if loop.first %}<a href="{{ url_for('admin_crud.edit', resource=resource, oid=o.id) }}">{{ o|display_cell(col) or '—' }}</a>{% else %}{{ o|display_cell(col) if o|display_cell(col) is not none else '—' }}{% endif %}</td>{% endfor %}
+  <td style="white-space:nowrap">
+    {% for ep, label in res.row_actions or [] %}<form class="inline" method="post" action="{{ url_for(ep, bid=o.id) }}">{{ csrf() }}<button class="btn sm" type="submit">{{ label }}</button></form>{% endfor %}
+    <a class="btn sm" href="{{ url_for('admin_crud.edit', resource=resource, oid=o.id) }}">تعديل</a>
+  </td>
+</tr>
+{% else %}<tr><td colspan="{{ res.columns|length + 1 }}">لا توجد عناصر.</td></tr>{% endfor %}
+</tbody></table></div>
+{% if res.sortable %}<p class="help" style="color:var(--ink-3);font-size:12.5px">اسحب الصفوف لتغيير الترتيب. <span id="order-saved" class="pill ok" hidden>حُفظ</span></p>{% endif %}
+{% endblock %}

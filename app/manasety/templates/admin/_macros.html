@@ -1,0 +1,84 @@
+{# ───── block (section) fields: names are <lang>__<key> and <lang>__<key>__<i>__<sub> ───── #}
+{% macro block_input(spec, name, value, media) -%}
+  {% set id = name|replace('__', '-') %}
+  {% if spec.kind == 'bool' %}
+    <label class="check"><input type="checkbox" name="{{ name }}" {% if value %}checked{% endif %}> {{ spec.label }}</label>
+  {% else %}
+  <div class="field">
+    <label for="{{ id }}">{{ spec.label }}</label>
+    {% if spec.kind == 'textarea' %}<textarea id="{{ id }}" name="{{ name }}" rows="2">{{ value or '' }}</textarea>
+    {% elif spec.kind == 'rich' %}<textarea id="{{ id }}" name="{{ name }}" data-rich>{{ value or '' }}</textarea>
+    {% elif spec.kind == 'select' %}
+      <select id="{{ id }}" name="{{ name }}">{% for k, v in spec.choices.items() %}<option value="{{ k }}" {% if k == value %}selected{% endif %}>{{ v }}</option>{% endfor %}</select>
+    {% elif spec.kind == 'media' %}
+      <select id="{{ id }}" name="{{ name }}"><option value="">— بدون —</option>{% for m in media if m.kind == 'image' %}<option value="{{ m.id }}" {% if m.id == value %}selected{% endif %}>#{{ m.id }} · {{ m.alt or m.original_name }}</option>{% endfor %}</select>
+      <span class="help">ارفع الصورة أولًا من <a href="{{ url_for('admin_media.index') }}" target="_blank">مكتبة الوسائط</a>.</span>
+    {% elif spec.kind == 'url' %}<input id="{{ id }}" name="{{ name }}" value="{{ value or '' }}" class="ltr">
+    {% else %}<input id="{{ id }}" name="{{ name }}" value="{{ value or '' }}">{% endif %}
+  </div>
+  {% endif %}
+{%- endmacro %}
+
+{% macro list_row(spec, prefix, idx, row, media) -%}
+<div class="list-row">
+  <div class="row-tools">
+    <button class="btn sm" type="button" data-move="up" aria-label="لأعلى">▲</button>
+    <button class="btn sm" type="button" data-move="down" aria-label="لأسفل">▼</button>
+    <button class="btn sm danger" type="button" data-remove-row>حذف</button>
+  </div>
+  <div class="grid2">
+    {% for sub in spec.fields %}{{ block_input(sub, prefix ~ '__' ~ idx ~ '__' ~ sub.key, row.get(sub.key) if row else '', media) }}{% endfor %}
+  </div>
+</div>
+{%- endmacro %}
+
+{% macro block_field(spec, lang, content, media) -%}
+  {% set name = lang ~ '__' ~ spec.key %}
+  {% if spec.kind == 'list' %}
+  <fieldset>
+    <legend>{{ spec.label }}</legend>
+    <div id="rows-{{ name }}" data-next="{{ (content.get(spec.key) or [])|length }}">
+      {% for row in content.get(spec.key) or [] %}{{ list_row(spec, name, loop.index0, row, media) }}{% endfor %}
+    </div>
+    <template id="rows-{{ name }}-tpl">{{ list_row(spec, name, '__IDX__', none, media) }}</template>
+    <button class="btn sm dashed" type="button" data-add-row="rows-{{ name }}">+ إضافة</button>
+  </fieldset>
+  {% else %}{{ block_input(spec, name, content.get(spec.key), media) }}{% endif %}
+{%- endmacro %}
+
+{# ───── generic CRUD field ───── #}
+{% macro crud_field(f, value, media, choices) -%}
+  {% set id = 'f-' ~ f.key %}
+  {% if f.kind == 'bool' %}
+    <label class="check"><input type="checkbox" name="{{ f.key }}" {% if value %}checked{% endif %}> {{ f.label }}</label>
+    {% if f.help %}<span class="help" style="margin:-6px 0 12px;display:block;color:var(--ink-3);font-size:12.5px">{{ f.help }}</span>{% endif %}
+  {% else %}
+  <div class="field">
+    <label for="{{ id }}">{{ f.label }}{% if f.required %} *{% endif %}</label>
+    {% if f.kind == 'textarea' %}<textarea id="{{ id }}" name="{{ f.key }}" rows="3">{{ value or '' }}</textarea>
+    {% elif f.kind == 'code' %}<textarea id="{{ id }}" name="{{ f.key }}" class="code" spellcheck="false"{% if f.admin_only and not current_user.can('__admin_only__') %} readonly{% endif %}>{{ value or '' }}</textarea>
+    {% elif f.kind == 'rich' %}<textarea id="{{ id }}" name="{{ f.key }}" data-rich>{{ value or '' }}</textarea>
+    {% elif f.kind == 'lines' %}<textarea id="{{ id }}" name="{{ f.key }}" rows="3" class="code">{{ (value or [])|join('\n') }}</textarea>
+    {% elif f.kind == 'date' %}<input id="{{ id }}" type="date" name="{{ f.key }}" value="{{ value.isoformat() if value else '' }}">
+    {% elif f.kind == 'int' %}<input id="{{ id }}" type="number" name="{{ f.key }}" value="{{ value if value is not none else 0 }}">
+    {% elif f.kind == 'select' %}
+      {% set opts = choices(f) %}
+      <select id="{{ id }}" name="{{ f.key }}">{% for k, v in opts.items() %}<option value="{{ k }}" {% if k|string == value|string %}selected{% endif %}>{{ v }}</option>{% endfor %}</select>
+    {% elif f.kind == 'multiselect' %}
+      {% set opts = choices(f) %}
+      <select id="{{ id }}" name="{{ f.key }}" multiple size="6">{% for k, v in opts.items() %}<option value="{{ k }}" {% if k|int in (value or []) %}selected{% endif %}>{{ v }}</option>{% endfor %}</select>
+    {% elif f.kind == 'media' %}
+      <div class="pick-media">
+        {% set cur = media_obj(value) %}{% if cur and cur.kind == 'image' %}<img src="{{ url_for('admin_media.raw', mid=cur.id) }}" alt="">{% endif %}
+        <select id="{{ id }}" name="{{ f.key }}"><option value="">— بدون —</option>
+          {% for m in media if f.media_kind == 'any' or m.kind == f.media_kind %}<option value="{{ m.id }}" {% if m.id == value %}selected{% endif %}>#{{ m.id }} · {{ m.kind }} · {{ m.alt or m.original_name }}</option>{% endfor %}
+        </select>
+      </div>
+      <span class="help">ارفع الملف من <a href="{{ url_for('admin_media.index') }}" target="_blank">مكتبة الوسائط</a> ثم اختره هنا.{% if f.private_hint %} ملفات الإثبات لا تُعرض في أي صفحة عامة.{% endif %}</span>
+    {% else %}<input id="{{ id }}" name="{{ f.key }}" value="{{ value or '' }}"{% if f.ltr or f.kind == 'url' %} class="ltr"{% endif %}>{% endif %}
+    {% if f.help and f.kind != 'bool' %}<span class="help">{{ f.help }}</span>{% endif %}
+  </div>
+  {% endif %}
+{%- endmacro %}
+
+{% macro csrf() %}<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">{% endmacro %}

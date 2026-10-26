@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+{# The live legal pages carried no tracking scripts; keep them clean (they were filed with PayTabs). #}
+<title>{{ page.title }}</title>
+<meta name="description" content="{{ page.meta_description }}">
+<link rel="canonical" href="{{ site_url() }}/{{ page.slug }}.html">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap">
+<link rel="stylesheet" href="/legal.css">
+</head>
+<body>
+{# Body markup imported byte-for-byte from the live page (the version filed with PayTabs), edited from the dashboard. #}
+{{ page.body_html|safe }}
+<script src="/legal.js"></script>
+</body>
+</html>

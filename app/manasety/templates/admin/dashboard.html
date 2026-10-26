@@ -1,0 +1,42 @@
+{% extends "admin/base.html" %}
+{% block title %}الرئيسية{% endblock %}
+{% block content %}
+<div class="top"><div class="grow"><h1>أهلًا {{ current_user.name }}</h1><p>نظرة سريعة على الموقع.</p></div>
+  <a class="btn" href="/" target="_blank" rel="noopener">فتح الموقع</a></div>
+
+{% if missing_env %}<div class="flash error">تنبيه: متغيرات البيئة {{ missing_env|join('، ') }} غير مضبوطة على هذا السيرفر — الطلبات تُحفظ هنا لكنها لا تصل إلى مرصود / بريد web3forms.</div>{% endif %}
+{% if current_user.can('content') and draft_differs %}<div class="warn">في الصفحة الرئيسية تغييرات محفوظة كمسودة ولم تُنشر بعد. <a href="{{ url_for('admin_content.page_builder') }}">مراجعة ونشر</a></div>{% endif %}
+{% if page and page.scheduled_at %}<div class="info">نشر مجدول للصفحة الرئيسية: <span class="mono">{{ page.scheduled_at.strftime('%Y-%m-%d %H:%M') }} UTC</span></div>{% endif %}
+
+<div class="kpis">
+  {% if current_user.can('leads') %}
+  <a class="kpi" href="{{ url_for('admin_leads.index', status='new') }}"><b>{{ stats.new_leads }}</b><span>طلبات جديدة</span></a>
+  <a class="kpi" href="{{ url_for('admin_leads.index') }}"><b>{{ stats.leads_total }}</b><span>كل الطلبات</span></a>
+  {% endif %}
+  {% if current_user.can('articles') %}
+  <a class="kpi" href="{{ url_for('admin_articles.index', status='published') }}"><b>{{ stats.articles_live }}</b><span>مقالات منشورة</span></a>
+  <a class="kpi" href="{{ url_for('admin_articles.index') }}"><b>{{ stats.articles_draft }}</b><span>مسودات ومراجعات</span></a>
+  {% endif %}
+  {% if current_user.can('clients') %}<a class="kpi" href="{{ url_for('admin_crud.index', resource='clients') }}"><b>{{ stats.clients_waiting_consent }}</b><span>جهات بلا موافقة مكتملة (مخفية)</span></a>{% endif %}
+  {% if current_user.can('facts') %}<a class="kpi" href="{{ url_for('admin_crud.index', resource='facts') }}"><b>{{ stats.facts_unverified }}</b><span>أرقام غير موثقة (مخفية)</span></a>{% endif %}
+  {% if current_user.can('features') %}<a class="kpi" href="{{ url_for('admin_crud.index', resource='features', status='soon') }}"><b>{{ stats.features_soon }}</b><span>ميزات «قريبًا»</span></a>{% endif %}
+</div>
+
+<div class="cols">
+  {% if latest_leads %}
+  <div class="card wide"><h2>أحدث الطلبات</h2>
+    <div class="t-wrap"><table class="t"><thead><tr><th>الاسم</th><th>المدرسة</th><th>الحالة</th><th>التاريخ</th></tr></thead><tbody>
+      {% for l in latest_leads %}<tr><td><a href="{{ url_for('admin_leads.detail', lid=l.id) }}">{{ l.name }}</a></td><td>{{ l.school or l.company }}</td><td><span class="pill">{{ l.status }}</span></td><td class="mono">{{ l.created_at.strftime('%Y-%m-%d %H:%M') }}</td></tr>{% endfor %}
+    </tbody></table></div>
+  </div>
+  {% endif %}
+  {% if recent %}
+  <div class="card narrow"><h2>آخر النشاط</h2>
+    <ul style="list-style:none;padding:0;margin:0;display:grid;gap:8px;font-size:13.5px">
+      {% for r in recent %}<li><b>{{ r.user_label }}</b> · {{ r.action }} · {{ r.entity_type }} {{ r.summary }}<br><span class="mono" style="color:var(--ink-3)">{{ r.created_at.strftime('%Y-%m-%d %H:%M') }}</span></li>{% endfor %}
+    </ul>
+    <a href="{{ url_for('admin_core.audit_log') }}">السجل الكامل</a>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

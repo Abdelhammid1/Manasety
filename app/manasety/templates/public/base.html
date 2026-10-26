@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="{{ lang or 'ar' }}" dir="{{ 'ltr' if lang == 'en' else 'rtl' }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{# Integrations registry: injected verbatim, in registry order (same IDs and places as the old site). #}
+{% for it in integrations_for('head') %}{% if it.requires_consent %}<template data-consent-code="{{ it.id }}">{{ it.code|safe }}</template>{% else %}{{ it.code|safe }}{% endif %}
+{% endfor %}
+{% set _title = (self.title() | trim) %}
+<title>{% block title %}{{ setting('brand_name_ar') }}{% endblock %}</title>
+<meta name="description" content="{% block description %}{% endblock %}">
+{% if noindex or preview or config.STAGING %}<meta name="robots" content="noindex, nofollow">{% endif %}
+{% if canonical %}<link rel="canonical" href="{{ canonical }}">{% endif %}
+{% block hreflang %}{% endblock %}
+<meta property="og:type" content="{% block og_type %}website{% endblock %}">
+<meta property="og:site_name" content="{{ setting('brand_name_ar') }}">
+<meta property="og:locale" content="{{ 'en_US' if lang == 'en' else 'ar_EG' }}">
+<meta property="og:title" content="{{ _title }}">
+<meta property="og:description" content="{{ self.description() | trim }}">
+{% if canonical %}<meta property="og:url" content="{{ canonical }}">{% endif %}
+<meta property="og:image" content="{% block og_image %}{{ site_url() ~ setting('default_og_image') }}{% endblock %}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ _title }}">
+<meta name="twitter:description" content="{{ self.description() | trim }}">
+<meta name="twitter:image" content="{{ self.og_image() | trim }}">
+<meta name="theme-color" content="#0C2461">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="alternate" type="application/rss+xml" title="{{ setting('blog_title') }}" href="/blog/feed.xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/site.css') }}?v=2">
+{% for item in schema or [] %}{{ jsonld(item) }}
+{% endfor %}
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+{{ icon_sprite() }}
+<a class="skip" href="#main">تخطَّ إلى المحتوى</a>
+{% if preview %}<div class="preview-bar">معاينة مسودة — هذه النسخة غير منشورة</div>{% endif %}
+
+<header class="site-header">
+  <div class="wrap nav">
+    <a class="brand" href="/" aria-label="{{ setting('brand_name_ar') }} — الصفحة الرئيسية">
+      <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+      <span>{{ setting('brand_name_ar') }}</span>
+    </a>
+    <nav aria-label="القائمة الرئيسية">
+      <ul class="nav-links">{% for item in setting('nav') %}<li><a href="{{ item.href }}">{{ item.label }}</a></li>{% endfor %}</ul>
+    </nav>
+    <a class="btn btn-primary btn-sm" href="{{ setting('nav_cta_href') }}">{{ setting('nav_cta_label') }}</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="فتح القائمة">{{ icon('menu') }}</button>
+  </div>
+  <div class="mobile-menu" id="mobile-menu">
+    <ul>{% for item in setting('nav') %}<li><a href="{{ item.href }}">{{ item.label }}</a></li>{% endfor %}</ul>
+  </div>
+</header>
+
+<main id="main">
+{% block content %}{% endblock %}
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <div class="foot-brand">{{ setting('footer_brand') }}</div>
+        <p>{{ setting('footer_about') }}</p>
+        <span class="legal-label">الكيان القانوني المعتمد:</span>
+        <span class="legal-name">{{ setting('legal_name_en') }}</span>
+      </div>
+      <div>
+        <h2>بيانات التواصل الرسمية</h2>
+        <ul>
+          <li><a href="mailto:{{ setting('email') }}">{{ icon('mail') }} {{ setting('email') }}</a></li>
+          <li>واتساب السعودية: <a href="{{ whatsapp_url('sa') }}" class="num" rel="noopener">{{ setting('whatsapp_sa_display') }}</a></li>
+          <li>واتساب مصر: <a href="{{ whatsapp_url('eg') }}" class="num" rel="noopener">{{ setting('whatsapp_eg_display') }}</a></li>
+          <li>اتصال: <a href="tel:+{{ setting('whatsapp_eg') }}" class="num">مصر</a> · <a href="tel:+{{ setting('whatsapp_sa') }}" class="num">السعودية</a></li>
+          {% if setting('footer_note') %}<li class="note">{{ setting('footer_note') }}</li>{% endif %}
+        </ul>
+      </div>
+      <div>
+        <h2>الوثائق القانونية</h2>
+        <ul>
+          {% for item in setting('footer_links') %}<li><a href="{{ item.href }}">{{ item.label }}</a></li>{% endfor %}
+          {% for f in files_for('footer') %}<li><a href="{{ f.href }}">{{ f.display_name }} {{ icon('download') }}</a></li>{% endfor %}
+        </ul>
+      </div>
+      <div>
+        <h2>تواصل معنا رقميًا</h2>
+        <p>{{ setting('footer_social_text') }}</p>
+        <span dir="ltr">{{ setting('social_handle') }}</span>
+        <div class="socials">{% for s in setting('social') %}<a href="{{ s.url }}" rel="noopener" target="_blank">{{ s.name }}</a>{% endfor %}</div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© {{ now_year() }} {{ setting('legal_name_en') }}. جميع الحقوق محفوظة. · سجل تجاري <bdi class="num">{{ setting('commercial_registration') }}</bdi> · {{ setting('address_ar') }}</span>
+      <span>{{ setting('footer_tagline') }}</span>
+    </div>
+  </div>
+</footer>
+
+<div class="wa-float"><a href="{{ whatsapp_url('eg') }}" rel="noopener" data-wa="eg">{{ icon('whatsapp') }}<span>واتساب</span></a></div>
+
+{% if needs_consent_banner() %}
+<div class="cookie-bar" id="cookie-bar" hidden>
+  <p>{{ setting('cookie_banner_text') }} <a href="/privacy.html">سياسة الخصوصية</a></p>
+  <button class="btn btn-primary btn-sm" type="button" data-consent="yes">موافق</button>
+  <button class="btn btn-sm" style="background:transparent;color:#fff;border-color:rgba(255,255,255,.3)" type="button" data-consent="no">رفض</button>
+</div>
+{% endif %}
+
+{% for it in integrations_for('body_end') %}{% if it.requires_consent %}<template data-consent-code="{{ it.id }}">{{ it.code|safe }}</template>{% else %}{{ it.code|safe }}{% endif %}
+{% endfor %}
+<script src="{{ url_for('static', filename='js/site.js') }}?v=2" defer></script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{% extends "public/base.html" %}
+{% block title %}{{ page_seo.get('title') or 'منصتي-سكول | نظام إدارة مدارس متكامل' }}{% endblock %}
+{% block description %}{{ page_seo.get('description') or '' }}{% endblock %}
+{% block og_image %}{% if page_seo.get('og_image') %}{{ site_url() ~ page_seo.get('og_image') }}{% else %}{{ site_url() ~ setting('default_og_image') }}{% endif %}{% endblock %}
+{% block hreflang %}{% if hreflang %}
+<link rel="alternate" hreflang="ar" href="{{ site_url() }}/">
+<link rel="alternate" hreflang="en" href="{{ site_url() }}/en/">
+<link rel="alternate" hreflang="x-default" href="{{ site_url() }}/">
+{% endif %}{% endblock %}
+{% block content %}
+{% for s in sections %}
+{% set c = s.c %}
+{% set anchor = s.anchor %}
+{% include "public/blocks/" ~ s.block_type ~ ".html" ignore missing %}
+{% endfor %}
+{% endblock %}

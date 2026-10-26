@@ -1,0 +1,14 @@
+{% extends "admin/base.html" %}
+{% block title %}تسجيل الدخول{% endblock %}
+{% block body %}
+<main class="auth">
+  <form class="card" method="post">
+    <h1 style="margin-bottom:16px">لوحة تحكم منصتي</h1>
+    {% with msgs = get_flashed_messages(with_categories=true) %}{% for cat, m in msgs %}<div class="flash {{ cat }}">{{ m }}</div>{% endfor %}{% endwith %}
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div class="field"><label for="email">البريد الإلكتروني</label><input id="email" type="email" name="email" required autocomplete="username" class="ltr"></div>
+    <div class="field"><label for="password">كلمة المرور</label><input id="password" type="password" name="password" required autocomplete="current-password"></div>
+    <button class="btn dark" type="submit" style="width:100%">دخول</button>
+  </form>
+</main>
+{% endblock %}

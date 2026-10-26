@@ -1,0 +1,12 @@
+<section class="section"{% if anchor %} id="{{ anchor }}"{% endif %}>
+  <div class="wrap split top">
+    <div class="rv">
+      {% if c.eyebrow %}<span class="pill">{{ c.eyebrow }}</span>{% endif %}
+      <h2 style="font-size:clamp(26px,3.4vw,38px)">{{ c.title|rt }}</h2>
+      {% if c.body %}<p class="body">{{ c.body|rt }}</p>{% endif %}
+    </div>
+    {% if c.points %}
+    <div class="stack rv">{% for p in c.points %}<div><b>{{ p.title }}</b><span>{{ p.text|rt }}</span></div>{% endfor %}</div>
+    {% endif %}
+  </div>
+</section>

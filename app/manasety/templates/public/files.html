@@ -1,0 +1,17 @@
+{% extends "public/base.html" %}
+{% block title %}ملفات منصتي{% endblock %}
+{% block description %}الملف التعريفي لمنصتي ومعرض أعمالنا.{% endblock %}
+{% block content %}
+<div class="wrap" style="padding-bottom:64px">
+  <div class="page-head"><h1>الملفات</h1></div>
+  <div class="grid g3">
+    {% for f in files %}
+    <a class="post-card" href="{{ f.href }}">
+      {% if f.cover %}<img src="{{ f.cover.url }}" alt="{{ f.cover.alt }}" loading="lazy">{% endif %}
+      <div class="pc-body"><h2>{{ f.display_name }}</h2>{% if f.description %}<p>{{ f.description }}</p>{% endif %}
+        {% if f.show_counter %}<span class="post-meta">{{ f.download_count }} تنزيل</span>{% endif %}</div>
+    </a>
+    {% else %}<p style="color:var(--ink-3)">لا توجد ملفات معروضة حاليًا.</p>{% endfor %}
+  </div>
+</div>
+{% endblock %}

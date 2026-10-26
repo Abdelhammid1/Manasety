@@ -1,0 +1,14 @@
+{% extends "admin/base.html" %}
+{% block title %}سجل النشاط{% endblock %}
+{% block content %}
+<div class="top"><div class="grow"><h1>سجل النشاط</h1><p>من، متى، وماذا تغيّر (قبل وبعد).</p></div></div>
+<div class="t-wrap"><table class="t"><thead><tr><th>الوقت (UTC)</th><th>المستخدم</th><th>الإجراء</th><th>العنصر</th><th>ملخص</th><th>IP</th><th></th></tr></thead><tbody>
+{% for r in rows %}
+<tr><td class="mono">{{ r.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td><td>{{ r.user_label }}</td><td><span class="pill">{{ r.action }}</span></td>
+<td><a href="?entity={{ r.entity_type }}">{{ r.entity_type }}</a>{% if r.entity_id %} #{{ r.entity_id }}{% endif %}</td><td class="trim">{{ r.summary }}</td><td class="mono">{{ r.ip or '' }}</td>
+<td>{% if r.before is not none or r.after is not none %}<a class="btn sm" href="{{ url_for('admin_core.audit_detail', log_id=r.id) }}">قبل/بعد</a>{% endif %}</td></tr>
+{% else %}<tr><td colspan="7">لا يوجد نشاط.</td></tr>{% endfor %}
+</tbody></table></div>
+<p style="margin-top:12px">{% if page_no > 1 %}<a class="btn sm" href="?page={{ page_no - 1 }}{% if request.args.entity %}&entity={{ request.args.entity }}{% endif %}">الأحدث</a>{% endif %}
+{% if rows|length == 50 %}<a class="btn sm" href="?page={{ page_no + 1 }}{% if request.args.entity %}&entity={{ request.args.entity }}{% endif %}">الأقدم</a>{% endif %}</p>
+{% endblock %}

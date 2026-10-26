@@ -1,0 +1,7 @@
+{% extends "admin/base.html" %}
+{% block title %}تفاصيل التغيير{% endblock %}
+{% block content %}
+<div class="top"><div class="grow"><h1>{{ row.action }} · {{ row.entity_type }} #{{ row.entity_id }}</h1><p>{{ row.user_label }} · <span class="mono">{{ row.created_at.strftime('%Y-%m-%d %H:%M:%S') }} UTC</span> · {{ row.summary }}</p></div>
+  <a class="btn" href="{{ url_for('admin_core.audit_log') }}">رجوع</a></div>
+<div class="cols"><div class="card narrow"><h2>قبل</h2><pre class="json">{{ before }}</pre></div><div class="card narrow"><h2>بعد</h2><pre class="json">{{ after }}</pre></div></div>
+{% endblock %}

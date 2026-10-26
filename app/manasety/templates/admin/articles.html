@@ -1,0 +1,17 @@
+{% extends "admin/base.html" %}
+{% block title %}المقالات{% endblock %}
+{% block content %}
+<div class="top"><div class="grow"><h1>المقالات</h1><p>مقال جيد يتجدد أفضل من أربعة ضعيفة. أي مسودة مولّدة بالذكاء الاصطناعي تُراجَع بإنسان قبل النشر.</p></div>
+  <a class="btn primary" href="{{ url_for('admin_articles.edit') }}">+ مقال</a></div>
+<nav class="filters" aria-label="الحالة">
+  <a class="btn sm{% if not status %} dark{% endif %}" href="{{ url_for('admin_articles.index') }}">الكل</a>
+  {% for k, v in statuses.items() %}<a class="btn sm{% if status == k %} dark{% endif %}" href="?status={{ k }}">{{ v }}</a>{% endfor %}
+</nav>
+<div class="t-wrap"><table class="t"><thead><tr><th>العنوان</th><th>اللغة</th><th>الحالة</th><th>الكلمة المفتاحية</th><th>النشر</th><th>آخر تعديل</th></tr></thead><tbody>
+{% for a in rows %}
+<tr><td><a href="{{ url_for('admin_articles.edit', aid=a.id) }}">{{ a.title }}</a><br><span class="mono" style="color:var(--ink-3)">{{ a.path }}</span></td>
+<td>{{ a.lang }}</td><td><span class="pill {{ 'ok' if a.status == 'published' else ('warn' if a.status in ('review', 'scheduled') else 'off') }}">{{ statuses[a.status] }}</span></td>
+<td>{{ a.focus_keyword or '—' }}</td><td class="mono">{{ a.published_at.strftime('%Y-%m-%d %H:%M') if a.published_at else '—' }}</td><td class="mono">{{ a.updated_at.strftime('%Y-%m-%d') }}</td></tr>
+{% else %}<tr><td colspan="6">لا توجد مقالات.</td></tr>{% endfor %}
+</tbody></table></div>
+{% endblock %}

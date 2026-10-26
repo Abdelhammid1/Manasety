@@ -1,0 +1,35 @@
+{% extends "admin/base.html" %}
+{% from "admin/_macros.html" import csrf %}
+{% block title %}الإعدادات{% endblock %}
+{% macro rows(key, rows_value, a, b, la, lb) %}
+<div id="rows-{{ key }}" data-next="{{ rows_value|length }}">
+  {% for r in rows_value %}
+  <div class="list-row"><div class="row-tools"><button class="btn sm" type="button" data-move="up" aria-label="لأعلى">▲</button><button class="btn sm" type="button" data-move="down" aria-label="لأسفل">▼</button><button class="btn sm danger" type="button" data-remove-row>حذف</button></div>
+    <div class="grid2"><div class="field"><label>{{ la }}</label><input name="{{ key }}__{{ loop.index0 }}__{{ a }}" value="{{ r[a] }}"></div>
+    <div class="field"><label>{{ lb }}</label><input name="{{ key }}__{{ loop.index0 }}__{{ b }}" value="{{ r[b] }}" class="ltr"></div></div></div>
+  {% endfor %}
+</div>
+<template id="rows-{{ key }}-tpl"><div class="list-row"><div class="row-tools"><button class="btn sm" type="button" data-move="up" aria-label="لأعلى">▲</button><button class="btn sm" type="button" data-move="down" aria-label="لأسفل">▼</button><button class="btn sm danger" type="button" data-remove-row>حذف</button></div>
+  <div class="grid2"><div class="field"><label>{{ la }}</label><input name="{{ key }}____IDX____{{ a }}"></div><div class="field"><label>{{ lb }}</label><input name="{{ key }}____IDX____{{ b }}" class="ltr"></div></div></div></template>
+<button class="btn sm dashed" type="button" data-add-row="rows-{{ key }}">+ إضافة</button>
+{% endmacro %}
+{% block content %}
+<div class="top"><div class="grow"><h1>الإعدادات</h1><p>بيانات الشركة والتذييل والقائمة والتواصل. كل تعديل يُسجَّل.</p></div></div>
+<form method="post">{{ csrf() }}
+{% for group, fields in form %}
+  <section class="card"><h2>{{ group }}</h2>
+    {% if 'قانونية' in group %}<div class="warn">هذه البيانات تطابق ما قُدّم لـ Apple وGoogle وD&amp;B وPayTabs. أي اختلاف قد يعطّل التحقق؛ لا تعدّلها إلا من السجل التجاري.</div>{% endif %}
+    <div class="grid2">
+    {% for key, label, kind in fields if kind in ('text', 'int', 'bool') %}
+      {% if kind == 'bool' %}<label class="check"><input type="checkbox" name="{{ key }}" {% if values[key] %}checked{% endif %}> {{ label }}</label>
+      {% else %}<div class="field"><label for="s-{{ key }}">{{ label }}</label><input id="s-{{ key }}" name="{{ key }}" value="{{ values[key] }}"{% if kind == 'int' %} type="number"{% endif %}></div>{% endif %}
+    {% endfor %}
+    </div>
+    {% for key, label, kind in fields if kind == 'textarea' %}<div class="field"><label for="s-{{ key }}">{{ label }}</label><textarea id="s-{{ key }}" name="{{ key }}" rows="2">{{ values[key] }}</textarea></div>{% endfor %}
+    {% for key, label, kind in fields if kind == 'links' %}<fieldset><legend>{{ label }}</legend>{{ rows(key, values[key] or [], 'label', 'href', 'النص', 'الرابط') }}</fieldset>{% endfor %}
+    {% for key, label, kind in fields if kind == 'social' %}<fieldset><legend>{{ label }}</legend>{{ rows(key, values[key] or [], 'name', 'url', 'المنصة', 'الرابط') }}</fieldset>{% endfor %}
+  </section>
+{% endfor %}
+  <div class="actions"><button class="btn dark" type="submit">حفظ الإعدادات</button></div>
+</form>
+{% endblock %}

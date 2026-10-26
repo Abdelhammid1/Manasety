@@ -1,0 +1,26 @@
+{% extends "admin/base.html" %}
+{% block title %}Search Console{% endblock %}
+{% block content %}
+<div class="top"><div class="grow"><h1>أرقام Search Console</h1><p>النقرات والظهور ومتوسط الترتيب (البيانات تتأخر يومين).</p></div>
+  {% if configured %}<nav class="filters">{% for d in (7, 28, 90) %}<a class="btn sm{% if days|int == d %} dark{% endif %}" href="?days={{ d }}">{{ d }} يومًا</a>{% endfor %}</nav>{% endif %}</div>
+{% if not configured %}
+<div class="card"><h2>الإعداد</h2>
+  <ol>
+    <li>أنشئ Service Account في Google Cloud وفعّل Search Console API.</li>
+    <li>أضف بريد الحساب كمستخدم (Restricted) على خاصية <span class="mono">manasety.ai</span> في Search Console — بدون لمس سجل التحقق القائم.</li>
+    <li>ضع ملف JSON على السيرفر خارج المستودع واضبط <code>GSC_CREDENTIALS_FILE</code> و<code>GSC_PROPERTY</code> في متغيرات البيئة.</li>
+  </ol>
+</div>
+{% else %}
+{% if error %}<div class="flash error">{{ error }}</div>{% endif %}
+<div class="cols">
+  {% for title, rows in [('الصفحات', data.pages), ('عبارات البحث', data.queries)] %}
+  <div class="card narrow"><h2>{{ title }}</h2>
+    <div class="t-wrap"><table class="t"><thead><tr><th>{{ title }}</th><th>نقرات</th><th>ظهور</th><th>CTR</th><th>الترتيب</th></tr></thead><tbody>
+    {% for r in rows %}<tr><td class="trim mono">{{ r.key }}</td><td class="mono">{{ r.clicks }}</td><td class="mono">{{ r.impressions }}</td><td class="mono">{{ r.ctr }}%</td><td class="mono">{{ r.position }}</td></tr>
+    {% else %}<tr><td colspan="5">لا بيانات.</td></tr>{% endfor %}</tbody></table></div>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+{% endblock %}

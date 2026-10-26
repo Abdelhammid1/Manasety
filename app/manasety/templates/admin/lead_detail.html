@@ -1,0 +1,29 @@
+{% extends "admin/base.html" %}
+{% from "admin/_macros.html" import csrf %}
+{% block title %}طلب #{{ lead.id }}{% endblock %}
+{% block content %}
+<div class="top"><div class="grow"><h1>{{ lead.name }}</h1><p>طلب #{{ lead.id }} · <span class="mono">{{ lead.created_at.strftime('%Y-%m-%d %H:%M') }} UTC</span> · {{ lead.form }}</p></div>
+  <a class="btn" href="https://wa.me/{{ lead.phone|replace('+', '')|replace(' ', '') }}" target="_blank" rel="noopener">واتساب</a>
+  <a class="btn" href="{{ url_for('admin_leads.index') }}">رجوع</a></div>
+<div class="cols">
+  <div class="card wide">
+    <dl class="grid2">
+      {% for label, value in [('الهاتف', lead.phone), ('البريد', lead.email), ('المدرسة', lead.school), ('الشركة', lead.company), ('المرحلة', lead.stage), ('نوع النشاط', lead.business_type), ('الخدمة', lead.service), ('المصدر', lead.source), ('UTM source', lead.utm_source), ('UTM medium', lead.utm_medium), ('UTM campaign', lead.utm_campaign), ('UTM term', lead.utm_term), ('UTM content', lead.utm_content), ('Referrer', lead.referrer), ('صفحة الهبوط', lead.landing_path)] if value %}
+      <div><dt class="lbl">{{ label }}</dt><dd style="margin:0 0 10px">{{ value }}</dd></div>
+      {% endfor %}
+    </dl>
+    {% if lead.message %}<h3>الرسالة</h3><p style="white-space:pre-line">{{ lead.message }}</p>{% endif %}
+  </div>
+  <div class="narrow">
+    <form class="card" method="post">{{ csrf() }}
+      <div class="field"><label for="status">الحالة</label><select id="status" name="status">{% for k, v in statuses.items() %}<option value="{{ k }}" {% if lead.status == k %}selected{% endif %}>{{ v }}</option>{% endfor %}</select></div>
+      <div class="field"><label for="notes">ملاحظات المبيعات</label><textarea id="notes" name="notes" rows="5">{{ lead.notes }}</textarea></div>
+      <div class="actions"><button class="btn dark" type="submit">حفظ</button></div>
+    </form>
+    <div class="card"><h2>الإرسال للتكاملات</h2>
+      <ul style="list-style:none;padding:0;margin:0 0 12px">{% for k, v in (lead.forward_log or {}).items() %}<li><b>{{ k }}</b>: <span class="mono">{{ v }}</span></li>{% else %}<li>لم يُسجَّل بعد.</li>{% endfor %}</ul>
+      <form method="post" action="{{ url_for('admin_leads.resend', lid=lead.id) }}" data-confirm="إعادة إرسال الطلب لمرصود والبريد وn8n؟">{{ csrf() }}<button class="btn sm" type="submit">إعادة الإرسال</button></form>
+    </div>
+  </div>
+</div>
+{% endblock %}

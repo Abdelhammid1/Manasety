@@ -1,0 +1,98 @@
+{% extends "admin/base.html" %}
+{% from "admin/_macros.html" import csrf %}
+{% block title %}{{ art.title or 'مقال جديد' }}{% endblock %}
+{% block content %}
+<div class="top"><div class="grow"><h1>{{ art.title or 'مقال جديد' }}</h1>{% if aid %}<p class="mono">{{ art.path }}</p>{% endif %}</div>
+  {% if aid %}<a class="btn" href="{{ url_for('admin_articles.preview', aid=aid) }}" target="_blank" rel="noopener">معاينة</a>{% endif %}
+  <a class="btn" href="{{ url_for('admin_articles.index') }}">رجوع</a></div>
+<form method="post">{{ csrf() }}
+<div class="cols">
+  <div class="wide">
+    <div class="card">
+      <div class="field"><label for="title">العنوان</label><input id="title" name="title" value="{{ art.title or '' }}" required></div>
+      <div class="grid2">
+        <div class="field"><label for="h1">H1 (إن اختلف عن العنوان)</label><input id="h1" name="h1" value="{{ art.h1 or '' }}"></div>
+        <div class="field"><label for="slug">الرابط (Slug)</label><input id="slug" name="slug" value="{{ art.slug or '' }}" class="ltr"><span class="help">حروف لاتينية قصيرة؛ الروابط العربية تظهر مشفّرة في واتساب. يُولَّد من العنوان إن تُرك فارغًا.</span></div>
+      </div>
+      <div class="field"><label for="excerpt">الملخص</label><textarea id="excerpt" name="excerpt" rows="2">{{ art.excerpt or '' }}</textarea></div>
+      <div class="field"><label for="content_html">المحتوى</label><textarea id="content_html" name="content_html" data-rich="tall">{{ art.content_html or '' }}</textarea>
+        <span class="help">كل مقال يربط بصفحة المنتج (/) وبمقالين ذوي صلة على الأقل.</span></div>
+    </div>
+    <div class="card">
+      <h2>أسئلة داخل المقال (تتحول إلى FAQ Schema)</h2>
+      <div id="rows-faq">
+        {% for item in art.faq or [] %}
+        <div class="list-row"><div class="row-tools"><button class="btn sm danger" type="button" data-remove-row>حذف</button></div>
+          <div class="field"><label>السؤال</label><input name="faq_q" value="{{ item.q }}"></div><div class="field"><label>الإجابة</label><textarea name="faq_a" rows="2">{{ item.a }}</textarea></div></div>
+        {% endfor %}
+      </div>
+      <template id="rows-faq-tpl"><div class="list-row"><div class="row-tools"><button class="btn sm danger" type="button" data-remove-row>حذف</button></div>
+        <div class="field"><label>السؤال</label><input name="faq_q"></div><div class="field"><label>الإجابة</label><textarea name="faq_a" rows="2"></textarea></div></div></template>
+      <button class="btn sm dashed" type="button" data-add-row="rows-faq">+ سؤال</button>
+    </div>
+    <div class="card">
+      <h2>الـ SEO</h2>
+      <div class="field"><label for="meta_title">Meta Title</label><input id="meta_title" name="meta_title" value="{{ art.meta_title or '' }}" data-count="30-65"></div>
+      <div class="field"><label for="meta_description">Meta Description</label><textarea id="meta_description" name="meta_description" rows="2" data-count="70-160">{{ art.meta_description or '' }}</textarea></div>
+      <div class="serp" id="serp" aria-label="معاينة نتيجة البحث"><div class="u"></div><div class="t"></div><div class="d"></div></div>
+      <div class="grid2" style="margin-top:14px">
+        <div class="field"><label for="fk">الكلمة المفتاحية الأساسية</label><input id="fk" name="focus_keyword" value="{{ art.focus_keyword or '' }}"></div>
+        <div class="field"><label for="sk">كلمات ثانوية</label><input id="sk" name="secondary_keywords" value="{{ art.secondary_keywords or '' }}"></div>
+        <div class="field"><label for="cu">Canonical (اتركه فارغًا للافتراضي)</label><input id="cu" name="canonical_url" value="{{ art.canonical_url or '' }}" class="ltr"></div>
+      </div>
+      <label class="check"><input type="checkbox" name="noindex" {% if art.noindex %}checked{% endif %}> Noindex (لا يُفهرس ولا يدخل الـ Sitemap)</label>
+    </div>
+  </div>
+  <div class="narrow">
+    <div class="card">
+      <h2>النشر</h2>
+      <div class="field"><label for="status">الحالة</label><select id="status" name="status">{% for k, v in statuses.items() %}<option value="{{ k }}" {% if art.status == k %}selected{% endif %}>{{ v }}</option>{% endfor %}</select></div>
+      <div class="field"><label for="pub">تاريخ النشر / الجدولة (بتوقيت جهازك)</label><input id="pub" type="datetime-local" data-tz-field data-utc="{{ art.published_at.isoformat() if art.published_at else '' }}"><input type="hidden" name="published_at"></div>
+      <label class="check"><input type="checkbox" name="human_reviewed" {% if art.human_reviewed %}checked{% endif %}> تمت المراجعة البشرية</label>
+      <div class="field"><label for="lang">اللغة</label><select id="lang" name="lang"><option value="ar" {% if art.lang != 'en' %}selected{% endif %}>العربية</option><option value="en" {% if art.lang == 'en' %}selected{% endif %}>English</option></select></div>
+      <div class="field"><label for="tr">ترجمة لمقال</label><select id="tr" name="translation_of_id"><option value="">—</option>{% for o in others %}<option value="{{ o.id }}" {% if o.id == art.translation_of_id %}selected{% endif %}>{{ o.title }} ({{ o.lang }})</option>{% endfor %}</select></div>
+      <div class="actions"><button class="btn dark" type="submit">حفظ</button></div>
+    </div>
+    <div class="card"><h2>فحص جودة المقال</h2><ul class="checks">{% for c in checks %}<li class="{{ 'ok' if c.ok }}">{{ c.label }}</li>{% endfor %}</ul></div>
+    <div class="card">
+      <h2>التصنيف والكاتب</h2>
+      <div class="field"><label for="cat">التصنيف (العنقود)</label><select id="cat" name="category_id"><option value="">—</option>{% for c in categories %}<option value="{{ c.id }}" {% if c.id == art.category_id %}selected{% endif %}>{{ c.name }}</option>{% endfor %}</select></div>
+      <div class="field"><label for="tags">الوسوم</label><select id="tags" name="tag_ids" multiple size="5">{% for t in tags %}<option value="{{ t.id }}" {% if t in art.tags %}selected{% endif %}>{{ t.name }}</option>{% endfor %}</select></div>
+      <div class="field"><label for="author">الكاتب</label><select id="author" name="author_id"><option value="">—</option>{% for a in authors %}<option value="{{ a.id }}" {% if a.id == art.author_id %}selected{% endif %}>{{ a.name }}</option>{% endfor %}</select></div>
+    </div>
+    <div class="card">
+      <h2>الصور</h2>
+      <div class="field"><label for="cover">الصورة الرئيسية</label><select id="cover" name="cover_id"><option value="">—</option>{% for m in images %}<option value="{{ m.id }}" {% if m.id == art.cover_id %}selected{% endif %}>#{{ m.id }} · {{ m.alt }}</option>{% endfor %}</select></div>
+      <div class="field"><label for="og">صورة المشاركة OG (افتراضيًا الرئيسية)</label><select id="og" name="og_image_id"><option value="">—</option>{% for m in images %}<option value="{{ m.id }}" {% if m.id == art.og_image_id %}selected{% endif %}>#{{ m.id }} · {{ m.alt }}</option>{% endfor %}</select></div>
+    </div>
+    <div class="card">
+      <h2>مقالات ذات صلة</h2>
+      <label class="check"><input type="radio" name="related_mode" value="auto" {% if art.related_mode != 'manual' %}checked{% endif %}> تلقائي بالتصنيف</label>
+      <label class="check"><input type="radio" name="related_mode" value="manual" {% if art.related_mode == 'manual' %}checked{% endif %}> يدوي</label>
+      <select name="related_ids" multiple size="5" aria-label="المقالات ذات الصلة">{% for o in others %}<option value="{{ o.id }}" {% if o.id in (art.related_ids or []) %}selected{% endif %}>{{ o.title }}</option>{% endfor %}</select>
+      {% if suggestions %}<h3 style="margin-top:14px">مقترح للربط الداخلي</h3>
+      <ul style="padding-inline-start:16px">{% for s in suggestions %}<li><a href="{{ s.path }}" target="_blank" rel="noopener">{{ s.title }}</a> <code>{{ s.path }}</code></li>{% endfor %}</ul>{% endif %}
+    </div>
+    {% if revisions %}
+    <div class="card"><h2>النسخ السابقة</h2>
+      {% for r in revisions %}<div style="display:flex;justify-content:space-between;gap:8px;padding:4px 0"><span class="mono">{{ r.created_at.strftime('%Y-%m-%d %H:%M') }}</span>
+        <button class="btn sm" type="submit" form="restore-{{ r.id }}">استرجاع</button></div>{% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</div>
+</form>
+{% for r in revisions %}<form id="restore-{{ r.id }}" method="post" action="{{ url_for('admin_articles.restore', aid=aid, rid=r.id) }}" data-confirm="استرجاع هذه النسخة؟">{{ csrf() }}</form>{% endfor %}
+{% if aid and art.status != 'published' %}<form method="post" action="{{ url_for('admin_articles.delete', aid=aid) }}" data-confirm="حذف المقال نهائيًا؟">{{ csrf() }}<button class="btn danger" type="submit">حذف المقال</button></form>{% endif %}
+<script>
+  document.querySelectorAll('[data-tz-field]').forEach(function (inp) {
+    if (inp.dataset.utc) {  // show the stored UTC time in the editor's local time
+      var d = new Date(inp.dataset.utc + 'Z'); var p = function (n) { return String(n).padStart(2, '0'); };
+      inp.value = d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()) + 'T' + p(d.getHours()) + ':' + p(d.getMinutes());
+    }
+    inp.form.addEventListener('submit', function () {
+      var d = new Date(inp.value); inp.form.elements.published_at.value = isNaN(d) ? '' : d.toISOString();
+    });
+  });
+</script>
+{% endblock %}

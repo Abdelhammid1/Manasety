@@ -1,0 +1,19 @@
+{% set problem = c.variant == 'problem' %}
+<section class="section{% if problem %} bg-white{% endif %}"{% if anchor %} id="{{ anchor }}"{% endif %}>
+  <div class="wrap">
+    <div class="head center rv">
+      {% if c.eyebrow %}<span class="kicker{% if problem %} orange{% endif %}">{{ c.eyebrow }}</span>{% endif %}
+      <h2>{{ c.title|rt }}</h2>
+      {% if c.subtitle %}<p>{{ c.subtitle|rt }}</p>{% endif %}
+    </div>
+    <div class="grid {{ 'g4' if problem else 'g3' }}">
+      {% for it in c['items'] or [] %}
+      <div class="{{ 'pcard' if problem else 'scard' }} rv">
+        <div class="ibox">{{ icon(it.icon) }}</div>
+        <h3>{{ it.title }}</h3>
+        <p>{{ it.text|rt }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>

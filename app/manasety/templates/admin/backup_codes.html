@@ -1,0 +1,12 @@
+{% extends "admin/base.html" %}
+{% block title %}رموز الاسترداد{% endblock %}
+{% block body %}
+<main class="auth">
+  <div class="card" style="max-width:460px">
+    <h1 style="margin-bottom:8px">تم التفعيل</h1>
+    <div class="warn">احفظ رموز الاسترداد في مكان آمن. كل رمز يُستخدم مرة واحدة ولن تظهر مرة أخرى.</div>
+    <ul class="mono" style="columns:2;list-style:none;padding:0;font-size:16px;line-height:2">{% for c in codes %}<li>{{ c }}</li>{% endfor %}</ul>
+    <a class="btn dark" href="{{ url_for('admin_core.dashboard') }}" style="width:100%">متابعة</a>
+  </div>
+</main>
+{% endblock %}

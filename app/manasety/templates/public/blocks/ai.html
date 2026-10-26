@@ -1,0 +1,27 @@
+<section class="section bg-white"{% if anchor %} id="{{ anchor }}"{% endif %}>
+  <div class="wrap">
+    <div class="head rv" style="max-width:860px">
+      {% if c.eyebrow %}<span class="pill lavender">{{ icon('bulb', 'ic') }}{{ c.eyebrow }}</span>{% endif %}
+      <h2>{{ c.title|rt }}</h2>
+      {% if c.subtitle %}<p>{{ c.subtitle|rt }}</p>{% endif %}
+    </div>
+    <div class="grid g2">
+      <div class="ai-card rv">
+        <div class="ai-card-head"><span class="ibox">{{ icon('graduation') }}</span><div><h3>{{ c.tools_title }}</h3>{% if c.tools_subtitle %}<p>{{ c.tools_subtitle }}</p>{% endif %}</div></div>
+        <div class="tools">{% for t in c.tools or [] %}<div class="tool">{{ icon(t.icon) }}{{ t.text }}</div>{% endfor %}</div>
+      </div>
+      <div class="ai-card rv">
+        <div class="ai-card-head"><span class="ibox">{{ icon('line-chart') }}</span><div><h3>{{ c.rows_title }}</h3>{% if c.rows_subtitle %}<p>{{ c.rows_subtitle }}</p>{% endif %}</div></div>
+        <div class="ai-rows">{% for r in c.rows or [] %}<div class="ai-row">{{ icon(r.icon) }}<div><b>{{ r.title }}</b><span>{{ r.text|rt }}</span></div></div>{% endfor %}</div>
+      </div>
+    </div>
+    {% if c.cost_title %}
+    <div class="cost-bar rv">
+      <span class="ibox">{{ icon('sliders') }}</span>
+      <div><b>{{ c.cost_title }}</b><span>{{ c.cost_text|rt }}</span></div>
+      {% if c.cost_badge %}<span class="cost-badge">{{ c.cost_badge }}</span>{% endif %}
+    </div>
+    {% endif %}
+    {% if c.transparency %}<p class="transparency">{{ c.transparency|rt }}</p>{% endif %}
+  </div>
+</section>

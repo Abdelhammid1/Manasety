@@ -1,0 +1,21 @@
+{% extends "admin/base.html" %}
+{% block title %}تفعيل التحقق بخطوتين{% endblock %}
+{% block body %}
+<main class="auth">
+  <form class="card" method="post" style="max-width:460px">
+    <h1 style="margin-bottom:8px">تفعيل التحقق بخطوتين</h1>
+    {% if forced %}<div class="warn">حسابك بصلاحية Admin/Editor ولا يعمل قبل تفعيل التحقق بخطوتين.</div>{% endif %}
+    {% with msgs = get_flashed_messages(with_categories=true) %}{% for cat, m in msgs %}<div class="flash {{ cat }}">{{ m }}</div>{% endfor %}{% endwith %}
+    <ol style="padding-inline-start:18px;color:var(--ink-2)">
+      <li>افتح Google Authenticator أو Microsoft Authenticator أو Authy.</li>
+      <li>امسح الرمز، أو أدخل المفتاح يدويًا.</li>
+      <li>اكتب الرمز المكوّن من 6 أرقام.</li>
+    </ol>
+    <div style="background:#fff;padding:10px;width:220px;margin:10px auto">{{ qr }}</div>
+    <p class="mono" style="text-align:center;word-break:break-all">{{ secret }}</p>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div class="field"><label for="code">الرمز</label><input id="code" name="code" required inputmode="numeric" autocomplete="one-time-code" class="ltr"></div>
+    <button class="btn dark" type="submit" style="width:100%">تفعيل</button>
+  </form>
+</main>
+{% endblock %}

@@ -1,0 +1,8 @@
+{
+  "venvPath": ".",
+  "venv": ".venv",
+  "include": ["manasety", "tests", "wsgi.py"],
+  "pythonVersion": "3.12",
+  "typeCheckingMode": "basic",
+  "reportAttributeAccessIssue": "warning"
+}

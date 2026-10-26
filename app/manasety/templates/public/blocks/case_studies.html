@@ -1,0 +1,27 @@
+{% set cases = case_studies() %}
+{% if cases %}
+<section class="section bg-white"{% if anchor %} id="{{ anchor }}"{% endif %}>
+  <div class="wrap">
+    <div class="head rv">
+      {% if c.eyebrow %}<span class="pill">{{ c.eyebrow }}</span>{% endif %}
+      <h2>{{ c.title|rt }}</h2>
+    </div>
+    <div class="grid g2">
+      {% for cs in cases %}
+      <article class="case rv">
+        <h3>{{ cs.display_name(lang) }}</h3>
+        <dl>
+          {% if cs.challenge %}<div><dt>{{ c.label_challenge or 'التحدي' }}</dt><dd>{{ cs.challenge|rt }}</dd></div>{% endif %}
+          {% if cs.built %}<div><dt>{{ c.label_built or 'ما بنيناه' }}</dt><dd>{{ cs.built|rt }}</dd></div>{% endif %}
+          {% if cs.working_now %}<div><dt>{{ c.label_now or 'ما يعمل الآن' }}</dt><dd>{{ cs.working_now|rt }}</dd></div>{% endif %}
+        </dl>
+        {% if cs.display_url() %}<a href="{{ cs.display_url() }}" rel="noopener" target="_blank">زيارة المنصة</a>{% endif %}
+      </article>
+      {% endfor %}
+    </div>
+    {% if c.show_files %}{% set cf = files_for('case_studies') %}{% if cf %}
+    <div class="hero-files" style="margin-top:24px">{% for f in cf %}<a class="file-btn" href="{{ f.href }}">{{ icon('download') }}{{ f.display_name }}</a>{% endfor %}</div>
+    {% endif %}{% endif %}
+  </div>
+</section>
+{% endif %}

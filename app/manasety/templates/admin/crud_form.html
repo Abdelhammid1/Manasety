@@ -1,0 +1,27 @@
+{% extends "admin/base.html" %}
+{% from "admin/_macros.html" import crud_field, csrf with context %}
+{% block title %}{{ res.singular }}{% endblock %}
+{% block content %}
+<div class="top"><div class="grow"><h1>{{ 'تعديل' if oid else 'إضافة' }} {{ res.singular }}</h1><p>{{ res.label }}</p></div>
+  <a class="btn" href="{{ url_for('admin_crud.index', resource=resource) }}">رجوع</a></div>
+{% for e in errors %}<div class="flash error">{{ e }}</div>{% endfor %}
+{% if resource == 'clients' and oid %}<div class="{{ 'info' if obj.is_publishable else 'warn' }}">{{ 'تظهر هذه الجهة للزوار.' if obj.is_publishable else 'هذه الجهة مخفية عن الزوار حتى تكتمل الموافقة (موافقة + تاريخ + ملف إثبات + ظاهر).' }}</div>{% endif %}
+{% if resource == 'facts' and oid %}<div class="{{ 'info' if obj.is_publishable else 'warn' }}">{{ 'الرقم منشور.' if obj.is_publishable else 'الرقم غير منشور: يحتاج مصدرًا وتاريخ تحقق وتفعيل «ظاهر».' }}</div>{% endif %}
+<form class="card" method="post">{{ csrf() }}
+  <div class="grid2">
+    {% for f in res.fields if f.kind not in ('rich', 'code', 'textarea', 'lines', 'multiselect') %}{{ crud_field(f, obj[f.key], media, choices) }}{% endfor %}
+  </div>
+  {% for f in res.fields if f.kind in ('rich', 'code', 'textarea', 'lines', 'multiselect') %}{{ crud_field(f, obj[f.key], media, choices) }}{% endfor %}
+  <div class="actions"><button class="btn dark" type="submit">حفظ</button></div>
+</form>
+{% if oid and (not res.delete_perm or current_user.can(res.delete_perm)) %}
+<form class="card" method="post" action="{{ url_for('admin_crud.delete', resource=resource, oid=oid) }}" data-confirm="حذف نهائي؟">{{ csrf() }}
+  <h2>حذف</h2>
+  {% if res.delete_type_name %}
+  <div class="warn">حذف تكامل قد يوقف تتبع الإعلانات أو التقارير أو التحقق. اكتب اسم التكامل «{{ obj.name }}» للتأكيد. سيُسجَّل الحذف في سجل النشاط.</div>
+  <div class="field"><label for="confirm_name">اسم التكامل</label><input id="confirm_name" name="confirm_name" autocomplete="off"></div>
+  {% endif %}
+  <button class="btn danger" type="submit">حذف</button>
+</form>
+{% endif %}
+{% endblock %}

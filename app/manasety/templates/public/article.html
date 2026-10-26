@@ -1,0 +1,50 @@
+{% extends "public/base.html" %}
+{% block title %}{{ article.meta_title or article.title }}{% endblock %}
+{% block description %}{{ article.meta_description or article.excerpt }}{% endblock %}
+{% block og_type %}article{% endblock %}
+{% block og_image %}{{ og_image or (site_url() ~ setting('default_og_image')) }}{% endblock %}
+{% block hreflang %}{% if translation %}
+<link rel="alternate" hreflang="{{ article.lang }}" href="{{ site_url() ~ article.path }}">
+<link rel="alternate" hreflang="{{ translation.lang }}" href="{{ site_url() ~ translation.path }}">
+{% endif %}{% endblock %}
+{% block content %}
+<div class="wrap">
+  <div class="page-head">
+    <ol class="crumbs">{% for name, url in crumbs %}<li>{% if not loop.last %}<a href="{{ url }}">{{ name }}</a>{% else %}<span aria-current="page">{{ name }}</span>{% endif %}</li>{% endfor %}</ol>
+    <h1>{{ article.h1 or article.title }}</h1>
+    <div class="post-meta">
+      {% if article.author %}<a href="/authors/{{ article.author.slug }}">{{ article.author.name }}</a>{% endif %}
+      <span>نُشر <time datetime="{{ article.published_at.isoformat() if article.published_at else '' }}">{{ article.published_at|ar_date }}</time></span>
+      {% if article.content_updated_at and article.published_at and article.content_updated_at.date() > article.published_at.date() %}<span>آخر تحديث <time datetime="{{ article.content_updated_at.isoformat() }}">{{ article.content_updated_at|ar_date }}</time></span>{% endif %}
+      {% if translation %}<a href="{{ translation.path }}" hreflang="{{ translation.lang }}">{{ 'English' if translation.lang == 'en' else 'العربية' }}</a>{% endif %}
+    </div>
+  </div>
+  <div class="article-layout{% if toc %} has-toc{% endif %}">
+    <article class="prose">
+      {% if article.cover %}<img src="{{ article.cover.url }}" alt="{{ article.cover.alt }}" width="{{ article.cover.width }}" height="{{ article.cover.height }}" fetchpriority="high">{% endif %}
+      {{ body|rich }}
+      {% if faq_pairs %}
+      <h2 id="faq">أسئلة شائعة</h2>
+      <div class="faq" style="margin:0">{% for q, a in faq_pairs %}<details><summary>{{ q }}{{ icon('chevron') }}</summary><div class="answer">{{ a|rich }}</div></details>{% endfor %}</div>
+      {% endif %}
+      {% if article.author %}
+      <div class="author-box">
+        {% if article.author.photo %}<img src="{{ article.author.photo.url }}" alt="{{ article.author.photo.alt or article.author.name }}" loading="lazy">{% endif %}
+        <div><b><a href="/authors/{{ article.author.slug }}" style="color:inherit;text-decoration:none">{{ article.author.name }}</a></b><p>{{ article.author.job_title }}</p></div>
+      </div>
+      {% endif %}
+      <p style="margin-top:28px"><a class="btn btn-primary" href="/#contact">احجز عرضًا توضيحيًا لمنصتي-سكول</a></p>
+    </article>
+    {% if toc %}
+    <aside class="toc" aria-label="محتويات المقال"><b>في هذا المقال</b>
+      <ol>{% for h in toc %}<li class="l{{ h.level }}"><a href="#{{ h.id }}">{{ h.text }}</a></li>{% endfor %}</ol>
+    </aside>
+    {% endif %}
+  </div>
+  {% if related %}
+  <section style="padding-bottom:64px"><h2 style="font-size:24px">مقالات ذات صلة</h2>
+    <div class="grid g3">{% for a in related %}{% include "public/_post_card.html" %}{% endfor %}</div>
+  </section>
+  {% endif %}
+</div>
+{% endblock %}

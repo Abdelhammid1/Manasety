@@ -6,3 +6,12 @@
 *.backup-*
 _snippets/
 contact-page.backup.html
+
+# Flask app
+app/.venv/
+app/instance/
+app/media/
+app/.env
+__pycache__/
+*.pyc
+.pytest_cache/

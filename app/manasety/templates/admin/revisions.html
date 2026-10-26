@@ -1,0 +1,14 @@
+{% extends "admin/base.html" %}
+{% from "admin/_macros.html" import csrf %}
+{% block title %}النسخ السابقة{% endblock %}
+{% block content %}
+<div class="top"><div class="grow"><h1>النسخ المنشورة السابقة · {{ page.title }}</h1><p>الاسترجاع يحمّل النسخة إلى المسودة فقط؛ لا شيء يتغير للزوار قبل «نشر».</p></div>
+  <a class="btn" href="{{ url_for('admin_content.page_builder', slug=page.slug) }}">رجوع</a></div>
+<div class="t-wrap"><table class="t"><thead><tr><th>#</th><th>التاريخ</th><th>بواسطة</th><th>ملاحظة</th><th>الأقسام</th><th></th></tr></thead><tbody>
+{% for r in revisions %}
+<tr><td class="mono">{{ r.id }}</td><td class="mono">{{ r.created_at.strftime('%Y-%m-%d %H:%M') }}</td><td>{{ r.created_by.email if r.created_by else 'نظام' }}</td><td>{{ r.note }}</td>
+<td>{{ (r.snapshot.sections or [])|length }}</td>
+<td><form method="post" action="{{ url_for('admin_content.restore', slug=page.slug, rid=r.id) }}" data-confirm="استبدال المسودة الحالية بهذه النسخة؟">{{ csrf() }}<button class="btn sm" type="submit">استرجاع للمسودة</button></form></td></tr>
+{% else %}<tr><td colspan="6">لا توجد نسخ بعد.</td></tr>{% endfor %}
+</tbody></table></div>
+{% endblock %}

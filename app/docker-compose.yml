@@ -1,0 +1,42 @@
+# /opt/manasety/app on the Hetzner server. Nginx on the host proxies to 127.0.0.1:8000.
+services:
+  web:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql+psycopg://manasety:${POSTGRES_PASSWORD}@db:5432/manasety
+      MEDIA_DIR: /app/media
+      LEGACY_DIR: /legacy
+      BACKUP_STATUS_FILE: /app/instance/backup-status.json
+      RATELIMIT_STORAGE_URI: redis://redis:6379/0   # shared across gunicorn workers
+    volumes:
+      - /opt/manasety/media:/app/media
+      - /opt/manasety/instance:/app/instance
+      - /opt/manasety/legacy-site:/legacy:ro   # the old static site, served for legacy URLs only
+    ports:
+      - "127.0.0.1:8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--save", "", "--appendonly", "no"]
+
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: manasety
+      POSTGRES_USER: manasety
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - /opt/manasety/pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U manasety"]
+      interval: 5s
+      retries: 10

@@ -1,0 +1,9 @@
+{% extends "admin/base.html" %}
+{% block title %}الصفحات القانونية{% endblock %}
+{% block content %}
+<div class="top"><div class="grow"><h1>الصفحات القانونية</h1><p>نفس الروابط المقدّمة لـ PayTabs. كل حفظ يحتفظ بالنسخة السابقة.</p></div></div>
+<div class="t-wrap"><table class="t"><thead><tr><th>الصفحة</th><th>الرابط</th><th>آخر تحديث معلن</th><th>آخر تعديل</th></tr></thead><tbody>
+{% for p in pages %}<tr><td><a href="{{ url_for('admin_legal.edit', slug=p.slug) }}">{{ p.title }}</a></td><td class="mono"><a href="/{{ p.slug }}.html" target="_blank" rel="noopener">/{{ p.slug }}.html</a></td>
+<td class="mono">{{ p.last_updated or '—' }}</td><td class="mono">{{ p.updated_at.strftime('%Y-%m-%d %H:%M') }}</td></tr>{% endfor %}
+</tbody></table></div>
+{% endblock %}

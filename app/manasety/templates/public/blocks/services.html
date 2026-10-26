@@ -1,0 +1,17 @@
+<section class="section bg-navy"{% if anchor %} id="{{ anchor }}"{% endif %}>
+  <div class="wrap svc">
+    <div class="rv">
+      {% if c.eyebrow %}<span class="kicker">{{ c.eyebrow }}</span>{% endif %}
+      <h2>{{ c.title|rt }}</h2>
+      {% if c.subtitle %}<p class="sub">{{ c.subtitle|rt }}</p>{% endif %}
+      <ul class="svc-list">{% for it in c['items'] or [] %}<li>{{ icon(it.icon) }}{{ it.title }}</li>{% endfor %}</ul>
+    </div>
+    {% if c.side_title or c.cta_label %}
+    <div class="svc-side rv">
+      {% if c.side_title %}<h3>{{ c.side_title }}</h3>{% endif %}
+      {% if c.side_text %}<p>{{ c.side_text|rt }}</p>{% endif %}
+      {% if c.cta_label %}<a class="btn btn-primary" href="{{ c.cta_href or '#contact' }}">{{ c.cta_label }}</a>{% endif %}
+    </div>
+    {% endif %}
+  </div>
+</section>

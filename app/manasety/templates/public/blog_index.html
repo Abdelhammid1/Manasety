@@ -1,0 +1,30 @@
+{% extends "public/base.html" %}
+{% block title %}{% if category %}{{ category.name }} | {% elif tag %}{{ tag.name }} | {% endif %}{{ setting('blog_title') }}{% if page_no > 1 %} — صفحة {{ page_no }}{% endif %}{% endblock %}
+{% block description %}{{ (category.description if category and category.description else setting('blog_description')) }}{% endblock %}
+{% block content %}
+<div class="wrap">
+  <div class="page-head">
+    <ol class="crumbs">{% for name, url in crumbs %}<li>{% if not loop.last %}<a href="{{ url }}">{{ name }}</a>{% else %}{{ name }}{% endif %}</li>{% endfor %}</ol>
+    <h1>{% if category %}{{ category.name }}{% elif tag %}#{{ tag.name }}{% else %}{{ setting('blog_title') }}{% endif %}</h1>
+    <p class="lead" style="color:var(--ink-2)">{{ category.description if category and category.description else setting('blog_description') }}</p>
+  </div>
+  {% if categories %}
+  <nav class="chips" aria-label="التصنيفات">
+    <a class="chip{% if not category and not tag %} active{% endif %}" href="/blog">الكل</a>
+    {% for cat in categories %}<a class="chip{% if category and category.id == cat.id %} active{% endif %}" href="/blog/category/{{ cat.slug }}">{{ cat.name }}</a>{% endfor %}
+  </nav>
+  {% endif %}
+  {% if articles %}
+  <div class="grid g3" style="padding-bottom:24px">{% for a in articles %}{% include "public/_post_card.html" %}{% endfor %}</div>
+  {% else %}
+  <p style="padding:40px 0;color:var(--ink-3)">لا توجد مقالات منشورة بعد.</p>
+  {% endif %}
+  {% if total_pages > 1 %}
+  <nav class="pager" aria-label="الصفحات" style="padding-bottom:64px">
+    {% if page_no > 1 %}<a class="btn btn-ghost btn-sm" href="?page={{ page_no - 1 }}" rel="prev">السابق</a>{% endif %}
+    <span class="btn btn-sm" style="pointer-events:none">{{ page_no }} / {{ total_pages }}</span>
+    {% if page_no < total_pages %}<a class="btn btn-ghost btn-sm" href="?page={{ page_no + 1 }}" rel="next">التالي</a>{% endif %}
+  </nav>
+  {% endif %}
+</div>
+{% endblock %}

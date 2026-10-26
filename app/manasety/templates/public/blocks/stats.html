@@ -1,0 +1,12 @@
+{# Only facts with a source + verification date + visible flag render (see Fact.is_publishable). #}
+{% set items = verified_facts(c.fact_keys) %}
+{% if items %}
+<section class="section bg-white"{% if anchor %} id="{{ anchor }}"{% endif %}>
+  <div class="wrap">
+    {% if c.title %}<div class="head center"><h2>{{ c.title|rt }}</h2></div>{% endif %}
+    <div class="grid g4">
+      {% for f in items %}<div class="scard" style="text-align:center"><b class="num" style="font-size:30px;color:var(--navy)">{{ f.value }}</b><p>{{ f.label }}</p></div>{% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}

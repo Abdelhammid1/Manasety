@@ -1,0 +1,21 @@
+{% extends "admin/base.html" %}
+{% block title %}الطلبات{% endblock %}
+{% block content %}
+<div class="top"><div class="grow"><h1>الطلبات</h1><p>{{ rows|length }} طلب{% if rows|length == 500 %} (أحدث 500){% endif %}</p></div>
+  <a class="btn" href="{{ url_for('admin_leads.export', **request.args) }}">تصدير CSV</a></div>
+<form class="filters" method="get">
+  <label for="q" style="position:absolute;width:1px;height:1px;overflow:hidden">بحث</label>
+  <input id="q" type="search" name="q" value="{{ request.args.q or '' }}" placeholder="اسم / هاتف / مدرسة">
+  <select name="status" aria-label="الحالة"><option value="">كل الحالات</option>{% for k, v in statuses.items() %}<option value="{{ k }}" {% if request.args.status == k %}selected{% endif %}>{{ v }}</option>{% endfor %}</select>
+  <select name="utm_source" aria-label="المصدر"><option value="">كل المصادر</option>{% for s in sources %}<option {% if request.args.utm_source == s %}selected{% endif %}>{{ s }}</option>{% endfor %}</select>
+  <button class="btn" type="submit">تصفية</button>
+</form>
+<div class="t-wrap"><table class="t"><thead><tr><th>#</th><th>التاريخ</th><th>الاسم</th><th>المدرسة/الشركة</th><th>الهاتف</th><th>نوع النشاط</th><th>UTM</th><th>الحالة</th></tr></thead><tbody>
+{% for l in rows %}
+<tr><td class="mono">{{ l.id }}</td><td class="mono">{{ l.created_at.strftime('%Y-%m-%d %H:%M') }}</td><td><a href="{{ url_for('admin_leads.detail', lid=l.id) }}">{{ l.name }}</a></td>
+<td>{{ l.school or l.company or '—' }}</td><td class="mono">{{ l.phone }}</td><td>{{ l.business_type or l.service or '—' }}</td>
+<td class="mono">{{ l.utm_source or '—' }}{% if l.utm_campaign %} / {{ l.utm_campaign }}{% endif %}</td>
+<td><span class="pill {{ {'new': 'warn', 'contacted': '', 'demo': 'ok', 'lost': 'off'}[l.status] }}">{{ statuses[l.status] }}</span></td></tr>
+{% else %}<tr><td colspan="8">لا توجد طلبات.</td></tr>{% endfor %}
+</tbody></table></div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "admin/base.html" %}
+{% from "admin/_macros.html" import csrf %}
+{% block title %}{{ page.title }}{% endblock %}
+{% block content %}
+<div class="top"><div class="grow"><h1>{{ page.title }}</h1><p class="mono">/{{ page.slug }}.html</p></div>
+  <a class="btn" href="/{{ page.slug }}.html" target="_blank" rel="noopener">عرض</a><a class="btn" href="{{ url_for('admin_legal.index') }}">رجوع</a></div>
+<div class="warn">هذه الصفحات مقدّمة لـ PayTabs كسياسات الشركة. أي تعديل جوهري في نموذج العمل أو سياسة الاسترداد يُراجَع قبل النشر.</div>
+<form class="card" method="post">{{ csrf() }}
+  <div class="grid2">
+    <div class="field"><label for="t">عنوان الصفحة</label><input id="t" name="title" value="{{ page.title }}"></div>
+    <div class="field"><label for="lu">تاريخ آخر تحديث المعلن</label><input id="lu" type="date" name="last_updated" value="{{ page.last_updated.isoformat() if page.last_updated else '' }}"></div>
+  </div>
+  <div class="field"><label for="md">الوصف (meta)</label><textarea id="md" name="meta_description" rows="2">{{ page.meta_description }}</textarea></div>
+  <div class="field"><label for="body">محتوى الصفحة (HTML ثنائي اللغة كما في الصفحة الحالية)</label>
+    <textarea id="body" name="body_html" class="code" style="min-height:480px">{{ page.body_html }}</textarea>
+    <span class="help">يُنظَّف عند الحفظ (لا سكربتات). حافظ على عناصر <code>span.ar</code> و<code>span.en</code> كما هي.</span></div>
+  <label class="check"><input type="checkbox" name="ack_paytabs" required> راجعت التنبيه أعلاه</label>
+  <div class="actions"><button class="btn dark" type="submit">حفظ ونشر</button></div>
+</form>
+<div class="card"><h2>النسخ السابقة</h2>
+  <div class="t-wrap"><table class="t"><thead><tr><th>#</th><th>التاريخ</th><th>بواسطة</th><th>ملاحظة</th><th></th></tr></thead><tbody>
+  {% for r in revisions %}<tr><td class="mono">{{ r.id }}</td><td class="mono">{{ r.created_at.strftime('%Y-%m-%d %H:%M') }}</td><td>{{ r.created_by.email if r.created_by else 'نظام' }}</td><td>{{ r.note }}</td>
+  <td><form method="post" action="{{ url_for('admin_legal.restore', slug=page.slug, rid=r.id) }}" data-confirm="استرجاع هذه النسخة ونشرها؟">{{ csrf() }}<button class="btn sm" type="submit">استرجاع</button></form></td></tr>
+  {% else %}<tr><td colspan="5">لا توجد نسخ سابقة.</td></tr>{% endfor %}
+  </tbody></table></div>
+</div>
+{% endblock %}

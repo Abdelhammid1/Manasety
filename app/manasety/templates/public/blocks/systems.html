@@ -1,0 +1,19 @@
+<section class="section"{% if anchor %} id="{{ anchor }}"{% endif %}>
+  <div class="wrap">
+    <div class="head center rv">
+      {% if c.eyebrow %}<span class="kicker">{{ c.eyebrow }}</span>{% endif %}
+      <h2>{{ c.title|rt }}</h2>
+      {% if c.subtitle %}<p>{{ c.subtitle|rt }}</p>{% endif %}
+    </div>
+    <div class="grid g4">
+      {% for s in c['items'] or [] %}
+      <div class="sys rv">
+        <span class="ibox">{{ icon(s.icon) }}</span>
+        <h3>{{ s.name }}</h3>
+        <p>{{ s.text|rt }}</p>
+        {% if s.url %}<a class="tag" href="{{ s.url }}" rel="noopener" target="_blank">{{ s.tag }}</a>{% elif s.tag %}<span class="tag">{{ s.tag }}</span>{% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>

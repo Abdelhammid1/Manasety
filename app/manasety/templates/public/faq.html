@@ -1,0 +1,15 @@
+{% extends "public/base.html" %}
+{% block title %}الأسئلة الشائعة | منصتي-سكول{% endblock %}
+{% block description %}إجابات عن طبيعة منصتي-سكول، والأمان، والتخصيص، والذكاء الاصطناعي، والتسعير.{% endblock %}
+{% block content %}
+<div class="wrap" style="padding-bottom:64px">
+  <div class="page-head"><h1>الأسئلة الشائعة</h1></div>
+  {% for key, label in categories.items() %}
+  {% set group = items | selectattr('category', 'equalto', key) | list %}
+  {% if group %}
+  <h2 style="font-size:22px;margin-top:28px">{{ label }}</h2>
+  <div class="faq" style="margin:0">{% for f in group %}<details><summary>{{ f.question }}{{ icon('chevron') }}</summary><div class="answer">{{ f.answer_html|rich }}</div></details>{% endfor %}</div>
+  {% endif %}
+  {% endfor %}
+</div>
+{% endblock %}
