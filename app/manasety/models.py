@@ -281,6 +281,7 @@ class Client(Model):
     consent_notes: Mapped[str] = mapped_column(String(500), default="")
     is_visible: Mapped[bool] = mapped_column(Boolean, default=True)
     position: Mapped[int] = mapped_column(Integer, default=0)
+    show_name: Mapped[bool] = mapped_column(Boolean, default=False, server_default="false")
 
     logo = relationship("Media", foreign_keys=[logo_id])
     consent_proof = relationship("Media", foreign_keys=[consent_proof_id])

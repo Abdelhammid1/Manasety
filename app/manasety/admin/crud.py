@@ -148,6 +148,7 @@ RESOURCES: dict[str, dict[str, Any]] = {
             F("consent_notes", "ملاحظات الموافقة"),
             F("is_visible", "ظاهر", "bool"), F("position", "الترتيب", "int"),
             F("name_en", "الاسم EN"), F("description_en", "الوصف EN", "textarea"),
+            F("show_name", "\u0625\u0638\u0647\u0627\u0631 \u0627\u0644\u0627\u0633\u0645 \u062a\u062d\u062a \u0627\u0644\u0644\u0648\u062c\u0648", "bool"),
         ],
         "validate": _clients,
     },
