@@ -1,7 +1,7 @@
 {% set tabs = (c.tabs or []) | selectattr('module') | list %}
 <section class="section bg-white"{% if anchor %} id="{{ anchor }}"{% endif %}>
   <div class="wrap">
-    <div class="head rv">
+    <div class="head center rv">
       {% if c.eyebrow %}<span class="pill">{{ c.eyebrow }}</span>{% endif %}
       <h2>{{ c.title|rt }}</h2>
     </div>
