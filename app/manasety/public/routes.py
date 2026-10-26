@@ -10,7 +10,7 @@ from flask import (Blueprint, Response, abort, current_app, jsonify, redirect, r
                    send_from_directory, url_for)
 from markupsafe import Markup
 
-from ..config import LEGACY_FILES
+from ..config import LEGACY_DIRS, LEGACY_FILES
 from ..extensions import csrf, db, limiter
 from ..models import Article, Author, Category, DisplayFile, LegalPage, Page, Tag, utcnow
 from ..publishing import (live_articles, public_faq, related_articles, section_content, visible_sections)
@@ -301,6 +301,11 @@ def robots():
 
 # ───────── display files & legacy static files (catch-all, keep last) ─────────
 
+@bp.route("/sara")
+def sara_root():
+    return redirect("/sara/", code=301)
+
+
 @bp.route("/<path:filename>")
 def root_file(filename: str):
     df = db.session.query(DisplayFile).filter_by(public_path=filename).first()
@@ -315,6 +320,12 @@ def root_file(filename: str):
                                    max_age=300, download_name=Path(df.public_path).name)
     if filename in LEGACY_FILES:
         return send_from_directory(current_app.config["LEGACY_DIR"], filename, max_age=3600)
+    top, _, rest = filename.partition("/")
+    if top in LEGACY_DIRS:
+        folder = Path(current_app.config["LEGACY_DIR"]) / top
+        if rest and ".." not in rest.split("/") and (folder / rest).is_file():
+            return send_from_directory(folder, rest, max_age=3600)  # safe_join inside
+        return send_from_directory(folder, "index.html", max_age=300)
     abort(404)
 
 

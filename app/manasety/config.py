@@ -82,5 +82,8 @@ LEGACY_FILES = {
     "manasety-landing-v2.html", "logo-animated-preview.html", "logo-animated.svg",
     "favicon.ico", "favicon.svg", "favicon-96x96.png", "apple-touch-icon.png", "site.webmanifest",
     "web-app-manifest-192x192.png", "web-app-manifest-512x512.png", "og-image.png",
-    "legal.css", "legal.js",
+    "legal.css", "legal.js", "indexold23-09-2026.html",
 }
+# Old static sub-sites served as whole folders (unknown sub-paths fall back to the folder's index.html,
+# because they use path-based URLs, e.g. /sara/<name>).
+LEGACY_DIRS = {"sara"}

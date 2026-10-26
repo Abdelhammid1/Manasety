@@ -118,6 +118,14 @@ def test_lead_honeypot_and_validation(client):
     assert r.status_code == 400
 
 
+def test_legacy_sara_folder_still_served(client):
+    assert client.get("/sara/").status_code == 200
+    assert client.get("/sara/some-name").status_code == 200        # path-based URL → index.html
+    assert client.get("/sara/css/style.css").status_code == 200
+    assert b"create_app" not in client.get("/sara/../wsgi.py").data  # traversal never leaves the folder
+    assert client.get("/indexold23-09-2026.html").status_code == 200
+
+
 def test_legal_pages_keep_urls(client):
     for slug in ("privacy", "terms", "refund"):
         # seeded without --legal-dir in tests → 404 is expected here; the deploy check uses the real import
