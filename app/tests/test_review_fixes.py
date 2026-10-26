@@ -116,3 +116,14 @@ def test_media_in_published_page_cannot_be_deleted(admin_client):
     admin_client.post(f"/admin/media/{m.id}/delete")
     assert db.session.get(Media, m.id) is not None
     _ = date.today()
+
+
+def test_redirect_cannot_hijack_lead_posts(admin_client, client):
+    from manasety.models import Redirect
+    admin_client.post("/admin/lib/redirects/new", data={"from_path": "/api/leads", "to_path": "https://evil.example/x", "code": "307"})
+    admin_client.post("/admin/lib/redirects/new", data={"from_path": "/x-old", "to_path": "//evil.example", "code": "301"})
+    assert db.session.query(Redirect).count() == 1  # only the seeded /index.html
+    db.session.add(Redirect(from_path="/promo", to_path="/", code=301))
+    db.session.commit()
+    assert client.post("/promo", data={"a": "b"}).status_code != 301   # forms are never redirected
+    assert client.get("/promo").status_code == 301

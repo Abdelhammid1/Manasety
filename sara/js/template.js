@@ -101,7 +101,7 @@ function renderHero(cfg) {
   set("hero-name",    cfg.name + "'s");
   set("hero-subtitle", cfg.celebrationSub);
   const startBtn = $("start-btn");
-  if (startBtn) startBtn.innerHTML = `${cfg.startButtonText} &nbsp;→`;
+  if (startBtn) startBtn.textContent = `${cfg.startButtonText} →`;
 }
 
 function renderQuiz(cfg) {
@@ -303,7 +303,7 @@ function showNotFound(slug) {
         <div class="notfound-card">
           <h2>Birthday not found</h2>
           <p>
-            No birthday exists at <code>${slug ? slug : "(no slug)"}</code> yet.
+            No birthday exists at <code class="nf-slug"></code> yet.
           </p>
           <p>
             To create one, open the admin panel at
@@ -312,6 +312,8 @@ function showNotFound(slug) {
         </div>
       </div>
     </section>`;
+  const slugEl = main.querySelector(".nf-slug");
+  if (slugEl) slugEl.textContent = slug || "(no slug)";
 }
 
 async function bootstrap() {

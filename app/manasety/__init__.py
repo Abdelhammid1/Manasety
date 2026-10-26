@@ -101,8 +101,8 @@ def _register_hooks(app: Flask) -> None:
 
     @app.before_request
     def legacy_redirects():
-        if request.path.startswith(("/admin", "/static/", "/media/")):
-            return None
+        if request.method not in ("GET", "HEAD") or request.path.startswith(("/admin", "/static/", "/media/", "/api/")):
+            return None  # never redirect form posts (a 307/308 would forward their bodies)
         from .models import Redirect
         row = db.session.query(Redirect).filter_by(from_path=request.path).first()
         if row is None:

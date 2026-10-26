@@ -60,8 +60,13 @@ def _clients(obj: Client) -> list[str]:
 
 def _redirects(obj: Redirect) -> list[str]:
     errs = []
-    if not obj.from_path.startswith("/") or obj.from_path.startswith(("/admin", "/static", "/media")):
-        errs.append("المسار القديم يبدأ بـ / ولا يكون داخل /admin أو /static أو /media.")
+    if not obj.from_path.startswith("/") or obj.from_path.startswith(
+            ("/admin", "/static", "/media", "/api", "/preview", "/blog", "/authors", "/en/")):
+        errs.append("المسار القديم يبدأ بـ / ولا يكون من مسارات الموقع نفسه (/admin، /api، /blog…).")
+    if obj.code not in (301, 302):
+        errs.append("الكود 301 أو 302 فقط.")
+    if not (obj.to_path.startswith("/") and not obj.to_path.startswith("//")) and not obj.to_path.startswith("https://"):
+        errs.append("الرابط الجديد مسار داخلي (/…) أو رابط https.")
     if obj.from_path in ("/privacy.html", "/terms.html", "/refund.html", "/manasety-profile.pdf"):
         errs.append("هذا الرابط مرتبط بتسجيلات الشركة (PayTabs / Sector Bot) ولا يُحوَّل.")
     if obj.from_path == obj.to_path:
@@ -304,7 +309,7 @@ def _parse(field: dict, form: Any) -> Any:
         return [int(x) for x in form.getlist(key) if str(x).isdigit()]
     if kind == "select":
         if field.get("coerce") == "int":
-            return int(raw) if str(raw).isdigit() else None
+            return int(raw) if str(raw).isdigit() and str(raw) in _choices(field) else None
         return raw if raw in _choices(field) else (next(iter(_choices(field)), "") if field.get("required") else "")
     value = clean_text(raw)
     if kind == "url" and value and not value.startswith(("https://", "http://", "/")):

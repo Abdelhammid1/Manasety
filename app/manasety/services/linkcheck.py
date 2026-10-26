@@ -37,12 +37,31 @@ def assert_public_url(url: str) -> None:
             raise UnsafeURL("private address")
 
 
+def _assert_public_peer(r: requests.Response) -> None:
+    """Check the address the socket actually connected to. Closes the DNS-rebinding gap between
+    assert_public_url()'s lookup and the connect (the body is not read until this passes)."""
+    conn = getattr(r.raw, "_connection", None) or getattr(r.raw, "connection", None)
+    sock = getattr(conn, "sock", None)
+    if sock is None:
+        r.close()
+        raise UnsafeURL("peer unknown")
+    ip = ipaddress.ip_address(sock.getpeername()[0])
+    if not ip.is_global or ip.is_multicast:
+        r.close()
+        raise UnsafeURL("private address (rebinding)")
+
+
 def safe_request(method: str, url: str, **kwargs) -> requests.Response:
-    """requests with redirects followed by hand so every hop is re-validated."""
+    """requests with redirects followed by hand so every hop is re-validated, before and after connect."""
+    kwargs.pop("stream", None)
     for _ in range(MAX_REDIRECTS + 1):
         assert_public_url(url)
-        r = requests.request(method, url, allow_redirects=False, timeout=TIMEOUT, headers=UA, **kwargs)
+        with requests.Session() as session:
+            session.trust_env = False  # no proxy env vars: we must see the real peer
+            r = session.request(method, url, allow_redirects=False, timeout=TIMEOUT, headers=UA, stream=True, **kwargs)
+        _assert_public_peer(r)
         if r.is_redirect and r.headers.get("Location"):
+            r.close()
             url = urljoin(url, r.headers["Location"])
             continue
         return r

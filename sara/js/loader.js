@@ -11,10 +11,16 @@ import { CONFIG } from "../config.js";
 
 const RESERVED_LABELS = new Set(["admin", "www", "api"]);
 
+const SLUG_RE = /^[a-z0-9-]{1,40}$/;
+
 export function getSlug() {
   const params = new URLSearchParams(location.search);
   const queryFor = params.get("for");
-  if (queryFor) return queryFor.toLowerCase().trim();
+  // The slug ends up in page markup: accept only safe slug characters.
+  if (queryFor) {
+    const slug = queryFor.toLowerCase().trim();
+    return SLUG_RE.test(slug) ? slug : null;
+  }
 
   const host = location.hostname;
   // Only extract a subdomain if the host lives under our configured domain.
