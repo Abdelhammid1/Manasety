@@ -7,8 +7,9 @@
     <div class="grid g6">
       {% for cl in partners %}
       <div class="logo-tile">
-        {% if cl.logo %}<img src="{{ cl.logo.url }}" alt="{{ cl.logo.alt or cl.name }}" loading="lazy" width="{{ cl.logo.width }}" height="{{ cl.logo.height }}">{% endif %}
-        {% if cl.url %}<a href="{{ cl.url }}" target="_blank" rel="noopener" style="color:inherit;text-decoration:none"><b>{{ cl.name }}</b></a>{% else %}<b>{{ cl.name }}</b>{% endif %}
+        {% if cl.url %}<a href="{{ cl.url }}" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;display:flex;flex-direction:column;align-items:center;gap:8px;width:100%">{% endif %}
+        {% if cl.logo %}<img src="{{ cl.logo.url }}" alt="{{ cl.logo.alt or cl.name }}" loading="lazy" width="{{ cl.logo.width }}" height="{{ cl.logo.height }}">{% else %}<b>{{ cl.name }}</b>{% endif %}
+        {% if cl.url %}</a>{% endif %}
       </div>
       {% endfor %}
     </div>
