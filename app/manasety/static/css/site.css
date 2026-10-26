@@ -134,6 +134,8 @@ p { margin: 0 0 1em; text-wrap: pretty; }
 /* feature tabs */
 .tabs { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; padding-bottom: 6px; margin-bottom: 20px; }
 .tabs::-webkit-scrollbar { display: none; }
+/* tabs centered */
+@media (min-width: 768px) { .tabs { justify-content: center; } }
 .tab { flex: none; min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink-2); font: 500 15px var(--font); cursor: pointer; white-space: nowrap; }
 .tab[aria-selected="true"] { background: var(--navy); border-color: var(--navy); color: #fff; }
 .tab-panel { background: var(--bg); border: 1px solid var(--line); border-radius: 18px; padding: 24px; }
