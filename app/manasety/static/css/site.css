@@ -360,3 +360,32 @@ p { margin: 0 0 1em; text-wrap: pretty; }
 .brand-blink { color: #078FD2; animation: brand-blink 1.1s steps(1) infinite; }
 @keyframes brand-blink { 50% { opacity: 0; } }
 @media (prefers-reduced-motion: reduce) { .bar-shimmer, .brand-blink { animation: none; } }
+
+/* chaos -> order infographic (cards block, variant "chaos") */
+.cx { display: grid; gap: 14px; align-items: center; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 960px) { .cx { grid-template-columns: minmax(0, 1fr) 64px minmax(0, 1fr); } }
+.cx-panel { border-radius: 20px; padding: 22px 22px 18px; border: 1px solid var(--line); box-shadow: var(--shadow); }
+.cx-chaos { background: #FFF5F5; border-color: #F8D0D0; }
+.cx-order { background: var(--tint); border-color: #C9D8F5; }
+.cx-title { text-align: center; font-size: 19px; margin-bottom: 18px; }
+.cx-chaos .cx-title { color: var(--red); }
+.cx-stage { position: relative; }
+.cx-lines { position: absolute; inset: 0; width: 100%; height: 100%; }
+.cx-lines path { fill: none; stroke-width: 2; vector-effect: non-scaling-stroke; }
+.cx-chaos .cx-lines path { stroke: var(--red); stroke-dasharray: 6 5; opacity: .8; animation: cx-dash 1.6s linear infinite; }
+.cx-order .cx-lines path { stroke: var(--accent); }
+@keyframes cx-dash { to { stroke-dashoffset: -22; } }
+.cx-grid { position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 34px 46px; }
+.cx-chip { display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 12px 8px; }
+.cx-chaos .cx-chip { transform: rotate(var(--r, 0deg)); border-color: #F3B4B4; }
+.cx-chip .ic { width: 24px; height: 24px; }
+.cx-chaos .cx-chip .ic { color: var(--red); }
+.cx-order .cx-chip .ic { color: var(--blue); }
+.cx-chip b { font-size: 13px; line-height: 1.5; color: var(--navy); font-weight: 600; }
+.cx-core { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 76px; height: 76px; border-radius: 50%; background: var(--navy); color: #fff; display: grid; place-items: center; text-align: center; font-weight: 700; font-size: 13px; line-height: 1.3; padding: 6px; box-shadow: 0 0 0 6px var(--tint); }
+.cx-note { text-align: center; margin: 16px 0 0; font-weight: 600; font-size: 14.5px; }
+.cx-bad { color: var(--red); }
+.cx-good { color: var(--green); }
+.cx-arrow { display: grid; place-items: center; height: 40px; font-size: 34px; color: var(--accent); }
+.cx-arrow::after { content: "\2193"; }
+@media (min-width: 960px) { .cx-arrow::after { content: "\2190"; } }

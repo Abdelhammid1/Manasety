@@ -52,7 +52,7 @@ BLOCK_TYPES: dict[str, dict[str, Any]] = {
         "label": "بطاقات (المشكلة / الحل)",
         "fields": [
             *_HEAD,
-            F(key="variant", kind="select", label="الشكل", choices={"problem": "مشكلة (أحمر)", "solution": "حل (أزرق)"}),
+            F(key="variant", kind="select", label="الشكل", choices={"chaos": "فوضى ← نظام (انفوجرافيك)", "problem": "مشكلة (أحمر)", "solution": "حل (أزرق)"}),
             F(key="items", kind="list", label="البطاقات", fields=[
                 _ICON, F(key="title", kind="text", label="العنوان"), F(key="text", kind="textarea", label="النص")]),
         ],

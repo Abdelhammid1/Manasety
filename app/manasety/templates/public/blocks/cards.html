@@ -6,6 +6,33 @@
       <h2>{{ c.title|rt }}</h2>
       {% if c.subtitle %}<p>{{ c.subtitle|rt }}</p>{% endif %}
     </div>
+    {% if c.variant == 'chaos' %}
+    {% set chips = (c['items'] or [])[:4] %}
+    <div class="cx rv">
+      <div class="cx-panel cx-chaos">
+        <h3 class="cx-title">قبل: أدوات متفرقة</h3>
+        <div class="cx-stage">
+          <svg class="cx-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M25 25 L75 75"/><path d="M75 25 L25 75"/><path d="M25 25 Q50 2 75 25"/><path d="M25 75 Q50 98 75 75"/><path d="M25 25 Q4 50 25 75"/><path d="M75 25 Q96 50 75 75"/>
+          </svg>
+          <div class="cx-grid">{% for it in chips %}<div class="cx-chip" style="--r:{{ ['-3deg','2deg','3deg','-2deg'][loop.index0 % 4] }}">{{ icon(it.icon) }}<b>{{ it.title }}</b></div>{% endfor %}</div>
+        </div>
+        <p class="cx-note cx-bad">نفس بيانات الطالب تُكتب في كل أداة</p>
+      </div>
+      <div class="cx-arrow" aria-hidden="true"></div>
+      <div class="cx-panel cx-order">
+        <h3 class="cx-title">بعد: منصة واحدة</h3>
+        <div class="cx-stage">
+          <svg class="cx-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M50 50 L25 25"/><path d="M50 50 L75 25"/><path d="M50 50 L25 75"/><path d="M50 50 L75 75"/>
+          </svg>
+          <div class="cx-grid">{% for it in chips %}<div class="cx-chip">{{ icon(it.icon) }}<b>{{ it.title }}</b></div>{% endfor %}</div>
+          <div class="cx-core">ملف الطالب</div>
+        </div>
+        <p class="cx-note cx-good">إدخال مرة واحدة</p>
+      </div>
+    </div>
+    {% else %}
     <div class="grid {{ 'g4' if problem else 'g3' }}">
       {% for it in c['items'] or [] %}
       <div class="{{ 'pcard' if problem else 'scard' }} rv">
@@ -15,5 +42,6 @@
       </div>
       {% endfor %}
     </div>
+    {% endif %}
   </div>
 </section>
