@@ -424,3 +424,6 @@ p { margin: 0 0 1em; text-wrap: pretty; }
   .hn1 { left: 50%; top: 11%; } .hn2 { left: 84%; top: 30%; } .hn3 { left: 84%; top: 70%; }
   .hn4 { left: 50%; top: 89%; } .hn5 { left: 16%; top: 70%; } .hn6 { left: 16%; top: 30%; }
 }
+
+/* st-core-gap */
+.st-core { margin-bottom: 14px; }
