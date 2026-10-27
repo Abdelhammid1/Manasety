@@ -26,7 +26,7 @@
           <svg class="cx-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
             <path d="M50 50 L25 25"/><path d="M50 50 L75 25"/><path d="M50 50 L25 75"/><path d="M50 50 L75 75"/>
           </svg>
-          <div class="cx-grid">{% for it in chips %}<div class="cx-chip">{{ icon(it.icon) }}<b>{{ it.title }}</b></div>{% endfor %}</div>
+          <div class="cx-grid">{% for it in chips %}<div class="cx-chip cx-icononly" aria-label="{{ it.title }}">{{ icon(it.icon) }}</div>{% endfor %}</div>
           <div class="cx-core">ملف الطالب</div>
         </div>
         <p class="cx-note cx-good">إدخال مرة واحدة</p>

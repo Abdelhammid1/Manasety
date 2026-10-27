@@ -389,3 +389,6 @@ p { margin: 0 0 1em; text-wrap: pretty; }
 .cx-arrow { display: grid; place-items: center; height: 40px; font-size: 34px; color: var(--accent); }
 .cx-arrow::after { content: "\2193"; }
 @media (min-width: 960px) { .cx-arrow::after { content: "\2190"; } }
+
+.cx-chip.cx-icononly { padding: 18px 8px; }
+.cx-chip.cx-icononly .ic { width: 34px; height: 34px; }
