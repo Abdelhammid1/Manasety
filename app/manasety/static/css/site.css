@@ -483,3 +483,13 @@ p { margin: 0 0 1em; text-wrap: pretty; }
 .fl-cost b { display: block; color: var(--navy); font-size: 16.5px; }
 .fl-cost > div span { color: var(--ink-2); font-size: 14.5px; }
 .fl-gauge { flex: none; width: 64px; height: 64px; border-radius: 50%; background: conic-gradient(var(--accent) 0 90%, var(--orange) 90% 100%); -webkit-mask: radial-gradient(circle, transparent 20px, #000 21px); mask: radial-gradient(circle, transparent 20px, #000 21px); }
+
+/* floating social buttons (same look as the legacy site) */
+.social-float{position:fixed;left:24px;bottom:96px;z-index:9990;display:flex;flex-direction:column;gap:12px}
+.social-float a{width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,.25);transition:transform .2s;text-decoration:none}
+.social-float a:hover{transform:translateY(-2px)}
+.social-float a:focus-visible{outline:3px solid var(--cyan);outline-offset:2px}
+.social-float svg{width:24px;height:24px;fill:#fff}
+.social-float b{color:#fff;font:700 20px/1 Arial,sans-serif}
+.sf-ig{background:#E1306C}.sf-tt{background:#010101}.sf-fb{background:#1877F2}.sf-li{background:#0A66C2}
+@media(max-width:640px){.social-float{left:16px;bottom:88px;gap:10px}.social-float a{width:42px;height:42px}.social-float svg{width:20px;height:20px}}

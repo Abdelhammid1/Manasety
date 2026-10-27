@@ -61,6 +61,10 @@ SETTINGS_FORM = [
         ("show_whatsapp_sa", "إظهار واتساب السعودية في التذييل", "bool"),
         ("show_whatsapp_eg", "إظهار واتساب مصر في التذييل", "bool"),
         ("show_phone_line", "إظهار سطر الاتصال في التذييل", "bool"),
+        ("show_footer_social", "إظهار عمود التواصل الرقمي في التذييل", "bool"),
+        ("show_footer_note", "إظهار سطر الخدمة عن بُعد", "bool"),
+        ("show_footer_copyright", "إظهار سطر حقوق النشر", "bool"),
+        ("show_social_float", "إظهار أزرار التواصل العائمة", "bool"),
     ]),
     ("القائمة والروابط", [
         ("nav", "عناصر شريط التنقل", "links"), ("nav_cta_label", "زر الشريط", "text"), ("nav_cta_href", "رابط زر الشريط", "text"),
