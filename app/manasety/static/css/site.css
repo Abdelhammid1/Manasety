@@ -728,3 +728,9 @@ body.biz .sc-ic { background: linear-gradient(135deg, var(--navy), var(--blue));
 .cl-txt p { margin: 0; color: var(--ink-2); font-size: 14.5px; }
 .cl-tag { grid-column: 2; font-size: 13px; font-weight: 600; color: var(--blue); }
 @media (min-width: 768px) { .cl-row { grid-template-columns: auto 1fr auto; align-items: center; } .cl-tag { grid-column: auto; text-align: left; max-width: 200px; } }
+
+/* system logos replace icons */
+.sys-logo { display: block; max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; }
+.cl-ic:has(.sys-logo), .wn-ic:has(.sys-logo), .pn-side:has(.sys-logo), .sc-ic:has(.sys-logo), .sys .ibox:has(.sys-logo) { width: 72px; height: 72px; padding: 6px; background: #fff; border: 1px solid var(--line); box-shadow: none; }
+.pn-side:has(.sys-logo) { width: auto; height: auto; border: 0; background: linear-gradient(160deg, var(--navy), var(--accent)); }
+.pn-side .sys-logo { max-height: 56px; background: #fff; border-radius: 12px; padding: 6px; }

@@ -138,7 +138,7 @@ BLOCK_TYPES: dict[str, dict[str, Any]] = {
             *_HEAD,
             F(key="variant", kind="select", label="الشكل", choices={"": "كروت (الحالي)", "classic": "كلاسيك (صفوف)", "windows": "نوافذ أنظمة (انفوجرافيك)", "panels": "لوحات جانبية (انفوجرافيك)", "showcase": "عرض مميز (انفوجرافيك)"}),
             F(key="items", kind="list", label="الأنظمة", fields=[
-                _ICON, F(key="name", kind="text", label="الاسم"), F(key="text", kind="textarea", label="الوصف"),
+                _ICON, F(key="logo", kind="media", label="الشعار (يحل محل الأيقونة)"), F(key="name", kind="text", label="الاسم"), F(key="text", kind="textarea", label="الوصف"),
                 F(key="tag", kind="text", label="الوسم السفلي"),
                 F(key="url", kind="url", label="الرابط (اتركه فارغًا إن لم يُتحقق منه)")]),
         ],

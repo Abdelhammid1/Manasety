@@ -6,44 +6,44 @@
       {% if c.subtitle %}<p>{{ c.subtitle|rt }}</p>{% endif %}
     </div>
     {% if c.variant == 'classic' %}
-    <div class="cl">{% for s in c['items'] or [] %}
+    <div class="cl">{% for s in c['items'] or [] %}{% set lg = media_obj(s.logo) %}
       <div class="cl-row">
-        <span class="cl-ic">{{ icon(s.icon) }}</span>
+        <span class="cl-ic">{% if lg %}<img class="sys-logo" src="{{ lg.url }}" alt="{{ lg.alt or s.name }}" loading="lazy">{% else %}{{ icon(s.icon) }}{% endif %}</span>
         <div class="cl-txt"><h3>{% if s.url %}<a href="{{ s.url }}" rel="noopener" target="_blank">{{ s.name }}</a>{% else %}{{ s.name }}{% endif %}</h3><p>{{ s.text|rt }}</p></div>
         {% if s.tag %}<span class="cl-tag">{{ s.tag }}</span>{% endif %}
       </div>
     {% endfor %}</div>
     {% elif c.variant == 'windows' %}
-    <div class="wn">{% for s in c['items'] or [] %}
+    <div class="wn">{% for s in c['items'] or [] %}{% set lg = media_obj(s.logo) %}
       <div class="wn-card rv">
         <div class="wn-bar"><i></i><i></i><i></i><span>{{ s.tag }}</span></div>
         <div class="wn-body">
-          <span class="wn-ic">{{ icon(s.icon) }}</span>
+          <span class="wn-ic">{% if lg %}<img class="sys-logo" src="{{ lg.url }}" alt="{{ lg.alt or s.name }}" loading="lazy">{% else %}{{ icon(s.icon) }}{% endif %}</span>
           <div><h3>{% if s.url %}<a href="{{ s.url }}" rel="noopener" target="_blank">{{ s.name }}</a>{% else %}{{ s.name }}{% endif %}</h3><p>{{ s.text|rt }}</p></div>
         </div>
       </div>
     {% endfor %}</div>
     {% elif c.variant == 'panels' %}
-    <div class="pn">{% for s in c['items'] or [] %}
+    <div class="pn">{% for s in c['items'] or [] %}{% set lg = media_obj(s.logo) %}
       <div class="pn-card rv">
-        <div class="pn-side">{{ icon(s.icon) }}{% if s.tag %}<small>{{ s.tag }}</small>{% endif %}</div>
+        <div class="pn-side">{% if lg %}<img class="sys-logo" src="{{ lg.url }}" alt="{{ lg.alt or s.name }}" loading="lazy">{% else %}{{ icon(s.icon) }}{% endif %}{% if s.tag %}<small>{{ s.tag }}</small>{% endif %}</div>
         <div class="pn-main"><h3>{% if s.url %}<a href="{{ s.url }}" rel="noopener" target="_blank">{{ s.name }}</a>{% else %}{{ s.name }}{% endif %}</h3><p>{{ s.text|rt }}</p></div>
       </div>
     {% endfor %}</div>
     {% elif c.variant == 'showcase' %}
-    <div class="sc">{% for s in c['items'] or [] %}
+    <div class="sc">{% for s in c['items'] or [] %}{% set lg = media_obj(s.logo) %}
       <div class="sc-card rv" tabindex="0">
         {% if s.tag %}<span class="sc-tag">{{ s.tag }}</span>{% endif %}
-        <span class="sc-ic">{{ icon(s.icon) }}</span>
+        <span class="sc-ic">{% if lg %}<img class="sys-logo" src="{{ lg.url }}" alt="{{ lg.alt or s.name }}" loading="lazy">{% else %}{{ icon(s.icon) }}{% endif %}</span>
         <h3>{% if s.url %}<a href="{{ s.url }}" rel="noopener" target="_blank">{{ s.name }}</a>{% else %}{{ s.name }}{% endif %}</h3>
         <p>{{ s.text|rt }}</p>
       </div>
     {% endfor %}</div>
     {% else %}
     <div class="grid g4">
-      {% for s in c['items'] or [] %}
+      {% for s in c['items'] or [] %}{% set lg = media_obj(s.logo) %}
       <div class="sys rv">
-        <span class="ibox">{{ icon(s.icon) }}</span>
+        <span class="ibox">{% if lg %}<img class="sys-logo" src="{{ lg.url }}" alt="{{ lg.alt or s.name }}" loading="lazy">{% else %}{{ icon(s.icon) }}{% endif %}</span>
         <h3>{{ s.name }}</h3>
         <p>{{ s.text|rt }}</p>
         {% if s.url %}<a class="tag" href="{{ s.url }}" rel="noopener" target="_blank">{{ s.tag }}</a>{% elif s.tag %}<span class="tag">{{ s.tag }}</span>{% endif %}
