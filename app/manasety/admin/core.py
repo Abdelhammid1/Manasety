@@ -66,6 +66,7 @@ SETTINGS_FORM = [
         ("show_footer_note", "إظهار سطر الخدمة عن بُعد", "bool"),
         ("show_footer_copyright", "إظهار سطر حقوق النشر", "bool"),
         ("show_social_float", "إظهار أزرار التواصل العائمة", "bool"),
+        ("show_domain_switch", "إظهار مبدل المجالين وبطاقة الدعوة", "bool"),
     ]),
     ("القائمة والروابط", [
         ("nav", "عناصر شريط التنقل", "links"), ("nav_cta_label", "زر الشريط", "text"), ("nav_cta_href", "رابط زر الشريط", "text"),

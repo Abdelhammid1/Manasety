@@ -513,3 +513,13 @@ p { margin: 0 0 1em; text-wrap: pretty; }
 .logo-flex .logo-tile { flex: 0 0 calc((100% - 20px) / 2); }
 @media (min-width: 640px) { .logo-flex .logo-tile { flex-basis: calc((100% - 40px) / 3); } }
 @media (min-width: 1024px) { .logo-flex { max-width: 980px; margin-inline: auto; } .logo-flex .logo-tile { flex-basis: calc((100% - 60px) / 4); } }
+
+/* two-domain switcher + invitation card */
+.dom-switch { background: var(--navy); }
+.dom-switch .wrap { display: flex; justify-content: center; gap: 6px; padding-block: 6px; }
+.dom-switch a { color: #B9C6E4; text-decoration: none; font-size: 13.5px; font-weight: 600; padding: 5px 18px; border-radius: 999px; }
+.dom-switch a:hover { color: #fff; }
+.dom-switch a.on { background: #fff; color: var(--navy); }
+.dom-cta { padding-block: 36px; }
+.dom-cta-card { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; background: var(--surface); border: 1px solid var(--line); border-top: 4px solid var(--orange); border-radius: 18px; padding: 22px 26px; box-shadow: var(--shadow); }
+.dom-cta-card b { color: var(--navy); font-size: 18px; }

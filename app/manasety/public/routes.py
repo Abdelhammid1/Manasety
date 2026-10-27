@@ -25,7 +25,7 @@ def _english_enabled() -> bool:
     return bool(get_setting("english_enabled"))
 
 
-def _render_page(page: Page, snapshot: Optional[list], lang: str, preview: bool = False) -> str:
+def _render_page(page: Page, snapshot: Optional[list], lang: str, preview: bool = False, path: str = "") -> str:
     if snapshot is None:
         abort(404)
     s = all_settings()
@@ -48,8 +48,8 @@ def _render_page(page: Page, snapshot: Optional[list], lang: str, preview: bool 
     return render_template(
         "public/home.html", page=page, sections=sections, lang=lang, page_seo=page_seo, schema=schema,
         faq_items=faq_items, preview=preview,
-        canonical=site + ("/en/" if lang == "en" else "/"),
-        hreflang=_english_enabled(),
+        canonical=site + (path or ("/en/" if lang == "en" else "/")),
+        hreflang=_english_enabled() and not path,
     )
 
 
@@ -65,6 +65,12 @@ def home_en():
         abort(404)
     page = db.session.query(Page).filter_by(slug="home").first_or_404()
     return _render_page(page, page.published_snapshot, "en")
+
+
+@bp.route("/business")
+def business():
+    page = db.session.query(Page).filter_by(slug="business").first_or_404()
+    return _render_page(page, page.published_snapshot, "ar", path="/business")
 
 
 @bp.route("/preview/<token>")
@@ -263,6 +269,9 @@ def sitemap():
     site = current_app.config["SITE_URL"]
     home = db.session.query(Page).filter_by(slug="home").first()
     urls = [{"loc": site + "/", "lastmod": home.published_at if home else None}]
+    biz = db.session.query(Page).filter_by(slug="business").first()
+    if biz is not None and biz.published_snapshot is not None:
+        urls.append({"loc": site + "/business", "lastmod": biz.published_at})
     if _english_enabled():
         urls.append({"loc": site + "/en/", "lastmod": home.published_at if home else None})
     arts = live_articles("ar") + (live_articles("en") if _english_enabled() else [])

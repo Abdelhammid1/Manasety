@@ -43,7 +43,9 @@
 <a class="skip" href="#main">تخطَّ إلى المحتوى</a>
 {% if preview %}<div class="preview-bar">معاينة مسودة — هذه النسخة غير منشورة</div>{% endif %}
 
+{% set on_biz = request.path.startswith('/business') %}
 <header class="site-header">
+{% if setting('show_domain_switch') %}<div class="dom-switch"><div class="wrap"><a class="{{ '' if on_biz else 'on' }}" href="/">المدارس</a><a class="{{ 'on' if on_biz else '' }}" href="/business">الأنظمة الإدارية</a></div></div>{% endif %}
   <div class="wrap nav">
     <a class="brand" href="/" aria-label="{{ setting('brand_name_ar') }} — الصفحة الرئيسية">
       <svg class="brand-logo" aria-hidden="true" focusable="false" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg" >
@@ -99,6 +101,13 @@
 <main id="main">
 {% block content %}{% endblock %}
 </main>
+
+{% if setting('show_domain_switch') and request.path in ('/', '/business') %}
+<section class="dom-cta"><div class="wrap"><div class="dom-cta-card">
+  <b>{% if on_biz %}هل تدير مدرسة؟ منصتي-سكول مصممة لها.{% else %}ليست مدرسة؟ لدينا أنظمة إدارية مخصصة لنشاطك.{% endif %}</b>
+  <a class="btn btn-primary btn-sm" href="{{ '/' if on_biz else '/business' }}">{% if on_biz %}اكتشف حل المدارس{% else %}تعرف على الأنظمة الإدارية{% endif %}</a>
+</div></div></section>
+{% endif %}
 
 <footer class="site-footer">
   <div class="wrap">
