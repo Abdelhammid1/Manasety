@@ -17,9 +17,19 @@
       <div class="st-flow" aria-hidden="true"></div>
       <div class="st-core rv"><span class="st-dot">ملف الطالب</span><span class="st-tag">إدخال مرة واحدة</span></div>
       <div class="st-flow" aria-hidden="true"></div>
-      <div class="grid g3">{% for m in mods %}
-        <div class="scard rv"><div class="ibox">{{ icon(m.icon) }}</div><h3>{{ m.title }}</h3><p>{{ m.text|rt }}</p></div>
-      {% endfor %}</div>
+      <div class="hub">
+        <svg class="hub-lines" viewBox="0 0 100 100" aria-hidden="true">
+          <path d="M50 50 L50 11"/><path d="M50 50 L84 30"/><path d="M50 50 L84 70"/><path d="M50 50 L50 89"/><path d="M50 50 L16 70"/><path d="M50 50 L16 30"/>
+        </svg>
+        <div class="hub-core"><span>ملف الطالب</span></div>
+        {% for m in mods[:6] %}
+        <div class="hub-node hn{{ loop.index }}" tabindex="0">
+          <div class="hub-ic">{{ icon(m.icon) }}</div>
+          <b>{{ m.title }}</b>
+          <p>{{ m.text|rt }}</p>
+        </div>
+        {% endfor %}
+      </div>
     </div>
     {% elif c.variant == 'chaos' %}
     {% set chips = (c['items'] or [])[:4] %}

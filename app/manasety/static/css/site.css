@@ -402,3 +402,25 @@ p { margin: 0 0 1em; text-wrap: pretty; }
 .st-core { display: grid; justify-items: center; gap: 10px; }
 .st-dot { display: grid; place-items: center; width: 104px; height: 104px; border-radius: 50%; background: var(--navy); color: #fff; font-weight: 700; font-size: 15px; text-align: center; line-height: 1.3; padding: 8px; box-shadow: 0 0 0 8px var(--tint), 0 0 0 9px #C9D8F5; }
 .st-tag { background: #ECFDF3; color: var(--green); font-weight: 700; font-size: 14px; padding: 5px 14px; border-radius: 999px; }
+
+/* hub & spokes (story variant): core in the middle, six modules around it */
+.hub { display: grid; gap: 12px; }
+.hub-lines, .hub-core { display: none; }
+.hub-node { background: var(--surface); border: 1px solid var(--line); border-inline-start: 4px solid var(--accent); border-radius: 16px; padding: 16px 18px; box-shadow: var(--shadow); }
+.hub-ic { width: 46px; height: 46px; border-radius: 12px; display: grid; place-items: center; background: #E3E9FC; color: var(--navy); margin-bottom: 10px; }
+.hub-ic .ic { width: 24px; height: 24px; }
+.hub-node b { display: block; color: var(--navy); font-size: 16px; line-height: 1.5; }
+.hub-node p { margin: 6px 0 0; color: var(--ink-2); font-size: 14.5px; }
+@media (min-width: 960px) {
+  .hub { display: block; position: relative; width: 760px; max-width: 100%; height: 640px; margin: 8px auto 0; }
+  .hub-lines { display: block; position: absolute; inset: 0; width: 100%; height: 100%; }
+  .hub-lines path { fill: none; stroke: var(--accent); stroke-width: 2; stroke-dasharray: 6 5; vector-effect: non-scaling-stroke; animation: cx-dash 1.8s linear infinite; }
+  .hub-core { display: grid; place-items: center; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 128px; height: 128px; border-radius: 50%; background: var(--navy); color: #fff; font-weight: 700; font-size: 17px; text-align: center; line-height: 1.3; padding: 10px; box-shadow: 0 0 0 10px var(--tint), 0 0 0 11px #C9D8F5; z-index: 2; }
+  .hub-node { position: absolute; width: 170px; transform: translate(-50%, -50%); text-align: center; border-inline-start-width: 1px; border-top: 4px solid var(--accent); padding: 14px 12px; cursor: default; z-index: 1; transition: box-shadow .2s, transform .2s; }
+  .hub-ic { margin: 0 auto 8px; }
+  .hub-node p { display: none; position: absolute; top: calc(100% + 8px); left: 50%; transform: translateX(-50%); width: 260px; background: var(--navy); color: #fff; border-radius: 12px; padding: 12px 14px; text-align: right; font-size: 14px; z-index: 5; box-shadow: 0 16px 36px -16px rgba(12, 36, 97, .6); }
+  .hub-node:hover, .hub-node:focus { z-index: 6; box-shadow: 0 18px 40px -22px rgba(12, 36, 97, .5); }
+  .hub-node:hover p, .hub-node:focus p, .hub-node:focus-within p { display: block; }
+  .hn1 { left: 50%; top: 11%; } .hn2 { left: 84%; top: 30%; } .hn3 { left: 84%; top: 70%; }
+  .hn4 { left: 50%; top: 89%; } .hn5 { left: 16%; top: 70%; } .hn6 { left: 16%; top: 30%; }
+}
