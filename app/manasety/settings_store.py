@@ -64,6 +64,8 @@ DEFAULTS: dict[str, Any] = {
     "show_footer_copyright": False,
     "show_social_float": True,
     "show_domain_switch": False,
+    "footer_about_biz": "أنظمة ومنصات تشغيل مخصصة للشركات: إدارة ومتابعة وتقارير وصلاحيات، مبنية حسب نشاطك.",
+    "footer_tagline_biz": "منصتي: حلول برمجية وأنظمة إدارية مخصصة للشركات.",
     "whatsapp_bubble": "مرحباً.. هل تريد معرفة المزيد عن الباقات والأسعار؟",
     "cookie_banner_text": "نستخدم ملفات تعريف الارتباط لتحليل الزيارات وتحسين الموقع.",
     "default_og_image": "/static/img/og-image.png",

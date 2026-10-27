@@ -45,6 +45,8 @@ SETTINGS_FORM = [
     ("الهوية والتذييل", [
         ("brand_name_ar", "اسم العلامة (عربي)", "text"), ("brand_name_en", "اسم العلامة (إنجليزي)", "text"),
         ("footer_brand", "اسم التذييل", "text"), ("footer_about", "نبذة التذييل", "textarea"),
+        ("footer_about_biz", "نبذة التذييل (صفحة الأعمال)", "textarea"),
+        ("footer_tagline_biz", "السطر الأخير (صفحة الأعمال)", "text"),
         ("footer_note", "سطر الخدمة عن بُعد", "text"), ("footer_social_text", "نص الحسابات", "text"),
         ("social_handle", "اسم الحساب", "text"), ("footer_tagline", "السطر الأخير", "text"),
     ]),

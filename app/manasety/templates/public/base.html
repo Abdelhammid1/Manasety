@@ -127,7 +127,7 @@
     <div class="foot">
       <div>
         <div class="foot-brand">{{ setting('footer_brand') }}</div>
-        <p>{{ setting('footer_about') }}</p>
+        <p>{{ (setting('footer_about_biz') if on_biz and setting('footer_about_biz') else setting('footer_about')) }}</p>
         <span class="legal-label">الكيان القانوني المعتمد:</span>
         <span class="legal-name">{{ setting('legal_name_en') }}</span>
       </div>
@@ -159,7 +159,7 @@
     </div>
     <div class="foot-bottom">
       <span>{% if setting('show_footer_copyright') %}© {{ now_year() }} {{ setting('legal_name_en') }}. جميع الحقوق محفوظة. · {% endif %}سجل تجاري <bdi class="num">{{ setting('commercial_registration') }}</bdi> · {{ setting('address_ar') }}</span>
-      <span>{{ setting('footer_tagline') }}</span>
+      <span>{{ (setting('footer_tagline_biz') if on_biz and setting('footer_tagline_biz') else setting('footer_tagline')) }}</span>
     </div>
   </div>
 </footer>
