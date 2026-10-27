@@ -1,5 +1,5 @@
 {% set img = media_obj(c.image) %}
-<section class="hero"{% if anchor %} id="{{ anchor }}"{% endif %}>
+<section class="hero{% if c.no_mock %} hero-solo{% endif %}"{% if anchor %} id="{{ anchor }}"{% endif %}>
   <div class="wrap split">
     <div>
       {% if c.badge %}<span class="hero-badge">{{ c.badge }}</span>{% endif %}
@@ -17,7 +17,7 @@
     <div class="hero-media">
       {% if img %}
       <img src="{{ img.url }}" alt="{{ img.alt }}" width="{{ img.width }}" height="{{ img.height }}" fetchpriority="high">
-      {% else %}
+      {% elif not c.no_mock %}
       {# Placeholder until the new hero image is uploaded. Demo data only. #}
       <div class="mock" aria-label="مثال توضيحي ببيانات تجريبية" role="img">
         <span class="mock-tag">مثال · بيانات تجريبية</span>

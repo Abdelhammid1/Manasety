@@ -523,3 +523,9 @@ p { margin: 0 0 1em; text-wrap: pretty; }
 .dom-cta { padding-block: 36px; }
 .dom-cta-card { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; background: var(--surface); border: 1px solid var(--line); border-top: 4px solid var(--orange); border-radius: 18px; padding: 22px 26px; box-shadow: var(--shadow); }
 .dom-cta-card b { color: var(--navy); font-size: 18px; }
+
+/* hero without media: centered */
+.hero.hero-solo .split { grid-template-columns: minmax(0, 1fr); text-align: center; }
+.hero-solo .lead { margin-inline: auto; }
+.hero-solo .hero-ctas, .hero-solo .proof { justify-content: center; }
+.hero-solo .hero-media { display: none; }

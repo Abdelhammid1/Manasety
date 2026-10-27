@@ -44,6 +44,7 @@ BLOCK_TYPES: dict[str, dict[str, Any]] = {
             F(key="cta_secondary_label", kind="text", label="الزر الثانوي"),
             F(key="cta_secondary_href", kind="url", label="رابط الزر الثانوي"),
             F(key="proof_line", kind="text", label="سطر الإثبات تحت الأزرار"),
+            F(key="no_mock", kind="bool", label="بدون مثال توضيحي (للصفحات غير المدرسية)"),
             F(key="image", kind="media", label="صورة الـ Hero (بيانات تجريبية فقط)"),
             F(key="show_files", kind="bool", label="إظهار الملفات المخصصة للـ Hero"),
         ],
@@ -162,6 +163,9 @@ BLOCK_TYPES: dict[str, dict[str, Any]] = {
         "label": "نموذج حجز العرض التوضيحي",
         "fields": [
             *_HEAD,
+            F(key="stage_label", kind="text", label="عنوان حقل المرحلة/العدد (فارغ = الافتراضي)"),
+            F(key="school_label", kind="text", label="عنوان حقل المدرسة/المؤسسة (فارغ = الافتراضي)"),
+            F(key="stage_ph", kind="text", label="نص أول خيار في قائمة المرحلة/العدد"),
             F(key="stages", kind="textarea", label="خيارات المرحلة (سطر لكل خيار)"),
             F(key="business_types", kind="textarea", label="خيارات نوع النشاط (سطر لكل خيار)"),
             F(key="name_placeholder", kind="text", label="مثال حقل الاسم"),
