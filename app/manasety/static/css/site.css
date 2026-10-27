@@ -283,6 +283,7 @@ p { margin: 0 0 1em; text-wrap: pretty; }
 .foot { display: grid; gap: 32px; grid-template-columns: minmax(0, 1fr); }
 @media (min-width: 640px) { .foot { grid-template-columns: 1fr 1fr; } }
 @media (min-width: 1024px) { .foot { grid-template-columns: 1.3fr 1.2fr 1fr 1fr; } }
+@media (min-width: 1024px) { .foot:not(:has(> :nth-child(4))) { grid-template-columns: 1.4fr 1fr 1fr; gap: 48px; } }
 .foot h2 { color: #fff; font-size: 16px; margin-bottom: 12px; }
 .foot-brand { display: flex; align-items: center; gap: 8px; color: #fff; font-size: 18px; font-weight: 700; margin-bottom: 10px; }
 .foot-brand::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--orange); }
@@ -294,7 +295,7 @@ p { margin: 0 0 1em; text-wrap: pretty; }
 .socials { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
 .socials a { display: inline-flex; align-items: center; min-height: 36px; padding: 0 14px; border-radius: 8px; background: var(--navy-deep); color: #fff; font-weight: 600; font-size: 13.5px; }
 .socials a:hover { text-decoration: none; background: var(--blue); }
-.foot-bottom { border-top: 1px solid rgba(255, 255, 255, .12); margin-top: 40px; padding-top: 18px; display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; font-size: 13px; color: #93A3C8; }
+.foot-bottom { border-top: 1px solid rgba(255, 255, 255, .12); margin-top: 40px; padding-top: 18px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px; font-size: 13px; color: #93A3C8; }
 
 /* floating WhatsApp */
 .wa-float { position: fixed; bottom: 18px; left: 18px; z-index: 40; }
