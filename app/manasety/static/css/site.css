@@ -734,3 +734,19 @@ body.biz .sc-ic { background: linear-gradient(135deg, var(--navy), var(--blue));
 .cl-ic:has(.sys-logo), .wn-ic:has(.sys-logo), .pn-side:has(.sys-logo), .sc-ic:has(.sys-logo), .sys .ibox:has(.sys-logo) { width: 72px; height: 72px; padding: 6px; background: #fff; border: 1px solid var(--line); box-shadow: none; }
 .pn-side:has(.sys-logo) { width: auto; height: auto; border: 0; background: linear-gradient(160deg, var(--navy), var(--accent)); }
 .pn-side .sys-logo { max-height: 56px; background: #fff; border-radius: 12px; padding: 6px; }
+
+/* round logo frames (all variants) */
+.cl-ic:has(.sys-logo), .wn-ic:has(.sys-logo), .sc-ic:has(.sys-logo), .sys .ibox:has(.sys-logo) { border-radius: 50%; overflow: hidden; padding: 8px; }
+.pn-side .sys-logo { border-radius: 50%; }
+/* systems: round-logo cards */
+.rc { display: grid; gap: 18px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 640px) { .rc { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1024px) { .rc { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.rc-card { display: grid; justify-items: center; align-content: start; gap: 8px; text-align: center; background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--blue); border-radius: 14px; padding: 26px 18px 24px; }
+.rc-logo { display: grid; place-items: center; width: 92px; height: 92px; border-radius: 50%; background: #fff; border: 1px solid var(--line); box-shadow: 0 8px 20px -12px rgba(12, 36, 97, .45); padding: 12px; overflow: hidden; color: var(--blue); }
+.rc-logo .sys-logo { width: 100%; height: 100%; object-fit: contain; }
+.rc-logo .ic { width: 36px; height: 36px; }
+.rc-card h3 { margin: 8px 0 0; font-size: 19px; color: var(--navy); }
+.rc-card h3 a { color: inherit; text-decoration: none; }
+.rc-tag { font-size: 12.5px; font-weight: 600; color: var(--blue); line-height: 1.5; }
+.rc-card p { margin: 4px 0 0; color: var(--ink-2); font-size: 14px; }

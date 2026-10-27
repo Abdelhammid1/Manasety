@@ -5,7 +5,16 @@
       <h2>{{ c.title|rt }}</h2>
       {% if c.subtitle %}<p>{{ c.subtitle|rt }}</p>{% endif %}
     </div>
-    {% if c.variant == 'classic' %}
+    {% if c.variant == 'roundcards' %}
+    <div class="rc">{% for s in c['items'] or [] %}{% set lg = media_obj(s.logo) %}
+      <div class="rc-card rv">
+        <span class="rc-logo">{% if lg %}<img class="sys-logo" src="{{ lg.url }}" alt="{{ lg.alt or s.name }}" loading="lazy">{% else %}{{ icon(s.icon) }}{% endif %}</span>
+        <h3>{% if s.url %}<a href="{{ s.url }}" rel="noopener" target="_blank">{{ s.name }}</a>{% else %}{{ s.name }}{% endif %}</h3>
+        {% if s.tag %}<span class="rc-tag">{{ s.tag }}</span>{% endif %}
+        <p>{{ s.text|rt }}</p>
+      </div>
+    {% endfor %}</div>
+    {% elif c.variant == 'classic' %}
     <div class="cl">{% for s in c['items'] or [] %}{% set lg = media_obj(s.logo) %}
       <div class="cl-row">
         <span class="cl-ic">{% if lg %}<img class="sys-logo" src="{{ lg.url }}" alt="{{ lg.alt or s.name }}" loading="lazy">{% else %}{{ icon(s.icon) }}{% endif %}</span>
