@@ -113,9 +113,9 @@
         <h2>بيانات التواصل الرسمية</h2>
         <ul>
           <li><a href="mailto:{{ setting('email') }}">{{ icon('mail') }} {{ setting('email') }}</a></li>
-          <li>واتساب السعودية: <a href="{{ whatsapp_url('sa') }}" class="num" rel="noopener">{{ setting('whatsapp_sa_display') }}</a></li>
-          <li>واتساب مصر: <a href="{{ whatsapp_url('eg') }}" class="num" rel="noopener">{{ setting('whatsapp_eg_display') }}</a></li>
-          <li>اتصال: <a href="tel:+{{ setting('whatsapp_eg') }}" class="num">مصر</a> · <a href="tel:+{{ setting('whatsapp_sa') }}" class="num">السعودية</a></li>
+          {% if setting('show_whatsapp_sa') %}<li>واتساب السعودية: <a href="{{ whatsapp_url('sa') }}" class="num" rel="noopener">{{ setting('whatsapp_sa_display') }}</a></li>{% endif %}
+          {% if setting('show_whatsapp_eg') %}<li>واتساب مصر: <a href="{{ whatsapp_url('eg') }}" class="num" rel="noopener">{{ setting('whatsapp_eg_display') }}</a></li>{% endif %}
+          {% if setting('show_phone_line') %}<li>اتصال: <a href="tel:+{{ setting('whatsapp_eg') }}" class="num">مصر</a> · <a href="tel:+{{ setting('whatsapp_sa') }}" class="num">السعودية</a></li>{% endif %}
           {% if setting('footer_note') %}<li class="note">{{ setting('footer_note') }}</li>{% endif %}
         </ul>
       </div>

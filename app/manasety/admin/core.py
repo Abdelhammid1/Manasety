@@ -58,6 +58,9 @@ SETTINGS_FORM = [
         ("whatsapp_eg", "واتساب مصر (أرقام فقط)", "text"), ("whatsapp_eg_display", "واتساب مصر (للعرض)", "text"),
         ("whatsapp_sa", "واتساب السعودية (أرقام فقط)", "text"), ("whatsapp_sa_display", "واتساب السعودية (للعرض)", "text"),
         ("whatsapp_prefill", "رسالة واتساب الجاهزة", "text"),
+        ("show_whatsapp_sa", "إظهار واتساب السعودية في التذييل", "bool"),
+        ("show_whatsapp_eg", "إظهار واتساب مصر في التذييل", "bool"),
+        ("show_phone_line", "إظهار سطر الاتصال في التذييل", "bool"),
     ]),
     ("القائمة والروابط", [
         ("nav", "عناصر شريط التنقل", "links"), ("nav_cta_label", "زر الشريط", "text"), ("nav_cta_href", "رابط زر الشريط", "text"),
