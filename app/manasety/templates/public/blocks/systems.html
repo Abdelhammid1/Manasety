@@ -5,6 +5,16 @@
       <h2>{{ c.title|rt }}</h2>
       {% if c.subtitle %}<p>{{ c.subtitle|rt }}</p>{% endif %}
     </div>
+    {% if c.variant == 'showcase' %}
+    <div class="sc">{% for s in c['items'] or [] %}
+      <div class="sc-card rv" tabindex="0">
+        {% if s.tag %}<span class="sc-tag">{{ s.tag }}</span>{% endif %}
+        <span class="sc-ic">{{ icon(s.icon) }}</span>
+        <h3>{% if s.url %}<a href="{{ s.url }}" rel="noopener" target="_blank">{{ s.name }}</a>{% else %}{{ s.name }}{% endif %}</h3>
+        <p>{{ s.text|rt }}</p>
+      </div>
+    {% endfor %}</div>
+    {% else %}
     <div class="grid g4">
       {% for s in c['items'] or [] %}
       <div class="sys rv">
@@ -15,5 +25,6 @@
       </div>
       {% endfor %}
     </div>
+    {% endif %}
   </div>
 </section>

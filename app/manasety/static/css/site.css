@@ -668,3 +668,20 @@ body.biz .tl-tile { border-inline-start-color: #0F766E; }
 body.biz .tl-tile .tl-ic { box-shadow: 0 10px 20px -10px rgba(15, 118, 110, .7); }
 @media (prefers-reduced-motion: reduce) { .tl-tile { transition: none; } .tl-tile:hover { transform: none; } }
 /* tl-num */
+
+/* systems showcase */
+.sc { display: grid; gap: 16px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 640px) { .sc { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1024px) { .sc { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.sc-card { position: relative; display: grid; justify-items: center; gap: 8px; text-align: center; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 18px 16px 22px; box-shadow: var(--shadow); transition: transform .2s, box-shadow .2s; }
+.sc-card:hover, .sc-card:focus { transform: translateY(-4px); box-shadow: 0 20px 40px -22px rgba(12, 36, 97, .5); outline: none; }
+.sc-tag { font-size: 12px; font-weight: 700; color: var(--blue); background: var(--tint); border-radius: 999px; padding: 4px 12px; line-height: 1.5; }
+.sc-ic { display: grid; place-items: center; width: 64px; height: 64px; border-radius: 20px; background: linear-gradient(135deg, var(--navy), var(--accent)); color: #fff; box-shadow: 0 12px 22px -12px rgba(37, 99, 235, .75); margin-top: 4px; }
+.sc-ic .ic { width: 30px; height: 30px; }
+.sc-card h3 { margin: 4px 0 0; font-size: 19px; }
+.sc-card h3 a { color: inherit; text-decoration: none; }
+.sc-card p { margin: 0; color: var(--ink-2); font-size: 13.5px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.sc-card:hover p, .sc-card:focus p, .sc-card:focus-within p { -webkit-line-clamp: unset; overflow: visible; }
+body.biz .sc-tag { color: #0F766E; background: #E6F4F1; }
+body.biz .sc-ic { background: linear-gradient(135deg, #0B4F4A, #0F766E); box-shadow: 0 12px 22px -12px rgba(15, 118, 110, .75); }
+@media (prefers-reduced-motion: reduce) { .sc-card { transition: none; } .sc-card:hover { transform: none; } }
