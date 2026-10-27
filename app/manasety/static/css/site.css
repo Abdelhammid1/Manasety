@@ -778,3 +778,6 @@ body.biz .section, body.biz .hero + .section { padding-block: 28px; }
 body.biz .hero { padding-bottom: 28px; }
 @media (min-width: 960px) { body.biz .hero { padding-bottom: 36px; } }
 body.biz .dom-cta { padding-block: 28px; }
+
+/* nav-brand-gap: more room between the logo/name and the menu links (desktop) */
+@media (min-width: 960px) { .site-header .brand { margin-inline-end: 56px; } }
