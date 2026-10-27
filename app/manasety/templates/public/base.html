@@ -88,13 +88,13 @@
       <span>{{ setting('brand_name_ar') }}<span class="brand-blink" aria-hidden="true">_</span></span>
     </a>
     <nav aria-label="القائمة الرئيسية">
-      <ul class="nav-links">{% for item in setting('nav') %}<li><a href="{{ item.href }}">{{ item.label }}</a></li>{% endfor %}</ul>
+      <ul class="nav-links">{% for item in (setting('nav_biz') if on_biz and setting('nav_biz') else setting('nav')) %}<li><a href="{{ item.href }}">{{ item.label }}</a></li>{% endfor %}</ul>
     </nav>
-    <a class="btn btn-primary btn-sm" href="{{ setting('nav_cta_href') }}">{{ setting('nav_cta_label') }}</a>
+    <a class="btn btn-primary btn-sm" href="{{ (setting('nav_cta_href_biz') if on_biz and setting('nav_cta_href_biz') else setting('nav_cta_href')) }}">{{ (setting('nav_cta_label_biz') if on_biz and setting('nav_cta_label_biz') else setting('nav_cta_label')) }}</a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="فتح القائمة">{{ icon('menu') }}</button>
   </div>
   <div class="mobile-menu" id="mobile-menu">
-    <ul>{% for item in setting('nav') %}<li><a href="{{ item.href }}">{{ item.label }}</a></li>{% endfor %}</ul>
+    <ul>{% for item in (setting('nav_biz') if on_biz and setting('nav_biz') else setting('nav')) %}<li><a href="{{ item.href }}">{{ item.label }}</a></li>{% endfor %}</ul>
   </div>
 </header>
 
