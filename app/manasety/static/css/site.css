@@ -206,7 +206,7 @@ p { margin: 0 0 1em; text-wrap: pretty; }
 .case dd { margin: 2px 0 0; color: var(--ink-2); font-size: 15.5px; }
 .case dl > div.now { background: var(--tint); border-radius: 12px; border-inline-start-color: var(--accent); padding: 12px 14px; }
 .case dl > div.now dd { color: var(--ink); }
-.case a.case-link { margin-top: auto; align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 999px; background: var(--navy); color: #fff; font-weight: 600; font-size: 15px; text-decoration: none; transition: background .2s; }
+.case a.case-link { margin-top: auto; align-self: center; display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 999px; background: var(--navy); color: #fff; font-weight: 600; font-size: 15px; text-decoration: none; transition: background .2s; }
 .case a.case-link::after { content: "\2190"; }
 .case a.case-link:hover { background: var(--accent); }
 
