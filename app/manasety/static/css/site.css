@@ -507,3 +507,9 @@ p { margin: 0 0 1em; text-wrap: pretty; }
 /* hero-next: pull the first section after the hero up */
 .hero + .section { padding-top: 36px; }
 @media (min-width: 768px) { .hero + .section { padding-top: 48px; } }
+
+/* partners: centered, count-agnostic layout */
+.logo-flex { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
+.logo-flex .logo-tile { flex: 0 0 calc((100% - 20px) / 2); }
+@media (min-width: 640px) { .logo-flex .logo-tile { flex-basis: calc((100% - 40px) / 3); } }
+@media (min-width: 1024px) { .logo-flex .logo-tile { flex-basis: calc((100% - 100px) / 6); } }
