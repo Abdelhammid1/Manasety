@@ -16,8 +16,8 @@
           <div class="field"><label for="f-name">الاسم الكريم <i>*</i></label><input id="f-name" name="name" required autocomplete="name" placeholder="{{ c.name_placeholder }}"></div>
           <div class="field"><label for="f-school">اسم المدرسة / المؤسسة <i>*</i></label><input id="f-school" name="school" required autocomplete="organization" placeholder="{{ c.school_placeholder }}"></div>
           <div class="field"><label for="f-phone">رقم الهاتف / واتساب <i>*</i></label><input id="f-phone" name="phone" type="tel" dir="ltr" required autocomplete="tel" inputmode="tel" placeholder="{{ c.phone_placeholder }}"></div>
-          <div class="field"><label for="f-stage">المرحلة التعليمية <i>*</i></label>
-            <select id="f-stage" name="stage" required><option value="">اختر المرحلة</option>{% for o in c.stages|lines %}<option>{{ o }}</option>{% endfor %}</select></div>
+          <div class="field"><label for="f-stage">اذكر عدد الطلاب التقريبي <i>*</i></label>
+            <select id="f-stage" name="stage" required><option value="">اختر العدد التقريبي</option>{% for o in c.stages|lines %}<option>{{ o }}</option>{% endfor %}</select></div>
           <div class="field full"><label for="f-type">نوع النشاط <i>*</i></label>
             <select id="f-type" name="business_type" required><option value="">اختر نوع المؤسسة</option>{% for o in c.business_types|lines %}<option>{{ o }}</option>{% endfor %}</select></div>
           <div class="field full"><label for="f-notes">ملاحظات أو احتياجات إضافية</label><textarea id="f-notes" name="message" rows="4" placeholder="{{ c.notes_placeholder }}"></textarea></div>
