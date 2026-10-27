@@ -73,7 +73,11 @@ def create_app(config: type[Config] = Config) -> Flask:
                  .filter(Media.filename == filename).first())
         if proof is not None:
             abort(404)
-        resp = send_from_directory(app.config["MEDIA_DIR"], filename, max_age=60 * 60 * 24 * 30)
+        import mimetypes
+        for _ext, _mt in ((".webp", "image/webp"), (".svg", "image/svg+xml"), (".avif", "image/avif")):
+            mimetypes.add_type(_mt, _ext)
+        resp = send_from_directory(app.config["MEDIA_DIR"], filename, max_age=60 * 60 * 24 * 30,
+                                   mimetype=mimetypes.guess_type(filename)[0] or None)
         resp.headers["X-Content-Type-Options"] = "nosniff"
         return resp
 
