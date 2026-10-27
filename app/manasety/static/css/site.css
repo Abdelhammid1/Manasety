@@ -771,3 +771,10 @@ body.biz .sc-ic { background: linear-gradient(135deg, var(--navy), var(--blue));
 .gl:not(.js) .gl-thumbs { display: none; }
 .gl:not(.js) .gl-main { padding-block: 18px; border-bottom: 1px solid var(--line-2); }
 @media (prefers-reduced-motion: reduce) { .gl-thumb { transition: none; } }
+
+/* biz-even-spacing: equal, tighter rhythm between all sections on the business page */
+body.biz .section, body.biz .hero + .section { padding-block: 28px; }
+@media (min-width: 768px) { body.biz .section, body.biz .hero + .section { padding-block: 36px; } }
+body.biz .hero { padding-bottom: 28px; }
+@media (min-width: 960px) { body.biz .hero { padding-bottom: 36px; } }
+body.biz .dom-cta { padding-block: 28px; }
