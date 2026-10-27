@@ -593,3 +593,25 @@ body.biz .dom-card.biz .btn-primary { background: #0F766E; }
 .dv-chip small { color: var(--ink-3); font-size: 12.5px; }
 .dv-body .btn, .dv-body .dom-here { justify-self: start; margin-top: 4px; }
 body.biz .dv-body .btn-primary { background: #0F766E; border-color: #0F766E; }
+
+/* choose-your-field v2: compact, icon-led */
+.dv2 { padding-block: 24px 32px; }
+.dv2-top { display: grid; justify-items: center; position: relative; padding-bottom: 20px; }
+.dv2-root { background: var(--navy); color: #fff; font-weight: 700; font-size: 15px; padding: 5px 20px; border-radius: 999px; }
+.dv2-top::after { content: ""; position: absolute; bottom: 0; left: 50%; height: 20px; border-inline-start: 2px dashed #9DB4E8; }
+.dv2-grid { display: grid; gap: 12px; grid-template-columns: minmax(0, 1fr); max-width: 640px; margin-inline: auto; position: relative; }
+@media (min-width: 640px) {
+  .dv2-grid { grid-template-columns: 1fr 1fr; }
+  .dv2-grid::before { content: ""; position: absolute; top: -10px; left: 25%; right: 25%; border-top: 2px dashed #9DB4E8; }
+}
+.dv2-card { display: grid; justify-items: center; gap: 8px; text-align: center; background: var(--surface); border: 1px solid var(--line); border-bottom: 4px solid var(--accent); border-radius: 16px; padding: 16px 14px; }
+.dv2-biz { border-bottom-color: #0F766E; }
+.dv2-card.here { background: var(--tint); }
+.dv2-ic { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: var(--tint); font-size: 22px; }
+.dv2-biz .dv2-ic { background: #E6F4F1; }
+.dv2-card h3 { margin: 0; font-size: 16px; }
+.dv2-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
+.dv2-tags span { font-size: 12.5px; font-weight: 600; color: var(--navy); background: var(--bg); border-radius: 999px; padding: 2px 10px; }
+.dv2-go { font-weight: 700; font-size: 13.5px; color: #fff; background: var(--accent); border-radius: 999px; padding: 5px 16px; text-decoration: none; }
+.dv2-biz .dv2-go { background: #0F766E; }
+.dv2-here { font-size: 12.5px; font-weight: 700; color: var(--green); background: #ECFDF3; border-radius: 999px; padding: 3px 12px; }
