@@ -298,13 +298,13 @@ p { margin: 0 0 1em; text-wrap: pretty; }
 .foot-bottom { border-top: 1px solid rgba(255, 255, 255, .12); margin-top: 40px; padding-top: 18px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px; font-size: 13px; color: #93A3C8; }
 
 /* floating WhatsApp */
-.wa-float { position: fixed; bottom: 24px; right: 24px; z-index: 40; display: flex; align-items: center; gap: 12px; flex-direction: row; }
+.wa-float { position: fixed; bottom: 24px; right: 24px; z-index: 40; display: flex; align-items: center; gap: 14px; flex-direction: row-reverse; direction: ltr; }
 .wa-float[hidden] { display: none; }
 .wa-wrap { position: relative; display: block; }
 .wa-btn { display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; background: #25D366; color: #fff; box-shadow: 0 8px 20px -8px rgba(0, 0, 0, .4); text-decoration: none; }
 .wa-btn .ic { width: 30px; height: 30px; }
 .wa-x { position: absolute; top: -6px; right: -6px; width: 22px; height: 22px; border-radius: 50%; border: 0; background: #FF5A5F; color: #fff; font-size: 15px; line-height: 1; cursor: pointer; padding: 0; }
-.wa-bubble { background: #fff; color: #128C4A; font-weight: 700; font-size: 15px; line-height: 1.5; padding: 12px 20px; border-radius: 999px; max-width: 340px; text-decoration: none; box-shadow: 0 8px 24px -10px rgba(0, 0, 0, .35); transition: opacity .4s, transform .4s; }
+.wa-bubble { direction: rtl; text-align: right; background: #fff; color: #128C4A; font-weight: 700; font-size: 15px; line-height: 1.5; padding: 12px 20px; border-radius: 999px; max-width: 340px; text-decoration: none; box-shadow: 0 8px 24px -10px rgba(0, 0, 0, .35); transition: opacity .4s, transform .4s; }
 .wa-bubble.wa-pre { opacity: 0; transform: translateX(12px); }
 @media (max-width: 640px) { .wa-float { bottom: 16px; right: 16px; } .wa-btn { width: 56px; height: 56px; } .wa-bubble { font-size: 13px; padding: 10px 14px; border-radius: 18px; max-width: 200px; } }
 @media (prefers-reduced-motion: reduce) { .wa-bubble { transition: none; } }
