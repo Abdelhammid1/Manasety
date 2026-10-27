@@ -6,7 +6,22 @@
       <h2>{{ c.title|rt }}</h2>
       {% if c.subtitle %}<p>{{ c.subtitle|rt }}</p>{% endif %}
     </div>
-    {% if c.variant == 'chaos' %}
+    {% if c.variant == 'story' %}
+    {% set chips = (c['items'] or [])[:4] %}
+    {% set mods = c['modules'] or [] %}
+    <div class="st">
+      <div class="cx-panel cx-chaos rv">
+        <div class="st-row">{% for it in chips %}<div class="cx-chip" style="--r:{{ ['-3deg','2deg','3deg','-2deg'][loop.index0 % 4] }}">{{ icon(it.icon) }}<b>{{ it.title }}</b></div>{% endfor %}</div>
+        <p class="cx-note cx-bad">نفس بيانات الطالب تُكتب في كل أداة</p>
+      </div>
+      <div class="st-flow" aria-hidden="true"></div>
+      <div class="st-core rv"><span class="st-dot">ملف الطالب</span><span class="st-tag">إدخال مرة واحدة</span></div>
+      <div class="st-flow" aria-hidden="true"></div>
+      <div class="grid g3">{% for m in mods %}
+        <div class="scard rv"><div class="ibox">{{ icon(m.icon) }}</div><h3>{{ m.title }}</h3><p>{{ m.text|rt }}</p></div>
+      {% endfor %}</div>
+    </div>
+    {% elif c.variant == 'chaos' %}
     {% set chips = (c['items'] or [])[:4] %}
     <div class="cx rv">
       <div class="cx-panel cx-chaos">
