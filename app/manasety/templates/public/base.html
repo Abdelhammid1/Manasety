@@ -103,10 +103,33 @@
 </main>
 
 {% if setting('show_domain_switch') and request.path in ('/', '/business') %}
-<section class="dom-cta"><div class="wrap"><h2 class="dom-h">اختر مجالك</h2><div class="dom-grid">
-<div class="dom-card edu{{ ' here' if not on_biz else '' }}"><span class="dom-ic">🎓</span><h3>منصتي للتعليم</h3><p>قسم متخصص في أنظمة إدارة المدارس والمعاهد: منصات شغالة فعلًا لمدارس ومعاهد.</p>{% if on_biz %}<a class="btn btn-primary btn-sm" href="/">اكتشف حل المدارس</a>{% else %}<span class="dom-here">أنت هنا</span>{% endif %}</div>
-<div class="dom-card biz{{ ' here' if on_biz else '' }}"><span class="dom-ic">🏢</span><h3>منصتي للأعمال</h3><p>قسم متخصص في الأنظمة الإدارية المخصصة: أنظمة بنيناها لقطاعات مختلفة مثل مرصود والمُحامي وActiveFit.</p>{% if on_biz %}<span class="dom-here">أنت هنا</span>{% else %}<a class="btn btn-primary btn-sm" href="/business">تعرف على الأنظمة الإدارية</a>{% endif %}</div>
-</div></div></section>
+<section class="dom-cta"><div class="wrap">
+  <div class="dv-top"><span class="dv-root">منصتي</span><small>شركة واحدة، قسمان متخصصان</small></div>
+  <div class="dv-grid">
+    <div class="dv-card dv-edu{{ ' here' if not on_biz else '' }}">
+      <div class="dv-band"><span class="dv-ic">🎓</span><div><h3>منصتي للتعليم</h3><small>أنظمة المدارس والمعاهد</small></div></div>
+      <div class="dv-body">
+        <p>قسم متخصص في أنظمة إدارة المدارس والمعاهد: منصات شغالة فعلًا لمدارس ومعاهد.</p>
+        <span class="dv-lbl">ما بنيناه</span>
+        <div class="dv-chips"><span class="dv-chip"><b>منصتي-سكول</b><small>إدارة المدارس والمعاهد</small></span></div>
+        {% if on_biz %}<a class="btn btn-primary btn-sm" href="/">اكتشف حل المدارس</a>{% else %}<span class="dom-here">أنت هنا</span>{% endif %}
+      </div>
+    </div>
+    <div class="dv-card dv-biz{{ ' here' if on_biz else '' }}">
+      <div class="dv-band"><span class="dv-ic">🏢</span><div><h3>منصتي للأعمال</h3><small>أنظمة إدارية مخصصة للشركات</small></div></div>
+      <div class="dv-body">
+        <p>قسم متخصص في الأنظمة الإدارية المخصصة: أنظمة بنيناها لقطاعات مختلفة.</p>
+        <span class="dv-lbl">ما بنيناه</span>
+        <div class="dv-chips">
+          <span class="dv-chip"><b>مرصود</b><small>إدارة موارد للشركات</small></span>
+          <span class="dv-chip"><b>المُحامي</b><small>مكاتب المحاماة</small></span>
+          <span class="dv-chip"><b>ActiveFit</b><small>النوادي الرياضية</small></span>
+        </div>
+        {% if on_biz %}<span class="dom-here">أنت هنا</span>{% else %}<a class="btn btn-primary btn-sm" href="/business">تعرف على الأنظمة الإدارية</a>{% endif %}
+      </div>
+    </div>
+  </div>
+</div></section>
 {% endif %}
 
 <footer class="site-footer">
