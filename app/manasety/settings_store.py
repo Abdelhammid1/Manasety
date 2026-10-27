@@ -63,6 +63,7 @@ DEFAULTS: dict[str, Any] = {
     "show_footer_note": False,
     "show_footer_copyright": False,
     "show_social_float": True,
+    "whatsapp_bubble": "مرحباً.. هل تريد معرفة المزيد عن الباقات والأسعار؟",
     "cookie_banner_text": "نستخدم ملفات تعريف الارتباط لتحليل الزيارات وتحسين الموقع.",
     "default_og_image": "/static/img/og-image.png",
     "blog_title": "مقالات منصتي",
