@@ -750,3 +750,24 @@ body.biz .sc-ic { background: linear-gradient(135deg, var(--navy), var(--blue));
 .rc-card h3 a { color: inherit; text-decoration: none; }
 .rc-tag { font-size: 12.5px; font-weight: 600; color: var(--blue); line-height: 1.5; }
 .rc-card p { margin: 4px 0 0; color: var(--ink-2); font-size: 14px; }
+
+/* systems gallery: one featured system + logo thumbnails */
+.gl { max-width: 760px; margin-inline: auto; }
+.gl-thumbs { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; position: relative; margin-bottom: 22px; }
+.gl-thumb { width: 72px; height: 72px; border-radius: 50%; border: 2px solid var(--line); background: #fff; padding: 10px; cursor: pointer; display: grid; place-items: center; color: var(--blue); opacity: .75; transition: opacity .2s, border-color .2s, transform .2s; }
+.gl-thumb .sys-logo { width: 100%; height: 100%; object-fit: contain; border-radius: 50%; }
+.gl-thumb.on, .gl-thumb:hover { opacity: 1; border-color: var(--blue); transform: translateY(-2px); }
+.gl-thumb:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.gl-stage { background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--blue); border-radius: 18px; padding: 30px 26px; text-align: center; }
+.gl-main { display: grid; justify-items: center; gap: 8px; }
+.gl.js .gl-main { display: none; }
+.gl.js .gl-main.on { display: grid; }
+.gl-logo { display: grid; place-items: center; width: 120px; height: 120px; border-radius: 50%; background: #fff; border: 1px solid var(--line); box-shadow: 0 10px 24px -14px rgba(12, 36, 97, .5); padding: 16px; color: var(--blue); }
+.gl-logo .sys-logo { width: 100%; height: 100%; object-fit: contain; }
+.gl-main h3 { margin: 8px 0 0; font-size: 22px; color: var(--navy); }
+.gl-main h3 a { color: inherit; text-decoration: none; }
+.gl-tag { font-size: 13px; font-weight: 600; color: var(--blue); }
+.gl-main p { margin: 4px 0 0; max-width: 560px; color: var(--ink-2); font-size: 15px; }
+.gl:not(.js) .gl-thumbs { display: none; }
+.gl:not(.js) .gl-main { padding-block: 18px; border-bottom: 1px solid var(--line-2); }
+@media (prefers-reduced-motion: reduce) { .gl-thumb { transition: none; } }

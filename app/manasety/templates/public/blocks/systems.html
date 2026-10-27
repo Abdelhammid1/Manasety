@@ -5,7 +5,27 @@
       <h2>{{ c.title|rt }}</h2>
       {% if c.subtitle %}<p>{{ c.subtitle|rt }}</p>{% endif %}
     </div>
-    {% if c.variant == 'roundcards' %}
+    {% if c.variant == 'gallery' %}
+    <div class="gl" data-gl>
+      <div class="gl-thumbs" role="group" aria-label="الأنظمة">{% for s in c['items'] or [] %}{% set lg = media_obj(s.logo) %}
+        <button type="button" class="gl-thumb{% if loop.first %} on{% endif %}" data-i="{{ loop.index0 }}" aria-label="{{ s.name }}" aria-pressed="{{ 'true' if loop.first else 'false' }}">{% if lg %}<img class="sys-logo" src="{{ lg.url }}" alt="" loading="lazy">{% else %}{{ icon(s.icon) }}{% endif %}</button>{% endfor %}
+      </div>
+      <div class="gl-stage">{% for s in c['items'] or [] %}{% set lg = media_obj(s.logo) %}
+        <article class="gl-main{% if loop.first %} on{% endif %}" data-i="{{ loop.index0 }}">
+          <span class="gl-logo">{% if lg %}<img class="sys-logo" src="{{ lg.url }}" alt="{{ lg.alt or s.name }}">{% else %}{{ icon(s.icon) }}{% endif %}</span>
+          <h3>{% if s.url %}<a href="{{ s.url }}" rel="noopener" target="_blank">{{ s.name }}</a>{% else %}{{ s.name }}{% endif %}</h3>
+          {% if s.tag %}<span class="gl-tag">{{ s.tag }}</span>{% endif %}
+          <p>{{ s.text|rt }}</p>
+        </article>{% endfor %}
+      </div>
+    </div>
+    <script>
+    (function(){document.querySelectorAll('[data-gl]').forEach(function(g){g.classList.add('js');
+    var t=g.querySelectorAll('.gl-thumb'),m=g.querySelectorAll('.gl-main');
+    function s(i){t.forEach(function(b,k){var on=k===i;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on?'true':'false')});m.forEach(function(a,k){a.classList.toggle('on',k===i)})}
+    t.forEach(function(b,i){b.addEventListener('click',function(){s(i)});b.addEventListener('mouseenter',function(){s(i)})})})})();
+    </script>
+    {% elif c.variant == 'roundcards' %}
     <div class="rc">{% for s in c['items'] or [] %}{% set lg = media_obj(s.logo) %}
       <div class="rc-card rv">
         <span class="rc-logo">{% if lg %}<img class="sys-logo" src="{{ lg.url }}" alt="{{ lg.alt or s.name }}" loading="lazy">{% else %}{{ icon(s.icon) }}{% endif %}</span>
