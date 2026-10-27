@@ -454,3 +454,32 @@ p { margin: 0 0 1em; text-wrap: pretty; }
 @media (min-width: 480px) { .bw-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 .bw-mod { text-align: center; font-size: 13px; font-weight: 600; color: var(--ink-3); background: var(--bg); border: 1px dashed var(--line); border-radius: 10px; padding: 14px 6px; }
 .bw-mod.on { color: var(--navy); background: var(--tint); border: 1px solid #C9D8F5; border-top: 3px solid var(--accent); }
+
+/* ai block, variant "flow": tools -> teacher approval gate -> analysis steps -> cost gauge */
+.fl { display: grid; gap: 0; max-width: 980px; margin-inline: auto; }
+.fl-stage { background: var(--bg); border: 1px solid var(--line); border-radius: 20px; padding: 22px; }
+.fl-h { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+.fl-h .ibox { width: 46px; height: 46px; border-radius: 12px; background: var(--accent); color: #fff; }
+.fl-h h3 { margin: 0; font-size: 18px; }
+.fl-chips { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+@media (min-width: 768px) { .fl-chips { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.fl-chip { display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px 8px; }
+.fl-chip .ic { width: 28px; height: 28px; color: var(--accent); }
+.fl-chip b { font-size: 13.5px; line-height: 1.5; color: var(--navy); font-weight: 600; }
+.fl-gate { position: relative; display: flex; align-items: center; justify-content: center; gap: 10px; margin: 0 auto; padding: 12px 22px; background: #ECFDF3; color: var(--green); border: 1px solid #B7E8CB; border-radius: 999px; font-size: 14.5px; text-align: center; }
+.fl-gate::before, .fl-gate::after { content: ""; position: absolute; left: 50%; height: 22px; border-inline-start: 2px dashed var(--accent); }
+.fl-gate::before { bottom: 100%; } .fl-gate::after { top: 100%; }
+.fl-gate { margin-block: 22px; }
+.fl-gic .ic { width: 22px; height: 22px; }
+.fl-steps { display: grid; gap: 12px; position: relative; }
+@media (min-width: 768px) { .fl-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); } .fl-steps::before { content: ""; position: absolute; top: 33px; right: 16%; left: 16%; border-top: 2px dashed var(--accent); } }
+.fl-step { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px 14px; text-align: center; }
+.fl-n { display: grid; place-items: center; width: 34px; height: 34px; margin: 0 auto 8px; border-radius: 50%; background: var(--navy); color: #fff; font-weight: 700; position: relative; z-index: 1; box-shadow: 0 0 0 5px var(--bg); }
+.fl-step .ic { width: 22px; height: 22px; color: var(--accent); margin: 0 auto 6px; }
+.fl-step b { display: block; color: var(--navy); font-size: 14.5px; line-height: 1.5; }
+.fl-step p { margin: 6px 0 0; color: var(--ink-3); font-size: 13px; }
+.fl-cost { margin-top: 22px; display: flex; flex-wrap: wrap; align-items: center; gap: 16px; background: var(--bg); border: 1px solid var(--line); border-radius: 20px; padding: 20px 24px; }
+.fl-cost > div { flex: 999 1 380px; }
+.fl-cost b { display: block; color: var(--navy); font-size: 16.5px; }
+.fl-cost > div span { color: var(--ink-2); font-size: 14.5px; }
+.fl-gauge { flex: none; width: 64px; height: 64px; border-radius: 50%; background: conic-gradient(var(--accent) 0 90%, var(--orange) 90% 100%); -webkit-mask: radial-gradient(circle, transparent 20px, #000 21px); mask: radial-gradient(circle, transparent 20px, #000 21px); }
