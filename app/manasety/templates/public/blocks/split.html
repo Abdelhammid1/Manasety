@@ -1,3 +1,17 @@
+{% if c.variant == 'timeline' %}
+<section class="section"{% if anchor %} id="{{ anchor }}"{% endif %}>
+  <div class="wrap">
+    <div class="head center rv">
+      {% if c.eyebrow %}<span class="pill">{{ c.eyebrow }}</span>{% endif %}
+      <h2>{{ c.title|rt }}</h2>
+      {% if c.body %}<p>{{ c.body|rt }}</p>{% endif %}
+    </div>
+    <ol class="tm">{% for p in c.points or [] %}{% set parts = p.title.split('\u2014', 1) %}
+      <li class="tm-step rv"><span class="tm-n">{{ (parts[0]|trim) if parts|length > 1 else loop.index }}</span><b>{{ (parts[1]|trim) if parts|length > 1 else p.title }}</b><p>{{ p.text|rt }}</p></li>
+    {% endfor %}</ol>
+  </div>
+</section>
+{% else %}
 <section class="section"{% if anchor %} id="{{ anchor }}"{% endif %}>
   <div class="wrap split top">
     <div class="rv">
@@ -10,3 +24,4 @@
     {% endif %}
   </div>
 </section>
+{% endif %}

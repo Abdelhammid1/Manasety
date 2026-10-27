@@ -6,7 +6,16 @@
       <h2>{{ c.title|rt }}</h2>
       {% if c.subtitle %}<p>{{ c.subtitle|rt }}</p>{% endif %}
     </div>
-    {% if c.variant == 'story' %}
+    {% if c.variant == 'chain' %}
+    <div class="ch">{% for it in c['items'] or [] %}
+      <div class="ch-node rv"><span class="ch-ic">{{ icon(it.icon) }}</span><b>{{ it.title }}</b><p>{{ it.text|rt }}</p></div>
+      {% if not loop.last %}<span class="ch-arr" aria-hidden="true"></span>{% endif %}
+    {% endfor %}</div>
+    {% elif c.variant == 'tiles' %}
+    <div class="tl">{% for it in c['items'] or [] %}
+      <div class="tl-tile rv"><span class="tl-ic">{{ icon(it.icon) }}</span><b>{{ it.title }}</b><p>{{ it.text|rt }}</p></div>
+    {% endfor %}</div>
+    {% elif c.variant == 'story' %}
     {% set chips = (c['items'] or [])[:4] %}
     {% set mods = c['modules'] or [] %}
     <div class="st">

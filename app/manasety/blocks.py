@@ -53,7 +53,7 @@ BLOCK_TYPES: dict[str, dict[str, Any]] = {
         "label": "بطاقات (المشكلة / الحل)",
         "fields": [
             *_HEAD,
-            F(key="variant", kind="select", label="الشكل", choices={"story": "قصة واحدة: فوضى ← منظومة", "chaos": "فوضى ← نظام (انفوجرافيك)", "problem": "مشكلة (أحمر)", "solution": "حل (أزرق)"}),
+            F(key="variant", kind="select", label="الشكل", choices={"chain": "سلسلة (انفوجرافيك)", "tiles": "بلاطات (انفوجرافيك)", "story": "قصة واحدة: فوضى ← منظومة", "chaos": "فوضى ← نظام (انفوجرافيك)", "problem": "مشكلة (أحمر)", "solution": "حل (أزرق)"}),
             F(key="items", kind="list", label="البطاقات", fields=[
                 _ICON, F(key="title", kind="text", label="العنوان"), F(key="text", kind="textarea", label="النص")]),
             F(key="modules", kind="list", label="موديولات الحل", fields=[
@@ -108,6 +108,7 @@ BLOCK_TYPES: dict[str, dict[str, Any]] = {
         "fields": [
             F(key="eyebrow", kind="text", label="سطر علوي"),
             F(key="title", kind="textarea", label="العنوان"),
+            F(key="variant", kind="select", label="الشكل", choices={"": "عادي (الحالي)", "timeline": "خط زمني (انفوجرافيك)"}),
             F(key="body", kind="textarea", label="النص"),
             F(key="points", kind="list", label="النقاط", fields=[
                 F(key="title", kind="text", label="العنوان"), F(key="text", kind="textarea", label="النص")]),
