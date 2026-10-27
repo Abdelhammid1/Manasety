@@ -136,7 +136,7 @@ BLOCK_TYPES: dict[str, dict[str, Any]] = {
         "label": "أنظمتنا الأخرى / خبرتنا في الإدارة",
         "fields": [
             *_HEAD,
-            F(key="variant", kind="select", label="الشكل", choices={"": "كروت (الحالي)", "showcase": "عرض مميز (انفوجرافيك)"}),
+            F(key="variant", kind="select", label="الشكل", choices={"": "كروت (الحالي)", "panels": "لوحات جانبية (انفوجرافيك)", "showcase": "عرض مميز (انفوجرافيك)"}),
             F(key="items", kind="list", label="الأنظمة", fields=[
                 _ICON, F(key="name", kind="text", label="الاسم"), F(key="text", kind="textarea", label="الوصف"),
                 F(key="tag", kind="text", label="الوسم السفلي"),

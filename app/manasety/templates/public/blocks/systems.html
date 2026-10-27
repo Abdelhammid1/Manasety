@@ -5,7 +5,14 @@
       <h2>{{ c.title|rt }}</h2>
       {% if c.subtitle %}<p>{{ c.subtitle|rt }}</p>{% endif %}
     </div>
-    {% if c.variant == 'showcase' %}
+    {% if c.variant == 'panels' %}
+    <div class="pn">{% for s in c['items'] or [] %}
+      <div class="pn-card rv">
+        <div class="pn-side">{{ icon(s.icon) }}{% if s.tag %}<small>{{ s.tag }}</small>{% endif %}</div>
+        <div class="pn-main"><h3>{% if s.url %}<a href="{{ s.url }}" rel="noopener" target="_blank">{{ s.name }}</a>{% else %}{{ s.name }}{% endif %}</h3><p>{{ s.text|rt }}</p></div>
+      </div>
+    {% endfor %}</div>
+    {% elif c.variant == 'showcase' %}
     <div class="sc">{% for s in c['items'] or [] %}
       <div class="sc-card rv" tabindex="0">
         {% if s.tag %}<span class="sc-tag">{{ s.tag }}</span>{% endif %}
