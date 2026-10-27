@@ -10,12 +10,12 @@
         {% endfor %}
       </div>
     </div>
-    <div class="ring" aria-hidden="true">
-      <div class="ring-core">{{ c.core_label }}</div>
-      {% for r in ring %}
-      {% set pos = ring_position(loop.index0, ring|length) %}
-      <span class="ring-node{% if r.on %} on{% endif %}" style="left:{{ pos[0] }}%;top:{{ pos[1] }}%">{{ r.label }}</span>
-      {% endfor %}
+    <div class="bw rv" role="img" aria-label="مثال توضيحي لمنصة مدرسة بهويتها الخاصة">
+      <div class="bw-bar"><i></i><i></i><i></i><span class="bw-url" dir="ltr">school-name.manasety.ai</span></div>
+      <div class="bw-body">
+        <div class="bw-head"><span class="bw-logo">{{ c.core_label }}</span><span class="bw-tag">مثال توضيحي</span></div>
+        <div class="bw-grid">{% for r in ring %}<span class="bw-mod{% if r.on %} on{% endif %}">{{ r.label }}</span>{% endfor %}</div>
+      </div>
     </div>
   </div>
 </section>
