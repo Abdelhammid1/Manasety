@@ -7,7 +7,7 @@
       {% if c.body %}<p>{{ c.body|rt }}</p>{% endif %}
     </div>
     <ol class="tm">{% for p in c.points or [] %}{% set parts = p.title.split('\u2014', 1) %}
-      <li class="tm-step rv"><span class="tm-n">{{ (parts[0]|trim) if parts|length > 1 else loop.index }}</span><b>{{ (parts[1]|trim) if parts|length > 1 else p.title }}</b><p>{{ p.text|rt }}</p></li>
+      <li class="tm-step rv"><span class="tm-n">{{ ((parts[0]|trim) if parts|length > 1 else loop.index|string)|replace('0','\u0660')|replace('1','\u0661')|replace('2','\u0662')|replace('3','\u0663')|replace('4','\u0664')|replace('5','\u0665')|replace('6','\u0666')|replace('7','\u0667')|replace('8','\u0668')|replace('9','\u0669') }}</span><b>{{ (parts[1]|trim) if parts|length > 1 else p.title }}</b><p>{{ p.text|rt }}</p></li>
     {% endfor %}</ol>
   </div>
 </section>
