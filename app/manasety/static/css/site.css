@@ -716,3 +716,15 @@ body.biz .sc-ic { background: linear-gradient(135deg, var(--navy), var(--blue));
 .wn-body h3 a { color: inherit; text-decoration: none; }
 .wn-body p { margin: 0; color: var(--ink-2); font-size: 14px; }
 @media (prefers-reduced-motion: reduce) { .wn-card { transition: none; } .wn-card:hover { transform: none; } }
+
+/* systems: classic rows */
+.cl { max-width: 900px; margin-inline: auto; background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--navy); }
+.cl-row { display: grid; grid-template-columns: auto 1fr; gap: 6px 18px; align-items: start; padding: 20px 24px; border-bottom: 1px solid var(--line); }
+.cl-row:last-child { border-bottom: 0; }
+.cl-ic { display: grid; place-items: center; width: 48px; height: 48px; border: 1px solid var(--navy); color: var(--navy); }
+.cl-ic .ic { width: 24px; height: 24px; }
+.cl-txt h3 { margin: 0 0 4px; font-size: 19px; color: var(--navy); }
+.cl-txt h3 a { color: inherit; text-decoration: none; }
+.cl-txt p { margin: 0; color: var(--ink-2); font-size: 14.5px; }
+.cl-tag { grid-column: 2; font-size: 13px; font-weight: 600; color: var(--blue); }
+@media (min-width: 768px) { .cl-row { grid-template-columns: auto 1fr auto; align-items: center; } .cl-tag { grid-column: auto; text-align: left; max-width: 200px; } }

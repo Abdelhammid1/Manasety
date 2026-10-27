@@ -5,7 +5,15 @@
       <h2>{{ c.title|rt }}</h2>
       {% if c.subtitle %}<p>{{ c.subtitle|rt }}</p>{% endif %}
     </div>
-    {% if c.variant == 'windows' %}
+    {% if c.variant == 'classic' %}
+    <div class="cl">{% for s in c['items'] or [] %}
+      <div class="cl-row">
+        <span class="cl-ic">{{ icon(s.icon) }}</span>
+        <div class="cl-txt"><h3>{% if s.url %}<a href="{{ s.url }}" rel="noopener" target="_blank">{{ s.name }}</a>{% else %}{{ s.name }}{% endif %}</h3><p>{{ s.text|rt }}</p></div>
+        {% if s.tag %}<span class="cl-tag">{{ s.tag }}</span>{% endif %}
+      </div>
+    {% endfor %}</div>
+    {% elif c.variant == 'windows' %}
     <div class="wn">{% for s in c['items'] or [] %}
       <div class="wn-card rv">
         <div class="wn-bar"><i></i><i></i><i></i><span>{{ s.tag }}</span></div>
