@@ -135,3 +135,12 @@ table.t { width: 100%; border-collapse: collapse; background: var(--surface); }
 .auth { min-height: 100vh; display: grid; place-items: center; padding: 16px; }
 .auth .card { width: 100%; max-width: 400px; }
 pre.json { background: #0F1B3D; color: #E2E8F0; padding: 14px; border-radius: 10px; overflow: auto; font: 12.5px var(--mono); direction: ltr; text-align: left; max-height: 480px; }
+
+/* page shortcuts on the dashboard */
+.pg-cards { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); margin-bottom: 20px; }
+.pg-card { display: flex; align-items: center; gap: 14px; background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; text-decoration: none; color: inherit; }
+.pg-card:hover { border-color: var(--blue); }
+.pg-card > div { flex: 1; }
+.pg-card b { display: block; font-size: 16px; color: var(--navy); }
+.pg-card small { color: var(--ink-3); }
+.pg-ic { font-size: 28px; }

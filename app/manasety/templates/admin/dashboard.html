@@ -4,6 +4,13 @@
 <div class="top"><div class="grow"><h1>أهلًا {{ current_user.name }}</h1><p>نظرة سريعة على الموقع.</p></div>
   <a class="btn" href="/" target="_blank" rel="noopener">فتح الموقع</a></div>
 
+{% if current_user.can('content') %}
+<div class="pg-cards">
+  <a class="pg-card" href="{{ url_for('admin_content.page_builder', slug='home') }}"><span class="pg-ic">🎓</span><div><b>صفحة المدارس</b><small>الصفحة الرئيسية — منصتي-سكول</small></div><span class="btn dark sm">فتح بناء الصفحة</span></a>
+  <a class="pg-card" href="{{ url_for('admin_content.page_builder', slug='business') }}"><span class="pg-ic">🏢</span><div><b>صفحة الأنظمة الإدارية</b><small>/business — للشركات والأنشطة غير التعليمية</small></div><span class="btn primary sm">فتح بناء الصفحة</span></a>
+</div>
+{% endif %}
+
 {% if missing_env %}<div class="flash error">تنبيه: متغيرات البيئة {{ missing_env|join('، ') }} غير مضبوطة على هذا السيرفر — الطلبات تُحفظ هنا لكنها لا تصل إلى مرصود / بريد web3forms.</div>{% endif %}
 {% if current_user.can('content') and draft_differs %}<div class="warn">في الصفحة الرئيسية تغييرات محفوظة كمسودة ولم تُنشر بعد. <a href="{{ url_for('admin_content.page_builder') }}">مراجعة ونشر</a></div>{% endif %}
 {% if page and page.scheduled_at %}<div class="info">نشر مجدول للصفحة الرئيسية: <span class="mono">{{ page.scheduled_at.strftime('%Y-%m-%d %H:%M') }} UTC</span></div>{% endif %}
