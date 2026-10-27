@@ -94,7 +94,7 @@ def _to_marsoud(app: Flask, lead: Lead) -> str:
         "package": "",
         "description": _description(lead),
         "ad_variant": lead.utm_content or "",
-        "source": lead.source or "landing_form",
+        "source": "landing_form",  # marsoud only accepts landing_form / contact_page / website
     }
     r = requests.post(app.config["MARSOUD_LEAD_URL"], json=payload, timeout=TIMEOUT,
                       headers={"X-Contact-Form-Token": token})
