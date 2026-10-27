@@ -529,3 +529,29 @@ p { margin: 0 0 1em; text-wrap: pretty; }
 .hero-solo .lead { margin-inline: auto; }
 .hero-solo .hero-ctas, .hero-solo .proof { justify-content: center; }
 .hero-solo .hero-media { display: none; }
+
+/* two specialised divisions: header panels, business identity, choose-your-field */
+.dom-switch { background: var(--navy); }
+.dom-switch .wrap { display: flex; justify-content: center; gap: 10px; padding-block: 8px; flex-wrap: wrap; }
+.dom-switch a { display: flex; align-items: center; gap: 10px; padding: 8px 18px; border-radius: 12px; background: rgba(255,255,255,.08); color: #B9C6E4; text-decoration: none; border: 1px solid transparent; }
+.dom-switch a b { display: block; font-size: 14.5px; color: inherit; line-height: 1.3; }
+.dom-switch a small { display: block; font-size: 12px; opacity: .85; line-height: 1.3; }
+.dom-switch a.on { background: #fff; color: var(--navy); }
+.dom-switch a.ds-biz.on { color: #0F766E; border-color: #0F766E; }
+.ds-ic { font-size: 20px; }
+@media (max-width: 640px) { .dom-switch a small { display: none; } .dom-switch a { padding: 6px 12px; } }
+body.biz .btn-primary { background: #0F766E; border-color: #0F766E; }
+body.biz .hero-badge::before { background: #0F766E; }
+body.biz .hero h1 span, body.biz .kicker, body.biz .pill { color: #0F766E; }
+body.biz .site-header .btn-primary { box-shadow: none; }
+.dom-h { text-align: center; margin-bottom: 18px; }
+.dom-grid { display: grid; gap: 16px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 768px) { .dom-grid { grid-template-columns: 1fr 1fr; } }
+.dom-card { background: var(--surface); border: 1px solid var(--line); border-top: 4px solid var(--accent); border-radius: 18px; padding: 26px; box-shadow: var(--shadow); display: grid; gap: 10px; align-content: start; }
+.dom-card.biz { border-top-color: #0F766E; }
+.dom-card.here { background: var(--tint); }
+.dom-card h3 { margin: 0; font-size: 20px; }
+.dom-card p { margin: 0 0 6px; color: var(--ink-2); }
+.dom-ic { font-size: 30px; }
+.dom-here { justify-self: start; background: #ECFDF3; color: var(--green); font-weight: 700; font-size: 13.5px; padding: 5px 14px; border-radius: 999px; }
+body.biz .dom-card.biz .btn-primary { background: #0F766E; }

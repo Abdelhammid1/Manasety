@@ -38,14 +38,14 @@
 {% endfor %}
 <script>document.documentElement.classList.add('js')</script>
 </head>
-<body>
+<body{% if request.path.startswith('/business') %} class="biz"{% endif %}>
 {{ icon_sprite() }}
 <a class="skip" href="#main">تخطَّ إلى المحتوى</a>
 {% if preview %}<div class="preview-bar">معاينة مسودة — هذه النسخة غير منشورة</div>{% endif %}
 
 {% set on_biz = request.path.startswith('/business') %}
 <header class="site-header">
-{% if setting('show_domain_switch') %}<div class="dom-switch"><div class="wrap"><a class="{{ '' if on_biz else 'on' }}" href="/">المدارس</a><a class="{{ 'on' if on_biz else '' }}" href="/business">الأنظمة الإدارية</a></div></div>{% endif %}
+{% if setting('show_domain_switch') %}<div class="dom-switch"><div class="wrap"><a class="ds-edu{{ '' if on_biz else ' on' }}" href="/"><span class="ds-ic">🎓</span><span><b>منصتي للتعليم</b><small>أنظمة المدارس والمعاهد</small></span></a><a class="ds-biz{{ ' on' if on_biz else '' }}" href="/business"><span class="ds-ic">🏢</span><span><b>منصتي للأعمال</b><small>أنظمة إدارية مخصصة للشركات</small></span></a></div></div>{% endif %}
   <div class="wrap nav">
     <a class="brand" href="/" aria-label="{{ setting('brand_name_ar') }} — الصفحة الرئيسية">
       <svg class="brand-logo" aria-hidden="true" focusable="false" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg" >
@@ -103,9 +103,9 @@
 </main>
 
 {% if setting('show_domain_switch') and request.path in ('/', '/business') %}
-<section class="dom-cta"><div class="wrap"><div class="dom-cta-card">
-  <b>{% if on_biz %}هل تدير مدرسة؟ منصتي-سكول مصممة لها.{% else %}ليست مدرسة؟ لدينا أنظمة إدارية مخصصة لنشاطك.{% endif %}</b>
-  <a class="btn btn-primary btn-sm" href="{{ '/' if on_biz else '/business' }}">{% if on_biz %}اكتشف حل المدارس{% else %}تعرف على الأنظمة الإدارية{% endif %}</a>
+<section class="dom-cta"><div class="wrap"><h2 class="dom-h">اختر مجالك</h2><div class="dom-grid">
+<div class="dom-card edu{{ ' here' if not on_biz else '' }}"><span class="dom-ic">🎓</span><h3>منصتي للتعليم</h3><p>قسم متخصص في أنظمة إدارة المدارس والمعاهد: منصات شغالة فعلًا لمدارس ومعاهد.</p>{% if on_biz %}<a class="btn btn-primary btn-sm" href="/">اكتشف حل المدارس</a>{% else %}<span class="dom-here">أنت هنا</span>{% endif %}</div>
+<div class="dom-card biz{{ ' here' if on_biz else '' }}"><span class="dom-ic">🏢</span><h3>منصتي للأعمال</h3><p>قسم متخصص في الأنظمة الإدارية المخصصة: أنظمة بنيناها لقطاعات مختلفة مثل مرصود والمُحامي وActiveFit.</p>{% if on_biz %}<span class="dom-here">أنت هنا</span>{% else %}<a class="btn btn-primary btn-sm" href="/business">تعرف على الأنظمة الإدارية</a>{% endif %}</div>
 </div></div></section>
 {% endif %}
 
