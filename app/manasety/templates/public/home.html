@@ -1,7 +1,7 @@
 {% extends "public/base.html" %}
 {% block title %}{{ page_seo.get('title') or 'منصتي-سكول | نظام إدارة مدارس متكامل' }}{% endblock %}
 {% block description %}{{ page_seo.get('description') or '' }}{% endblock %}
-{% block og_image %}{% if page_seo.get('og_image') %}{{ site_url() ~ page_seo.get('og_image') }}{% else %}{{ site_url() ~ setting('default_og_image') }}{% endif %}{% endblock %}
+{% block og_image %}{% set _og = (page_seo.get('og_image') or setting('default_og_image') or '')|trim %}{% if _og.startswith('http') %}{{ _og }}{% else %}{{ site_url() ~ '/' ~ _og.lstrip('/') }}{% endif %}{% endblock %}
 {% block hreflang %}{% if hreflang %}
 <link rel="alternate" hreflang="ar" href="{{ site_url() }}/">
 <link rel="alternate" hreflang="en" href="{{ site_url() }}/en/">
