@@ -555,3 +555,11 @@ body.biz .site-header .btn-primary { box-shadow: none; }
 .dom-ic { font-size: 30px; }
 .dom-here { justify-self: start; background: #ECFDF3; color: var(--green); font-weight: 700; font-size: 13.5px; padding: 5px 14px; border-radius: 999px; }
 body.biz .dom-card.biz .btn-primary { background: #0F766E; }
+
+/* ds-compact: slim two-division bar */
+.dom-switch .wrap { padding-block: 4px; gap: 8px; }
+.dom-switch a { padding: 5px 16px; border-radius: 999px; gap: 8px; }
+.dom-switch a b { font-size: 13.5px; font-weight: 600; }
+.dom-switch a small { display: none; }
+.ds-ic { font-size: 15px; line-height: 1; }
+@media (max-width: 640px) { .dom-switch a { padding: 4px 12px; } .dom-switch a b { font-size: 12.5px; } }
