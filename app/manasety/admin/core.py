@@ -61,6 +61,7 @@ SETTINGS_FORM = [
         ("whatsapp_sa", "واتساب السعودية (أرقام فقط)", "text"), ("whatsapp_sa_display", "واتساب السعودية (للعرض)", "text"),
         ("whatsapp_bubble", "نص فقاعة واتساب (فارغ = بدون فقاعة)", "text"),
         ("whatsapp_prefill", "رسالة واتساب الجاهزة", "text"),
+        ("whatsapp_prefill_biz", "رسالة واتساب الجاهزة (صفحة الأعمال)", "text"),
         ("show_whatsapp_sa", "إظهار واتساب السعودية في التذييل", "bool"),
         ("show_whatsapp_eg", "إظهار واتساب مصر في التذييل", "bool"),
         ("show_phone_line", "إظهار سطر الاتصال في التذييل", "bool"),

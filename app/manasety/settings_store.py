@@ -64,6 +64,7 @@ DEFAULTS: dict[str, Any] = {
     "show_footer_copyright": False,
     "show_social_float": True,
     "show_domain_switch": False,
+    "whatsapp_prefill_biz": "السلام عليكم 👋 جاي من موقع منصتي، عايز أعرف أكتر عن الأنظمة الإدارية المخصصة لشركتي",
     "nav_biz": [
         {"label": "خدماتنا", "href": "#services"},
         {"label": "من الفكرة إلى الإطلاق", "href": "#process"},

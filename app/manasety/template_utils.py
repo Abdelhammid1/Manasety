@@ -50,7 +50,14 @@ def ar_date(value: Any) -> str:
 
 def whatsapp_url(country: str = "eg") -> str:
     number = get_setting(f"whatsapp_{country}")
-    return f"https://wa.me/{number}?text={quote(get_setting('whatsapp_prefill') or '')}"
+    from flask import request
+    text = get_setting('whatsapp_prefill') or ''
+    try:
+        if request.path.startswith('/business') and get_setting('whatsapp_prefill_biz'):
+            text = get_setting('whatsapp_prefill_biz')
+    except RuntimeError:
+        pass
+    return f"https://wa.me/{number}?text={quote(text)}"
 
 
 def integrations_for(placement: str) -> list[Integration]:
