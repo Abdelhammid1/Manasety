@@ -83,6 +83,10 @@ SETTINGS_FORM = [
     ]),
     ("المدونة والـ SEO", [
         ("blog_title", "عنوان المدونة", "text"), ("blog_description", "وصف المدونة", "textarea"),
+        ("blog_title_biz", "عنوان مدونة الأعمال", "text"),
+        ("blog_description_biz", "وصف مدونة الأعمال", "textarea"),
+        ("default_og_image_biz", "صورة المشاركة للأعمال (مسار)", "text"),
+        ("product_page_url_biz", "رابط صفحة المنتج للأعمال", "text"),
         ("default_og_image", "صورة المشاركة الافتراضية (مسار)", "text"),
         ("product_page_url", "رابط صفحة المنتج (للروابط الداخلية)", "text"),
         ("internal_links_min_related", "أقل عدد روابط لمقالات ذات صلة", "int"),

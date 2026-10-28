@@ -57,6 +57,7 @@
     <div class="card">
       <h2>التصنيف والكاتب</h2>
       <div class="field"><label for="cat">التصنيف (العنقود)</label><select id="cat" name="category_id"><option value="">—</option>{% for c in categories %}<option value="{{ c.id }}" {% if c.id == art.category_id %}selected{% endif %}>{{ c.name }}</option>{% endfor %}</select></div>
+      <div class="field"><label for="aud">يظهر في</label><select id="aud" name="audience"><option value="both" {% if (art.audience or 'both') == 'both' %}selected{% endif %}>المدارس والأعمال</option><option value="schools" {% if art.audience == 'schools' %}selected{% endif %}>المدارس فقط</option><option value="business" {% if art.audience == 'business' %}selected{% endif %}>الأعمال فقط</option></select></div>
       <div class="field"><label for="tags">الوسوم</label><select id="tags" name="tag_ids" multiple size="5">{% for t in tags %}<option value="{{ t.id }}" {% if t in art.tags %}selected{% endif %}>{{ t.name }}</option>{% endfor %}</select></div>
       <div class="field"><label for="author">الكاتب</label><select id="author" name="author_id"><option value="">—</option>{% for a in authors %}<option value="{{ a.id }}" {% if a.id == art.author_id %}selected{% endif %}>{{ a.name }}</option>{% endfor %}</select></div>
     </div>

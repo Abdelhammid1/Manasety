@@ -149,8 +149,8 @@ def _blog_prefix(lang: str) -> str:
     return "/en/blog" if lang == "en" else "/blog"
 
 
-def _blog_index(lang: str, category: Optional[Category] = None, tag: Optional[Tag] = None):
-    articles = live_articles(lang, category_id=category.id if category else None)
+def _blog_index(lang: str, category: Optional[Category] = None, tag: Optional[Tag] = None, audience: str = "schools"):
+    articles = live_articles(lang, category_id=category.id if category else None, audience=audience)
     if tag:
         articles = [a for a in articles if tag in a.tags]
     page_no = max(request.args.get("page", 1, type=int) or 1, 1)
@@ -168,7 +168,7 @@ def _blog_index(lang: str, category: Optional[Category] = None, tag: Optional[Ta
     return render_template(
         "public/blog_index.html", articles=articles[(page_no - 1) * per_page: page_no * per_page],
         categories=db.session.query(Category).order_by(Category.name).all(), category=category, tag=tag,
-        page_no=page_no, total_pages=total_pages, lang=lang,
+        page_no=page_no, total_pages=total_pages, lang=lang, blog_audience=audience,
         canonical=site + path + (f"?page={page_no}" if page_no > 1 else ""),
         schema=[seo.breadcrumb_schema(crumbs)], crumbs=crumbs,
     )
@@ -196,6 +196,23 @@ def blog_category(slug: str):
 def blog_tag(slug: str):
     tag = db.session.query(Tag).filter_by(slug=slug).first_or_404()
     return _blog_index("ar", tag=tag)
+
+
+@bp.route("/business/blog")
+def blog_biz():
+    return _blog_index("ar", audience="business")
+
+
+@bp.route("/business/blog/category/<slug>")
+def blog_biz_category(slug: str):
+    cat = db.session.query(Category).filter_by(slug=slug).first_or_404()
+    return _blog_index("ar", category=cat, audience="business")
+
+
+@bp.route("/business/blog/tag/<slug>")
+def blog_biz_tag(slug: str):
+    tag = db.session.query(Tag).filter_by(slug=slug).first_or_404()
+    return _blog_index("ar", tag=tag, audience="business")
 
 
 def _article_view(lang: str, slug: str, preview_article: Optional[Article] = None):
@@ -278,6 +295,8 @@ def sitemap():
     if arts:
         dates = [d for d in (a.content_updated_at or a.published_at for a in arts) if d is not None]
         urls.append({"loc": site + "/blog", "lastmod": max(dates) if dates else None})
+        if any(a.audience in ("business", "both") for a in arts):
+            urls.append({"loc": site + "/business/blog", "lastmod": max(dates) if dates else None})
     for a in arts:
         if a.noindex or (a.canonical_url and a.canonical_url != site + a.path):
             continue

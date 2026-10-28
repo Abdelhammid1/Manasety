@@ -472,6 +472,7 @@ class Article(Model):
     canonical_url: Mapped[str] = mapped_column(String(500), default="")
     noindex: Mapped[bool] = mapped_column(Boolean, default=False)
     related_mode: Mapped[str] = mapped_column(String(10), default="auto")
+    audience: Mapped[str] = mapped_column(String(10), default="both", server_default="both")
     related_ids: Mapped[list] = mapped_column(JSON, default=list)
     faq: Mapped[list] = mapped_column(JSON, default=list)  # [{"q": .., "a": ..}]
     translation_of_id: Mapped[Optional[int]] = mapped_column(ForeignKey("articles.id"))

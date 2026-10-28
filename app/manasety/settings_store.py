@@ -64,6 +64,10 @@ DEFAULTS: dict[str, Any] = {
     "show_footer_copyright": False,
     "show_social_float": True,
     "show_domain_switch": False,
+    "blog_title_biz": "مقالات منصتي للأعمال",
+    "blog_description_biz": "مقالات عملية عن الأنظمة الإدارية المخصصة وأتمتة العمليات وإدارة الفروع والتقارير.",
+    "default_og_image_biz": "/media/og-business.jpg",
+    "product_page_url_biz": "/business",
     "whatsapp_prefill_biz": "السلام عليكم 👋 جاي من موقع منصتي، عايز أعرف أكتر عن الأنظمة الإدارية المخصصة لشركتي",
     "nav_biz": [
         {"label": "خدماتنا", "href": "#services"},

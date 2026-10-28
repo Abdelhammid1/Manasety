@@ -153,11 +153,14 @@ def public_files(placement: str) -> list[DisplayFile]:
     return [f for f in rows if placement in (f.placements or [])]
 
 
-def live_articles(lang: str = "ar", limit: Optional[int] = None, category_id: Optional[int] = None) -> list[Article]:
+def live_articles(lang: str = "ar", limit: Optional[int] = None, category_id: Optional[int] = None,
+                  audience: Optional[str] = None) -> list[Article]:
     q = (db.session.query(Article)
          .filter(Article.lang == lang, Article.status == "published", Article.published_at <= utcnow()))
     if category_id:
         q = q.filter(Article.category_id == category_id)
+    if audience in ("schools", "business"):
+        q = q.filter(Article.audience.in_([audience, "both"]))
     q = q.order_by(Article.published_at.desc())
     if limit:
         q = q.limit(limit)
@@ -169,7 +172,8 @@ def related_articles(article: Article, count: int = 3) -> list[Article]:
         rows = db.session.query(Article).filter(Article.id.in_(article.related_ids)).all()
         by_id = {a.id: a for a in rows if a.is_live}
         return [by_id[i] for i in article.related_ids if i in by_id][:count]
-    pool = [a for a in live_articles(article.lang, category_id=article.category_id) if a.id != article.id]
+    aud = article.audience if article.audience in ("schools", "business") else None
+    pool = [a for a in live_articles(article.lang, category_id=article.category_id, audience=aud) if a.id != article.id]
     if len(pool) < count:
-        pool += [a for a in live_articles(article.lang) if a.id != article.id and a not in pool]
+        pool += [a for a in live_articles(article.lang, audience=aud) if a.id != article.id and a not in pool]
     return pool[:count]

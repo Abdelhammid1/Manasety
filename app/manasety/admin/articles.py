@@ -63,6 +63,7 @@ def _save(art: Article, aid: int | None):
     art.content_html = clean_rich(request.form.get("content_html", ""))
     art.slug = slugify(request.form.get("slug") or art.title)
     art.noindex = request.form.get("noindex") == "on"
+    art.audience = request.form.get("audience") if request.form.get("audience") in ("schools", "business") else "both"
     art.human_reviewed = request.form.get("human_reviewed") == "on"
     art.related_mode = "manual" if request.form.get("related_mode") == "manual" else "auto"
     art.related_ids = [int(x) for x in request.form.getlist("related_ids") if x.isdigit()][:6]
