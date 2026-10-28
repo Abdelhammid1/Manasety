@@ -633,3 +633,17 @@ class Setting(Model):
     key: Mapped[str] = mapped_column(String(80), primary_key=True)
     value: Mapped[Any] = mapped_column(JSON)
     updated_at: Mapped[datetime] = mapped_column(DateTime, default=utcnow, onupdate=utcnow)
+
+
+class SideCard(Model):
+    __tablename__ = "side_cards"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    title: Mapped[str] = mapped_column(String(160), default="")
+    text: Mapped[str] = mapped_column(Text, default="")
+    image_id: Mapped[Optional[int]] = mapped_column(ForeignKey("media.id"))
+    button_label: Mapped[str] = mapped_column(String(60), default="")
+    url: Mapped[str] = mapped_column(String(500), default="")
+    audience: Mapped[str] = mapped_column(String(10), default="both")
+    side: Mapped[str] = mapped_column(String(10), default="both")
+    is_active: Mapped[bool] = mapped_column(Boolean, default=True)
+    position: Mapped[int] = mapped_column(Integer, default=0)

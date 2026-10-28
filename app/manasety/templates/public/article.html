@@ -8,6 +8,11 @@
 <link rel="alternate" hreflang="{{ translation.lang }}" href="{{ site_url() ~ translation.path }}">
 {% endif %}{% endblock %}
 {% block content %}
+{% macro sc_card(sc) %}{% set im = media_obj(sc.image_id) %}
+<div class="sdc">{% if im %}<img src="{{ im.url }}" alt="{{ im.alt or sc.title }}" loading="lazy">{% endif %}
+{% if sc.title %}<b>{{ sc.title }}</b>{% endif %}{% if sc.text %}<p>{{ sc.text }}</p>{% endif %}
+{% if sc.url %}<a class="btn btn-primary btn-sm" href="{{ sc.url }}">{{ sc.button_label or 'اعرف أكثر' }}</a>{% endif %}</div>{% endmacro %}
+{% set _cards = side_cards|default([]) %}
 <div class="wrap">
   <div class="page-head">
     <ol class="crumbs">{% for name, url in crumbs %}<li>{% if not loop.last %}<a href="{{ url }}">{{ name }}</a>{% else %}<span aria-current="page">{{ name }}</span>{% endif %}</li>{% endfor %}</ol>
@@ -19,6 +24,8 @@
       {% if translation %}<a href="{{ translation.path }}" hreflang="{{ translation.lang }}">{{ 'English' if translation.lang == 'en' else 'العربية' }}</a>{% endif %}
     </div>
   </div>
+  <div class="art-wrap{% if toc %} has-toc{% endif %}">
+  <aside class="side-col side-r">{% for sc in _cards if sc.side in ('right', 'both') %}{{ sc_card(sc) }}{% endfor %}</aside>
   <div class="article-layout{% if toc %} has-toc{% endif %}">
     <article class="prose">
       {% if article.cover %}<img src="{{ article.cover.url }}" alt="{{ article.cover.alt }}" width="{{ article.cover.width }}" height="{{ article.cover.height }}" fetchpriority="high">{% endif %}
@@ -40,6 +47,8 @@
       <ol>{% for h in toc %}<li class="l{{ h.level }}"><a href="#{{ h.id }}">{{ h.text }}</a></li>{% endfor %}</ol>
     </aside>
     {% endif %}
+  </div>
+  <aside class="side-col side-l">{% for sc in _cards if sc.side in ('left', 'both') %}{{ sc_card(sc) }}{% endfor %}</aside>
   </div>
   {% if related %}
   <section style="padding-bottom:64px"><h2 style="font-size:24px">مقالات ذات صلة</h2>

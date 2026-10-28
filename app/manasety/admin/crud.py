@@ -15,7 +15,7 @@ from ..extensions import db
 from ..icons import ICONS
 from ..models import (BACKLINK_CHANNELS, BACKLINK_STATUSES, FAQ_CATEGORIES, FEATURE_MODULES, FEATURE_STATUSES,
                       INTEGRATION_KINDS, INTEGRATION_PLACEMENTS, Article, Author, Backlink, CaseStudy, Category,
-                      Client, Fact, FaqItem, Feature, Integration, Media, Redirect, Tag)
+                      Client, Fact, FaqItem, Feature, Integration, Media, Redirect, SideCard, Tag)
 from ..security import audit, clean_rich, clean_text, snapshot_model
 from ..services.seo import slugify
 
@@ -151,6 +151,22 @@ RESOURCES: dict[str, dict[str, Any]] = {
             F("show_name", "\u0625\u0638\u0647\u0627\u0631 \u0627\u0644\u0627\u0633\u0645 \u062a\u062d\u062a \u0627\u0644\u0644\u0648\u062c\u0648", "bool"),
         ],
         "validate": _clients,
+    },
+    "side_cards": {
+        "model": SideCard, "perm": "articles", "label": "الإعلانات الجانبية في المقالات", "singular": "بطاقة",
+        "order": (SideCard.position, SideCard.id),
+        "columns": [("title", "العنوان"),
+                    ("audience", "يظهر في", lambda o: {"both": "المدارس والأعمال", "schools": "المدارس فقط", "business": "الأعمال فقط"}.get(o.audience, o.audience)),
+                    ("side", "المكان", lambda o: {"both": "يمين وشمال", "right": "يمين فقط", "left": "شمال فقط"}.get(o.side, o.side)),
+                    ("is_active", "الحالة", lambda o: "مفعّلة" if o.is_active else "متوقفة")],
+        "fields": [
+            F("title", "العنوان"), F("text", "النص القصير", "textarea"),
+            F("image_id", "الصورة (اختيارية)", "media", media_kind="image"),
+            F("button_label", "نص الزر (اختياري)"), F("url", "رابط الزر (اختياري)", "url"),
+            F("audience", "يظهر في", "select", choices={"both": "المدارس والأعمال", "schools": "المدارس فقط", "business": "الأعمال فقط"}),
+            F("side", "المكان", "select", choices={"both": "يمين وشمال", "right": "يمين فقط", "left": "شمال فقط"}),
+            F("is_active", "مفعّلة", "bool"), F("position", "الترتيب", "int"),
+        ],
     },
     "case_studies": {
         "model": CaseStudy, "perm": "case_studies", "label": "دراسات الحالة", "singular": "دراسة حالة",

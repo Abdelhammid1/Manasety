@@ -12,7 +12,7 @@ from markupsafe import Markup
 
 from ..config import LEGACY_DIRS, LEGACY_FILES
 from ..extensions import csrf, db, limiter
-from ..models import Article, Author, Category, DisplayFile, LegalPage, Page, Tag, utcnow
+from ..models import Article, Author, Category, DisplayFile, LegalPage, Page, SideCard, Tag, utcnow
 from ..publishing import (live_articles, public_faq, related_articles, section_content, visible_sections)
 from ..services import seo
 from ..services.leads import build_lead, forward_lead
@@ -215,6 +215,12 @@ def blog_biz_tag(slug: str):
     return _blog_index("ar", tag=tag, audience="business")
 
 
+def _side_cards(art: Article) -> list:
+    aud = "business" if art.audience == "business" else "schools"
+    return (db.session.query(SideCard).filter(SideCard.is_active.is_(True), SideCard.audience.in_([aud, "both"]))
+            .order_by(SideCard.position, SideCard.id).all())
+
+
 def _article_view(lang: str, slug: str, preview_article: Optional[Article] = None):
     art = preview_article or db.session.query(Article).filter_by(lang=lang, slug=slug).first()
     if art is None or (preview_article is None and not art.is_live):
@@ -246,7 +252,7 @@ def _article_view(lang: str, slug: str, preview_article: Optional[Article] = Non
         "public/article.html", article=art, body=Markup(body), toc=toc if seo.word_count(body) > 900 else [],
         related=related_articles(art), faq_pairs=faq_pairs, lang=lang, schema=schema, crumbs=crumbs,
         canonical=art.canonical_url or site + art.path, og_image=(site + og.url) if og else "",
-        noindex=art.noindex or preview_article is not None, translation=translation,
+        noindex=art.noindex or preview_article is not None, translation=translation, side_cards=_side_cards(art),
     )
 
 

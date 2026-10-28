@@ -21,6 +21,7 @@ NAV = [
         ("admin_articles.index", "المقالات", "articles"),
         ("admin_crud.index:categories", "التصنيفات", "articles"),
         ("admin_crud.index:tags", "الوسوم", "articles"),
+        ("admin_crud.index:side_cards", "الإعلانات الجانبية", "articles"),
         ("admin_crud.index:authors", "الكُتّاب", "articles"),
         ("admin_seo.index", "الـ SEO والروابط", "seo"),
         ("admin_crud.index:redirects", "التحويلات 301", "seo"),
