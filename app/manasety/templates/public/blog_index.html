@@ -1,17 +1,21 @@
 {% extends "public/base.html" %}
-{% block title %}{% if category %}{{ category.name }} | {% elif tag %}{{ tag.name }} | {% endif %}{{ setting('blog_title') }}{% if page_no > 1 %} — صفحة {{ page_no }}{% endif %}{% endblock %}
-{% block description %}{{ (category.description if category and category.description else setting('blog_description')) }}{% endblock %}
+{% set _biz = blog_audience == 'business' %}
+{% set _bt = (setting('blog_title_biz') if _biz and setting('blog_title_biz') else setting('blog_title')) %}
+{% set _bd = (setting('blog_description_biz') if _biz and setting('blog_description_biz') else setting('blog_description')) %}
+{% set _bp = '/business/blog' if _biz else '/blog' %}
+{% block title %}{% if category %}{{ category.name }} | {% elif tag %}{{ tag.name }} | {% endif %}{{ _bt }}{% if page_no > 1 %} — صفحة {{ page_no }}{% endif %}{% endblock %}
+{% block description %}{{ (category.description if category and category.description else _bd) }}{% endblock %}
 {% block content %}
 <div class="wrap">
   <div class="page-head">
     <ol class="crumbs">{% for name, url in crumbs %}<li>{% if not loop.last %}<a href="{{ url }}">{{ name }}</a>{% else %}{{ name }}{% endif %}</li>{% endfor %}</ol>
-    <h1>{% if category %}{{ category.name }}{% elif tag %}#{{ tag.name }}{% else %}{{ setting('blog_title') }}{% endif %}</h1>
-    <p class="lead" style="color:var(--ink-2)">{{ category.description if category and category.description else setting('blog_description') }}</p>
+    <h1>{% if category %}{{ category.name }}{% elif tag %}#{{ tag.name }}{% else %}{{ _bt }}{% endif %}</h1>
+    <p class="lead" style="color:var(--ink-2)">{{ category.description if category and category.description else _bd }}</p>
   </div>
   {% if categories %}
   <nav class="chips" aria-label="التصنيفات">
-    <a class="chip{% if not category and not tag %} active{% endif %}" href="/blog">الكل</a>
-    {% for cat in categories %}<a class="chip{% if category and category.id == cat.id %} active{% endif %}" href="/blog/category/{{ cat.slug }}">{{ cat.name }}</a>{% endfor %}
+    <a class="chip{% if not category and not tag %} active{% endif %}" href="{{ _bp }}">الكل</a>
+    {% for cat in categories %}<a class="chip{% if category and category.id == cat.id %} active{% endif %}" href="{{ _bp }}/category/{{ cat.slug }}">{{ cat.name }}</a>{% endfor %}
   </nav>
   {% endif %}
   {% if articles %}
