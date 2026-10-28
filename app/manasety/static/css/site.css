@@ -907,9 +907,3 @@ html.pl .social-float, html.pl .wa-float { z-index: 1; }
 
 /* slot-top-offset: push the top slot down a bit */
 @media (min-width: 1280px) { .slot:nth-child(1) { padding-top: 40px; } }
-
-/* author-top: author card moved under the title */
-.post-meta .author-box { display: flex; align-items: center; gap: 12px; margin: 0; padding: 0; background: none; border: 0; box-shadow: none; flex-direction: row; }
-.post-meta .author-box img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; margin: 0; }
-.post-meta .author-box b { font-size: 15px; }
-.post-meta .author-box p { margin: 0; font-size: 13px; color: var(--ink-3); }
