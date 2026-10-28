@@ -18,7 +18,9 @@
     <ol class="crumbs">{% for name, url in crumbs %}<li>{% if not loop.last %}<a href="{{ url }}">{{ name }}</a>{% else %}<span aria-current="page">{{ name }}</span>{% endif %}</li>{% endfor %}</ol>
     <h1>{{ article.h1 or article.title }}</h1>
     <div class="post-meta">
-      {% if article.author %}<a href="/authors/{{ article.author.slug }}">{{ article.author.name }}</a>{% endif %}
+      {% if article.author %}
+      <div class="author-box">
+        {% if article.author.photo %}<img src="{{ article.author.photo.url }}" alt="{{ article.author.photo.alt or article.author.name }}" loading="lazy">{% endif %}
       <span>نُشر <time datetime="{{ article.published_at.isoformat() if article.published_at else '' }}">{{ article.published_at|ar_date }}</time></span>
       {% if article.content_updated_at and article.published_at and article.content_updated_at.date() > article.published_at.date() %}<span>آخر تحديث <time datetime="{{ article.content_updated_at.isoformat() }}">{{ article.content_updated_at|ar_date }}</time></span>{% endif %}
       {% if translation %}<a href="{{ translation.path }}" hreflang="{{ translation.lang }}">{{ 'English' if translation.lang == 'en' else 'العربية' }}</a>{% endif %}
@@ -36,9 +38,7 @@
       <h2 id="faq">أسئلة شائعة</h2>
       <div class="faq" style="margin:0">{% for q, a in faq_pairs %}<details><summary>{{ q }}{{ icon('chevron') }}</summary><div class="answer">{{ a|rich }}</div></details>{% endfor %}</div>
       {% endif %}
-      {% if article.author %}
-      <div class="author-box">
-        {% if article.author.photo %}<img src="{{ article.author.photo.url }}" alt="{{ article.author.photo.alt or article.author.name }}" loading="lazy">{% endif %}
+      
         <div><b><a href="/authors/{{ article.author.slug }}" style="color:inherit;text-decoration:none">{{ article.author.name }}</a></b><p>{{ article.author.job_title }}</p></div>
       </div>
       {% endif %}
