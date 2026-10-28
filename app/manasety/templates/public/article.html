@@ -25,7 +25,9 @@
     </div>
   </div>
   <div class="art-wrap{% if toc %} has-toc{% endif %}">
-  <aside class="side-col side-r">{% for sc in _cards if sc.side in ('right', 'both') %}{{ sc_card(sc) }}{% endfor %}</aside>
+  {% set ns = namespace(r=false, l=false, b=false) %}
+  {% for sc in _cards %}{% if sc.side.startswith('right') %}{% set ns.r = true %}{% elif sc.side.startswith('left') %}{% set ns.l = true %}{% elif sc.side == 'bottom' %}{% set ns.b = true %}{% endif %}{% endfor %}
+  {% if ns.r %}<aside class="side-col side-r">{% for k in ('right_1', 'right_2', 'right_3') %}<div class="slot">{% for sc in _cards if sc.side == k %}{{ sc_card(sc) }}{% endfor %}</div>{% endfor %}</aside>{% endif %}
   <div class="article-layout{% if toc %} has-toc{% endif %}">
     <article class="prose">
       {% if article.cover %}<img src="{{ article.cover.url }}" alt="{{ article.cover.alt }}" width="{{ article.cover.width }}" height="{{ article.cover.height }}" fetchpriority="high">{% endif %}
@@ -48,8 +50,9 @@
     </aside>
     {% endif %}
   </div>
-  <aside class="side-col side-l">{% for sc in _cards if sc.side in ('left', 'both') %}{{ sc_card(sc) }}{% endfor %}</aside>
+  {% if ns.l %}<aside class="side-col side-l">{% for k in ('left_1', 'left_2', 'left_3') %}<div class="slot">{% for sc in _cards if sc.side == k %}{{ sc_card(sc) }}{% endfor %}</div>{% endfor %}</aside>{% endif %}
   </div>
+  {% if ns.b %}<div class="sdc-bottom">{% for sc in _cards if sc.side == 'bottom' %}{{ sc_card(sc) }}{% endfor %}</div>{% endif %}
   {% if related %}
   <section style="padding-bottom:64px"><h2 style="font-size:24px">مقالات ذات صلة</h2>
     <div class="grid g3">{% for a in related %}{% include "public/_post_card.html" %}{% endfor %}</div>
