@@ -868,3 +868,18 @@ html.pl .social-float, html.pl .wa-float { z-index: 1; }
 .sdc img { border-radius: 10px; width: 100%; height: auto; }
 .sdc b { color: var(--navy); font-size: 15.5px; line-height: 1.5; }
 .sdc p { margin: 0; color: var(--ink-2); font-size: 13.5px; line-height: 1.7; }
+
+/* sdc-fix: explicit columns so the article is always the middle column in RTL */
+@media (min-width: 1280px) {
+  .art-wrap { direction: ltr; }
+  .art-wrap > * { direction: rtl; }
+  .art-wrap > .side-l { grid-column: 1; grid-row: 1; }
+  .art-wrap > .article-layout { grid-column: 2; grid-row: 1; min-width: 0; }
+  .art-wrap > .side-r { grid-column: 3; grid-row: 1; }
+  .art-wrap.has-toc { grid-template-columns: minmax(0, 1100px); }
+  .art-wrap.has-toc > .article-layout { grid-column: 1; }
+}
+@media (min-width: 1600px) {
+  .art-wrap.has-toc { grid-template-columns: minmax(0, 1100px) 210px; }
+  .art-wrap.has-toc > .side-r { grid-column: 2; }
+}
