@@ -2,7 +2,7 @@
 {% block title %}{{ article.meta_title or article.title }}{% endblock %}
 {% block description %}{{ article.meta_description or article.excerpt }}{% endblock %}
 {% block og_type %}article{% endblock %}
-{% block og_image %}{{ og_image or (site_url() ~ setting('default_og_image')) }}{% endblock %}
+{% block og_image %}{{ og_image or (site_url() ~ (setting('default_og_image_biz') if article.audience == 'business' else setting('default_og_image'))) }}{% endblock %}
 {% block hreflang %}{% if translation %}
 <link rel="alternate" hreflang="{{ article.lang }}" href="{{ site_url() ~ article.path }}">
 <link rel="alternate" hreflang="{{ translation.lang }}" href="{{ site_url() ~ translation.path }}">
@@ -33,7 +33,7 @@
         <div><b><a href="/authors/{{ article.author.slug }}" style="color:inherit;text-decoration:none">{{ article.author.name }}</a></b><p>{{ article.author.job_title }}</p></div>
       </div>
       {% endif %}
-      <p style="margin-top:28px"><a class="btn btn-primary" href="/#contact">احجز عرضًا توضيحيًا لمنصتي-سكول</a></p>
+      {% if article.audience == 'business' %}<p style="margin-top:28px"><a class="btn btn-primary" href="/business#contact">احجز استشارة مجانية</a></p>{% else %}<p style="margin-top:28px"><a class="btn btn-primary" href="/#contact">احجز عرضًا توضيحيًا لمنصتي-سكول</a></p>{% endif %}
     </article>
     {% if toc %}
     <aside class="toc" aria-label="محتويات المقال"><b>في هذا المقال</b>

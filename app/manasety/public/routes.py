@@ -225,9 +225,11 @@ def _article_view(lang: str, slug: str, preview_article: Optional[Article] = Non
     og = art.og_image or cover
     faq_pairs = [(x.get("q", ""), x.get("a", "")) for x in (art.faq or []) if x.get("q") and x.get("a")]
     faq_pairs += [(f.question, f.answer_html) for f in public_faq(article_id=art.id)]
-    crumbs = [("الرئيسية", site + "/"), ("المقالات", site + _blog_prefix(lang))]
+    biz = art.audience == "business"
+    home_path, blog_path = ("/business", "/business/blog") if biz else ("/", _blog_prefix(lang))
+    crumbs = [("الرئيسية", site + home_path), ("المقالات", site + blog_path)]
     if art.category:
-        crumbs.append((art.category.name, f"{site}/blog/category/{art.category.slug}"))
+        crumbs.append((art.category.name, f"{site}{blog_path}/category/{art.category.slug}"))
     crumbs.append((art.title, site + art.path))
     schema: list[Any] = [seo.article_schema(art, site, (site + og.url) if og else ""), seo.breadcrumb_schema(crumbs)]
     fs = seo.faq_schema(faq_pairs)
