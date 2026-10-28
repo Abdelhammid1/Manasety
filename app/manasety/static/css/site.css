@@ -904,3 +904,6 @@ html.pl .social-float, html.pl .wa-float { z-index: 1; }
   .art-wrap.has-toc .side-col { display: none; }
 }
 @media (min-width: 1600px) { .art-wrap.has-toc .side-r { display: grid; } }
+
+/* slot-top-offset: push the top slot down a bit */
+@media (min-width: 1280px) { .slot:nth-child(1) { padding-top: 40px; } }
