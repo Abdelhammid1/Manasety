@@ -9,7 +9,7 @@
     <div class="grid g3">
       {% for a in arts %}{% include "public/_post_card.html" %}{% endfor %}
     </div>
-    {% if c.more_label %}<p class="faq-more"><a href="/blog">{{ c.more_label }}</a></p>{% endif %}
+    {% if c.more_label %}<p class="faq-more"><a href="{{ '/business/blog' if request.path.startswith('/business') else '/blog' }}">{{ c.more_label }}</a></p>{% endif %}
   </div>
 </section>
 {% endif %}

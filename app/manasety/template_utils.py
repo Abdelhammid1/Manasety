@@ -88,12 +88,14 @@ def ring_position(index: int, total: int, radius: float = 42.0) -> tuple[float, 
 
 
 def featured_articles(slugs: Any, count: int, lang: str = "ar") -> list[Article]:
+    from flask import request
     wanted = lines(slugs)
     if wanted:
         rows = db.session.query(Article).filter(Article.lang == lang, Article.slug.in_(wanted)).all()
         by_slug = {a.slug: a for a in rows if a.is_live}
         return [by_slug[s] for s in wanted if s in by_slug][:count]
-    return live_articles(lang, limit=count)
+    aud = "business" if request.path.startswith("/business") else "schools"
+    return live_articles(lang, limit=count, audience=aud)
 
 
 def verified_facts(keys: Any) -> list[Fact]:

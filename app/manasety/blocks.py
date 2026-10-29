@@ -184,7 +184,7 @@ BLOCK_TYPES: dict[str, dict[str, Any]] = {
             F(key="eyebrow", kind="text", label="سطر علوي"),
             F(key="title", kind="textarea", label="العنوان"),
             F(key="article_slugs", kind="textarea", label="روابط مقالات محددة (slug لكل سطر) — فارغ = الأحدث"),
-            F(key="count", kind="select", label="العدد", choices={"3": "3", "2": "2", "1": "1"}),
+            F(key="count", kind="select", label="العدد", choices={"3": "3", "2": "2", "1": "1", "4": "4", "6": "6"}),
             F(key="more_label", kind="text", label="نص رابط المدونة"),
         ],
     },
