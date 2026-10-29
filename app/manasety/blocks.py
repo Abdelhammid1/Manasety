@@ -79,6 +79,7 @@ BLOCK_TYPES: dict[str, dict[str, Any]] = {
             F(key="eyebrow", kind="text", label="سطر علوي"),
             F(key="title", kind="textarea", label="العنوان"),
             F(key="core_label", kind="text", label="اسم المنصة الأم في الرسم"),
+            F(key="url_text", kind="text", label="عنوان الموقع في شريط المتصفح بالرسم (فاضي = school-name.manasety.ai)"),
             F(key="ring", kind="list", label="الموديولات حول المنصة", fields=[
                 F(key="label", kind="text", label="الاسم"), F(key="on", kind="bool", label="مُضاء في الرسم")]),
             F(key="points", kind="list", label="النقاط", fields=[

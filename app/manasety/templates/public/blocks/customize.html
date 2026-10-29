@@ -11,7 +11,7 @@
       </div>
     </div>
     <div class="bw rv" role="img" aria-label="مثال توضيحي لمنصة مدرسة بهويتها الخاصة">
-      <div class="bw-bar"><i></i><i></i><i></i><span class="bw-url" dir="ltr">school-name.manasety.ai</span></div>
+      <div class="bw-bar"><i></i><i></i><i></i><span class="bw-url" dir="ltr">{{ c.url_text or 'school-name.manasety.ai' }}</span></div>
       <div class="bw-body">
         <div class="bw-head"><span class="bw-logo">{{ c.core_label }}</span><span class="bw-tag">مثال توضيحي</span></div>
         <div class="bw-grid">{% for r in ring %}<span class="bw-mod{% if r.on %} on{% endif %}">{{ r.label }}</span>{% endfor %}</div>
