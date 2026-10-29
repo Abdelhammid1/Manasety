@@ -648,3 +648,5 @@ class SideCard(Model):
     side: Mapped[str] = mapped_column(String(10), default="both")
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
     position: Mapped[int] = mapped_column(Integer, default=0)
+    page_slug: Mapped[str] = mapped_column(String(120), default="", server_default="")
+

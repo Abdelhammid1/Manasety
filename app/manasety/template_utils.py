@@ -119,12 +119,20 @@ def page_is_live(href: str) -> bool:
     return True if page is None else page.published_snapshot is not None
 
 
+def side_cards_for(slug: str) -> list:
+    from .models import SideCard
+    if not slug:
+        return []
+    return (db.session.query(SideCard).filter(SideCard.is_active.is_(True), SideCard.page_slug == slug)
+            .order_by(SideCard.position, SideCard.id).all())
+
+
 def register_template_utils(app: Flask) -> None:
     app.jinja_env.filters.update(rt=render_text, rich=render_rich, tables=wrap_tables, ar_date=ar_date, lines=lines)
     app.jinja_env.globals.update(
         icon=icon, icon_sprite=icon_sprite, media_obj=media_obj, setting=get_setting, jsonld=jsonld,
         whatsapp_url=whatsapp_url, integrations_for=integrations_for, needs_consent_banner=needs_consent_banner,
         fact=fact_value, files_for=public_files, features_for=public_features, clients=public_clients,
-        case_studies=public_case_studies, page_is_live=page_is_live, ring_position=ring_position, featured_articles=featured_articles,
+        case_studies=public_case_studies, page_is_live=page_is_live, side_cards_for=side_cards_for, ring_position=ring_position, featured_articles=featured_articles,
         verified_facts=verified_facts, media_list=media_list, site_url=lambda: current_app.config["SITE_URL"],
     )

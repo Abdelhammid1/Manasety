@@ -196,6 +196,14 @@ BLOCK_TYPES: dict[str, dict[str, Any]] = {
             F(key="fact_keys", kind="textarea", label="مفاتيح الأرقام (مفتاح لكل سطر)"),
         ],
     },
+    "system_detail": {
+        "label": "تفاصيل نظام (نص + كروت جانبية من «الإعلانات الجانبية»)",
+        "fields": [
+            F(key="eyebrow", kind="text", label="سطر علوي"),
+            F(key="title", kind="textarea", label="العنوان"),
+            F(key="body", kind="rich", label="النص"),
+        ],
+    },
     "rich_text": {
         "label": "نص حر",
         "fields": [

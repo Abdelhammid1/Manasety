@@ -158,6 +158,7 @@ RESOURCES: dict[str, dict[str, Any]] = {
         "columns": [("title", "العنوان"),
                     ("audience", "يظهر في", lambda o: {"both": "المدارس والأعمال", "schools": "المدارس فقط", "business": "الأعمال فقط"}.get(o.audience, o.audience)),
                     ("side", "المكان", lambda o: {"right_1": "يمين — أعلى", "right_2": "يمين — وسط", "right_3": "يمين — أسفل", "left_1": "شمال — أعلى", "left_2": "شمال — وسط", "left_3": "شمال — أسفل", "bottom": "أسفل المقال (بعرض الصفحة)"}.get(o.side, o.side)),
+                    ("page_slug", "الصفحة", lambda o: o.page_slug or "المقالات"),
                     ("is_active", "الحالة", lambda o: "مفعّلة" if o.is_active else "متوقفة")],
         "fields": [
             F("title", "العنوان"), F("text", "النص القصير", "textarea"),
@@ -165,6 +166,7 @@ RESOURCES: dict[str, dict[str, Any]] = {
             F("button_label", "نص الزر (اختياري)"), F("url", "رابط الزر (اختياري)", "url"),
             F("audience", "يظهر في", "select", choices={"both": "المدارس والأعمال", "schools": "المدارس فقط", "business": "الأعمال فقط"}),
             F("side", "المكان", "select", choices={"right_1": "يمين — أعلى", "right_2": "يمين — وسط", "right_3": "يمين — أسفل", "left_1": "شمال — أعلى", "left_2": "شمال — وسط", "left_3": "شمال — أسفل", "bottom": "أسفل المقال (بعرض الصفحة)"}),
+            F("page_slug", "تظهر في صفحة (رابطها مثل qdrat-platform) — فاضي = المقالات", "text", ltr=True),
             F("is_active", "مفعّلة", "bool"), F("position", "الترتيب", "int"),
         ],
     },

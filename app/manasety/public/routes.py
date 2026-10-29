@@ -238,7 +238,7 @@ def blog_biz_tag(slug: str):
 
 def _side_cards(art: Article) -> list:
     aud = "business" if art.audience == "business" else "schools"
-    return (db.session.query(SideCard).filter(SideCard.is_active.is_(True), SideCard.audience.in_([aud, "both"]))
+    return (db.session.query(SideCard).filter(SideCard.is_active.is_(True), SideCard.audience.in_([aud, "both"]), SideCard.page_slug == "")
             .order_by(SideCard.position, SideCard.id).all())
 
 

@@ -1,0 +1,19 @@
+{% macro sdc_card(sc) %}{% set im = media_obj(sc.image_id) %}
+<div class="sdc">{% if im %}<img src="{{ im.url }}" alt="{{ im.alt or sc.title }}" loading="lazy">{% endif %}
+{% if sc.title %}<b>{{ sc.title }}</b>{% endif %}{% if sc.text %}<p>{{ sc.text }}</p>{% endif %}
+{% if sc.url %}<a class="btn btn-primary btn-sm" href="{{ sc.url }}">{{ sc.button_label or 'اعرف أكثر' }}</a>{% endif %}</div>{% endmacro %}
+{% set _cards = side_cards_for(page.slug) %}
+<section class="section"{% if anchor %} id="{{ anchor }}"{% endif %}>
+  <div class="wrap">
+    {% if c.eyebrow %}<div class="head center rv"><span class="pill">{{ c.eyebrow }}</span></div>{% endif %}
+    {% if c.title %}<h2 style="text-align:center;font-size:clamp(26px,3.4vw,36px)">{{ c.title|rt }}</h2>{% endif %}
+    <div class="art-wrap">
+      {% if _cards|selectattr('side', 'in', ['right_1', 'right_2', 'right_3'])|list %}<aside class="side-col side-r">{% for k in ('right_1', 'right_2', 'right_3') %}<div class="slot">{% for sc in _cards if sc.side == k %}{{ sdc_card(sc) }}{% endfor %}</div>{% endfor %}</aside>{% endif %}
+      <div class="article-layout">
+        <article class="prose" style="border:0;padding:0;background:none">{{ c.body|rich }}</article>
+      </div>
+      {% if _cards|selectattr('side', 'in', ['left_1', 'left_2', 'left_3'])|list %}<aside class="side-col side-l">{% for k in ('left_1', 'left_2', 'left_3') %}<div class="slot">{% for sc in _cards if sc.side == k %}{{ sdc_card(sc) }}{% endfor %}</div>{% endfor %}</aside>{% endif %}
+    </div>
+    {% if _cards|selectattr('side', 'equalto', 'bottom')|list %}<div class="sdc-bottom">{% for sc in _cards if sc.side == 'bottom' %}{{ sdc_card(sc) }}{% endfor %}</div>{% endif %}
+  </div>
+</section>
