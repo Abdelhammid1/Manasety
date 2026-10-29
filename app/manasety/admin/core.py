@@ -35,7 +35,8 @@ def dashboard():
     recent = db.session.query(AuditLog).order_by(AuditLog.id.desc()).limit(8).all() if current_user.can("__admin_only__") else []
     latest_leads = db.session.query(Lead).order_by(Lead.id.desc()).limit(5).all() if current_user.can("leads") else []
     missing_env = [k for k in REQUIRED_LEAD_ENV if not current_app.config.get(k)]
-    return render_template("admin/dashboard.html", stats=stats, page=page, draft_differs=draft_differs,
+    extra_pages = db.session.query(Page).filter(Page.slug.notin_(["home", "business"])).order_by(Page.id).all()
+    return render_template("admin/dashboard.html", extra_pages=extra_pages, stats=stats, page=page, draft_differs=draft_differs,
                            recent=recent, latest_leads=latest_leads, missing_env=missing_env)
 
 

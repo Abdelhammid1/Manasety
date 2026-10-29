@@ -1,0 +1,21 @@
+{% extends "admin/base.html" %}
+{% block title %}إضافة صفحة{% endblock %}
+{% block content %}
+<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px">
+  <h1 style="margin:0">إضافة صفحة جديدة</h1>
+  <a class="btn" href="{{ url_for('admin_core.dashboard') }}">رجوع</a>
+</div>
+{% if error %}<div class="warn" style="margin-bottom:12px">{{ error }}</div>{% endif %}
+<form method="post" style="display:grid;gap:14px;max-width:560px">{{ csrf() }}
+  <label>اسم الصفحة (للداشبورد)<br><input name="title" value="{{ form.title }}" required style="width:100%"></label>
+  <label>الرابط (إنجليزي صغير وشرطة)<br><input name="slug" value="{{ form.slug }}" dir="ltr" placeholder="training-institutes" required style="width:100%"></label>
+  <label>ابدأ من<br>
+    <select name="source" style="width:100%">
+      <option value="">صفحة فاضية</option>
+      {% for p in pages %}<option value="{{ p.slug }}" {{ 'selected' if form.source == p.slug }}>نسخة من: {{ p.title }} (/{{ p.slug }})</option>{% endfor %}
+    </select>
+  </label>
+  <div><button class="btn primary" type="submit">إنشاء كمسودة</button></div>
+</form>
+<p style="margin-top:14px;color:#666">الصفحة بتتعمل مسودة ومش بتظهر للزوار ولا في الـ sitemap غير بعد "نشر التغييرات".</p>
+{% endblock %}

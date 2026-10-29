@@ -79,6 +79,19 @@ def training_institutes():
     return _render_page(page, page.published_snapshot, "ar", path="/training-institutes")
 
 
+import re as _re
+_DYN_SLUG = _re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
+
+
+@bp.route("/<slug>")
+def dynamic_page(slug):
+    """Any page created from the dashboard (admin/pages/new) is served at /<slug>."""
+    if slug in ("home", "business") or not _DYN_SLUG.match(slug):
+        abort(404)
+    page = db.session.query(Page).filter_by(slug=slug).first_or_404()
+    return _render_page(page, page.published_snapshot, "ar", path="/" + slug)
+
+
 @bp.route("/preview/<token>")
 def preview(token: str):
     """Shareable draft preview (noindex). The token rotates from the dashboard."""
@@ -303,9 +316,9 @@ def sitemap():
     biz = db.session.query(Page).filter_by(slug="business").first()
     if biz is not None and biz.published_snapshot is not None:
         urls.append({"loc": site + "/business", "lastmod": biz.published_at})
-    ti = db.session.query(Page).filter_by(slug="training-institutes").first()
-    if ti is not None and ti.published_snapshot is not None:
-        urls.append({"loc": site + "/training-institutes", "lastmod": ti.published_at})
+    for extra in db.session.query(Page).filter(Page.slug.notin_(["home", "business"])).all():
+        if extra.published_snapshot is not None:
+            urls.append({"loc": f"{site}/{extra.slug}", "lastmod": extra.published_at})
     if _english_enabled():
         urls.append({"loc": site + "/en/", "lastmod": home.published_at if home else None})
     arts = live_articles("ar") + (live_articles("en") if _english_enabled() else [])

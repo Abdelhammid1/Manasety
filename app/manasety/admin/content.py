@@ -225,3 +225,59 @@ def page_seo(slug: str):
         flash("تم حفظ الـ SEO في المسودة؛ يظهر بعد النشر.", "ok")
         return redirect(url_for("admin_content.page_seo", slug=slug))
     return render_template("admin/page_seo.html", page=page, langs=LANGS)
+
+
+
+# ───────── create a new page from the dashboard ─────────
+import copy as _copy
+import re as _re
+
+_SLUG_RE = _re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
+_RESERVED = {"admin", "api", "static", "media", "blog", "business", "home", "en", "faq", "files", "preview",
+             "thank-you", "sitemap", "robots", "authors", "legacy", "privacy", "terms", "refund", "sara",
+             "login", "logout", "rss", "feed", "health"}
+
+
+def _slug_reserved(slug: str) -> bool:
+    from flask import current_app
+    if slug in _RESERVED:
+        return True
+    for r in current_app.url_map.iter_rules():
+        first = r.rule.strip("/").split("/")[0]
+        if first == slug or first.split(".")[0] == slug:
+            return True
+    return False
+
+
+@bp.route("/new", methods=["GET", "POST"])
+@permission_required("content")
+def new_page():
+    pages = db.session.query(Page).order_by(Page.id).all()
+    form = {"title": "", "slug": "", "source": ""}
+    error = ""
+    if request.method == "POST":
+        form = {k: (request.form.get(k) or "").strip() for k in form}
+        slug = form["slug"].lower()
+        form["slug"] = slug
+        if not form["title"]:
+            error = "اكتب اسم الصفحة."
+        elif not _SLUG_RE.match(slug) or len(slug) > 100:
+            error = "الرابط لازم يكون حروف إنجليزي صغيرة وأرقام وشرطة بس (مثال: training-institutes)."
+        elif db.session.query(Page).filter_by(slug=slug).first():
+            error = "في صفحة بنفس الرابط بالفعل."
+        elif _slug_reserved(slug):
+            error = "الرابط ده محجوز للنظام، اختار اسم تاني."
+        else:
+            page = Page(slug=slug, title=form["title"][:255], seo={}, published_seo={})
+            db.session.add(page)
+            db.session.flush()
+            src = next((x for x in pages if x.slug == form["source"]), None)
+            if src is not None:
+                for s in sorted(src.sections, key=lambda x: x.position):
+                    db.session.add(Section(page_id=page.id, block_type=s.block_type, admin_label=s.admin_label,
+                                           anchor=s.anchor, position=s.position, is_visible=s.is_visible,
+                                           content=_copy.deepcopy(s.content or {})))
+            db.session.commit()
+            flash("اتعملت الصفحة كمسودة. مش هتظهر للزوار غير بعد ما تدوسي نشر.")
+            return redirect(url_for("admin_content.page_builder", slug=slug))
+    return render_template("admin/page_new.html", pages=pages, form=form, error=error)
