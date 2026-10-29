@@ -151,7 +151,7 @@
       <span class="dv2-ic">🎓</span>
       <h3>منصتي للتعليم</h3>
       <p class="dv2-d">أنظمة إدارة التعليم والتدريب الإلكتروني</p>
-      {% if on_biz %}<a class="dv2-go" href="/">المدارس ←</a>{% else %}<span class="dv2-here">أنت هنا</span>{% endif %}{% for item in (setting('extra_pages') or []) %}{% if page_is_live(item.href) %}<a class="dv2-go" href="{{ item.href }}">{{ item.label }} ←</a>{% endif %}{% endfor %}
+      {% if on_biz %}<a class="dv2-go" href="/">المدارس ←</a>{% else %}<span class="dv2-here">أنت هنا</span>{% endif %}
     </div>
     <div class="dv2-card dv2-biz{{ ' here' if on_biz else '' }}">
       <span class="dv2-ic">🏢</span>
