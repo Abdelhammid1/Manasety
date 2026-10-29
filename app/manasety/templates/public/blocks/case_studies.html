@@ -1,4 +1,6 @@
 {% set cases = case_studies() %}
+{% set _want = (c.case_ids or '')|lines %}
+{% if _want %}{% set _ns = namespace(l=[]) %}{% for _x in cases %}{% if (_x.id|string) in _want %}{% set _ns.l = _ns.l + [_x] %}{% endif %}{% endfor %}{% set cases = _ns.l %}{% endif %}
 {% if cases %}
 <section class="section bg-white"{% if anchor %} id="{{ anchor }}"{% endif %}>
   <div class="wrap">

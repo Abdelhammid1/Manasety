@@ -39,7 +39,7 @@ def _render_page(page: Page, snapshot: Optional[list], lang: str, preview: bool 
     faq_items = []
     faq_section = next((x for x in sections if x["block_type"] == "faq"), None)
     if faq_section:
-        faq_items = public_faq(home_only=True, category=faq_section["c"].get("category", ""))
+        faq_items = public_faq(home_only=(page.slug in ("home", "business")), category=faq_section["c"].get("category", ""))
         fs = seo.faq_schema([(f.question_en if lang == "en" and f.question_en else f.question,
                               f.answer_html_en if lang == "en" and f.answer_html_en else f.answer_html)
                              for f in faq_items])

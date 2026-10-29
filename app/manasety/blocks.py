@@ -122,6 +122,7 @@ BLOCK_TYPES: dict[str, dict[str, Any]] = {
             F(key="label_challenge", kind="text", label="عنوان «التحدي»"),
             F(key="label_built", kind="text", label="عنوان «ما بنيناه»"),
             F(key="label_now", kind="text", label="عنوان «ما يعمل الآن»"),
+            F(key="case_ids", kind="textarea", label="أرقام دراسات حالة محددة (رقم لكل سطر) — فارغ = كل الدراسات"),
             F(key="show_files", kind="bool", label="إظهار الملفات المخصصة لهذا القسم"),
         ],
     },
