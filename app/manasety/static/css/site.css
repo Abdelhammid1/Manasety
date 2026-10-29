@@ -343,8 +343,16 @@ p { margin: 0 0 1em; text-wrap: pretty; }
 .prose img { border-radius: 12px; margin-block: 1em; }
 .prose blockquote { margin: 1.4em 0; padding: 4px 18px; border-inline-start: 4px solid var(--accent); color: var(--ink-2); background: var(--tint); border-radius: 8px; }
 .prose table { width: 100%; border-collapse: collapse; display: block; overflow-x: auto; font-size: 15.5px; }
-.prose th, .prose td { border: 1px solid var(--line); padding: 8px 12px; text-align: start; }
-.prose th { background: var(--bg); }
+.prose th, .prose td { border: 1px solid var(--line); padding: 8px 12px; text-align: start; vertical-align: top; }
+.prose th { background: var(--tint); color: var(--navy); font-weight: 600; }
+/* tables are wrapped in .table-wrap at display time: the wrapper scrolls sideways on phones */
+.prose .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 1.3em 0; border: 1px solid var(--line); border-radius: 12px; }
+.prose .table-wrap table { display: table; margin: 0; border-style: hidden; }
+.prose .table-wrap th, .prose .table-wrap td { min-width: 8em; }
+.prose h4 { font-size: 17px; margin-top: 1.3em; }
+.prose li > ul, .prose li > ol { margin: .3em 0; }
+.prose ul ul { list-style-type: circle; }
+.prose ul.checklist { list-style: none; padding-inline-start: .4em; }
 .prose iframe { width: 100%; aspect-ratio: 16 / 9; height: auto; border: 0; border-radius: 12px; }
 .prose pre { background: #0F1B3D; color: #E2E8F0; padding: 16px; border-radius: 10px; overflow-x: auto; direction: ltr; font-family: var(--mono); font-size: 14px; }
 .toc { position: sticky; top: 90px; align-self: start; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px; font-size: 14.5px; }

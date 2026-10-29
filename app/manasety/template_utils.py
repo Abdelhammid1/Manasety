@@ -14,7 +14,7 @@ from .icons import ICONS
 from .models import Article, Fact, Integration, Media
 from .publishing import (live_articles, public_case_studies, public_clients, public_features, public_files,
                          publishable_fact, render_rich, render_text)
-from .services.seo import jsonld
+from .services.seo import jsonld, wrap_tables
 from .settings_store import get_setting
 
 
@@ -105,7 +105,7 @@ def media_list(limit: int = 300) -> list[Media]:
 
 
 def register_template_utils(app: Flask) -> None:
-    app.jinja_env.filters.update(rt=render_text, rich=render_rich, ar_date=ar_date, lines=lines)
+    app.jinja_env.filters.update(rt=render_text, rich=render_rich, tables=wrap_tables, ar_date=ar_date, lines=lines)
     app.jinja_env.globals.update(
         icon=icon, icon_sprite=icon_sprite, media_obj=media_obj, setting=get_setting, jsonld=jsonld,
         whatsapp_url=whatsapp_url, integrations_for=integrations_for, needs_consent_banner=needs_consent_banner,

@@ -3,8 +3,10 @@
 from __future__ import annotations
 
 from datetime import datetime, timezone
+from types import SimpleNamespace
 
-from flask import Blueprint, abort, flash, redirect, render_template, request, url_for
+from flask import Blueprint, abort, flash, jsonify, redirect, render_template, request, url_for
+from flask_login import current_user
 
 from ..extensions import db
 from ..models import ARTICLE_STATUSES, Article, Author, Category, Media, Revision, Tag, utcnow
@@ -14,6 +16,9 @@ from ..services.seo import article_checks, slugify, suggest_internal_links
 from ..settings_store import get_setting
 
 bp = Blueprint("admin_articles", __name__, url_prefix="/admin/articles")
+
+# One autosave slot per article: the editor's unsaved title/body, never the live article itself.
+AUTOSAVE = "article_autosave"
 
 TEXT_FIELDS = ("title", "h1", "excerpt", "meta_title", "meta_description", "focus_keyword", "secondary_keywords", "canonical_url")
 
@@ -113,11 +118,69 @@ def _save(art: Article, aid: int | None):
     db.session.flush()
     if aid:
         add_revision("article", art.id, before, note="قبل التعديل")
+    _drop_autosave(art.id)
     audit("update" if aid else "create", "article", art.id, before=before, after=art.to_snapshot(),
           summary=f"{art.title} ({ARTICLE_STATUSES[art.status]})")
     db.session.commit()
     flash("تم الحفظ.", "ok")
     return redirect(url_for("admin_articles.edit", aid=art.id))
+
+
+def _autosave_slot(aid: int) -> Revision | None:
+    return db.session.query(Revision).filter_by(entity_type=AUTOSAVE, entity_id=aid).first()
+
+
+def _drop_autosave(aid: int) -> None:
+    db.session.query(Revision).filter_by(entity_type=AUTOSAVE, entity_id=aid).delete()
+
+
+def _pending_autosave(art: Article, aid: int | None) -> dict | None:
+    """The autosaved draft, if it is newer than the last real save and actually differs."""
+    slot = _autosave_slot(aid) if aid else None
+    if slot is None or (art.updated_at and slot.created_at <= art.updated_at):
+        return None
+    snap = slot.snapshot or {}
+    if snap.get("content_html") == art.content_html and snap.get("title") == art.title:
+        return None
+    return {"title": snap.get("title", ""), "content_html": snap.get("content_html", ""),
+            "saved_at": slot.created_at.isoformat()}
+
+
+def _form_checks(art: Article, content: str) -> list[dict]:
+    """Quality checks for what is in the editor right now (not what is saved)."""
+    f = request.form
+
+    def fk(name: str) -> int | None:
+        raw = f.get(name, "")
+        return int(raw) if raw.isdigit() else None
+
+    view = SimpleNamespace(
+        content_html=content, human_reviewed=f.get("human_reviewed") == "on", cover_id=fk("cover_id"), author_id=fk("author_id"),
+        **{k: clean_text(f.get(k, getattr(art, k) or "")) for k in ("title", "h1", "meta_title", "meta_description", "focus_keyword")})
+    return article_checks(view, get_setting("product_page_url") or "/", int(get_setting("internal_links_min_related") or 2))
+
+
+@bp.route("/<int:aid>/autosave", methods=["POST"])
+@permission_required("articles")
+def autosave(aid: int):
+    art = db.session.get(Article, aid) or abort(404)
+    # The editor sends the article version it was opened on. If the article was saved since (this tab's own
+    # save racing a late tick, or another tab), the draft would be older than the article: refuse it.
+    base = request.form.get("base", "")
+    if base and art.updated_at and base != art.updated_at.isoformat():
+        return jsonify(stale=True), 409
+    content = clean_rich(request.form.get("content_html", ""))
+    title = clean_text(request.form.get("title", ""))[:500]
+    _drop_autosave(aid)  # one slot per article, even with two tabs open
+    saved_at = None
+    if content != art.content_html or title != art.title:  # otherwise nothing is unsaved any more
+        slot = Revision(entity_type=AUTOSAVE, entity_id=aid, snapshot={"title": title, "content_html": content},
+                        note="حفظ تلقائي", created_by_id=current_user.id)
+        db.session.add(slot)
+        db.session.flush()
+        saved_at = slot.created_at.isoformat()
+    db.session.commit()
+    return jsonify(saved_at=saved_at, checks=_form_checks(art, content))
 
 
 def _render_form(art: Article, aid: int | None):
@@ -130,7 +193,7 @@ def _render_form(art: Article, aid: int | None):
         tags=db.session.query(Tag).order_by(Tag.name).all(),
         authors=db.session.query(Author).order_by(Author.name).all(),
         images=db.session.query(Media).filter_by(kind="image").order_by(Media.id.desc()).limit(200).all(),
-        others=others, suggestions=suggestions, checks=checks,
+        others=others, suggestions=suggestions, checks=checks, autosave=_pending_autosave(art, aid),
         revisions=(db.session.query(Revision).filter_by(entity_type="article", entity_id=aid)
                    .order_by(Revision.id.desc()).limit(30).all() if aid else []),
     )
@@ -149,7 +212,7 @@ def preview(aid: int):
 def restore(aid: int, rid: int):
     art = db.session.get(Article, aid) or abort(404)
     rev = db.session.get(Revision, rid)
-    if rev is None or rev.entity_type != "article" or rev.entity_id != aid:
+    if rev is None or rev.entity_type != "article" or rev.entity_id != aid:  # never the autosave slot
         abort(404)
     before = art.to_snapshot()
     add_revision("article", art.id, before, note="قبل الاسترجاع")
@@ -170,6 +233,7 @@ def delete(aid: int):
         flash("أرشِف المقال المنشور بدل حذفه، وأضف تحويل 301 لرابطه إن لزم.", "error")
         return redirect(url_for("admin_articles.edit", aid=aid))
     audit("delete", "article", aid, before=art.to_snapshot())
+    _drop_autosave(aid)  # an orphaned draft could be offered to a later article reusing the id
     db.session.delete(art)
     db.session.commit()
     flash("تم الحذف.", "ok")

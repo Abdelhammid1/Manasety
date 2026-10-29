@@ -31,7 +31,7 @@
   <div class="article-layout{% if toc %} has-toc{% endif %}">
     <article class="prose">
       {% if article.cover %}<img src="{{ article.cover.url }}" alt="{{ article.cover.alt }}" width="{{ article.cover.width }}" height="{{ article.cover.height }}" fetchpriority="high">{% endif %}
-      {{ body|rich }}
+      {{ body|tables|rich }}
       {% if faq_pairs %}
       <h2 id="faq">أسئلة شائعة</h2>
       <div class="faq" style="margin:0">{% for q, a in faq_pairs %}<details><summary>{{ q }}{{ icon('chevron') }}</summary><div class="answer">{{ a|rich }}</div></details>{% endfor %}</div>

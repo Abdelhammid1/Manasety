@@ -1,67 +1,10 @@
-/* Dashboard helpers. Output of the rich editor is re-sanitised on the server; this file only edits. */
+/* Dashboard helpers (list rows, ordering, counters, SERP preview, confirmations). */
 (function () {
   'use strict';
   var d = document;
   var csrf = (d.querySelector('meta[name="csrf-token"]') || {}).content || '';
 
-  /* ── rich text editor (contenteditable + hidden textarea) ── */
-  d.querySelectorAll('textarea[data-rich]').forEach(function (ta) {
-    var wrap = d.createElement('div');
-    wrap.className = 'rich' + (ta.dataset.rich === 'tall' ? ' tall' : '');
-    var bar = d.createElement('div'); bar.className = 'bar';
-    var ed = d.createElement('div'); ed.className = 'ed'; ed.contentEditable = 'true'; ed.dir = 'auto';
-    ed.innerHTML = ta.value;
-    ed.setAttribute('role', 'textbox'); ed.setAttribute('aria-multiline', 'true');
-    if (ta.id) { var lab = d.querySelector('label[for="' + ta.id + '"]'); if (lab) ed.setAttribute('aria-label', lab.textContent.trim()); }
-    var tools = [
-      ['B', 'bold', 'غامق'], ['I', 'italic', 'مائل'], ['H2', 'formatBlock:h2', 'عنوان H2'], ['H3', 'formatBlock:h3', 'عنوان H3'],
-      ['¶', 'formatBlock:p', 'فقرة'], ['•', 'insertUnorderedList', 'قائمة'], ['1.', 'insertOrderedList', 'قائمة مرقمة'],
-      ['❝', 'formatBlock:blockquote', 'اقتباس'], ['🔗', 'link', 'رابط'], ['🖼', 'image', 'صورة من المكتبة'],
-      ['▶', 'youtube', 'فيديو YouTube'], ['⌫', 'removeFormat', 'إزالة التنسيق'], ['</>', 'source', 'HTML']
-    ];
-    tools.forEach(function (t) {
-      var b = d.createElement('button'); b.type = 'button'; b.textContent = t[0]; b.title = t[2]; b.setAttribute('aria-label', t[2]);
-      b.addEventListener('click', function () {
-        var cmd = t[1];
-        if (cmd === 'source') {
-          if (wrap.classList.toggle('source')) { src.value = ed.innerHTML; } else { ed.innerHTML = src.value; }
-          return;
-        }
-        ed.focus();
-        if (cmd === 'link') {
-          var url = prompt('الرابط (https://… أو /blog/…)');
-          if (url && /^(https?:\/\/|\/|mailto:|tel:)/.test(url)) d.execCommand('createLink', false, url);
-        } else if (cmd === 'image') {
-          var src2 = prompt('رابط الصورة من مكتبة الوسائط (/media/…)');
-          var alt = src2 ? prompt('النص البديل (alt) — إلزامي') : '';
-          if (src2 && alt && /^\/media\//.test(src2)) d.execCommand('insertHTML', false, '<img src="' + src2 + '" alt="' + alt.replace(/"/g, '') + '" loading="lazy">');
-        } else if (cmd === 'youtube') {
-          var v = prompt('رابط فيديو YouTube');
-          var m = v && v.match(/(?:v=|youtu\.be\/|embed\/)([\w-]{11})/);
-          if (m) d.execCommand('insertHTML', false, '<iframe src="https://www.youtube-nocookie.com/embed/' + m[1] + '" title="YouTube" loading="lazy" allowfullscreen></iframe><p></p>');
-        } else if (cmd.indexOf('formatBlock:') === 0) {
-          d.execCommand('formatBlock', false, cmd.split(':')[1]);
-        } else {
-          d.execCommand(cmd, false, null);
-        }
-        sync();
-      });
-      bar.appendChild(b);
-    });
-    var src = d.createElement('textarea'); src.className = 'src code'; src.setAttribute('aria-label', 'HTML');
-    ta.style.display = 'none';
-    ta.parentNode.insertBefore(wrap, ta);
-    wrap.appendChild(bar); wrap.appendChild(ed); wrap.appendChild(src); wrap.appendChild(ta);
-    function sync() { ta.value = wrap.classList.contains('source') ? src.value : ed.innerHTML; ta.dispatchEvent(new Event('input', { bubbles: true })); }
-    ed.addEventListener('input', sync); src.addEventListener('input', sync);
-    ed.addEventListener('paste', function (e) {
-      // paste as plain text so Word/Docs styles don't leak in
-      e.preventDefault();
-      var text = (e.clipboardData || window.clipboardData).getData('text/plain');
-      d.execCommand('insertText', false, text);
-    });
-    var form = ta.closest('form'); if (form) form.addEventListener('submit', sync);
-  });
+  /* The rich text editor lives in editor.js. */
 
   /* ── repeatable list rows (block fields) ── */
   d.addEventListener('click', function (e) {

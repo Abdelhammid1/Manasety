@@ -61,6 +61,49 @@ def word_count(content: str) -> int:
     return len(strip_tags(content).split())
 
 
+_TABLE_TAG_RE = re.compile(r"<table\b|</table>", re.I)
+_WRAP_OPEN = '<div class="table-wrap">'
+
+
+def wrap_tables(content: str) -> str:
+    """Give each table a horizontal scroller for phones. Returns plain str on purpose: this is a text
+    edit (a "<table" inside an attribute value would be hit too), so the result must still go through
+    the sanitiser (`|tables|rich` in templates), which keeps only <div class="table-wrap">.
+    Tables already wrapped (written that way in the HTML view) are left alone."""
+    content = str(content or "")
+    out, pos, stack = [], 0, []
+    for m in _TABLE_TAG_RE.finditer(content):
+        out.append(content[pos:m.start()])
+        if m.group(0).lower() == "</table>":
+            out.append(m.group(0))
+            if stack and stack.pop():
+                out.append("</div>")
+        else:
+            wrapped = content[:m.start()].rstrip().endswith(_WRAP_OPEN)
+            stack.append(not wrapped)
+            out.append(m.group(0) if wrapped else _WRAP_OPEN + m.group(0))
+        pos = m.end()
+    out.append(content[pos:])
+    return "".join(out)
+
+
+# A paragraph that is nothing but bold text: usually a heading pasted from Word/Docs as <b>.
+# Same rule as isBoldLine() in editor.js: every visible character sits inside <strong>/<b>.
+_PARA_RE = re.compile(r"<p\b[^>]*>(.*?)</p>", re.I | re.S)
+_BOLD_RUN_RE = re.compile(r"<(strong|b)\b[^>]*>.*?</\1>", re.I | re.S)
+
+
+def bold_line_count(content: str) -> int:
+    count = 0
+    for inner in _PARA_RE.findall(content or ""):
+        text = strip_tags(inner).strip()
+        if not 2 <= len(text) <= 150 or not _BOLD_RUN_RE.search(inner):
+            continue
+        if not strip_tags(_BOLD_RUN_RE.sub("", inner)).strip():
+            count += 1
+    return count
+
+
 def jsonld(data: Any) -> Markup:
     raw = json.dumps(data, ensure_ascii=False, separators=(",", ":"))
     raw = raw.replace("</", "<\\/")  # no premature </script>
@@ -154,6 +197,7 @@ def article_checks(article: Any, product_url: str = "/", min_related: int = 2) -
     internal = [h for h in links if h.startswith("/") or "manasety.ai" in h]
     to_product = any(h.split("#")[0].rstrip("/") in ("", product_url.rstrip("/"), "https://manasety.ai") for h in internal)
     to_articles = {h for h in internal if "/blog/" in h}
+    bold_lines = bold_line_count(content)
     imgs_without_alt = re.findall(r"<img(?![^>]*\balt=\"[^\"]+\")[^>]*>", article.content_html or "")
     checks = [
         (bool(kw), "تحديد كلمة مفتاحية أساسية"),
@@ -165,6 +209,8 @@ def article_checks(article: Any, product_url: str = "/", min_related: int = 2) -
          f"طول الـ Meta Description مناسب (70–160، الحالي {len(article.meta_description or '')})"),
         (word_count(content) >= 600, f"طول المقال 600 كلمة فأكثر (الحالي {word_count(content)})"),
         ("<h2" in content, "يحتوي عناوين H2"),
+        (bold_lines == 0, "لا توجد سطور غامقة مكان العناوين" if bold_lines == 0 else
+         f"{bold_lines} سطر غامق يبدو كعنوان: حوّله بزر «تحويل لعنوان»"),
         (to_product, "رابط داخلي لصفحة المنتج"),
         (len(to_articles) >= min_related, f"روابط لمقالين ذوي صلة على الأقل (الحالي {len(to_articles)})"),
         (not imgs_without_alt, "كل الصور داخل المقال لها alt"),

@@ -5,7 +5,8 @@
 <div class="top"><div class="grow"><h1>{{ art.title or 'مقال جديد' }}</h1>{% if aid %}<p class="mono">{{ art.path }}</p>{% endif %}</div>
   {% if aid %}<a class="btn" href="{{ url_for('admin_articles.preview', aid=aid) }}" target="_blank" rel="noopener">معاينة</a>{% endif %}
   <a class="btn" href="{{ url_for('admin_articles.index') }}">رجوع</a></div>
-<form method="post">{{ csrf() }}
+{% if autosave %}<script type="application/json" id="autosave-draft">{{ autosave|tojson }}</script>{% endif %}
+<form method="post" data-guard>{{ csrf() }}
 <div class="cols">
   <div class="wide">
     <div class="card">
@@ -15,7 +16,7 @@
         <div class="field"><label for="slug">الرابط (Slug)</label><input id="slug" name="slug" value="{{ art.slug or '' }}" class="ltr"><span class="help">حروف لاتينية قصيرة؛ الروابط العربية تظهر مشفّرة في واتساب. يُولَّد من العنوان إن تُرك فارغًا.</span></div>
       </div>
       <div class="field"><label for="excerpt">الملخص</label><textarea id="excerpt" name="excerpt" rows="2">{{ art.excerpt or '' }}</textarea></div>
-      <div class="field"><label for="content_html">المحتوى</label><textarea id="content_html" name="content_html" data-rich="tall">{{ art.content_html or '' }}</textarea>
+      <div class="field"><label for="content_html">المحتوى</label><textarea id="content_html" name="content_html" data-rich="tall" data-preview{% if aid %} data-autosave="{{ url_for('admin_articles.autosave', aid=aid) }}" data-base="{{ art.updated_at.isoformat() if art.updated_at else '' }}"{% endif %}>{{ art.content_html or '' }}</textarea>
         <span class="help">كل مقال يربط بصفحة المنتج (/) وبمقالين ذوي صلة على الأقل.</span></div>
     </div>
     <div class="card">
@@ -53,7 +54,7 @@
       <div class="field"><label for="tr">ترجمة لمقال</label><select id="tr" name="translation_of_id"><option value="">—</option>{% for o in others %}<option value="{{ o.id }}" {% if o.id == art.translation_of_id %}selected{% endif %}>{{ o.title }} ({{ o.lang }})</option>{% endfor %}</select></div>
       <div class="actions"><button class="btn dark" type="submit">حفظ</button></div>
     </div>
-    <div class="card"><h2>فحص جودة المقال</h2><ul class="checks">{% for c in checks %}<li class="{{ 'ok' if c.ok }}">{{ c.label }}</li>{% endfor %}</ul></div>
+    <div class="card"><h2>فحص جودة المقال</h2><ul class="checks" id="quality-checks" aria-live="polite">{% for c in checks %}<li class="{{ 'ok' if c.ok }}">{{ c.label }}</li>{% endfor %}</ul></div>
     <div class="card">
       <h2>التصنيف والكاتب</h2>
       <div class="field"><label for="cat">التصنيف (العنقود)</label><select id="cat" name="category_id"><option value="">—</option>{% for c in categories %}<option value="{{ c.id }}" {% if c.id == art.category_id %}selected{% endif %}>{{ c.name }}</option>{% endfor %}</select></div>

@@ -16,7 +16,7 @@ from .models import AuditLog, Revision
 _RICH_TAGS = {
     "p", "br", "strong", "b", "em", "i", "u", "s", "h2", "h3", "h4", "ul", "ol", "li", "a",
     "blockquote", "code", "pre", "hr", "img", "figure", "figcaption", "table", "thead", "tbody",
-    "tr", "th", "td", "span", "iframe", "bdi", "sup", "sub", "dl", "dt", "dd",
+    "tr", "th", "td", "span", "iframe", "bdi", "sup", "sub", "dl", "dt", "dd", "div",
 }
 _RICH_ATTRS = {
     "a": {"href", "title", "target"},
@@ -25,6 +25,7 @@ _RICH_ATTRS = {
     "th": {"colspan", "rowspan", "scope"},
     "td": {"colspan", "rowspan"},
     "h2": {"id"}, "h3": {"id"}, "h4": {"id"},
+    "ul": {"class"}, "div": {"class"},  # only the classes in _RICH_CLASSES survive _filter_rich_attr
     "span": {"dir", "lang"}, "p": {"dir"}, "bdi": set(),
 }
 
@@ -45,11 +46,27 @@ def _filter_attr(tag: str, attr: str, value: str) -> Optional[str]:
     return value
 
 
+# Rich text may carry exactly these classes (legal pages keep their own classes untouched).
+_RICH_CLASSES = {"ul": "checklist", "div": "table-wrap"}
+
+
+def _filter_rich_attr(tag: str, attr: str, value: str) -> Optional[str]:
+    if attr == "class":
+        allowed = _RICH_CLASSES.get(tag)
+        return allowed if allowed and allowed in value.split() else None
+    return _filter_attr(tag, attr, value)
+
+
+# Hand-typed bullets at the start of a list item ("• نص" pasted from Word/WhatsApp) duplicate the list marker.
+_LI_BULLET_RE = re.compile(r"(<li\b[^>]*>)(?:\s|&nbsp;)*(?:[•·▪◦‣●○■]|[-–*](?=\s|&nbsp;))(?:\s|&nbsp;)*")
+
+
 def clean_rich(html: str) -> str:
-    return nh3.clean(
-        html or "", tags=_RICH_TAGS, attributes=_RICH_ATTRS, attribute_filter=_filter_attr,
+    cleaned = nh3.clean(
+        html or "", tags=_RICH_TAGS, attributes=_RICH_ATTRS, attribute_filter=_filter_rich_attr,
         url_schemes={"http", "https", "mailto", "tel"}, link_rel="noopener",
     )
+    return _LI_BULLET_RE.sub(r"\1", cleaned)
 
 
 def clean_legal(html: str) -> str:
