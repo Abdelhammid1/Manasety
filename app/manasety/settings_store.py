@@ -76,6 +76,10 @@ DEFAULTS: dict[str, Any] = {
         {"label": "المقالات", "href": "/blog"},
     ],
     "nav_cta_label_biz": "احجز استشارة",
+    "whatsapp_prefill_institutes": "السلام عليكم 👋 جاي من موقع منصتي، عايز أعرف أكتر عن منصة إدارة المعاهد ومراكز التدريب وأطلب عرضًا تجريبيًا",
+    "extra_pages": [
+        {"label": "للمعاهد والمراكز", "href": "/training-institutes"},
+    ],
     "nav_cta_href_biz": "#contact",
     "footer_about_biz": "أنظمة ومنصات تشغيل مخصصة للشركات: إدارة ومتابعة وتقارير وصلاحيات، مبنية حسب نشاطك.",
     "footer_tagline_biz": "منصتي: حلول برمجية وأنظمة إدارية مخصصة للشركات.",

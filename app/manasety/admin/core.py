@@ -62,7 +62,7 @@ SETTINGS_FORM = [
         ("whatsapp_sa", "واتساب السعودية (أرقام فقط)", "text"), ("whatsapp_sa_display", "واتساب السعودية (للعرض)", "text"),
         ("whatsapp_bubble", "نص فقاعة واتساب (فارغ = بدون فقاعة)", "text"),
         ("whatsapp_prefill", "رسالة واتساب الجاهزة", "text"),
-        ("whatsapp_prefill_biz", "رسالة واتساب الجاهزة (صفحة الأعمال)", "text"),
+        ("whatsapp_prefill_biz", "رسالة واتساب الجاهزة (صفحة الأعمال)", "text"), ("whatsapp_prefill_institutes", "رسالة الواتساب (صفحة المعاهد)", "textarea"),
         ("show_whatsapp_sa", "إظهار واتساب السعودية في التذييل", "bool"),
         ("show_whatsapp_eg", "إظهار واتساب مصر في التذييل", "bool"),
         ("show_phone_line", "إظهار سطر الاتصال في التذييل", "bool"),
@@ -76,7 +76,7 @@ SETTINGS_FORM = [
         ("nav", "عناصر شريط التنقل", "links"), ("nav_cta_label", "زر الشريط", "text"), ("nav_cta_href", "رابط زر الشريط", "text"),
         ("nav_biz", "عناصر قائمة صفحة الأعمال", "links"),
         ("nav_cta_label_biz", "زر القائمة (الأعمال)", "text"), ("nav_cta_href_biz", "رابط زر القائمة (الأعمال)", "text"),
-        ("footer_links", "روابط الوثائق القانونية في التذييل", "links"), ("social", "حسابات التواصل", "social"),
+        ("footer_links", "روابط الوثائق القانونية في التذييل", "links"), ("extra_pages", "صفحات إضافية (القائمة العلوية للتعليم + التذييل) — بتظهر بعد نشر الصفحة", "links"), ("social", "حسابات التواصل", "social"),
     ]),
     ("صفحة الشكر والكوكيز", [
         ("thank_you_title", "عنوان صفحة الشكر", "text"), ("thank_you_text", "نص صفحة الشكر", "textarea"),

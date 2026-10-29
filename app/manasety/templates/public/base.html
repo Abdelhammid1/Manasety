@@ -129,13 +129,13 @@
       <span>{{ setting('brand_name_ar') }}<span class="brand-blink" aria-hidden="true">_</span></span>
     </a>
     <nav aria-label="القائمة الرئيسية">
-      <ul class="nav-links">{% for item in (setting('nav_biz') if on_biz and setting('nav_biz') else setting('nav')) %}<li><a href="{{ item.href }}">{{ item.label }}</a></li>{% endfor %}</ul>
+      <ul class="nav-links">{% for item in (setting('nav_biz') if on_biz and setting('nav_biz') else setting('nav')) %}<li><a href="{{ item.href }}">{{ item.label }}</a></li>{% endfor %}{% if not on_biz %}{% for item in (setting('extra_pages') or []) %}{% if page_is_live(item.href) %}<li><a href="{{ item.href }}">{{ item.label }}</a></li>{% endif %}{% endfor %}{% endif %}</ul>
     </nav>
     <a class="btn btn-primary btn-sm" href="{{ (setting('nav_cta_href_biz') if on_biz and setting('nav_cta_href_biz') else setting('nav_cta_href')) }}">{{ (setting('nav_cta_label_biz') if on_biz and setting('nav_cta_label_biz') else setting('nav_cta_label')) }}</a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="فتح القائمة">{{ icon('menu') }}</button>
   </div>
   <div class="mobile-menu" id="mobile-menu">
-    <ul>{% for item in (setting('nav_biz') if on_biz and setting('nav_biz') else setting('nav')) %}<li><a href="{{ item.href }}">{{ item.label }}</a></li>{% endfor %}</ul>
+    <ul>{% for item in (setting('nav_biz') if on_biz and setting('nav_biz') else setting('nav')) %}<li><a href="{{ item.href }}">{{ item.label }}</a></li>{% endfor %}{% if not on_biz %}{% for item in (setting('extra_pages') or []) %}{% if page_is_live(item.href) %}<li><a href="{{ item.href }}">{{ item.label }}</a></li>{% endif %}{% endfor %}{% endif %}</ul>
   </div>
 </header>
 
@@ -189,6 +189,11 @@
           {% for f in files_for('footer') %}<li><a href="{{ f.href }}">{{ f.display_name }} {{ icon('download') }}</a></li>{% endfor %}
         </ul>
       </div>
+      {% set ns = namespace(items=[]) %}{% for item in (setting('extra_pages') or []) %}{% if page_is_live(item.href) %}{% set ns.items = ns.items + [item] %}{% endif %}{% endfor %}
+      {% if ns.items %}<div>
+        <h2>صفحاتنا</h2>
+        <ul>{% for item in ns.items %}<li><a href="{{ item.href }}">{{ item.label }}</a></li>{% endfor %}</ul>
+      </div>{% endif %}
       {% if setting('show_footer_social') %}
       <div>
         <h2>تواصل معنا رقميًا</h2>

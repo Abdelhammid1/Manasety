@@ -50,11 +50,14 @@ def ar_date(value: Any) -> str:
 
 def whatsapp_url(country: str = "eg") -> str:
     number = get_setting(f"whatsapp_{country}")
-    from flask import request
+    from flask import g, request
     text = get_setting('whatsapp_prefill') or ''
     try:
         if request.path.startswith('/business') and get_setting('whatsapp_prefill_biz'):
             text = get_setting('whatsapp_prefill_biz')
+        elif (getattr(g, 'page_slug', '') == 'training-institutes' or request.path.startswith('/training-institutes')) \
+                and get_setting('whatsapp_prefill_institutes'):
+            text = get_setting('whatsapp_prefill_institutes')
     except RuntimeError:
         pass
     return f"https://wa.me/{number}?text={quote(text)}"
@@ -106,12 +109,22 @@ def media_list(limit: int = 300) -> list[Media]:
     return db.session.query(Media).order_by(Media.id.desc()).limit(limit).all()
 
 
+def page_is_live(href: str) -> bool:
+    """False for links to dashboard pages that exist but are not published yet (avoids 404 links)."""
+    from .models import Page
+    h = (href or "").split("#")[0].split("?")[0].strip("/")
+    if not h or "/" in h or "." in h:
+        return True
+    page = db.session.query(Page).filter_by(slug=h).first()
+    return True if page is None else page.published_snapshot is not None
+
+
 def register_template_utils(app: Flask) -> None:
     app.jinja_env.filters.update(rt=render_text, rich=render_rich, tables=wrap_tables, ar_date=ar_date, lines=lines)
     app.jinja_env.globals.update(
         icon=icon, icon_sprite=icon_sprite, media_obj=media_obj, setting=get_setting, jsonld=jsonld,
         whatsapp_url=whatsapp_url, integrations_for=integrations_for, needs_consent_banner=needs_consent_banner,
         fact=fact_value, files_for=public_files, features_for=public_features, clients=public_clients,
-        case_studies=public_case_studies, ring_position=ring_position, featured_articles=featured_articles,
+        case_studies=public_case_studies, page_is_live=page_is_live, ring_position=ring_position, featured_articles=featured_articles,
         verified_facts=verified_facts, media_list=media_list, site_url=lambda: current_app.config["SITE_URL"],
     )

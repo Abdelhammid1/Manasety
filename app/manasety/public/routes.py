@@ -28,6 +28,8 @@ def _english_enabled() -> bool:
 def _render_page(page: Page, snapshot: Optional[list], lang: str, preview: bool = False, path: str = "") -> str:
     if snapshot is None:
         abort(404)
+    from flask import g as _g
+    _g.page_slug = page.slug
     s = all_settings()
     site = current_app.config["SITE_URL"]
     page_seo = ((page.seo if preview else page.published_seo) or {}).get(lang, {})
