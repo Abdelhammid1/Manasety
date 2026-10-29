@@ -90,6 +90,8 @@ BLOCK_TYPES: dict[str, dict[str, Any]] = {
         "fields": [
             *_HEAD,
             F(key="variant", kind="select", label="الشكل", choices={"": "كروت (الحالي)", "flow": "مسار بقرار بشري (انفوجرافيك)"}),
+            F(key="tools_icon", kind="select", label="أيقونة الطبقة 1 (فاضي = قبعة التخرج)", choices={"": "الافتراضي", **{i: i for i in ICON_CHOICES}}),
+            F(key="rows_icon", kind="select", label="أيقونة الطبقة 2 (فاضي = الافتراضي)", choices={"": "الافتراضي", **{i: i for i in ICON_CHOICES}}),
             F(key="tools_title", kind="text", label="الطبقة 1: العنوان"),
             F(key="tools_subtitle", kind="text", label="الطبقة 1: سطر تحت العنوان"),
             F(key="tools", kind="list", label="الطبقة 1: الأدوات", fields=[_ICON, F(key="text", kind="text", label="الأداة")]),
