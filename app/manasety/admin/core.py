@@ -76,7 +76,7 @@ SETTINGS_FORM = [
         ("nav", "عناصر شريط التنقل", "links"), ("nav_cta_label", "زر الشريط", "text"), ("nav_cta_href", "رابط زر الشريط", "text"),
         ("nav_biz", "عناصر قائمة صفحة الأعمال", "links"),
         ("nav_cta_label_biz", "زر القائمة (الأعمال)", "text"), ("nav_cta_href_biz", "رابط زر القائمة (الأعمال)", "text"),
-        ("footer_links", "روابط الوثائق القانونية في التذييل", "links"), ("extra_pages", "صفحات إضافية (في التذييل فقط) — بتظهر بعد نشر الصفحة", "links"), ("social", "حسابات التواصل", "social"),
+        ("footer_links", "روابط الوثائق القانونية في التذييل", "links"), ("extra_pages", "صفحات إضافية (في التذييل فقط) — بتظهر بعد نشر الصفحة", "links"), ("nav_institutes", "القائمة العلوية لصفحة المعاهد (فاضي = قائمة المدارس)", "links"), ("nav_cta_label_institutes", "زر القائمة العلوية لصفحة المعاهد: النص", "text"), ("nav_cta_href_institutes", "زر القائمة العلوية لصفحة المعاهد: الرابط", "text"), ("social", "حسابات التواصل", "social"),
     ]),
     ("صفحة الشكر والكوكيز", [
         ("thank_you_title", "عنوان صفحة الشكر", "text"), ("thank_you_text", "نص صفحة الشكر", "textarea"),

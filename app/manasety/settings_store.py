@@ -77,6 +77,16 @@ DEFAULTS: dict[str, Any] = {
     ],
     "nav_cta_label_biz": "احجز استشارة",
     "whatsapp_prefill_institutes": "السلام عليكم 👋 جاي من موقع منصتي، عايز أعرف أكتر عن منصة إدارة المعاهد ومراكز التدريب وأطلب عرضًا تجريبيًا",
+    "nav_institutes": [
+        {"label": "ما يغطيه النظام", "href": "#features"},
+        {"label": "الذكاء الاصطناعي", "href": "#ai"},
+        {"label": "دراسة حالة", "href": "#case"},
+        {"label": "كيف نبدأ", "href": "#process"},
+        {"label": "الأسئلة الشائعة", "href": "#faq"},
+        {"label": "المقالات", "href": "/blog"},
+    ],
+    "nav_cta_label_institutes": "اطلب عرضًا",
+    "nav_cta_href_institutes": "#contact",
     "extra_pages": [
         {"label": "للمعاهد والمراكز", "href": "/training-institutes"},
     ],
