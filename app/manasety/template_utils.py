@@ -53,7 +53,7 @@ def whatsapp_url(country: str = "eg") -> str:
     from flask import g, request
     text = get_setting('whatsapp_prefill') or ''
     try:
-        if request.path.startswith('/business') and get_setting('whatsapp_prefill_biz'):
+        if (request.path.startswith('/business') or getattr(g, 'page_slug', '') in lines(get_setting('business_pages'))) and get_setting('whatsapp_prefill_biz'):
             text = get_setting('whatsapp_prefill_biz')
         elif (getattr(g, 'page_slug', '') == 'training-institutes' or request.path.startswith('/training-institutes')) \
                 and get_setting('whatsapp_prefill_institutes'):

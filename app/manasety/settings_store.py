@@ -87,6 +87,13 @@ DEFAULTS: dict[str, Any] = {
     ],
     "nav_cta_label_institutes": "اطلب عرضًا",
     "nav_cta_href_institutes": "#contact",
+    "business_pages": "marsoud\nelmouhamy\nactivefit",
+    "nav_biz_pages": [
+        {"label": "خدماتنا", "href": "/business#services"},
+        {"label": "من الفكرة إلى الإطلاق", "href": "/business#process"},
+        {"label": "أنظمتنا", "href": "/business#portfolio"},
+        {"label": "المقالات", "href": "/business/blog"},
+    ],
     "extra_pages": [
         {"label": "للمعاهد والمراكز", "href": "/training-institutes"},
     ],

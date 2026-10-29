@@ -38,7 +38,7 @@
 {% endfor %}
 <script>document.documentElement.classList.add('js');try{if(!sessionStorage.getItem('pl_seen'))document.documentElement.classList.add('pl')}catch(e){document.documentElement.classList.add('pl')}</script>
 </head>
-{% set on_biz = request.path.startswith('/business') or (article is defined and article and article.audience == 'business') %}
+{% set on_biz = request.path.startswith('/business') or (article is defined and article and article.audience == 'business') or ((g.get('page_slug') or '') in ((setting('business_pages') or '')|lines)) %}
 <body{% if on_biz %} class="biz"{% endif %}>
 <div id="preloader">
   <svg viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
@@ -84,8 +84,9 @@
 <a class="skip" href="#main">تخطَّ إلى المحتوى</a>
 {% if preview %}<div class="preview-bar">معاينة مسودة — هذه النسخة غير منشورة</div>{% endif %}
 
-{% set on_biz = request.path.startswith('/business') or (article is defined and article and article.audience == 'business') %}
+{% set on_biz = request.path.startswith('/business') or (article is defined and article and article.audience == 'business') or ((g.get('page_slug') or '') in ((setting('business_pages') or '')|lines)) %}
 {% set on_inst = request.path.startswith('/training-institutes') or (g.get('page_slug') == 'training-institutes') %}
+{% set on_bizpage = (g.get('page_slug') or '') in ((setting('business_pages') or '')|lines) %}
 <header class="site-header">
 {% if setting('show_domain_switch') %}<div class="dom-switch"><div class="wrap"><a class="ds-edu{{ '' if on_biz else ' on' }}" href="/"><span class="ds-ic">🎓</span><span><b>منصتي للتعليم</b><small>أنظمة المدارس والمعاهد</small></span></a><a class="ds-biz{{ ' on' if on_biz else '' }}" href="/business"><span class="ds-ic">🏢</span><span><b>منصتي للأعمال</b><small>أنظمة إدارية مخصصة للشركات</small></span></a></div></div>{% endif %}
   <div class="wrap nav">
@@ -130,13 +131,13 @@
       <span>{{ setting('brand_name_ar') }}<span class="brand-blink" aria-hidden="true">_</span></span>
     </a>
     <nav aria-label="القائمة الرئيسية">
-      <ul class="nav-links">{% for item in (setting('nav_biz') if on_biz and setting('nav_biz') else (setting('nav_institutes') if on_inst and setting('nav_institutes') else setting('nav'))) %}<li><a href="{{ item.href }}">{{ item.label }}</a></li>{% endfor %}</ul>
+      <ul class="nav-links">{% for item in (setting('nav_biz_pages') if on_bizpage and setting('nav_biz_pages') else (setting('nav_biz') if on_biz and setting('nav_biz') else (setting('nav_institutes') if on_inst and setting('nav_institutes') else setting('nav')))) %}<li><a href="{{ item.href }}">{{ item.label }}</a></li>{% endfor %}</ul>
     </nav>
     <a class="btn btn-primary btn-sm" href="{{ (setting('nav_cta_href_biz') if on_biz and setting('nav_cta_href_biz') else (setting('nav_cta_href_institutes') if on_inst and setting('nav_cta_href_institutes') else setting('nav_cta_href'))) }}">{{ (setting('nav_cta_label_biz') if on_biz and setting('nav_cta_label_biz') else (setting('nav_cta_label_institutes') if on_inst and setting('nav_cta_label_institutes') else setting('nav_cta_label'))) }}</a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="فتح القائمة">{{ icon('menu') }}</button>
   </div>
   <div class="mobile-menu" id="mobile-menu">
-    <ul>{% for item in (setting('nav_biz') if on_biz and setting('nav_biz') else (setting('nav_institutes') if on_inst and setting('nav_institutes') else setting('nav'))) %}<li><a href="{{ item.href }}">{{ item.label }}</a></li>{% endfor %}</ul>
+    <ul>{% for item in (setting('nav_biz_pages') if on_bizpage and setting('nav_biz_pages') else (setting('nav_biz') if on_biz and setting('nav_biz') else (setting('nav_institutes') if on_inst and setting('nav_institutes') else setting('nav')))) %}<li><a href="{{ item.href }}">{{ item.label }}</a></li>{% endfor %}</ul>
   </div>
 </header>
 
