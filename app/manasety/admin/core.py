@@ -9,7 +9,7 @@ from flask import Blueprint, abort, current_app, flash, redirect, render_templat
 from flask_login import current_user
 
 from ..extensions import db
-from ..models import (ROLES, Article, AuditLog, Client, Fact, Feature, Lead, Page, User, utcnow)
+from ..models import (ROLES, Article, AuditLog, Author, Client, Fact, Feature, Lead, Page, User, utcnow)
 from ..security import admin_required, audit, clean_text, snapshot_model
 from ..settings_store import DEFAULTS, LOCKED_KEYS, all_settings, set_setting
 
@@ -155,7 +155,8 @@ def users():
             flash("هذا البريد مسجّل بالفعل.", "error")
         else:
             temp = secrets.token_urlsafe(12)
-            user = User(email=email, name=clean_text(request.form.get("name") or email), role=role)
+            user = User(email=email, name=clean_text(request.form.get("name") or email), role=role,
+                        author_id=_author_choice())
             user.set_password(temp)
             db.session.add(user)
             db.session.flush()
@@ -163,7 +164,14 @@ def users():
             db.session.commit()
             flash(f"تم إنشاء الحساب. كلمة المرور المؤقتة (تظهر مرة واحدة): {temp}", "ok")
         return redirect(url_for("admin_core.users"))
-    return render_template("admin/users.html", users=db.session.query(User).order_by(User.id).all(), roles=ROLES)
+    return render_template("admin/users.html", users=db.session.query(User).order_by(User.id).all(), roles=ROLES,
+                           authors=db.session.query(Author).order_by(Author.name).all())
+
+
+def _author_choice() -> int | None:
+    """The «linked author» select: an existing author id, or None for «no author»."""
+    raw = request.form.get("author_id", "")
+    return int(raw) if raw.isdigit() and db.session.get(Author, int(raw)) is not None else None
 
 
 @bp.route("/users/<int:uid>", methods=["POST"])
@@ -177,6 +185,8 @@ def user_update(uid: int):
         return redirect(url_for("admin_core.users"))
     if action == "role" and request.form.get("role") in ROLES:
         user.role = request.form["role"]
+    elif action == "author":
+        user.author_id = _author_choice()
     elif action == "deactivate":
         user.is_active_flag = not user.is_active_flag
         user.session_version += 1

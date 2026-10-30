@@ -57,6 +57,10 @@ class User(UserMixin, Model):
     session_version: Mapped[int] = mapped_column(Integer, default=1)
     last_login_at: Mapped[Optional[datetime]] = mapped_column(DateTime)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=utcnow)
+    # The byline this person writes under: new articles they create start with this author selected.
+    author_id: Mapped[Optional[int]] = mapped_column(ForeignKey("authors.id", ondelete="SET NULL"))
+
+    author = relationship("Author")
 
     def set_password(self, password: str) -> None:
         self.password_hash = generate_password_hash(password)
