@@ -15,7 +15,7 @@ from ..extensions import db
 from ..icons import ICONS
 from ..models import (BACKLINK_CHANNELS, BACKLINK_STATUSES, FAQ_CATEGORIES, FEATURE_MODULES, FEATURE_STATUSES,
                       INTEGRATION_KINDS, INTEGRATION_PLACEMENTS, Article, Author, Backlink, CaseStudy, Category,
-                      Client, Fact, FaqItem, Feature, Integration, Media, Redirect, SideCard, Tag)
+                      Client, Fact, FaqItem, Feature, Integration, Media, Redirect, SideCard, Tag, User)
 from ..security import audit, clean_rich, clean_text, snapshot_model
 from ..services.seo import slugify
 
@@ -411,6 +411,8 @@ def delete(resource: str, oid: int):
         flash("للحذف اكتب اسم التكامل كما هو بالضبط.", "error")
         return redirect(url_for("admin_crud.edit", resource=resource, oid=oid))
     audit("delete", resource, oid, before=snapshot_model(obj))
+    if isinstance(obj, Author):  # SQLite ignores ON DELETE SET NULL; a dangling id could point at a later author
+        db.session.query(User).filter_by(author_id=obj.id).update({"author_id": None})
     db.session.delete(obj)
     db.session.commit()
     flash("تم الحذف.", "ok")

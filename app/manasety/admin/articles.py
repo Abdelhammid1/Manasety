@@ -62,8 +62,8 @@ def edit(aid: int | None = None):
 
 def _own_author_id() -> int | None:
     """A new article starts with the writer's linked author (still changeable in the form)."""
-    aid = current_user.author_id
-    return aid if aid and db.session.get(Author, aid) is not None else None
+    author = current_user.author
+    return author.id if author is not None else None
 
 
 def _save(art: Article, aid: int | None):
@@ -82,6 +82,7 @@ def _save(art: Article, aid: int | None):
     for fk in ("category_id", "author_id", "cover_id", "og_image_id", "translation_of_id"):
         raw = request.form.get(fk, "")
         setattr(art, fk, int(raw) if raw.isdigit() else None)
+    art.author_id = Author.existing_id(request.form.get("author_id"))  # a deleted author must not fail the FK on save
     tag_ids = [int(x) for x in request.form.getlist("tag_ids") if x.isdigit()]
     art.tags = db.session.query(Tag).filter(Tag.id.in_(tag_ids)).all() if tag_ids else []
     art.faq = [{"q": clean_text(q), "a": clean_rich(a)}

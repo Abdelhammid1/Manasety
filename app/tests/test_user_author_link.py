@@ -60,3 +60,22 @@ def test_admin_links_author_on_create_and_update(admin_client):
     admin_client.post(f"/admin/users/{u.id}", data={"action": "author", "author_id": "99999"})  # unknown author → none
     assert u.author_id is None
     assert "الكاتب المرتبط" in admin_client.get("/admin/users").data.decode()
+
+
+def test_bad_or_stale_author_ids_never_500(admin_client):
+    author = _author()
+    u = db.session.query(User).first()
+    assert u is not None
+    for raw in ("²", "٣", "-1", "1e3"):
+        r = admin_client.post(f"/admin/users/{u.id}", data={"action": "author", "author_id": raw})
+        assert r.status_code == 302
+        assert u.author_id is None
+    # an article saved with a deleted author id gets no author instead of an FK error
+    admin_client.post("/admin/articles/new", data={"title": "مقال قديم", "author_id": "99999", "status": "draft"})
+    assert db.session.query(Article).filter_by(title="مقال قديم").one().author_id is None
+    # deleting an author clears the users linked to it
+    u.author_id = author.id
+    db.session.commit()
+    admin_client.post(f"/admin/lib/authors/{author.id}/delete")
+    db.session.refresh(u)
+    assert u.author_id is None

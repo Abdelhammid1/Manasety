@@ -170,8 +170,7 @@ def users():
 
 def _author_choice() -> int | None:
     """The «linked author» select: an existing author id, or None for «no author»."""
-    raw = request.form.get("author_id", "")
-    return int(raw) if raw.isdigit() and db.session.get(Author, int(raw)) is not None else None
+    return Author.existing_id(request.form.get("author_id"))
 
 
 @bp.route("/users/<int:uid>", methods=["POST"])

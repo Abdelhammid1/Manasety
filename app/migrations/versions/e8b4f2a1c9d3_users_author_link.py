@@ -20,11 +20,12 @@ def upgrade():
     with op.batch_alter_table('users') as batch:
         batch.add_column(sa.Column('author_id', sa.Integer(), nullable=True))
         batch.create_foreign_key(FK_NAME, 'authors', ['author_id'], ['id'], ondelete='SET NULL')
-    # Abdelhamid writes as author #1 (shalaby). Only his user row is touched, and only if both rows exist.
+    # Abdelhamid writes as author #1 (shalaby). Only his user row is touched, and only if author #1 really is
+    # "shalaby" (a re-seeded DB may have someone else as #1) and he is not linked yet.
     op.execute(sa.text(
         "UPDATE users SET author_id = 1 "
         "WHERE lower(email) = 'abdelhamid@manasety.ai' AND author_id IS NULL "
-        "AND EXISTS (SELECT 1 FROM authors WHERE id = 1)"
+        "AND EXISTS (SELECT 1 FROM authors WHERE id = 1 AND slug = 'shalaby')"
     ))
 
 

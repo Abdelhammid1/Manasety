@@ -443,6 +443,14 @@ class Author(Model):
 
     photo = relationship("Media")
 
+    @staticmethod
+    def existing_id(raw: Any) -> Optional[int]:
+        """A form value → the id of an author that exists, else None (ASCII digits only: '²'.isdigit() is True)."""
+        raw = str(raw or "")
+        if not re.fullmatch(r"[0-9]{1,9}", raw):
+            return None
+        return int(raw) if db.session.get(Author, int(raw)) is not None else None
+
 
 ARTICLE_STATUSES = {
     "draft": "مسودة",
