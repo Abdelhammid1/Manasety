@@ -397,3 +397,24 @@ def not_found(_e):
 @bp.app_template_global()
 def now_year() -> int:
     return utcnow().year
+
+
+# ───────── site icons (favicon etc.), served from the site root ─────────
+import os as _os
+
+_ICONS_DIR = _os.path.normpath(_os.path.join(_os.path.dirname(__file__), "..", "static", "icons"))
+_ICON_NAMES = ("favicon.ico", "favicon.svg", "favicon-96x96.png", "apple-touch-icon.png", "site.webmanifest",
+               "web-app-manifest-192x192.png", "web-app-manifest-512x512.png")
+
+
+def _make_icon_view(name: str):
+    def view():
+        if not _os.path.isfile(_os.path.join(_ICONS_DIR, name)):
+            abort(404)
+        mt = "application/manifest+json" if name.endswith(".webmanifest") else None
+        return send_from_directory(_ICONS_DIR, name, mimetype=mt, max_age=60 * 60 * 24 * 7)
+    return view
+
+
+for _n in _ICON_NAMES:
+    bp.add_url_rule("/" + _n, endpoint="icon_" + _n.replace(".", "_").replace("-", "_"), view_func=_make_icon_view(_n))
