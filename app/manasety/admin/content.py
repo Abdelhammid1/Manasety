@@ -281,3 +281,40 @@ def new_page():
             flash("اتعملت الصفحة كمسودة. مش هتظهر للزوار غير بعد ما تدوسي نشر.")
             return redirect(url_for("admin_content.page_builder", slug=slug))
     return render_template("admin/page_new.html", pages=pages, form=form, error=error)
+
+
+
+# ───────── per-page layout: top nav, footer, WhatsApp ─────────
+
+@bp.route("/_layouts")
+@permission_required("content")
+def layouts_overview():
+    from ..page_layout import overview_rows
+    return render_template("admin/page_layouts.html", rows=overview_rows())
+
+
+@bp.route("/<slug>/layout", methods=["GET", "POST"])
+@permission_required("content")
+def page_layout_edit(slug: str):
+    from ..page_layout import (effective_layout, form_from_layout, layout_from_form, reset_layout,
+                               save_layout, saved_layout)
+    page = _page(slug)
+    if request.method == "POST":
+        before = saved_layout(slug)
+        if request.form.get("action") == "reset":
+            reset_layout(slug)
+            audit("update", "page_layout", page.id, before=before, after={})
+            db.session.commit()
+            flash("رجعت الصفحة لاستخدام الإعدادات العامة.", "ok")
+        else:
+            new, skipped = layout_from_form(request.form)
+            save_layout(slug, new)
+            audit("update", "page_layout", page.id, before=before, after=new)
+            db.session.commit()
+            flash("اتحفظت إعدادات الصفحة، والتغيير ظاهر فورًا ومش محتاج نشر.", "ok")
+            if skipped:
+                flash(f"اتجاهلت {skipped} سطر لأن صيغته مش «الاسم | الرابط» أو رابطه مش مقبول.", "ok")
+        return redirect(url_for("admin_content.page_layout_edit", slug=slug))
+    eff = effective_layout(slug)
+    return render_template("admin/page_layout.html", page=page, form=form_from_layout(eff),
+                           custom=bool(saved_layout(slug)))

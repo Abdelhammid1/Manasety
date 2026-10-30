@@ -1,0 +1,46 @@
+{% extends "admin/base.html" %}
+{% block title %}القائمة والتذييل والواتساب{% endblock %}\n{% block content %}
+<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap">
+  <h1 style="margin:0">القائمة والتذييل والواتساب — {{ page.title }}</h1>
+  <div style="display:flex;gap:8px;flex-wrap:wrap">
+    <a class="btn" href="{{ url_for('admin_content.page_builder', slug=page.slug) }}">بناء الصفحة</a>
+    <a class="btn" href="{{ url_for('admin_content.layouts_overview') }}">كل الصفحات</a>
+  </div>
+</div>
+<p style="margin:0 0 16px;color:#667">كل اللي هنا خاص بالصفحة دي لوحدها، ويظهر فورًا من غير «نشر». الحالة: <b>{{ 'مخصصة لهذه الصفحة' if custom else 'بتستخدم الإعدادات العامة، والقيم اللي تحت هي الحالية' }}</b>. أي حقل تفضّيه بيرجع للإعداد العام.</p>
+<form method="post" style="display:grid;gap:16px;max-width:760px">{{ csrf() }}
+  <input type="hidden" name="action" value="save">
+  <section style="border:1px solid #d9deea;border-radius:12px;padding:16px;display:grid;gap:12px">
+    <h2 style="margin:0;font-size:18px">الشكل العام</h2>
+    <label>شكل الصفحة (يتحكم في الألوان وصياغة التذييل)<br>
+      <select name="style" style="width:100%">
+        <option value="schools" {{ 'selected' if form.style == 'schools' }}>تعليم (مدارس ومعاهد)</option>
+        <option value="business" {{ 'selected' if form.style == 'business' }}>أعمال (أنظمة إدارية للشركات)</option>
+      </select></label>
+  </section>
+  <section style="border:1px solid #d9deea;border-radius:12px;padding:16px;display:grid;gap:12px">
+    <h2 style="margin:0;font-size:18px">القائمة العلوية</h2>
+    <label>الروابط (سطر لكل رابط بصيغة: الاسم | الرابط). الرابط اللي يبدأ بـ # بيروح لقسم جوه الصفحة، واللي يبدأ بـ / لصفحة تانية<br>
+      <textarea name="nav" rows="6" dir="auto" style="width:100%">{{ form.nav }}</textarea></label>
+    <label>نص الزر<br><input name="cta_label" value="{{ form.cta_label }}" style="width:100%"></label>
+    <label>رابط الزر<br><input name="cta_href" value="{{ form.cta_href }}" dir="ltr" style="width:100%"></label>
+  </section>
+  <section style="border:1px solid #d9deea;border-radius:12px;padding:16px;display:grid;gap:12px">
+    <h2 style="margin:0;font-size:18px">التذييل</h2>
+    <label>النبذة<br><textarea name="footer_about" rows="3" style="width:100%">{{ form.footer_about }}</textarea></label>
+    <label>السطر الأخير<br><input name="footer_tagline" value="{{ form.footer_tagline }}" style="width:100%"></label>
+    <label>عمود «صفحاتنا» (سطر لكل رابط: الاسم | الرابط، وبيظهر بعد نشر الصفحة المربوطة)<br>
+      <textarea name="footer_pages" rows="4" dir="auto" style="width:100%">{{ form.footer_pages }}</textarea></label>
+    <label><input type="checkbox" name="footer_pages_hide" {{ 'checked' if form.footer_pages_hide }}> إخفاء عمود «صفحاتنا» في هذه الصفحة</label>
+  </section>
+  <section style="border:1px solid #d9deea;border-radius:12px;padding:16px;display:grid;gap:12px">
+    <h2 style="margin:0;font-size:18px">الواتساب</h2>
+    <label>الرسالة الجاهزة اللي بتتكتب للزائر<br><textarea name="whatsapp" rows="3" style="width:100%">{{ form.whatsapp }}</textarea></label>
+    <label>نص الفقاعة العائمة<br><input name="whatsapp_bubble" value="{{ form.whatsapp_bubble }}" style="width:100%"></label>
+  </section>
+  <div><button class="btn primary" type="submit">حفظ</button></div>
+</form>
+{% if custom %}
+<form method="post" data-confirm="الصفحة هترجع تستخدم الإعدادات العامة، متأكدة؟" style="margin-top:14px">{{ csrf() }}<input type="hidden" name="action" value="reset"><button class="btn danger sm" type="submit">رجّع للإعدادات العامة</button></form>
+{% endif %}
+{% endblock %}

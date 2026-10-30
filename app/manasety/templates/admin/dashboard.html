@@ -12,6 +12,7 @@
   <a class="pg-card" href="{{ url_for('admin_content.page_builder', slug=p.slug) }}"><span class="pg-ic">📄</span><div><b>{{ p.title }}</b><small>/{{ p.slug }} — {{ 'منشورة' if p.published_snapshot is not none else 'مسودة غير منشورة' }}</small></div><span class="btn primary sm">فتح بناء الصفحة</span></a>
 {% endfor %}
   <a class="pg-card" href="{{ url_for('admin_content.new_page') }}"><span class="pg-ic">➕</span><div><b>إضافة صفحة جديدة</b><small>صفحة برابط جديد تبنيها من الداشبورد</small></div><span class="btn dark sm">إضافة</span></a>
+  <a class="pg-card" href="{{ url_for('admin_content.layouts_overview') }}"><span class="pg-ic">🧭</span><div><b>القائمة والتذييل والواتساب</b><small>تحكم في كل صفحة لوحدها</small></div><span class="btn dark sm">فتح</span></a>
 </div>
 {% endif %}
 

@@ -60,6 +60,12 @@ def whatsapp_url(country: str = "eg") -> str:
             text = get_setting('whatsapp_prefill_institutes')
     except RuntimeError:
         pass
+    try:
+        _ov = (page_layout() or {}).get("whatsapp")
+        if _ov:
+            text = _ov
+    except RuntimeError:
+        pass
     return f"https://wa.me/{number}?text={quote(text)}"
 
 
@@ -119,6 +125,16 @@ def page_is_live(href: str) -> bool:
     return True if page is None else page.published_snapshot is not None
 
 
+def page_layout() -> dict:
+    """Per-page overrides (top nav, footer, WhatsApp) saved from the dashboard; {} = use the global settings."""
+    from flask import g
+    slug = getattr(g, "page_slug", "") or ""
+    if not slug:
+        return {}
+    data = get_setting("page_layout") or {}
+    return dict(data.get(slug) or {}) if isinstance(data, dict) else {}
+
+
 def side_cards_for(slug: str) -> list:
     from .models import SideCard
     if not slug:
@@ -133,6 +149,6 @@ def register_template_utils(app: Flask) -> None:
         icon=icon, icon_sprite=icon_sprite, media_obj=media_obj, setting=get_setting, jsonld=jsonld,
         whatsapp_url=whatsapp_url, integrations_for=integrations_for, needs_consent_banner=needs_consent_banner,
         fact=fact_value, files_for=public_files, features_for=public_features, clients=public_clients,
-        case_studies=public_case_studies, page_is_live=page_is_live, side_cards_for=side_cards_for, ring_position=ring_position, featured_articles=featured_articles,
+        case_studies=public_case_studies, page_is_live=page_is_live, side_cards_for=side_cards_for, page_layout=page_layout, ring_position=ring_position, featured_articles=featured_articles,
         verified_facts=verified_facts, media_list=media_list, site_url=lambda: current_app.config["SITE_URL"],
     )

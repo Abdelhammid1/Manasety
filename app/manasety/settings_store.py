@@ -94,6 +94,7 @@ DEFAULTS: dict[str, Any] = {
         {"label": "أنظمتنا", "href": "/business#portfolio"},
         {"label": "المقالات", "href": "/business/blog"},
     ],
+    "page_layout": {},
     "extra_pages": [
         {"label": "للمعاهد والمراكز", "href": "/training-institutes"},
     ],
