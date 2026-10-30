@@ -1,4 +1,5 @@
 {% extends "admin/base.html" %}
+{% from "admin/_macros.html" import csrf %}
 {% block title %}القائمة والتذييل والواتساب{% endblock %}\n{% block content %}
 <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap">
   <h1 style="margin:0">القائمة والتذييل والواتساب — {{ page.title }}</h1>
