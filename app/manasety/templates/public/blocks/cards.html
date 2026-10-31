@@ -1,5 +1,5 @@
 {% set problem = c.variant == 'problem' %}
-<section class="section{% if problem %} bg-white{% endif %}"{% if anchor %} id="{{ anchor }}"{% endif %}>
+<section class="section{% if problem or c.variant == 'steps' %} bg-white{% endif %}"{% if anchor %} id="{{ anchor }}"{% endif %}>
   <div class="wrap">
     <div class="head center rv">
       {% if c.eyebrow %}<span class="kicker{% if problem %} orange{% endif %}">{{ c.eyebrow }}</span>{% endif %}
@@ -14,6 +14,10 @@
     {% elif c.variant == 'tiles' %}
     <div class="tl">{% for it in c['items'] or [] %}
       <div class="tl-tile rv"><span class="tl-ic">{{ icon(it.icon) }}</span><b>{{ it.title }}</b><p>{{ it.text|rt }}</p></div>
+    {% endfor %}</div>
+    {% elif c.variant == 'steps' %}
+    <div class="stp">{% for it in c['items'] or [] %}
+      <div class="stp-card rv"><span class="stp-n">{{ '%02d'|format(loop.index) }}</span><span class="stp-ic">{{ icon(it.icon) }}</span><h3>{{ it.title }}</h3><p>{{ it.text|rt }}</p></div>
     {% endfor %}</div>
     {% elif c.variant == 'story' %}
     {% set chips = (c['items'] or [])[:4] %}
