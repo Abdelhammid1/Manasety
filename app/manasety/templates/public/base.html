@@ -185,7 +185,7 @@
           <li><a href="mailto:{{ setting('email') }}">{{ icon('mail') }} {{ setting('email') }}</a></li>
           {% if setting('show_whatsapp_sa') %}<li>{{ t('واتساب السعودية:') }} <a href="{{ whatsapp_url('sa') }}" class="num" rel="noopener">{{ setting('whatsapp_sa_display') }}</a></li>{% endif %}
           {% if setting('show_whatsapp_eg') %}<li>{{ t('واتساب مصر:') }} <a href="{{ whatsapp_url('eg') }}" class="num" rel="noopener">{{ setting('whatsapp_eg_display') }}</a></li>{% endif %}
-          {% if setting('show_phone_line') %}<li>{{ t('اتصال:') }} <a href="tel:+{{ setting('whatsapp_eg') }}" class="num">{{ t('مصر') }}</a> · <a href="tel:+{{ setting('whatsapp_sa') }}" class="num">{{ t('السعودية') }}</a></li>{% endif %}
+          {% if setting('show_phone_line') %}<li>{{ t('اتصال:') }} <a href="tel:+{{ setting('whatsapp_eg') }}" class="num">{{ t('مصر') }}</a>{% if setting('show_whatsapp_sa') %} · <a href="tel:+{{ setting('whatsapp_sa') }}" class="num">{{ t('السعودية') }}</a>{% endif %}</li>{% endif %}
           {% if setting('footer_note') and setting('show_footer_note') %}<li class="note">{{ setting('footer_note') }}</li>{% endif %}
         </ul>
       </div>
