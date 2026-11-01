@@ -1,0 +1,37 @@
+<section class="section"{% if anchor %} id="{{ anchor }}"{% endif %}>
+  <div class="wrap contact-grid">
+    <div class="form-card">
+      <form id="demo-form" action="/api/leads" method="post" novalidate data-lead-name="Contact Request" data-thanks="{{ '/en/thank-you' if lang == 'en' else '/thank-you.html' }}" data-msg-required="{{ t('من فضلك أكمل الحقول المطلوبة.') }}" data-msg-failed="{{ t('تعذر الإرسال. حاول مرة أخرى أو راسلنا على واتساب.') }}">
+        <div class="head">
+          <h2>{{ c.title|rt }}</h2>
+          {% if c.subtitle %}<p>{{ c.subtitle|rt }}</p>{% endif %}
+        </div>
+        <input type="hidden" name="form" value="contact">
+        <input type="hidden" name="lang" value="{{ lang or 'ar' }}">
+        <input type="hidden" name="source" value="contact_page">
+        {% for k in ('utm_source','utm_medium','utm_campaign','utm_term','utm_content','referrer','landing_path') %}<input type="hidden" name="{{ k }}" value="">{% endfor %}
+        <div class="hp" aria-hidden="true"><label for="f-website">{{ t('اترك هذا الحقل فارغًا') }}</label><input id="f-website" name="website" tabindex="-1" autocomplete="off"></div>
+        <div class="fgrid">
+          <div class="field"><label for="f-name">{{ t('الاسم الكريم') }} <i>*</i></label><input id="f-name" name="name" required autocomplete="name" placeholder="{{ c.name_placeholder }}"></div>
+          <div class="field"><label for="f-phone">{{ t('رقم الهاتف / واتساب') }} <i>*</i></label><input id="f-phone" name="phone" type="tel" dir="ltr" required autocomplete="tel" inputmode="tel" placeholder="{{ c.phone_placeholder }}"></div>
+          <div class="field"><label for="f-email">{{ t('البريد الإلكتروني (اختياري)') }}</label><input id="f-email" name="email" type="email" dir="ltr" autocomplete="email"></div>
+          <div class="field"><label for="f-company">{{ t('اسم الجهة (اختياري)') }}</label><input id="f-company" name="company" autocomplete="organization"></div>
+          <div class="field full"><label for="f-notes">{{ t('وصف مختصر للاحتياج') }} <i>*</i></label><textarea id="f-notes" name="message" rows="5" required placeholder="{{ c.notes_placeholder }}"></textarea></div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-primary" type="submit">{{ c.submit_label or t('إرسال الطلب') }}</button>
+          <div class="form-msg" role="alert"></div>
+        </div>
+      </form>
+    </div>
+    <aside class="contact-info">
+      <h2>{{ t('بيانات التواصل الرسمية') }}</h2>
+      <ul>
+        <li>{{ icon('mail') }}<div><b>{{ t('البريد الإلكتروني') }}</b><a href="mailto:{{ setting('email') }}" dir="ltr">{{ setting('email') }}</a></div></li>
+        {% if setting('show_whatsapp_sa') %}<li>{{ icon('whatsapp') }}<div><b>{{ t('واتساب السعودية:') }}</b><a href="{{ whatsapp_url('sa') }}" class="num" dir="ltr" rel="noopener">{{ setting('whatsapp_sa_display') }}</a></div></li>{% endif %}
+        {% if setting('show_whatsapp_eg') %}<li>{{ icon('whatsapp') }}<div><b>{{ t('واتساب مصر:') }}</b><a href="{{ whatsapp_url('eg') }}" class="num" dir="ltr" rel="noopener">{{ setting('whatsapp_eg_display') }}</a></div></li>{% endif %}
+        <li>{{ icon('id-card') }}<div><b>{{ t('الكيان القانوني المعتمد:') }}</b><span>{{ setting('legal_name_ar') }}</span><span>{{ t('سجل تجاري') }} <bdi class="num">{{ setting('commercial_registration') }}</bdi></span><span>{{ setting('address_ar') }}</span></div></li>
+      </ul>
+    </aside>
+  </div>
+</section>

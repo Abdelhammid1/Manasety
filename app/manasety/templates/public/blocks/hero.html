@@ -6,24 +6,24 @@
       <h1>{{ c.title|rt }}{% if c.title_highlight %}<br><span>{{ c.title_highlight|rt }}</span>{% endif %}</h1>
       {% if c.subtitle %}<p class="lead">{{ c.subtitle|rt }}</p>{% endif %}
       <div class="hero-ctas">
-        {% if c.cta_primary_label %}<a class="btn btn-primary" href="{{ c.cta_primary_href or '#contact' }}">{{ c.cta_primary_label }}</a>{% endif %}
-        {% if c.cta_secondary_label %}<a class="btn btn-ghost" href="{{ c.cta_secondary_href or '#features' }}">{{ c.cta_secondary_label }}</a>{% endif %}
+        {% if c.cta_primary_label %}<a class="btn btn-primary" href="{{ (c.cta_primary_href or '#contact')|lhref }}">{{ c.cta_primary_label }}</a>{% endif %}
+        {% if c.cta_secondary_label %}<a class="btn btn-ghost" href="{{ (c.cta_secondary_href or '#features')|lhref }}">{{ c.cta_secondary_label }}</a>{% endif %}
       </div>
       {% if c.proof_line %}<p class="proof">{{ icon('check') }}{{ c.proof_line|rt }}</p>{% endif %}
       {% if c.show_files %}{% set hf = files_for('hero') %}{% if hf %}
-      <div class="hero-files">{% for f in hf %}<a class="file-btn" href="{{ f.href }}">{{ icon('download') }}{{ f.display_name }}</a>{% endfor %}</div>
+      <div class="hero-files">{% for f in hf %}<a class="file-btn" href="{{ f.href }}">{{ icon('download') }}{{ loc(f, 'display_name') }}</a>{% endfor %}</div>
       {% endif %}{% endif %}
     </div>
     <div class="hero-media">
       {% if img %}
-      <img src="{{ img.url }}" alt="{{ img.alt }}" width="{{ img.width }}" height="{{ img.height }}" fetchpriority="high">
+      <img src="{{ img.url }}" alt="{{ loc(img, 'alt') }}" width="{{ img.width }}" height="{{ img.height }}" fetchpriority="high">
       {% elif not c.no_mock %}
       {# Placeholder until the new hero image is uploaded. Demo data only. #}
-      <div class="mock" aria-label="مثال توضيحي ببيانات تجريبية" role="img">
-        <span class="mock-tag">مثال · بيانات تجريبية</span>
-        <div class="mock-top"><div class="mock-av">ط ت</div><div><b style="color:var(--navy)">طالب تجريبي</b><br><small style="color:var(--ink-3)">Student 360</small></div></div>
-        <div class="mock-kpis"><div><small>الحضور</small><b dir="ltr">86%</b></div><div><small>المعدل</small><b dir="ltr">74.5</b></div><div><small>الرسوم</small><b style="color:var(--green);font-family:var(--font);font-size:15px">مسددة</b></div></div>
-        <div class="mock-alert">إنذار تلقائي: غياب متكرر وانخفاض في الرياضيات. أُرسل تنبيه لولي الأمر والمرشد.</div>
+      <div class="mock" aria-label="{{ t('مثال توضيحي ببيانات تجريبية') }}" role="img">
+        <span class="mock-tag">{{ t('مثال · بيانات تجريبية') }}</span>
+        <div class="mock-top"><div class="mock-av">{{ t('ط ت') }}</div><div><b style="color:var(--navy)">{{ t('طالب تجريبي') }}</b><br><small style="color:var(--ink-3)">Student 360</small></div></div>
+        <div class="mock-kpis"><div><small>{{ t('الحضور') }}</small><b dir="ltr">86%</b></div><div><small>{{ t('المعدل') }}</small><b dir="ltr">74.5</b></div><div><small>{{ t('الرسوم') }}</small><b style="color:var(--green);font-family:var(--font);font-size:15px">{{ t('مسددة') }}</b></div></div>
+        <div class="mock-alert">{{ t('إنذار تلقائي: غياب متكرر وانخفاض في الرياضيات. أُرسل تنبيه لولي الأمر والمرشد.') }}</div>
       </div>
       {% endif %}
     </div>

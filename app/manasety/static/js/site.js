@@ -88,7 +88,7 @@
       msg.className = 'form-msg'; msg.textContent = '';
       if (!form.checkValidity()) {
         msg.className = 'form-msg err';
-        msg.textContent = 'من فضلك أكمل الحقول المطلوبة.';
+        msg.textContent = form.dataset.msgRequired || 'من فضلك أكمل الحقول المطلوبة.';
         var bad = form.querySelector(':invalid'); if (bad) bad.focus();
         return;
       }
@@ -102,13 +102,13 @@
         })
         .then(function (res) {
           if (!res.ok || !res.body.ok) throw new Error((res.body.errors || []).join(' ') || 'error');
-          track('generate_lead', { event_category: 'Form' }, 'Lead', { content_name: 'Demo Request', content_category: 'Landing Page' });
-          window.location.href = '/thank-you.html';
+          track('generate_lead', { event_category: 'Form' }, 'Lead', { content_name: form.dataset.leadName || 'Demo Request', content_category: 'Landing Page' });
+          window.location.href = form.dataset.thanks || '/thank-you.html';
         })
         .catch(function (err) {
           btn.disabled = false;
           msg.className = 'form-msg err';
-          msg.textContent = err.message && err.message !== 'error' ? err.message : 'تعذر الإرسال. حاول مرة أخرى أو راسلنا على واتساب.';
+          msg.textContent = err.message && err.message !== 'error' ? err.message : (form.dataset.msgFailed || 'تعذر الإرسال. حاول مرة أخرى أو راسلنا على واتساب.');
         });
     });
   }
@@ -117,6 +117,7 @@
   d.addEventListener('click', function (e) {
     var a = e.target.closest('a');
     if (!a) return;
+    if (a.hasAttribute('data-lang-switch') && location.hash) a.href = a.pathname + location.hash;  // stay on the same section
     var href = a.getAttribute('href') || '';
     if (/wa\.me|whatsapp/.test(href)) {
       var source = a.getAttribute('data-wa-source') || 'landing-website';

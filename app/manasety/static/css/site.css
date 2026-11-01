@@ -924,3 +924,54 @@ html.pl .social-float, html.pl .wa-float { z-index: 1; }
 .prose h2 { font-size: 21px; }
 .prose h3 { font-size: 17.5px; }
 .prose table { font-size: 14px; }
+
+/* ── cards variant: 3 numbered steps ── */
+.stp { position: relative; display: grid; gap: 34px; grid-template-columns: minmax(0, 1fr); padding-top: 26px; max-width: 1040px; margin-inline: auto; }
+.stp-card { position: relative; z-index: 1; background: var(--bg); border: 1px solid var(--line); border-radius: 20px; padding: 42px 24px 28px; text-align: center; transition: transform .2s, box-shadow .2s; }
+.stp-card:hover { box-shadow: var(--shadow); }
+.stp-n { position: absolute; top: -26px; left: 50%; transform: translateX(-50%); width: 52px; height: 52px; border-radius: 50%; background: var(--navy); color: #fff; display: grid; place-items: center; font-weight: 800; font-size: 18px; letter-spacing: .5px; box-shadow: 0 0 0 6px #fff; }
+.stp-ic { width: 56px; height: 56px; border-radius: 14px; display: grid; place-items: center; background: #E3E9FC; color: var(--navy); margin: 0 auto 16px; }
+.stp-ic .ic { width: 26px; height: 26px; }
+.stp-card h3 { margin: 0 0 8px; font-size: 19px; color: var(--navy); }
+.stp-card p { margin: 0; color: var(--ink-3); font-size: 14.5px; line-height: 1.9; }
+@media (min-width: 768px) {
+  .stp { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+  .stp::before { content: ""; position: absolute; top: 26px; inset-inline: 16.66%; border-top: 2px dashed var(--accent); opacity: .45; z-index: 0; }
+}
+
+/* language button */
+.lang-switch { display: inline-flex; align-items: center; min-height: 36px; padding: 0 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--navy); font-size: 14px; font-weight: 600; text-decoration: none; white-space: nowrap; }
+.lang-switch:hover { border-color: var(--accent); color: var(--accent); }
+.site-header .nav:has(.lang-switch) { grid-template-columns: 1fr auto auto auto; }
+.site-header .nav:has(.lang-switch) .lang-switch { justify-self: end; }
+/* phones: the header has one more item, so it tightens only when the button is there */
+@media (max-width: 480px) {
+  .nav:has(.lang-switch) { gap: 8px; }
+  .nav:has(.lang-switch) > .btn { flex: none; white-space: nowrap; padding-inline: 10px; font-size: 13px; }
+  .nav:has(.lang-switch) .lang-switch { min-height: 34px; padding: 0 9px; font-size: 13px; }
+  .nav:has(.lang-switch) .nav-toggle { flex: none; width: 40px; height: 40px; }
+  .nav:has(.lang-switch) .brand { min-width: 0; font-size: 17px; gap: 6px; }
+}
+@media (max-width: 400px) { .nav:has(.lang-switch) .brand > span { display: none; } }
+
+/* English pages (left-to-right): the few rules above that are written for Arabic */
+html[dir="ltr"] .field input[dir="ltr"] { text-align: left; }
+html[dir="ltr"] .wa-bubble { direction: ltr; text-align: left; }
+html[dir="ltr"] .hub-node p, html[dir="ltr"] .tl-tile { text-align: left; }
+html[dir="ltr"] .tl-tile::after { content: counter(svc); left: auto; right: 14px; }
+html[dir="ltr"] .art-wrap > * { direction: ltr; }
+html[dir="ltr"] .cl-tag { text-align: right; }
+
+
+/* contact page */
+.contact-grid { display: grid; gap: 24px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 960px) { .contact-grid { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); align-items: start; } }
+.contact-grid .form-card { max-width: none; width: 100%; margin: 0; }
+.contact-info { background: var(--surface); border: 1px solid var(--line); border-radius: 24px; padding: 28px 24px; min-width: 0; }
+.contact-info h2 { font-size: 20px; margin: 0 0 18px; }
+.contact-info ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; }
+.contact-info li { display: flex; gap: 12px; align-items: flex-start; }
+.contact-info li > svg { flex: none; width: 20px; height: 20px; margin-top: 3px; color: var(--ink-2); }
+.contact-info li > div { display: flex; flex-direction: column; gap: 2px; min-width: 0; overflow-wrap: anywhere; }
+.contact-info b { font-size: 14px; color: var(--ink-2); font-weight: 600; }
+.contact-info a { width: fit-content; }

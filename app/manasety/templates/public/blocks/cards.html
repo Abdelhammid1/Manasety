@@ -1,5 +1,5 @@
 {% set problem = c.variant == 'problem' %}
-<section class="section{% if problem %} bg-white{% endif %}"{% if anchor %} id="{{ anchor }}"{% endif %}>
+<section class="section{% if problem or c.variant == 'steps' %} bg-white{% endif %}"{% if anchor %} id="{{ anchor }}"{% endif %}>
   <div class="wrap">
     <div class="head center rv">
       {% if c.eyebrow %}<span class="kicker{% if problem %} orange{% endif %}">{{ c.eyebrow }}</span>{% endif %}
@@ -15,21 +15,25 @@
     <div class="tl">{% for it in c['items'] or [] %}
       <div class="tl-tile rv"><span class="tl-ic">{{ icon(it.icon) }}</span><b>{{ it.title }}</b><p>{{ it.text|rt }}</p></div>
     {% endfor %}</div>
+    {% elif c.variant == 'steps' %}
+    <div class="stp">{% for it in c['items'] or [] %}
+      <div class="stp-card rv"><span class="stp-n">{{ '%02d'|format(loop.index) }}</span><span class="stp-ic">{{ icon(it.icon) }}</span><h3>{{ it.title }}</h3><p>{{ it.text|rt }}</p></div>
+    {% endfor %}</div>
     {% elif c.variant == 'story' %}
     {% set chips = (c['items'] or [])[:4] %}
     {% set mods = c['modules'] or [] %}
     <div class="st">
       <div class="cx-panel cx-chaos rv">
         <div class="st-row">{% for it in chips %}<div class="cx-chip" style="--r:{{ ['-3deg','2deg','3deg','-2deg'][loop.index0 % 4] }}">{{ icon(it.icon) }}<b>{{ it.title }}</b></div>{% endfor %}</div>
-        <p class="cx-note cx-bad">نفس بيانات الطالب تُكتب في كل أداة</p>
+        <p class="cx-note cx-bad">{{ t('نفس بيانات الطالب تُكتب في كل أداة') }}</p>
       </div>
       <div class="st-flow" aria-hidden="true"></div>
-      <div class="st-core rv"><span class="st-tag">إدخال مرة واحدة</span></div>
+      <div class="st-core rv"><span class="st-tag">{{ t('إدخال مرة واحدة') }}</span></div>
       <div class="hub">
         <svg class="hub-lines" viewBox="0 0 100 100" aria-hidden="true">
           <path d="M50 50 L50 11"/><path d="M50 50 L84 30"/><path d="M50 50 L84 70"/><path d="M50 50 L50 89"/><path d="M50 50 L16 70"/><path d="M50 50 L16 30"/>
         </svg>
-        <div class="hub-core"><span>ملف الطالب</span></div>
+        <div class="hub-core"><span>{{ t('ملف الطالب') }}</span></div>
         {% for m in mods[:6] %}
         <div class="hub-node hn{{ loop.index }}" tabindex="0">
           <div class="hub-ic">{{ icon(m.icon) }}</div>
@@ -43,26 +47,26 @@
     {% set chips = (c['items'] or [])[:4] %}
     <div class="cx rv">
       <div class="cx-panel cx-chaos">
-        <h3 class="cx-title">قبل: أدوات متفرقة</h3>
+        <h3 class="cx-title">{{ t('قبل: أدوات متفرقة') }}</h3>
         <div class="cx-stage">
           <svg class="cx-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
             <path d="M25 25 L75 75"/><path d="M75 25 L25 75"/><path d="M25 25 Q50 2 75 25"/><path d="M25 75 Q50 98 75 75"/><path d="M25 25 Q4 50 25 75"/><path d="M75 25 Q96 50 75 75"/>
           </svg>
           <div class="cx-grid">{% for it in chips %}<div class="cx-chip" style="--r:{{ ['-3deg','2deg','3deg','-2deg'][loop.index0 % 4] }}">{{ icon(it.icon) }}<b>{{ it.title }}</b></div>{% endfor %}</div>
         </div>
-        <p class="cx-note cx-bad">نفس بيانات الطالب تُكتب في كل أداة</p>
+        <p class="cx-note cx-bad">{{ t('نفس بيانات الطالب تُكتب في كل أداة') }}</p>
       </div>
       <div class="cx-arrow" aria-hidden="true"></div>
       <div class="cx-panel cx-order">
-        <h3 class="cx-title">بعد: منصة واحدة</h3>
+        <h3 class="cx-title">{{ t('بعد: منصة واحدة') }}</h3>
         <div class="cx-stage">
           <svg class="cx-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
             <path d="M50 50 L25 25"/><path d="M50 50 L75 25"/><path d="M50 50 L25 75"/><path d="M50 50 L75 75"/>
           </svg>
           <div class="cx-grid">{% for it in chips %}<div class="cx-chip cx-icononly" aria-label="{{ it.title }}">{{ icon(it.icon) }}</div>{% endfor %}</div>
-          <div class="cx-core">ملف الطالب</div>
+          <div class="cx-core">{{ t('ملف الطالب') }}</div>
         </div>
-        <p class="cx-note cx-good">إدخال مرة واحدة</p>
+        <p class="cx-note cx-good">{{ t('إدخال مرة واحدة') }}</p>
       </div>
     </div>
     {% else %}

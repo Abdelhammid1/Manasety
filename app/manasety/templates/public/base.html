@@ -9,7 +9,7 @@
 {% set _title = (self.title() | trim) %}
 <title>{% block title %}{{ setting('brand_name_ar') }}{% endblock %}</title>
 <meta name="description" content="{% block description %}{% endblock %}">
-{% if noindex or preview or config.STAGING %}<meta name="robots" content="noindex, nofollow">{% endif %}
+{% if noindex or preview or config.STAGING or english_draft() %}<meta name="robots" content="noindex, nofollow">{% endif %}
 {% if canonical %}<link rel="canonical" href="{{ canonical }}">{% endif %}
 {% block hreflang %}{% endblock %}
 <meta property="og:type" content="{% block og_type %}website{% endblock %}">
@@ -33,12 +33,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="{{ url_for('static', filename='css/site.css') }}?v=3">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/site.css') }}?v=5">
 {% for item in schema or [] %}{{ jsonld(item) }}
 {% endfor %}
 <script>document.documentElement.classList.add('js');try{if(!sessionStorage.getItem('pl_seen'))document.documentElement.classList.add('pl')}catch(e){document.documentElement.classList.add('pl')}</script>
 </head>
-{% set on_biz = request.path.startswith('/business') or (article is defined and article and article.audience == 'business') %}
+{% set LAY = page_layout() %}
+{% set on_biz = ((LAY.style == 'business') if LAY.style else (plain_path().startswith('/business') or (article is defined and article and article.audience == 'business') or ((g.get('page_slug') or '') in ((setting('business_pages') or '')|lines)))) %}
 <body{% if on_biz %} class="biz"{% endif %}>
 <div id="preloader">
   <svg viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
@@ -81,14 +82,19 @@
   <div class="preloader-text" dir="ltr"><span style="animation-delay:.1s">M</span><span style="animation-delay:.18s">a</span><span style="animation-delay:.26s">n</span><span style="animation-delay:.34s">a</span><span style="animation-delay:.42s">s</span><span style="animation-delay:.5s">e</span><span style="animation-delay:.58s">t</span><span style="animation-delay:.66s">y</span></div>
 </div>
 {{ icon_sprite() }}
-<a class="skip" href="#main">تخطَّ إلى المحتوى</a>
-{% if preview %}<div class="preview-bar">معاينة مسودة — هذه النسخة غير منشورة</div>{% endif %}
+<a class="skip" href="#main">{{ t('تخطَّ إلى المحتوى') }}</a>
+{% if english_draft() and not preview %}<div class="preview-bar">{{ t('نسخة إنجليزية غير منشورة: تظهر لفريق منصتي فقط حتى تفعيلها من الإعدادات.') }}</div>{% endif %}
+{% if preview %}<div class="preview-bar">{{ t('معاينة مسودة — هذه النسخة غير منشورة') }}</div>{% endif %}
 
-{% set on_biz = request.path.startswith('/business') or (article is defined and article and article.audience == 'business') %}
+{% set LAY = page_layout() %}
+{% set on_biz = ((LAY.style == 'business') if LAY.style else (plain_path().startswith('/business') or (article is defined and article and article.audience == 'business') or ((g.get('page_slug') or '') in ((setting('business_pages') or '')|lines)))) %}
+{% set on_inst = plain_path().startswith('/training-institutes') or (g.get('page_slug') == 'training-institutes') %}
+{% set on_bizpage = (g.get('page_slug') or '') in ((setting('business_pages') or '')|lines) %}
+{% set _alt = lang_switch_url() %}{% set _alt_lang = 'ar' if lang == 'en' else 'en' %}{% set _alt_name = 'العربية' if lang == 'en' else 'English' %}{% set _alt_label = t('تغيير اللغة إلى العربية') if lang == 'en' else t('تغيير اللغة إلى الإنجليزية') %}
 <header class="site-header">
-{% if setting('show_domain_switch') %}<div class="dom-switch"><div class="wrap"><a class="ds-edu{{ '' if on_biz else ' on' }}" href="/"><span class="ds-ic">🎓</span><span><b>منصتي للتعليم</b><small>أنظمة المدارس والمعاهد</small></span></a><a class="ds-biz{{ ' on' if on_biz else '' }}" href="/business"><span class="ds-ic">🏢</span><span><b>منصتي للأعمال</b><small>أنظمة إدارية مخصصة للشركات</small></span></a></div></div>{% endif %}
+{% if setting('show_domain_switch') %}<div class="dom-switch"><div class="wrap"><a class="ds-edu{{ '' if on_biz else ' on' }}" href="{{ '/'|lhref }}"><span class="ds-ic">🎓</span><span><b>{{ t('منصتي للتعليم') }}</b><small>{{ t('أنظمة المدارس والمعاهد') }}</small></span></a><a class="ds-biz{{ ' on' if on_biz else '' }}" href="{{ '/business'|lhref }}"><span class="ds-ic">🏢</span><span><b>{{ t('منصتي للأعمال') }}</b><small>{{ t('أنظمة إدارية مخصصة للشركات') }}</small></span></a></div></div>{% endif %}
   <div class="wrap nav">
-    <a class="brand" href="/" aria-label="{{ setting('brand_name_ar') }} — الصفحة الرئيسية">
+    <a class="brand" href="{{ '/'|lhref }}" aria-label="{{ setting('brand_name_ar') }} {{ t('— الصفحة الرئيسية') }}">
       <svg class="brand-logo" aria-hidden="true" focusable="false" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg" >
       <defs>
         <linearGradient id="hd-ng1" x1="0" y1="132" x2="463" y2="132" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#1e3a8a"/><stop offset="1" stop-color="#1849A9"/></linearGradient>
@@ -128,14 +134,15 @@
     </svg>
       <span>{{ setting('brand_name_ar') }}<span class="brand-blink" aria-hidden="true">_</span></span>
     </a>
-    <nav aria-label="القائمة الرئيسية">
-      <ul class="nav-links">{% for item in (setting('nav_biz') if on_biz and setting('nav_biz') else setting('nav')) %}<li><a href="{{ item.href }}">{{ item.label }}</a></li>{% endfor %}</ul>
+    <nav aria-label="{{ t('القائمة الرئيسية') }}">
+      <ul class="nav-links">{% for item in (LAY.nav if LAY.nav else (setting('nav_biz_pages') if on_bizpage and setting('nav_biz_pages') else (setting('nav_biz') if on_biz and setting('nav_biz') else (setting('nav_institutes') if on_inst and setting('nav_institutes') else setting('nav'))))) %}<li><a href="{{ item.href|lhref }}">{{ item.label }}</a></li>{% endfor %}</ul>
     </nav>
-    <a class="btn btn-primary btn-sm" href="{{ (setting('nav_cta_href_biz') if on_biz and setting('nav_cta_href_biz') else setting('nav_cta_href')) }}">{{ (setting('nav_cta_label_biz') if on_biz and setting('nav_cta_label_biz') else setting('nav_cta_label')) }}</a>
-    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="فتح القائمة">{{ icon('menu') }}</button>
+    <a class="btn btn-primary btn-sm" href="{{ (LAY.cta_href if LAY.cta_href else (setting('nav_cta_href_biz') if on_biz and setting('nav_cta_href_biz') else (setting('nav_cta_href_institutes') if on_inst and setting('nav_cta_href_institutes') else setting('nav_cta_href'))))|lhref }}">{{ (LAY.cta_label if LAY.cta_label else (setting('nav_cta_label_biz') if on_biz and setting('nav_cta_label_biz') else (setting('nav_cta_label_institutes') if on_inst and setting('nav_cta_label_institutes') else setting('nav_cta_label')))) }}</a>
+    {% if _alt %}<a class="lang-switch" href="{{ _alt }}" hreflang="{{ _alt_lang }}" lang="{{ _alt_lang }}" data-lang-switch aria-label="{{ t(_alt_label) }}">{{ _alt_name }}</a>{% endif %}
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="{{ t('فتح القائمة') }}">{{ icon('menu') }}</button>
   </div>
   <div class="mobile-menu" id="mobile-menu">
-    <ul>{% for item in (setting('nav_biz') if on_biz and setting('nav_biz') else setting('nav')) %}<li><a href="{{ item.href }}">{{ item.label }}</a></li>{% endfor %}</ul>
+    <ul>{% for item in (LAY.nav if LAY.nav else (setting('nav_biz_pages') if on_bizpage and setting('nav_biz_pages') else (setting('nav_biz') if on_biz and setting('nav_biz') else (setting('nav_institutes') if on_inst and setting('nav_institutes') else setting('nav'))))) %}<li><a href="{{ item.href|lhref }}">{{ item.label }}</a></li>{% endfor %}</ul>
   </div>
 </header>
 
@@ -143,21 +150,21 @@
 {% block content %}{% endblock %}
 </main>
 
-{% if setting('show_domain_switch') and request.path in ('/', '/business') %}
+{% if setting('show_domain_switch') and plain_path() in ('/', '/business') %}
 <section class="dom-cta dv2"><div class="wrap">
-  <div class="dv2-top"><span class="dv2-root">منصتي</span><svg class="dv2-fork" viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="dvg1" x1="0" x2="1"><stop offset="0" stop-color="#2563EB"/><stop offset="1" stop-color="#1849A9"/></linearGradient></defs><path d="M50 0 V8 C50 24 75 20 75 40" stroke="#2563EB"/><path d="M50 0 V8 C50 24 25 20 25 40" stroke="#1849A9"/></svg></div>
+  <div class="dv2-top"><span class="dv2-root">{{ t('منصتي') }}</span><svg class="dv2-fork" viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="dvg1" x1="0" x2="1"><stop offset="0" stop-color="#2563EB"/><stop offset="1" stop-color="#1849A9"/></linearGradient></defs><path d="M50 0 V8 C50 24 75 20 75 40" stroke="#2563EB"/><path d="M50 0 V8 C50 24 25 20 25 40" stroke="#1849A9"/></svg></div>
   <div class="dv2-grid">
     <div class="dv2-card dv2-edu{{ ' here' if not on_biz else '' }}">
       <span class="dv2-ic">🎓</span>
-      <h3>منصتي للتعليم</h3>
-      <p class="dv2-d">أنظمة إدارة التعليم والتدريب الإلكتروني</p>
-      {% if on_biz %}<a class="dv2-go" href="/">المدارس ←</a>{% else %}<span class="dv2-here">أنت هنا</span>{% endif %}
+      <h3>{{ t('منصتي للتعليم') }}</h3>
+      <p class="dv2-d">{{ t('أنظمة إدارة التعليم والتدريب الإلكتروني') }}</p>
+      {% if on_biz %}<a class="dv2-go" href="{{ '/'|lhref }}">{{ t('المدارس ←') }}</a>{% else %}<span class="dv2-here">{{ t('أنت هنا') }}</span>{% endif %}
     </div>
     <div class="dv2-card dv2-biz{{ ' here' if on_biz else '' }}">
       <span class="dv2-ic">🏢</span>
-      <h3>منصتي للأعمال</h3>
-      <p class="dv2-d">أنظمة إدارية مخصصة للشركات والأنشطة</p>
-      {% if on_biz %}<span class="dv2-here">أنت هنا</span>{% else %}<a class="dv2-go" href="/business">الأنظمة الإدارية ←</a>{% endif %}
+      <h3>{{ t('منصتي للأعمال') }}</h3>
+      <p class="dv2-d">{{ t('أنظمة إدارية مخصصة للشركات والأنشطة') }}</p>
+      {% if on_biz %}<span class="dv2-here">{{ t('أنت هنا') }}</span>{% else %}<a class="dv2-go" href="{{ '/business'|lhref }}">{{ t('الأنظمة الإدارية ←') }}</a>{% endif %}
     </div>
   </div>
 </div></section>
@@ -168,30 +175,35 @@
     <div class="foot">
       <div>
         <div class="foot-brand">{{ setting('footer_brand') }}</div>
-        <p>{{ (setting('footer_about_biz') if on_biz and setting('footer_about_biz') else setting('footer_about')) }}</p>
-        <span class="legal-label">الكيان القانوني المعتمد:</span>
+        <p>{{ (LAY.footer_about if LAY.footer_about else (setting('footer_about_biz') if on_biz and setting('footer_about_biz') else setting('footer_about'))) }}</p>
+        <span class="legal-label">{{ t('الكيان القانوني المعتمد:') }}</span>
         <span class="legal-name">{{ setting('legal_name_en') }}</span>
       </div>
       <div>
-        <h2>بيانات التواصل الرسمية</h2>
+        <h2>{{ t('بيانات التواصل الرسمية') }}</h2>
         <ul>
           <li><a href="mailto:{{ setting('email') }}">{{ icon('mail') }} {{ setting('email') }}</a></li>
-          {% if setting('show_whatsapp_sa') %}<li>واتساب السعودية: <a href="{{ whatsapp_url('sa') }}" class="num" rel="noopener">{{ setting('whatsapp_sa_display') }}</a></li>{% endif %}
-          {% if setting('show_whatsapp_eg') %}<li>واتساب مصر: <a href="{{ whatsapp_url('eg') }}" class="num" rel="noopener">{{ setting('whatsapp_eg_display') }}</a></li>{% endif %}
-          {% if setting('show_phone_line') %}<li>اتصال: <a href="tel:+{{ setting('whatsapp_eg') }}" class="num">مصر</a> · <a href="tel:+{{ setting('whatsapp_sa') }}" class="num">السعودية</a></li>{% endif %}
+          {% if setting('show_whatsapp_sa') %}<li>{{ t('واتساب السعودية:') }} <a href="{{ whatsapp_url('sa') }}" class="num" rel="noopener">{{ setting('whatsapp_sa_display') }}</a></li>{% endif %}
+          {% if setting('show_whatsapp_eg') %}<li>{{ t('واتساب مصر:') }} <a href="{{ whatsapp_url('eg') }}" class="num" rel="noopener">{{ setting('whatsapp_eg_display') }}</a></li>{% endif %}
+          {% if setting('show_phone_line') %}<li>{{ t('اتصال:') }} <a href="tel:+{{ setting('whatsapp_eg') }}" class="num">{{ t('مصر') }}</a> · <a href="tel:+{{ setting('whatsapp_sa') }}" class="num">{{ t('السعودية') }}</a></li>{% endif %}
           {% if setting('footer_note') and setting('show_footer_note') %}<li class="note">{{ setting('footer_note') }}</li>{% endif %}
         </ul>
       </div>
       <div>
-        <h2>الوثائق القانونية</h2>
+        <h2>{{ t('الوثائق القانونية') }}</h2>
         <ul>
-          {% for item in setting('footer_links') %}<li><a href="{{ item.href }}">{{ item.label }}</a></li>{% endfor %}
-          {% for f in files_for('footer') %}<li><a href="{{ f.href }}">{{ f.display_name }} {{ icon('download') }}</a></li>{% endfor %}
+          {% for item in setting('footer_links') %}<li><a href="{{ item.href|lhref }}">{{ item.label }}</a></li>{% endfor %}
+          {% for f in files_for('footer') %}<li><a href="{{ f.href }}">{{ loc(f, 'display_name') }} {{ icon('download') }}</a></li>{% endfor %}
         </ul>
       </div>
+      {% set ns = namespace(items=[]) %}{% for item in (LAY.footer_pages if LAY.footer_pages else (setting('extra_pages') or [])) %}{% if page_is_live(item.href) %}{% set ns.items = ns.items + [item] %}{% endif %}{% endfor %}
+      {% if ns.items and not LAY.footer_pages_hide %}<div>
+        <h2>{{ t('صفحاتنا') }}</h2>
+        <ul>{% for item in ns.items %}<li><a href="{{ item.href|lhref }}">{{ item.label }}</a></li>{% endfor %}</ul>
+      </div>{% endif %}
       {% if setting('show_footer_social') %}
       <div>
-        <h2>تواصل معنا رقميًا</h2>
+        <h2>{{ t('تواصل معنا رقميًا') }}</h2>
         <p>{{ setting('footer_social_text') }}</p>
         <span dir="ltr">{{ setting('social_handle') }}</span>
         <div class="socials">{% for s in setting('social') %}<a href="{{ s.url }}" rel="noopener" target="_blank">{{ s.name }}</a>{% endfor %}</div>
@@ -199,8 +211,8 @@
       {% endif %}
     </div>
     <div class="foot-bottom">
-      <span>{% if setting('show_footer_copyright') %}© {{ now_year() }} {{ setting('legal_name_en') }}. جميع الحقوق محفوظة. · {% endif %}سجل تجاري <bdi class="num">{{ setting('commercial_registration') }}</bdi> · {{ setting('address_ar') }}</span>
-      <span>{{ (setting('footer_tagline_biz') if on_biz and setting('footer_tagline_biz') else setting('footer_tagline')) }}</span>
+      <span>{% if setting('show_footer_copyright') %}© {{ now_year() }} {{ setting('legal_name_en') }}{{ t('. جميع الحقوق محفوظة. ·') }} {% endif %}{{ t('سجل تجاري') }} <bdi class="num">{{ setting('commercial_registration') }}</bdi> · {{ setting('address_ar') }}</span>
+      <span>{{ (LAY.footer_tagline if LAY.footer_tagline else (setting('footer_tagline_biz') if on_biz and setting('footer_tagline_biz') else setting('footer_tagline'))) }}</span>
     </div>
   </div>
 </footer>
@@ -210,8 +222,8 @@
 {% endif %}
 
 <div class="wa-float" id="wa-float" hidden>
-  {% if setting('whatsapp_bubble') %}<a class="wa-bubble" href="{{ whatsapp_url('eg') }}" rel="noopener" data-wa="eg" data-wa-source="bubble">{{ setting('whatsapp_bubble') }}</a>{% endif %}
-  <span class="wa-wrap"><a class="wa-btn" href="{{ whatsapp_url('eg') }}" rel="noopener" data-wa="eg" data-wa-source="float" aria-label="واتساب">{{ icon('whatsapp') }}</a><button class="wa-x" type="button" aria-label="إغلاق">&times;</button></span>
+  {% if (LAY.whatsapp_bubble or setting('whatsapp_bubble')) %}<a class="wa-bubble" href="{{ whatsapp_url('eg') }}" rel="noopener" data-wa="eg" data-wa-source="bubble">{{ LAY.whatsapp_bubble or setting('whatsapp_bubble') }}</a>{% endif %}
+  <span class="wa-wrap"><a class="wa-btn" href="{{ whatsapp_url('eg') }}" rel="noopener" data-wa="eg" data-wa-source="float" aria-label="{{ t('واتساب') }}">{{ icon('whatsapp') }}</a><button class="wa-x" type="button" aria-label="{{ t('إغلاق') }}">&times;</button></span>
 </div>
 <script>
 (function(){var w=document.getElementById('wa-float');if(!w)return;var closed=false;try{closed=sessionStorage.getItem('wa_closed')==='1'}catch(e){}
@@ -221,15 +233,15 @@ w.querySelector('.wa-x').addEventListener('click',function(){w.hidden=true;try{s
 
 {% if needs_consent_banner() %}
 <div class="cookie-bar" id="cookie-bar" hidden>
-  <p>{{ setting('cookie_banner_text') }} <a href="/privacy.html">سياسة الخصوصية</a></p>
-  <button class="btn btn-primary btn-sm" type="button" data-consent="yes">موافق</button>
-  <button class="btn btn-sm" style="background:transparent;color:#fff;border-color:rgba(255,255,255,.3)" type="button" data-consent="no">رفض</button>
+  <p>{{ setting('cookie_banner_text') }} <a href="/privacy.html">{{ t('سياسة الخصوصية') }}</a></p>
+  <button class="btn btn-primary btn-sm" type="button" data-consent="yes">{{ t('موافق') }}</button>
+  <button class="btn btn-sm" style="background:transparent;color:#fff;border-color:rgba(255,255,255,.3)" type="button" data-consent="no">{{ t('رفض') }}</button>
 </div>
 {% endif %}
 
 {% for it in integrations_for('body_end') %}{% if it.requires_consent %}<template data-consent-code="{{ it.id }}">{{ it.code|safe }}</template>{% else %}{{ it.code|safe }}{% endif %}
 {% endfor %}
 <script>(function(){var p=document.getElementById('preloader');if(!p)return;var done=false;function go(){if(done)return;done=true;p.classList.add('hide');try{sessionStorage.setItem('pl_seen','1')}catch(e){}setTimeout(function(){document.documentElement.classList.remove('pl')},800)}if(document.readyState==='complete')setTimeout(go,1200);else window.addEventListener('load',function(){setTimeout(go,1200)});setTimeout(go,3500)})();</script>
-<script src="{{ url_for('static', filename='js/site.js') }}?v=2" defer></script>
+<script src="{{ url_for('static', filename='js/site.js') }}?v=4" defer></script>
 </body>
 </html>

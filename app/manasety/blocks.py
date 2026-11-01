@@ -32,6 +32,21 @@ _CTA = [
 ]
 
 BLOCK_TYPES: dict[str, dict[str, Any]] = {
+    "page_head": {
+        "label": "عنوان صفحة (H1)",
+        "fields": [*_HEAD],
+    },
+    "contact": {
+        "label": "نموذج التواصل وبيانات التواصل (من الإعدادات)",
+        "fields": [
+            F(key="title", kind="textarea", label="عنوان النموذج"),
+            F(key="subtitle", kind="textarea", label="نص تحت العنوان"),
+            F(key="name_placeholder", kind="text", label="مثال حقل الاسم"),
+            F(key="phone_placeholder", kind="text", label="مثال حقل الهاتف"),
+            F(key="notes_placeholder", kind="text", label="مثال حقل الوصف"),
+            F(key="submit_label", kind="text", label="نص زر الإرسال"),
+        ],
+    },
     "hero": {
         "label": "Hero (العنوان الرئيسي)",
         "fields": [
@@ -53,7 +68,7 @@ BLOCK_TYPES: dict[str, dict[str, Any]] = {
         "label": "بطاقات (المشكلة / الحل)",
         "fields": [
             *_HEAD,
-            F(key="variant", kind="select", label="الشكل", choices={"chain": "سلسلة (انفوجرافيك)", "tiles": "بلاطات (انفوجرافيك)", "story": "قصة واحدة: فوضى ← منظومة", "chaos": "فوضى ← نظام (انفوجرافيك)", "problem": "مشكلة (أحمر)", "solution": "حل (أزرق)"}),
+            F(key="variant", kind="select", label="الشكل", choices={"chain": "سلسلة (انفوجرافيك)", "tiles": "بلاطات (انفوجرافيك)", "story": "قصة واحدة: فوضى ← منظومة", "chaos": "فوضى ← نظام (انفوجرافيك)", "problem": "مشكلة (أحمر)", "solution": "حل (أزرق)", "steps": "3 خطوات (أرقام وخط يوصلهم)"}),
             F(key="items", kind="list", label="البطاقات", fields=[
                 _ICON, F(key="title", kind="text", label="العنوان"), F(key="text", kind="textarea", label="النص")]),
             F(key="modules", kind="list", label="موديولات الحل", fields=[
@@ -79,6 +94,7 @@ BLOCK_TYPES: dict[str, dict[str, Any]] = {
             F(key="eyebrow", kind="text", label="سطر علوي"),
             F(key="title", kind="textarea", label="العنوان"),
             F(key="core_label", kind="text", label="اسم المنصة الأم في الرسم"),
+            F(key="url_text", kind="text", label="عنوان الموقع في شريط المتصفح بالرسم (فاضي = school-name.manasety.ai)"),
             F(key="ring", kind="list", label="الموديولات حول المنصة", fields=[
                 F(key="label", kind="text", label="الاسم"), F(key="on", kind="bool", label="مُضاء في الرسم")]),
             F(key="points", kind="list", label="النقاط", fields=[
@@ -90,6 +106,8 @@ BLOCK_TYPES: dict[str, dict[str, Any]] = {
         "fields": [
             *_HEAD,
             F(key="variant", kind="select", label="الشكل", choices={"": "كروت (الحالي)", "flow": "مسار بقرار بشري (انفوجرافيك)"}),
+            F(key="tools_icon", kind="select", label="أيقونة الطبقة 1 (فاضي = قبعة التخرج)", choices={"": "الافتراضي", **{i: i for i in ICON_CHOICES}}),
+            F(key="rows_icon", kind="select", label="أيقونة الطبقة 2 (فاضي = الافتراضي)", choices={"": "الافتراضي", **{i: i for i in ICON_CHOICES}}),
             F(key="tools_title", kind="text", label="الطبقة 1: العنوان"),
             F(key="tools_subtitle", kind="text", label="الطبقة 1: سطر تحت العنوان"),
             F(key="tools", kind="list", label="الطبقة 1: الأدوات", fields=[_ICON, F(key="text", kind="text", label="الأداة")]),
@@ -122,6 +140,7 @@ BLOCK_TYPES: dict[str, dict[str, Any]] = {
             F(key="label_challenge", kind="text", label="عنوان «التحدي»"),
             F(key="label_built", kind="text", label="عنوان «ما بنيناه»"),
             F(key="label_now", kind="text", label="عنوان «ما يعمل الآن»"),
+            F(key="case_ids", kind="textarea", label="أرقام دراسات حالة محددة (رقم لكل سطر) — فارغ = كل الدراسات"),
             F(key="show_files", kind="bool", label="إظهار الملفات المخصصة لهذا القسم"),
         ],
     },
@@ -184,7 +203,7 @@ BLOCK_TYPES: dict[str, dict[str, Any]] = {
             F(key="eyebrow", kind="text", label="سطر علوي"),
             F(key="title", kind="textarea", label="العنوان"),
             F(key="article_slugs", kind="textarea", label="روابط مقالات محددة (slug لكل سطر) — فارغ = الأحدث"),
-            F(key="count", kind="select", label="العدد", choices={"3": "3", "2": "2", "1": "1"}),
+            F(key="count", kind="select", label="العدد", choices={"3": "3", "2": "2", "1": "1", "4": "4", "6": "6"}),
             F(key="more_label", kind="text", label="نص رابط المدونة"),
         ],
     },
@@ -195,11 +214,20 @@ BLOCK_TYPES: dict[str, dict[str, Any]] = {
             F(key="fact_keys", kind="textarea", label="مفاتيح الأرقام (مفتاح لكل سطر)"),
         ],
     },
+    "system_detail": {
+        "label": "تفاصيل نظام (نص + كروت جانبية من «الإعلانات الجانبية»)",
+        "fields": [
+            F(key="eyebrow", kind="text", label="سطر علوي"),
+            F(key="title", kind="textarea", label="العنوان"),
+            F(key="body", kind="rich", label="النص"),
+        ],
+    },
     "rich_text": {
         "label": "نص حر",
         "fields": [
             F(key="title", kind="textarea", label="العنوان"),
             F(key="body", kind="rich", label="النص"),
+            *_CTA,
         ],
     },
 }

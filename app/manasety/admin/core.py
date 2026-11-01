@@ -35,7 +35,8 @@ def dashboard():
     recent = db.session.query(AuditLog).order_by(AuditLog.id.desc()).limit(8).all() if current_user.can("__admin_only__") else []
     latest_leads = db.session.query(Lead).order_by(Lead.id.desc()).limit(5).all() if current_user.can("leads") else []
     missing_env = [k for k in REQUIRED_LEAD_ENV if not current_app.config.get(k)]
-    return render_template("admin/dashboard.html", stats=stats, page=page, draft_differs=draft_differs,
+    extra_pages = db.session.query(Page).filter(Page.slug.notin_(["home", "business"])).order_by(Page.id).all()
+    return render_template("admin/dashboard.html", extra_pages=extra_pages, stats=stats, page=page, draft_differs=draft_differs,
                            recent=recent, latest_leads=latest_leads, missing_env=missing_env)
 
 
@@ -61,7 +62,7 @@ SETTINGS_FORM = [
         ("whatsapp_sa", "واتساب السعودية (أرقام فقط)", "text"), ("whatsapp_sa_display", "واتساب السعودية (للعرض)", "text"),
         ("whatsapp_bubble", "نص فقاعة واتساب (فارغ = بدون فقاعة)", "text"),
         ("whatsapp_prefill", "رسالة واتساب الجاهزة", "text"),
-        ("whatsapp_prefill_biz", "رسالة واتساب الجاهزة (صفحة الأعمال)", "text"),
+        ("whatsapp_prefill_biz", "رسالة واتساب الجاهزة (صفحة الأعمال)", "text"), ("whatsapp_prefill_institutes", "رسالة الواتساب (صفحة المعاهد)", "textarea"),
         ("show_whatsapp_sa", "إظهار واتساب السعودية في التذييل", "bool"),
         ("show_whatsapp_eg", "إظهار واتساب مصر في التذييل", "bool"),
         ("show_phone_line", "إظهار سطر الاتصال في التذييل", "bool"),
@@ -75,7 +76,25 @@ SETTINGS_FORM = [
         ("nav", "عناصر شريط التنقل", "links"), ("nav_cta_label", "زر الشريط", "text"), ("nav_cta_href", "رابط زر الشريط", "text"),
         ("nav_biz", "عناصر قائمة صفحة الأعمال", "links"),
         ("nav_cta_label_biz", "زر القائمة (الأعمال)", "text"), ("nav_cta_href_biz", "رابط زر القائمة (الأعمال)", "text"),
-        ("footer_links", "روابط الوثائق القانونية في التذييل", "links"), ("social", "حسابات التواصل", "social"),
+        ("footer_links", "روابط الوثائق القانونية في التذييل", "links"), ("extra_pages", "صفحات إضافية (في التذييل فقط) — بتظهر بعد نشر الصفحة", "links"), ("business_pages", "صفحات الأنظمة التي تظهر بشكل الأعمال (رابط كل صفحة في سطر، مثل marsoud)", "textarea"), ("nav_biz_pages", "القائمة العلوية لصفحات الأنظمة (الأعمال)", "links"), ("nav_institutes", "القائمة العلوية لصفحة المعاهد (فاضي = قائمة المدارس)", "links"), ("nav_cta_label_institutes", "زر القائمة العلوية لصفحة المعاهد: النص", "text"), ("nav_cta_href_institutes", "زر القائمة العلوية لصفحة المعاهد: الرابط", "text"), ("social", "حسابات التواصل", "social"),
+    ]),
+    ("النسخة الإنجليزية (تظهر في /en/)", [
+        ("footer_brand_en", "اسم التذييل", "text"), ("footer_about_en", "نبذة التذييل", "textarea"),
+        ("footer_tagline_en", "سطر التذييل", "text"), ("footer_note_en", "سطر الخدمة عن بُعد", "text"),
+        ("footer_social_text_en", "نص عمود التواصل", "textarea"),
+        ("nav_en", "عناصر شريط التنقل", "links"), ("nav_cta_label_en", "زر الشريط", "text"),
+        ("footer_links_en", "روابط الوثائق القانونية", "links"), ("extra_pages_en", "صفحات إضافية في التذييل", "links"),
+        ("nav_biz_en", "قائمة صفحة الأعمال", "links"), ("nav_cta_label_biz_en", "زر القائمة (الأعمال)", "text"),
+        ("nav_biz_pages_en", "قائمة صفحات الأنظمة (فاضي = قائمة الأعمال)", "links"),
+        ("nav_institutes_en", "قائمة صفحة المعاهد (فاضي = القائمة العامة)", "links"),
+        ("nav_cta_label_institutes_en", "زر قائمة المعاهد", "text"),
+        ("footer_about_biz_en", "نبذة التذييل (الأعمال)", "textarea"), ("footer_tagline_biz_en", "سطر التذييل (الأعمال)", "text"),
+        ("whatsapp_prefill_en", "رسالة واتساب الجاهزة", "text"), ("whatsapp_prefill_biz_en", "رسالة واتساب (الأعمال)", "text"),
+        ("whatsapp_prefill_institutes_en", "رسالة واتساب (المعاهد)", "textarea"), ("whatsapp_bubble_en", "فقاعة واتساب", "text"),
+        ("thank_you_title_en", "عنوان صفحة الشكر", "text"), ("thank_you_text_en", "نص صفحة الشكر", "textarea"),
+        ("cookie_banner_text_en", "شريط الكوكيز", "text"),
+        ("blog_title_en", "عنوان المدونة", "text"), ("blog_description_en", "وصف المدونة", "textarea"),
+        ("blog_title_biz_en", "عنوان مدونة الأعمال", "text"), ("blog_description_biz_en", "وصف مدونة الأعمال", "textarea"),
     ]),
     ("صفحة الشكر والكوكيز", [
         ("thank_you_title", "عنوان صفحة الشكر", "text"), ("thank_you_text", "نص صفحة الشكر", "textarea"),

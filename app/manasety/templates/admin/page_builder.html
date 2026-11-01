@@ -11,6 +11,7 @@
   </div>
   <a class="btn" href="{{ url_for('public.preview', token=page.preview_token, lang=lang) }}" target="_blank" rel="noopener">معاينة بالرابط</a>
   <a class="btn" href="{{ url_for('admin_content.page_seo', slug=page.slug) }}">SEO الصفحة</a>
+  <a class="btn" href="{{ url_for('admin_content.page_layout_edit', slug=page.slug) }}">القائمة والتذييل والواتساب</a>
   <a class="btn" href="{{ url_for('admin_content.revisions', slug=page.slug) }}">النسخ السابقة</a>
   <form class="inline" method="post" action="{{ url_for('admin_content.publish', slug=page.slug) }}" data-confirm="نشر المسودة الحالية للزوار الآن؟">{{ csrf() }}<button class="btn primary" type="submit">نشر التغييرات</button></form>
 </div>

@@ -1,6 +1,6 @@
 {% extends "public/base.html" %}
-{% block title %}تم استلام طلبك | منصتي{% endblock %}
-{% block description %}تم استلام طلبك بنجاح.{% endblock %}
+{% block title %}{{ t('تم استلام طلبك | منصتي') }}{% endblock %}
+{% block description %}{{ t('تم استلام طلبك بنجاح.') }}{% endblock %}
 {% set noindex = True %}
 {% block content %}
 <div class="center-page">
@@ -8,7 +8,7 @@
     <div class="ibox">{{ icon('check') }}</div>
     <h1 style="font-size:30px">{{ setting('thank_you_title') }}</h1>
     <p style="color:var(--ink-2);max-width:520px;margin:0 auto 24px">{{ setting('thank_you_text') }}</p>
-    <a class="btn btn-ghost" href="/">العودة للرئيسية</a>
+    <a class="btn btn-ghost" href="{{ '/'|lhref }}">{{ t('العودة للرئيسية') }}</a>
   </div>
 </div>
 {% endblock %}

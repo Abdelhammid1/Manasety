@@ -8,12 +8,16 @@ from __future__ import annotations
 import re
 import shutil
 from datetime import date
+import copy
 from pathlib import Path
 from typing import Any
 
 from flask import current_app
 
 from .extensions import db
+from .i18n import translate_tree
+from .i18n_catalog import CONTENT, UI
+from .settings_store import get_setting, set_setting
 from .models import (Author, CaseStudy, Category, Client, DisplayFile, Fact, FaqItem, Feature, Integration, LegalPage,
                      Page, Redirect, Section)
 from .publishing import publish_page
@@ -286,6 +290,90 @@ INTEGRATIONS = [
 ]
 
 
+ABOUT_SECTIONS = [
+    _sec("page_head", "عنوان الصفحة", "top", {
+        "eyebrow": "من نحن",
+        "title": "نبني أنظمة الإدارة من واقع العمل اليومي.",
+        "subtitle": "منصتي علامة تجارية تابعة لشركة شلبي إنتليجنس للبرمجيات وحلول الذكاء الاصطناعي. نبني أنظمة مخصصة وحلول ذكاء اصطناعي تنظّم العمليات، وتقلل العمل اليدوي، وتربط الفرق والبيانات في مكان واحد.",
+    }),
+    _sec("rich_text", "قصتنا", "story", {
+        "title": "من أنظمة القطاعات إلى المدرسة",
+        "body": "<p>قبل المدارس، بنينا أنظمة إدارة متكاملة في قطاعات أخرى: مكاتب المحاماة، والمبيعات والمستودعات، والصالات الرياضية، والفعاليات.</p>"
+                "<p>ثم بنينا منصة معهد متخصص في التدريب على اختبارات القدرات والتحصيلي وSTEP، ونقلنا ما تعلمناه إلى بنك الأسئلة والتقييم في منصتي-سكول: نظام واحد للمدرسة كلها، من القبول والحضور إلى الدرجات والفواتير والرواتب.</p>",
+    }),
+    _sec("cards", "كيف نعمل", "principles", {
+        "eyebrow": "كيف نعمل", "title": "مبادئ نلتزم بها في كل نظام نبنيه.", "subtitle": "", "variant": "solution",
+        "items": [
+            {"icon": "spark", "title": "الذكاء الاصطناعي يقترح، والإنسان يقرّر",
+             "text": "مهمة الذكاء الاصطناعي رفع الأعباء الروتينية، ويبقى القرار النهائي والاعتماد بيد الكادر البشري."},
+            {"icon": "shield", "title": "بيانات محمية ومعزولة",
+             "text": "بيانات كل مدرسة محمية ومعزولة عن أي مدرسة أخرى، ويمكن استرجاعها."},
+            {"icon": "clipboard", "title": "حسب طريقة عملك",
+             "text": "أنظمة مخصصة حسب طريقة عمل كل جهة، وتنفيذ واضح وتسليم على مراحل، ودعم وتطوير بعد التسليم."},
+        ],
+    }),
+    {**next(s for s in HOME_SECTIONS if s["block_type"] == "systems"), "anchor": "portfolio"},
+    _sec("rich_text", "دعوة للتواصل", "next", {
+        "title": "لنتحدث عن مؤسستك",
+        "body": "<p>شاركنا فكرتك أو نظامك الحالي، وسنرجع لك بخطوة واضحة.</p>",
+        "cta_label": "تواصل معنا", "cta_href": "/contact",
+    }),
+]
+
+CONTACT_SECTIONS = [
+    _sec("page_head", "عنوان الصفحة", "top", {
+        "eyebrow": "تواصل معنا",
+        "title": "لنبدأ محادثة واضحة.",
+        "subtitle": "اختر طريقة التواصل المناسبة أو أرسل تفاصيل احتياجك، وسنراجع الطلب ونتواصل معك.",
+    }),
+    _sec("contact", "نموذج وبيانات التواصل", "contact", {
+        "title": "أرسل تفاصيل احتياجك",
+        "subtitle": "اكتب لنا المطلوب بشكل مختصر، وسنرجع لك بخطوة واضحة.",
+        "name_placeholder": "مثال: أ. محمد العتيبي", "phone_placeholder": "+966 5X XXX XXXX",
+        "notes_placeholder": "وصف مختصر للاحتياج", "submit_label": "إرسال الطلب",
+    }),
+]
+
+EXTRA_PAGES = (
+    ("about", "من نحن", "About us", ABOUT_SECTIONS, {
+        "title": "من نحن | منصتي",
+        "description": "منصتي علامة تجارية تابعة لشركة شلبي إنتليجنس للبرمجيات وحلول الذكاء الاصطناعي. نبني أنظمة مخصصة وحلول ذكاء اصطناعي.",
+        "software_name": "", "og_image": ""}),
+    ("contact", "تواصل معنا", "Contact us", CONTACT_SECTIONS, {
+        "title": "تواصل معنا | منصتي",
+        "description": "تواصل مع فريق منصتي عبر الواتساب أو البريد الإلكتروني، أو أرسل تفاصيل احتياجك وسنتواصل معك.",
+        "software_name": "", "og_image": ""}),
+)
+
+
+def _seed_extra_pages(log: list[str]) -> None:
+    """Published in both languages, and added to the footer. A page that already exists is left as it is."""
+    table = {**UI, **CONTENT}
+
+    def bilingual(arabic: dict) -> dict:
+        gaps: set[str] = set()
+        english = translate_tree(arabic, table, gaps)
+        return {"ar": arabic, "en": {} if gaps else english}
+
+    for slug, title_ar, title_en, sections, seo in EXTRA_PAGES:
+        page, created = _get_or_create(Page, {"title": title_ar, "seo": bilingual(seo)}, slug=slug)
+        if not created:
+            continue
+        db.session.flush()
+        for pos, s in enumerate(sections):
+            db.session.add(Section(page_id=page.id, position=pos, is_visible=True, block_type=s["block_type"],
+                                   admin_label=s["admin_label"], anchor=s["anchor"],
+                                   content=bilingual(copy.deepcopy(s["content"]["ar"]))))
+        db.session.flush()
+        db.session.refresh(page)
+        publish_page(page, note="المحتوى الأولي")
+        for key, label in (("extra_pages", title_ar), ("extra_pages_en", title_en)):
+            links = list(get_setting(key) or [])
+            if not any(item.get("href") == f"/{slug}" for item in links):
+                set_setting(key, links + [{"label": label, "href": f"/{slug}"}])
+        log.append(f"{slug} page (published, Arabic and English)")
+
+
 def _get_or_create(model: Any, defaults: dict | None = None, **lookup: Any) -> tuple[Any, bool]:
     row = db.session.query(model).filter_by(**lookup).first()
     if row:
@@ -377,6 +465,15 @@ def seed_all(legal_dir: Path | None = None, profile_pdf: Path | None = None) -> 
         log += import_profile(profile_pdf)
 
     db.session.commit()
+    # Once only: seed is re-run on deploys, and must not bring back English someone removed from the dashboard.
+    _seed_extra_pages(log)
+    db.session.commit()
+    if not get_setting("english_seed_filled"):
+        from .services.translations import fill_english
+        set_setting("english_seed_filled", True)
+        filled = fill_english()["filled"]
+        if filled:
+            log.append(f"English text filled: {filled} (shown only once English is switched on)")
     return log
 
 

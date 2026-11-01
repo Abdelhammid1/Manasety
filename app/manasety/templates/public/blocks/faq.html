@@ -14,7 +14,7 @@
       </details>
       {% endfor %}
     </div>
-    {% if c.more_label %}<p class="faq-more"><a href="/faq">{{ c.more_label }}</a></p>{% endif %}
+    {% if c.more_label %}<p class="faq-more"><a href="{{ '/faq'|lhref }}">{{ c.more_label }}</a></p>{% endif %}
   </div>
 </section>
 {% endif %}

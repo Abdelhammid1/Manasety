@@ -1,0 +1,24 @@
+{% extends "admin/base.html" %}
+{% block title %}القائمة والتذييل والواتساب{% endblock %}\n{% block content %}
+<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap">
+  <h1 style="margin:0">القائمة والتذييل والواتساب — كل الصفحات</h1>
+  <a class="btn" href="{{ url_for('admin_core.dashboard') }}">رجوع</a>
+</div>
+<p style="margin:0 0 16px;color:#667">كل صفحة ليها إعداداتها هنا. «عامة» يعني بتستخدم الإعدادات العامة، و«مخصصة» يعني اتحفظ لها إعداد خاص.</p>
+<div style="overflow-x:auto">
+<table style="border-collapse:collapse;width:100%">
+  <tr style="text-align:right;border-bottom:2px solid #d9deea"><th style="padding:8px">الصفحة</th><th style="padding:8px">الحالة</th><th style="padding:8px">الشكل</th><th style="padding:8px">القائمة العلوية</th><th style="padding:8px">رسالة الواتساب</th><th style="padding:8px">الإعداد</th><th style="padding:8px"></th></tr>
+  {% for r in rows %}
+  <tr style="border-bottom:1px solid #e6e9f2;vertical-align:top">
+    <td style="padding:8px"><b>{{ r.page.title }}</b><br><span dir="ltr" style="color:#667">/{{ r.page.slug if r.page.slug != 'home' else '' }}</span></td>
+    <td style="padding:8px">{{ 'منشورة' if r.live else 'مسودة' }}</td>
+    <td style="padding:8px">{{ 'أعمال' if r.eff.style == 'business' else 'تعليم' }}</td>
+    <td style="padding:8px">{{ r.nav_text }}</td>
+    <td style="padding:8px">{{ (r.eff.whatsapp or '')[:60] }}</td>
+    <td style="padding:8px">{{ 'مخصصة' if r.custom else 'عامة' }}</td>
+    <td style="padding:8px"><a class="btn sm" href="{{ url_for('admin_content.page_layout_edit', slug=r.page.slug) }}">تعديل</a></td>
+  </tr>
+  {% endfor %}
+</table>
+</div>
+{% endblock %}

@@ -145,7 +145,7 @@ def _drop_autosave(aid: int) -> None:
 def _pending_autosave(art: Article, aid: int | None) -> dict | None:
     """The autosaved draft, if it is newer than the last real save and actually differs."""
     slot = _autosave_slot(aid) if aid else None
-    if slot is None or (art.updated_at and slot.created_at <= art.updated_at):
+    if slot is None or (art.updated_at and slot.created_at < art.updated_at):
         return None
     snap = slot.snapshot or {}
     if snap.get("content_html") == art.content_html and snap.get("title") == art.title:

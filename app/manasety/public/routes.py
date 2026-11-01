@@ -6,12 +6,13 @@ from email.utils import format_datetime
 from pathlib import Path
 from typing import Any, Optional
 
-from flask import (Blueprint, Response, abort, current_app, jsonify, redirect, render_template, request,
+from flask import (Blueprint, Response, abort, current_app, g, jsonify, redirect, render_template, request,
                    send_from_directory, url_for)
 from markupsafe import Markup
 
 from ..config import LEGACY_DIRS, LEGACY_FILES
 from ..extensions import csrf, db, limiter
+from ..i18n import current_lang, english_live, english_path, english_visible, snapshot_has_english, t
 from ..models import Article, Author, Category, DisplayFile, LegalPage, Page, SideCard, Tag, utcnow
 from ..publishing import (live_articles, public_faq, related_articles, section_content, visible_sections)
 from ..services import seo
@@ -21,25 +22,36 @@ from ..settings_store import all_settings, get_setting
 bp = Blueprint("public", __name__)
 
 
-def _english_enabled() -> bool:
-    return bool(get_setting("english_enabled"))
+def _english_gate() -> None:
+    """English pages are public once switched on; until then only logged-in staff can review them."""
+    if not english_visible():
+        abort(404)
 
 
 def _render_page(page: Page, snapshot: Optional[list], lang: str, preview: bool = False, path: str = "") -> str:
     if snapshot is None:
         abort(404)
+    from flask import g as _g
+    _g.page_slug = page.slug
+    _g.lang = lang  # previews pass ?lang=en on a path without the /en prefix
+    if preview:
+        _g.lang_alt = None
     s = all_settings()
     site = current_app.config["SITE_URL"]
     page_seo = ((page.seo if preview else page.published_seo) or {}).get(lang, {})
     sections = [{**sec, "c": section_content(sec, lang)} for sec in visible_sections(snapshot)]
+    if lang == "en":  # a section with no English yet stays hidden rather than rendering empty
+        sections = [sec for sec in sections if sec["c"]]
     hero = next((x["c"] for x in sections if x["block_type"] == "hero"), {})
     schema = [seo.organization_schema(s, site), seo.website_schema(s, site),
-              seo.software_schema(site, page_seo.get("software_name") or "منصتي-سكول (Manasety School)",
-                                  page_seo.get("description") or hero.get("subtitle", ""))]
+              seo.software_schema(site, page_seo.get("software_name") or t("منصتي-سكول (Manasety School)"),
+                                  page_seo.get("description") or hero.get("subtitle", ""), lang)]
     faq_items = []
     faq_section = next((x for x in sections if x["block_type"] == "faq"), None)
     if faq_section:
-        faq_items = public_faq(home_only=True, category=faq_section["c"].get("category", ""))
+        faq_items = public_faq(home_only=(page.slug in ("home", "business")), category=faq_section["c"].get("category", ""))
+        if lang == "en":
+            faq_items = [f for f in faq_items if f.question_en and f.answer_html_en]
         fs = seo.faq_schema([(f.question_en if lang == "en" and f.question_en else f.question,
                               f.answer_html_en if lang == "en" and f.answer_html_en else f.answer_html)
                              for f in faq_items])
@@ -48,8 +60,9 @@ def _render_page(page: Page, snapshot: Optional[list], lang: str, preview: bool 
     return render_template(
         "public/home.html", page=page, sections=sections, lang=lang, page_seo=page_seo, schema=schema,
         faq_items=faq_items, preview=preview,
-        canonical=site + (path or ("/en/" if lang == "en" else "/")),
-        hreflang=_english_enabled() and not path,
+        canonical=site + ("/en" if lang == "en" and path else "") + (path or ("/en/" if lang == "en" else "/")),
+        hreflang=english_live() and not preview and snapshot_has_english(snapshot),
+        path_ar=path or "/", path_en=f"/en{path}" if path else "/en/",
     )
 
 
@@ -59,18 +72,57 @@ def home():
     return _render_page(page, page.published_snapshot, "ar")
 
 
+@bp.route("/en")
+def home_en_redirect():
+    return redirect("/en/", code=301)
+
+
 @bp.route("/en/")
 def home_en():
-    if not _english_enabled():
-        abort(404)
+    _english_gate()
     page = db.session.query(Page).filter_by(slug="home").first_or_404()
+    if not snapshot_has_english(page.published_snapshot):
+        abort(404)
     return _render_page(page, page.published_snapshot, "en")
+
+
+@bp.route("/en/<slug>")
+def dynamic_page_en(slug):
+    """The English version of /business, /training-institutes and any page from the dashboard."""
+    _english_gate()
+    if slug == "home" or not _DYN_SLUG.match(slug):
+        abort(404)
+    page = db.session.query(Page).filter_by(slug=slug).first_or_404()
+    if not snapshot_has_english(page.published_snapshot):
+        abort(404)
+    return _render_page(page, page.published_snapshot, "en", path="/" + slug)
 
 
 @bp.route("/business")
 def business():
     page = db.session.query(Page).filter_by(slug="business").first_or_404()
     return _render_page(page, page.published_snapshot, "ar", path="/business")
+
+
+@bp.route("/training-institutes")
+def training_institutes():
+    page = db.session.query(Page).filter_by(slug="training-institutes").first_or_404()
+    return _render_page(page, page.published_snapshot, "ar", path="/training-institutes")
+
+
+import re as _re
+_DYN_SLUG = _re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
+
+
+@bp.route("/<slug>")
+def dynamic_page(slug):
+    """Any page created from the dashboard (admin/pages/new) is served at /<slug>."""
+    if slug in ("home", "business"):
+        abort(404)
+    page = db.session.query(Page).filter_by(slug=slug).first() if _DYN_SLUG.match(slug) else None
+    if page is None:  # /manasety-profile.pdf, /indexold….html and other root files must keep working
+        return root_file(slug)
+    return _render_page(page, page.published_snapshot, "ar", path="/" + slug)
 
 
 @bp.route("/preview/<token>")
@@ -96,10 +148,13 @@ def submit_lead():
     if request.is_json and not isinstance(payload, dict):
         return jsonify(ok=False, errors=["طلب غير صالح."]), 400
     form = {k: v for k, v in payload.items() if isinstance(v, str)} if payload is not None else request.form
+    g.lang = "en" if form.get("lang") == "en" else "ar"  # the form's language: same address for both
+    thanks = "public.thank_you_en" if g.lang == "en" else "public.thank_you"
     if (form.get("website") or "").strip():  # honeypot: bots fill every field
-        return (jsonify(ok=True), 200) if wants_json else redirect(url_for("public.thank_you"))
+        return (jsonify(ok=True), 200) if wants_json else redirect(url_for(thanks))
     lead, errors = build_lead(form, form.get("form") or "demo")
     if errors or lead is None:
+        errors = [t(e) for e in errors]
         if wants_json:
             return jsonify(ok=False, errors=errors), 400
         return Response("<br>".join(errors), 400)
@@ -108,13 +163,19 @@ def submit_lead():
     forward_lead(lead.id)
     if wants_json:
         return jsonify(ok=True, id=lead.id)
-    return redirect(url_for("public.thank_you"))
+    return redirect(url_for(thanks))
 
 
 @bp.route("/thank-you.html")
 @bp.route("/thank-you")
 def thank_you():
     return render_template("public/thank_you.html", lang="ar")
+
+
+@bp.route("/en/thank-you")
+def thank_you_en():
+    _english_gate()
+    return render_template("public/thank_you.html", lang="en")
 
 
 # ───────── legal pages (same URLs that were filed with PayTabs) ─────────
@@ -127,20 +188,46 @@ def legal(slug: str):
 
 # ───────── FAQ & files pages ─────────
 
-@bp.route("/faq")
-def faq_page():
+def _faq_view(lang: str):
     from ..models import FAQ_CATEGORIES
     items = [f for f in public_faq() if f.show_on_faq_page]
-    schema = seo.faq_schema([(f.question, f.answer_html) for f in items])
-    return render_template("public/faq.html", items=items, categories=FAQ_CATEGORIES, lang="ar",
-                           schema=[schema] if schema else [], canonical=current_app.config["SITE_URL"] + "/faq")
+    if lang == "en":
+        items = [f for f in items if f.question_en and f.answer_html_en]
+        schema = seo.faq_schema([(f.question_en, f.answer_html_en) for f in items])
+    else:
+        schema = seo.faq_schema([(f.question, f.answer_html) for f in items])
+    path = "/en/faq" if lang == "en" else "/faq"
+    return render_template("public/faq.html", items=items, categories=FAQ_CATEGORIES, lang=lang,
+                           schema=[schema] if schema else [], canonical=current_app.config["SITE_URL"] + path)
+
+
+@bp.route("/faq")
+def faq_page():
+    return _faq_view("ar")
+
+
+@bp.route("/en/faq")
+def faq_page_en():
+    _english_gate()
+    return _faq_view("en")
+
+
+def _files_view(lang: str):
+    from ..publishing import public_files
+    path = "/en/files" if lang == "en" else "/files"
+    return render_template("public/files.html", files=public_files("page"), lang=lang,
+                           canonical=current_app.config["SITE_URL"] + path)
 
 
 @bp.route("/files")
 def files_page():
-    from ..publishing import public_files
-    return render_template("public/files.html", files=public_files("page"), lang="ar",
-                           canonical=current_app.config["SITE_URL"] + "/files")
+    return _files_view("ar")
+
+
+@bp.route("/en/files")
+def files_page_en():
+    _english_gate()
+    return _files_view("en")
 
 
 # ───────── blog ─────────
@@ -160,11 +247,11 @@ def _blog_index(lang: str, category: Optional[Category] = None, tag: Optional[Ta
         abort(404)
     site = current_app.config["SITE_URL"]
     path = request.path
-    crumbs = [("الرئيسية", site + "/"), ("المقالات", site + _blog_prefix(lang))]
+    crumbs = [(t("الرئيسية"), site + ("/en/" if lang == "en" else "/")), (t("المقالات"), site + _blog_prefix(lang))]
     if category:
-        crumbs.append((category.name, site + path))
+        crumbs.append((t(category.name), site + path))
     if tag:
-        crumbs.append((tag.name, site + path))
+        crumbs.append((t(tag.name), site + path))
     return render_template(
         "public/blog_index.html", articles=articles[(page_no - 1) * per_page: page_no * per_page],
         categories=db.session.query(Category).order_by(Category.name).all(), category=category, tag=tag,
@@ -181,9 +268,22 @@ def blog():
 
 @bp.route("/en/blog")
 def blog_en():
-    if not _english_enabled():
-        abort(404)
+    _english_gate()
     return _blog_index("en")
+
+
+@bp.route("/en/blog/category/<slug>")
+def blog_category_en(slug: str):
+    _english_gate()
+    cat = db.session.query(Category).filter_by(slug=slug).first_or_404()
+    return _blog_index("en", category=cat)
+
+
+@bp.route("/en/blog/tag/<slug>")
+def blog_tag_en(slug: str):
+    _english_gate()
+    tag = db.session.query(Tag).filter_by(slug=slug).first_or_404()
+    return _blog_index("en", tag=tag)
 
 
 @bp.route("/blog/category/<slug>")
@@ -196,6 +296,26 @@ def blog_category(slug: str):
 def blog_tag(slug: str):
     tag = db.session.query(Tag).filter_by(slug=slug).first_or_404()
     return _blog_index("ar", tag=tag)
+
+
+@bp.route("/en/business/blog")
+def blog_biz_en():
+    _english_gate()
+    return _blog_index("en", audience="business")
+
+
+@bp.route("/en/business/blog/category/<slug>")
+def blog_biz_category_en(slug: str):
+    _english_gate()
+    cat = db.session.query(Category).filter_by(slug=slug).first_or_404()
+    return _blog_index("en", category=cat, audience="business")
+
+
+@bp.route("/en/business/blog/tag/<slug>")
+def blog_biz_tag_en(slug: str):
+    _english_gate()
+    tag = db.session.query(Tag).filter_by(slug=slug).first_or_404()
+    return _blog_index("en", tag=tag, audience="business")
 
 
 @bp.route("/business/blog")
@@ -217,7 +337,7 @@ def blog_biz_tag(slug: str):
 
 def _side_cards(art: Article) -> list:
     aud = "business" if art.audience == "business" else "schools"
-    return (db.session.query(SideCard).filter(SideCard.is_active.is_(True), SideCard.audience.in_([aud, "both"]))
+    return (db.session.query(SideCard).filter(SideCard.is_active.is_(True), SideCard.audience.in_([aud, "both"]), SideCard.page_slug == "")
             .order_by(SideCard.position, SideCard.id).all())
 
 
@@ -230,12 +350,17 @@ def _article_view(lang: str, slug: str, preview_article: Optional[Article] = Non
     cover = art.cover
     og = art.og_image or cover
     faq_pairs = [(x.get("q", ""), x.get("a", "")) for x in (art.faq or []) if x.get("q") and x.get("a")]
-    faq_pairs += [(f.question, f.answer_html) for f in public_faq(article_id=art.id)]
-    biz = art.audience == "business"
-    home_path, blog_path = ("/business", "/business/blog") if biz else ("/", _blog_prefix(lang))
-    crumbs = [("الرئيسية", site + home_path), ("المقالات", site + blog_path)]
+    linked_faq = public_faq(article_id=art.id)
+    if lang == "en":
+        faq_pairs += [(f.question_en, f.answer_html_en) for f in linked_faq if f.question_en and f.answer_html_en]
+    else:
+        faq_pairs += [(f.question, f.answer_html) for f in linked_faq]
+    biz = art.audience == "business" and lang != "en"
+    g.lang = art.lang
+    home_path, blog_path = ("/business", "/business/blog") if biz else (("/en/" if lang == "en" else "/"), _blog_prefix(lang))
+    crumbs = [(t("الرئيسية"), site + home_path), (t("المقالات"), site + blog_path)]
     if art.category:
-        crumbs.append((art.category.name, f"{site}{blog_path}/category/{art.category.slug}"))
+        crumbs.append((t(art.category.name), f"{site}{blog_path}/category/{art.category.slug}"))
     crumbs.append((art.title, site + art.path))
     schema: list[Any] = [seo.article_schema(art, site, (site + og.url) if og else ""), seo.breadcrumb_schema(crumbs)]
     fs = seo.faq_schema(faq_pairs)
@@ -248,6 +373,7 @@ def _article_view(lang: str, slug: str, preview_article: Optional[Article] = Non
         translation = db.session.query(Article).filter_by(translation_of_id=art.id).first()
     if translation is not None and not translation.is_live:
         translation = None
+    g.lang_alt = translation.path if translation is not None else None  # no translation: no language button
     return render_template(
         "public/article.html", article=art, body=Markup(body), toc=toc if seo.word_count(body) > 900 else [],
         related=related_articles(art), faq_pairs=faq_pairs, lang=lang, schema=schema, crumbs=crumbs,
@@ -263,19 +389,29 @@ def article(slug: str):
 
 @bp.route("/en/blog/<slug>")
 def article_en(slug: str):
-    if not _english_enabled():
-        abort(404)
+    _english_gate()
     return _article_view("en", slug)
+
+
+def _author_view(slug: str, lang: str):
+    person = db.session.query(Author).filter_by(slug=slug).first_or_404()
+    site = current_app.config["SITE_URL"]
+    articles = [a for a in live_articles(lang) if a.author_id == person.id]
+    schema = [{"@context": "https://schema.org", **seo.person_schema(person, site)}]
+    prefix = "/en" if lang == "en" else ""
+    return render_template("public/author.html", author=person, articles=articles, lang=lang, schema=schema,
+                           canonical=f"{site}{prefix}/authors/{slug}")
 
 
 @bp.route("/authors/<slug>")
 def author(slug: str):
-    person = db.session.query(Author).filter_by(slug=slug).first_or_404()
-    site = current_app.config["SITE_URL"]
-    articles = [a for a in live_articles("ar") if a.author_id == person.id]
-    schema = [{"@context": "https://schema.org", **seo.person_schema(person, site)}]
-    return render_template("public/author.html", author=person, articles=articles, lang="ar", schema=schema,
-                           canonical=f"{site}/authors/{slug}")
+    return _author_view(slug, "ar")
+
+
+@bp.route("/en/authors/<slug>")
+def author_en(slug: str):
+    _english_gate()
+    return _author_view(slug, "en")
 
 
 @bp.route("/blog/feed.xml")
@@ -289,6 +425,34 @@ def rss():
 
 # ───────── sitemap / robots ─────────
 
+def _english_sitemap_urls(site: str) -> list[dict[str, Any]]:
+    """Only English addresses that really open: pages with English, and listings with English articles."""
+    urls: list[dict[str, Any]] = []
+    for page in db.session.query(Page).all():
+        if snapshot_has_english(page.published_snapshot):
+            path = "/en/" if page.slug == "home" else f"/en/{page.slug}"
+            urls.append({"loc": site + path, "lastmod": page.published_at})
+    if english_path("/faq"):
+        urls.append({"loc": site + "/en/faq", "lastmod": None})
+    arts = live_articles("en")
+    if not arts:
+        return urls
+    dates = [d for d in (a.content_updated_at or a.published_at for a in arts) if d is not None]
+    urls.append({"loc": site + "/en/blog", "lastmod": max(dates) if dates else None})
+    if any(a.audience in ("business", "both") for a in arts):
+        urls.append({"loc": site + "/en/business/blog", "lastmod": max(dates) if dates else None})
+    for a in arts:
+        if not (a.noindex or (a.canonical_url and a.canonical_url != site + a.path)):
+            urls.append({"loc": site + a.path, "lastmod": a.content_updated_at or a.published_at})
+    used_cats = {a.category_id for a in arts if a.category_id}
+    for c in db.session.query(Category).filter(Category.id.in_(used_cats)).all() if used_cats else []:
+        urls.append({"loc": f"{site}/en/blog/category/{c.slug}", "lastmod": None})
+    for au in db.session.query(Author).all():
+        if any(a.author_id == au.id for a in arts):
+            urls.append({"loc": f"{site}/en/authors/{au.slug}", "lastmod": None})
+    return urls
+
+
 @bp.route("/sitemap.xml")
 def sitemap():
     site = current_app.config["SITE_URL"]
@@ -297,9 +461,10 @@ def sitemap():
     biz = db.session.query(Page).filter_by(slug="business").first()
     if biz is not None and biz.published_snapshot is not None:
         urls.append({"loc": site + "/business", "lastmod": biz.published_at})
-    if _english_enabled():
-        urls.append({"loc": site + "/en/", "lastmod": home.published_at if home else None})
-    arts = live_articles("ar") + (live_articles("en") if _english_enabled() else [])
+    for extra in db.session.query(Page).filter(Page.slug.notin_(["home", "business"])).all():
+        if extra.published_snapshot is not None:
+            urls.append({"loc": f"{site}/{extra.slug}", "lastmod": extra.published_at})
+    arts = live_articles("ar")
     if arts:
         dates = [d for d in (a.content_updated_at or a.published_at for a in arts) if d is not None]
         urls.append({"loc": site + "/blog", "lastmod": max(dates) if dates else None})
@@ -320,6 +485,8 @@ def sitemap():
         lp = db.session.query(LegalPage).filter_by(slug=slug).first()
         if lp:
             urls.append({"loc": f"{site}/{slug}.html", "lastmod": lp.updated_at})
+    if english_live():
+        urls += _english_sitemap_urls(site)
     xml = render_template("public/sitemap.xml", urls=urls)
     return Response(xml, mimetype="application/xml")
 
@@ -367,9 +534,33 @@ def root_file(filename: str):
 
 @bp.app_errorhandler(404)
 def not_found(_e):
-    return render_template("public/404.html", lang="ar"), 404
+    g.lang_alt = None
+    # English stays hidden from visitors until it is switched on, even on a missing /en/ page
+    g.lang = "en" if current_lang() == "en" and english_visible() else "ar"
+    return render_template("public/404.html", lang=g.lang), 404
 
 
 @bp.app_template_global()
 def now_year() -> int:
     return utcnow().year
+
+
+# ───────── site icons (favicon etc.), served from the site root ─────────
+import os as _os
+
+_ICONS_DIR = _os.path.normpath(_os.path.join(_os.path.dirname(__file__), "..", "static", "icons"))
+_ICON_NAMES = ("favicon.ico", "favicon.svg", "favicon-96x96.png", "apple-touch-icon.png", "site.webmanifest",
+               "web-app-manifest-192x192.png", "web-app-manifest-512x512.png")
+
+
+def _make_icon_view(name: str):
+    def view():
+        if not _os.path.isfile(_os.path.join(_ICONS_DIR, name)):
+            abort(404)
+        mt = "application/manifest+json" if name.endswith(".webmanifest") else None
+        return send_from_directory(_ICONS_DIR, name, mimetype=mt, max_age=60 * 60 * 24 * 7)
+    return view
+
+
+for _n in _ICON_NAMES:
+    bp.add_url_rule("/" + _n, endpoint="icon_" + _n.replace(".", "_").replace("-", "_"), view_func=_make_icon_view(_n))

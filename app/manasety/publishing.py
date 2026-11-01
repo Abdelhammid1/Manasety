@@ -108,9 +108,29 @@ def visible_sections(snapshot: Optional[list]) -> list[dict]:
     return [s for s in (snapshot or []) if s.get("is_visible")]
 
 
+# Not text: the Arabic section's value is used when the English form left it empty (images, links, layout).
+_SHARED_KEYS = {"image", "logo", "icon", "icon_key", "url", "href", "module", "on", "variant", "no_mock", "show_files",
+                "category", "soon_module", "fact_keys", "case_ids", "article_slugs", "count", "url_text", "tools_icon",
+                "rows_icon", "cta_primary_href", "cta_secondary_href", "cta_href"}
+
+
+def _with_shared(en: Any, ar: Any) -> Any:
+    if isinstance(en, dict) and isinstance(ar, dict):
+        merged = {k: _with_shared(v, ar.get(k)) for k, v in en.items()}
+        for key in _SHARED_KEYS & ar.keys():
+            if merged.get(key) in (None, ""):
+                merged[key] = ar[key]
+        return merged
+    if isinstance(en, list) and isinstance(ar, list):
+        return [_with_shared(v, ar[i] if i < len(ar) else None) for i, v in enumerate(en)]
+    return en
+
+
 def section_content(section: dict, lang: str) -> dict:
     content = section.get("content") or {}
-    return content.get(lang) or ({} if lang != "ar" else {})
+    if lang == "en":
+        return _with_shared(content.get("en"), content.get("ar") or {}) if content.get("en") else {}
+    return content.get(lang) or {}
 
 
 # ───────── library data ─────────

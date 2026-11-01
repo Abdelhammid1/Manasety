@@ -1,0 +1,9 @@
+<section{% if anchor %} id="{{ anchor }}"{% endif %}>
+  <div class="wrap">
+    <div class="page-head">
+      {% if c.eyebrow %}<span class="kicker orange">{{ c.eyebrow }}</span>{% endif %}
+      <h1>{{ c.title|rt }}</h1>
+      {% if c.subtitle %}<p class="lead" style="color:var(--ink-2)">{{ c.subtitle|rt }}</p>{% endif %}
+    </div>
+  </div>
+</section>

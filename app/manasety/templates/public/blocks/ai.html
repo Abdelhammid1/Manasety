@@ -8,12 +8,12 @@
     {% if c.variant == 'flow' %}
     <div class="fl">
       <div class="fl-stage rv">
-        <div class="fl-h"><span class="ibox">{{ icon('graduation') }}</span><h3>{{ c.tools_title }}</h3></div>
+        <div class="fl-h"><span class="ibox">{{ icon(c.tools_icon or 'graduation') }}</span><h3>{{ c.tools_title }}</h3></div>
         <div class="fl-chips">{% for t in c.tools or [] %}<div class="fl-chip">{{ icon(t.icon) }}<b>{{ t.text }}</b></div>{% endfor %}</div>
       </div>
       {% if c.tools_subtitle %}<div class="fl-gate rv"><span class="fl-gic">{{ icon('check-square') }}</span><b>{{ c.tools_subtitle }}</b></div>{% endif %}
       <div class="fl-stage rv">
-        <div class="fl-h"><span class="ibox">{{ icon('line-chart') }}</span><h3>{{ c.rows_title }}</h3></div>
+        <div class="fl-h"><span class="ibox">{{ icon(c.rows_icon or 'line-chart') }}</span><h3>{{ c.rows_title }}</h3></div>
         <div class="fl-steps">{% for r in c.rows or [] %}<div class="fl-step"><span class="fl-n">{{ loop.index }}</span>{{ icon(r.icon) }}<b>{{ r.title }}</b><p>{{ r.text|rt }}</p></div>{% endfor %}</div>
       </div>
       {% if c.cost_title %}
@@ -23,11 +23,11 @@
     {% else %}
     <div class="grid g2">
       <div class="ai-card rv">
-        <div class="ai-card-head"><span class="ibox">{{ icon('graduation') }}</span><div><h3>{{ c.tools_title }}</h3>{% if c.tools_subtitle %}<p>{{ c.tools_subtitle }}</p>{% endif %}</div></div>
+        <div class="ai-card-head"><span class="ibox">{{ icon(c.tools_icon or 'graduation') }}</span><div><h3>{{ c.tools_title }}</h3>{% if c.tools_subtitle %}<p>{{ c.tools_subtitle }}</p>{% endif %}</div></div>
         <div class="tools">{% for t in c.tools or [] %}<div class="tool">{{ icon(t.icon) }}{{ t.text }}</div>{% endfor %}</div>
       </div>
       <div class="ai-card rv">
-        <div class="ai-card-head"><span class="ibox">{{ icon('line-chart') }}</span><div><h3>{{ c.rows_title }}</h3>{% if c.rows_subtitle %}<p>{{ c.rows_subtitle }}</p>{% endif %}</div></div>
+        <div class="ai-card-head"><span class="ibox">{{ icon(c.rows_icon or 'line-chart') }}</span><div><h3>{{ c.rows_title }}</h3>{% if c.rows_subtitle %}<p>{{ c.rows_subtitle }}</p>{% endif %}</div></div>
         <div class="ai-rows">{% for r in c.rows or [] %}<div class="ai-row">{{ icon(r.icon) }}<div><b>{{ r.title }}</b><span>{{ r.text|rt }}</span></div></div>{% endfor %}</div>
       </div>
     </div>
