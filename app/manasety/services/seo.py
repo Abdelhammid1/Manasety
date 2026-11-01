@@ -110,27 +110,58 @@ def jsonld(data: Any) -> Markup:
     return Markup(f'<script type="application/ld+json">{raw}</script>')
 
 
-def organization_schema(s: dict, site_url: str) -> dict:
-    return {
+def _brand_title(s: dict) -> str:
+    return f'{s["brand_name_ar"]} - {s["brand_name_en"]}'
+
+
+_ORG_DESC = {
+    "ar": "شركة برمجيات وحلول ذكاء اصطناعي، متخصصة في أنظمة إدارة المدارس والمنصات التعليمية، بالإضافة إلى بناء أنظمة مخصصة للشركات وأتمتة العمليات.",
+    "en": "Manasety is a software and AI solutions company specializing in school management systems and e-learning platforms, plus custom business systems and process automation.",
+}
+
+
+def organization_schema(s: dict, site_url: str, lang: str = "ar") -> dict:
+    en = lang == "en"
+    digits = "".join(ch for ch in str(s.get("whatsapp_eg") or "") if ch.isdigit())
+    phone = ("+" + digits) if digits else ""
+    org = {
         "@context": "https://schema.org",
         "@type": "Organization",
         "@id": f"{site_url}/#organization",
-        "name": s["brand_name_ar"],
-        "alternateName": [s["brand_name_en"], s["legal_name_en"]],
-        "legalName": s["legal_name_en"],
+        "name": _brand_title(s),
+        "alternateName": [s["brand_name_en"], s["brand_name_ar"]],
         "url": site_url + "/",
         "logo": f"{site_url}/static/img/logo.svg",
+        "description": _ORG_DESC["en" if en else "ar"],
+        "parentOrganization": {"@type": "Organization", "name": s["legal_name_en"]},
+        "areaServed": ["EG", "SA"],
         "email": s["email"],
-        "address": {"@type": "PostalAddress", "streetAddress": s["address_ar"],
-                    "addressLocality": "قويسنا", "addressRegion": "المنوفية", "addressCountry": "EG"},
-        "sameAs": [x["url"] for x in s.get("social", []) if x.get("url")],
     }
+    if phone:
+        org["telephone"] = phone
+        org["contactPoint"] = {"@type": "ContactPoint", "contactType": "sales", "telephone": phone,
+                               "url": f"{site_url}{'/en' if en else ''}/contact", "availableLanguage": ["ar", "en"]}
+    if str(s.get("address_ar") or "").strip():
+        org["address"] = {"@type": "PostalAddress", "streetAddress": s["address_ar"],
+                          "addressLocality": "قويسنا", "addressRegion": "المنوفية", "addressCountry": "EG"}
+    same = [x["url"] for x in s.get("social", []) if x.get("url")]
+    if str(s.get("gbp_url") or "").strip():
+        same.append(str(s["gbp_url"]).strip())
+    org["sameAs"] = same
+    return org
 
 
-def website_schema(s: dict, site_url: str) -> dict:
+def website_schema(s: dict, site_url: str, lang: str = "ar") -> dict:
     return {"@context": "https://schema.org", "@type": "WebSite", "@id": f"{site_url}/#website",
-            "url": site_url + "/", "name": s["brand_name_ar"], "inLanguage": "ar",
-            "publisher": {"@id": f"{site_url}/#organization"}}
+            "url": site_url + "/", "name": _brand_title(s), "alternateName": s["brand_name_en"],
+            "inLanguage": lang, "publisher": {"@id": f"{site_url}/#organization"}}
+
+
+def about_page_schema(site_url: str, name: str, lang: str = "ar") -> dict:
+    path = "/en/about" if lang == "en" else "/about"
+    return {"@context": "https://schema.org", "@type": "AboutPage", "@id": f"{site_url}{path}#aboutpage",
+            "url": f"{site_url}{path}", "name": name, "inLanguage": lang,
+            "about": {"@id": f"{site_url}/#organization"}}
 
 
 def software_schema(site_url: str, name: str, description: str, lang: str = "ar") -> dict:

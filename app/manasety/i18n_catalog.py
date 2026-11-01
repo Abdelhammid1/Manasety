@@ -42,6 +42,7 @@ UI: dict[str, str] = {
     "أنظمة إدارية مخصصة للشركات والأنشطة": "Custom management systems for companies and businesses",
     "الأنظمة الإدارية ←": "Management systems →",
     "الكيان القانوني المعتمد:": "Registered legal entity:",
+    "علامة تجارية مملوكة لشركة": "A brand owned by",
     "بيانات التواصل الرسمية": "Official contact details",
     "واتساب السعودية:": "WhatsApp Saudi Arabia:",
     "واتساب مصر:": "WhatsApp Egypt:",

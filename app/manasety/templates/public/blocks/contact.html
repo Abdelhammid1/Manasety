@@ -30,7 +30,7 @@
         <li>{{ icon('mail') }}<div><b>{{ t('البريد الإلكتروني') }}</b><a href="mailto:{{ setting('email') }}" dir="ltr">{{ setting('email') }}</a></div></li>
         {% if setting('show_whatsapp_sa') %}<li>{{ icon('whatsapp') }}<div><b>{{ t('واتساب السعودية:') }}</b><a href="{{ whatsapp_url('sa') }}" class="num" dir="ltr" rel="noopener">{{ setting('whatsapp_sa_display') }}</a></div></li>{% endif %}
         {% if setting('show_whatsapp_eg') %}<li>{{ icon('whatsapp') }}<div><b>{{ t('واتساب مصر:') }}</b><a href="{{ whatsapp_url('eg') }}" class="num" dir="ltr" rel="noopener">{{ setting('whatsapp_eg_display') }}</a></div></li>{% endif %}
-        <li>{{ icon('id-card') }}<div><b>{{ t('الكيان القانوني المعتمد:') }}</b><span>{{ setting('legal_name_ar') }}</span><span>{{ t('سجل تجاري') }} <bdi class="num">{{ setting('commercial_registration') }}</bdi></span><span>{{ setting('address_ar') }}</span></div></li>
+        <li>{{ icon('id-card') }}<div><b>{{ t('الكيان القانوني المعتمد:') }}</b><span>{{ setting('legal_name_en') }}</span><span>{{ t('سجل تجاري') }} <bdi class="num">{{ setting('commercial_registration') }}</bdi></span><span>{{ setting('address_ar') }}</span></div></li>
       </ul>
     </aside>
   </div>

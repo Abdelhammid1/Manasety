@@ -43,9 +43,12 @@ def _render_page(page: Page, snapshot: Optional[list], lang: str, preview: bool 
     if lang == "en":  # a section with no English yet stays hidden rather than rendering empty
         sections = [sec for sec in sections if sec["c"]]
     hero = next((x["c"] for x in sections if x["block_type"] == "hero"), {})
-    schema = [seo.organization_schema(s, site), seo.website_schema(s, site),
-              seo.software_schema(site, page_seo.get("software_name") or t("منصتي-سكول (Manasety School)"),
-                                  page_seo.get("description") or hero.get("subtitle", ""), lang)]
+    schema = [seo.organization_schema(s, site, lang), seo.website_schema(s, site, lang)]
+    if page.slug == "about":
+        schema.append(seo.about_page_schema(site, page_seo.get("title") or "", lang))
+    if page.slug not in ("about", "contact"):
+        schema.append(seo.software_schema(site, page_seo.get("software_name") or t("منصتي-سكول (Manasety School)"),
+                                          page_seo.get("description") or hero.get("subtitle", ""), lang))
     faq_items = []
     faq_section = next((x for x in sections if x["block_type"] == "faq"), None)
     if faq_section:
