@@ -13,16 +13,16 @@
       <article class="case rv">
         <h3>{{ cs.display_name(lang) }}</h3>
         <dl>
-          {% if cs.challenge %}<div><dt>{{ c.label_challenge or 'التحدي' }}</dt><dd>{{ cs.challenge|rt }}</dd></div>{% endif %}
-          {% if cs.built %}<div><dt>{{ c.label_built or 'ما بنيناه' }}</dt><dd>{{ cs.built|rt }}</dd></div>{% endif %}
-          {% if cs.working_now %}<div class="now"><dt>{{ c.label_now or 'ما يعمل الآن' }}</dt><dd>{{ cs.working_now|rt }}</dd></div>{% endif %}
+          {% if cs.challenge %}<div><dt>{{ c.label_challenge or t('التحدي') }}</dt><dd>{{ loc(cs, 'challenge')|rt }}</dd></div>{% endif %}
+          {% if cs.built %}<div><dt>{{ c.label_built or t('ما بنيناه') }}</dt><dd>{{ loc(cs, 'built')|rt }}</dd></div>{% endif %}
+          {% if cs.working_now %}<div class="now"><dt>{{ c.label_now or t('ما يعمل الآن') }}</dt><dd>{{ loc(cs, 'working_now')|rt }}</dd></div>{% endif %}
         </dl>
-        {% if cs.display_url() %}{% if cs.display_url().startswith('/') %}<a href="{{ cs.display_url() }}" class="case-link">اقرأ المزيد</a>{% else %}<a href="{{ cs.display_url() }}" rel="noopener" target="_blank" class="case-link">زيارة المنصة</a>{% endif %}{% endif %}
+        {% if cs.display_url() %}{% if cs.display_url().startswith('/') %}<a href="{{ cs.display_url()|lhref }}" class="case-link">{{ t('اقرأ المزيد') }}</a>{% else %}<a href="{{ cs.display_url() }}" rel="noopener" target="_blank" class="case-link">{{ t('زيارة المنصة') }}</a>{% endif %}{% endif %}
       </article>
       {% endfor %}
     </div>
     {% if c.show_files %}{% set cf = files_for('case_studies') %}{% if cf %}
-    <div class="hero-files" style="margin-top:24px">{% for f in cf %}<a class="file-btn" href="{{ f.href }}">{{ icon('download') }}{{ f.display_name }}</a>{% endfor %}</div>
+    <div class="hero-files" style="margin-top:24px">{% for f in cf %}<a class="file-btn" href="{{ f.href }}">{{ icon('download') }}{{ loc(f, 'display_name') }}</a>{% endfor %}</div>
     {% endif %}{% endif %}
   </div>
 </section>

@@ -1,7 +1,7 @@
 {% macro sdc_card(sc) %}{% set im = media_obj(sc.image_id) %}
 <div class="sdc">{% if im %}<img src="{{ im.url }}" alt="{{ im.alt or sc.title }}" loading="lazy">{% endif %}
-{% if sc.title %}<b>{{ sc.title }}</b>{% endif %}{% if sc.text %}<p>{{ sc.text }}</p>{% endif %}
-{% if sc.url %}<a class="btn btn-primary btn-sm" href="{{ sc.url }}">{{ sc.button_label or 'اعرف أكثر' }}</a>{% endif %}</div>{% endmacro %}
+{% if sc.title %}<b>{{ t(sc.title) }}</b>{% endif %}{% if sc.text %}<p>{{ t(sc.text) }}</p>{% endif %}
+{% if sc.url %}<a class="btn btn-primary btn-sm" href="{{ sc.url }}">{{ t(sc.button_label or t('اعرف أكثر')) }}</a>{% endif %}</div>{% endmacro %}
 {% set _cards = side_cards_for(page.slug) %}
 <section class="section"{% if anchor %} id="{{ anchor }}"{% endif %}>
   <div class="wrap">

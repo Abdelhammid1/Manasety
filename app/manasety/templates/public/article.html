@@ -10,17 +10,17 @@
 {% block content %}
 {% macro sc_card(sc) %}{% set im = media_obj(sc.image_id) %}
 <div class="sdc">{% if im %}<img src="{{ im.url }}" alt="{{ im.alt or sc.title }}" loading="lazy">{% endif %}
-{% if sc.title %}<b>{{ sc.title }}</b>{% endif %}{% if sc.text %}<p>{{ sc.text }}</p>{% endif %}
-{% if sc.url %}<a class="btn btn-primary btn-sm" href="{{ sc.url }}">{{ sc.button_label or 'اعرف أكثر' }}</a>{% endif %}</div>{% endmacro %}
+{% if sc.title %}<b>{{ t(sc.title) }}</b>{% endif %}{% if sc.text %}<p>{{ t(sc.text) }}</p>{% endif %}
+{% if sc.url %}<a class="btn btn-primary btn-sm" href="{{ sc.url }}">{{ t(sc.button_label or t('اعرف أكثر')) }}</a>{% endif %}</div>{% endmacro %}
 {% set _cards = side_cards|default([]) %}
 <div class="wrap">
   <div class="page-head">
     <ol class="crumbs">{% for name, url in crumbs %}<li>{% if not loop.last %}<a href="{{ url }}">{{ name }}</a>{% else %}<span aria-current="page">{{ name }}</span>{% endif %}</li>{% endfor %}</ol>
     <h1>{{ article.h1 or article.title }}</h1>
     <div class="post-meta">
-      {% if article.author %}<a href="/authors/{{ article.author.slug }}">{{ article.author.name }}</a>{% endif %}
-      <span>نُشر <time datetime="{{ article.published_at.isoformat() if article.published_at else '' }}">{{ article.published_at|ar_date }}</time></span>
-      {% if article.content_updated_at and article.published_at and article.content_updated_at.date() > article.published_at.date() %}<span>آخر تحديث <time datetime="{{ article.content_updated_at.isoformat() }}">{{ article.content_updated_at|ar_date }}</time></span>{% endif %}
+      {% if article.author %}<a href="{{ ('/authors/' ~ article.author.slug)|lhref }}">{{ t(article.author.name) }}</a>{% endif %}
+      <span>{{ t('نُشر') }} <time datetime="{{ article.published_at.isoformat() if article.published_at else '' }}">{{ article.published_at|ar_date }}</time></span>
+      {% if article.content_updated_at and article.published_at and article.content_updated_at.date() > article.published_at.date() %}<span>{{ t('آخر تحديث') }} <time datetime="{{ article.content_updated_at.isoformat() }}">{{ article.content_updated_at|ar_date }}</time></span>{% endif %}
       {% if translation %}<a href="{{ translation.path }}" hreflang="{{ translation.lang }}">{{ 'English' if translation.lang == 'en' else 'العربية' }}</a>{% endif %}
     </div>
   </div>
@@ -33,19 +33,19 @@
       {% if article.cover %}<img src="{{ article.cover.url }}" alt="{{ article.cover.alt }}" width="{{ article.cover.width }}" height="{{ article.cover.height }}" fetchpriority="high">{% endif %}
       {{ body|tables|rich }}
       {% if faq_pairs %}
-      <h2 id="faq">أسئلة شائعة</h2>
+      <h2 id="faq">{{ t('أسئلة شائعة') }}</h2>
       <div class="faq" style="margin:0">{% for q, a in faq_pairs %}<details><summary>{{ q }}{{ icon('chevron') }}</summary><div class="answer">{{ a|rich }}</div></details>{% endfor %}</div>
       {% endif %}
       {% if article.author %}
       <div class="author-box">
-        {% if article.author.photo %}<img src="{{ article.author.photo.url }}" alt="{{ article.author.photo.alt or article.author.name }}" loading="lazy">{% endif %}
-        <div><b><a href="/authors/{{ article.author.slug }}" style="color:inherit;text-decoration:none">{{ article.author.name }}</a></b><p>{{ article.author.job_title }}</p></div>
+        {% if article.author.photo %}<img src="{{ article.author.photo.url }}" alt="{{ loc(article.author.photo, 'alt') or t(article.author.name) }}" loading="lazy">{% endif %}
+        <div><b><a href="{{ ('/authors/' ~ article.author.slug)|lhref }}" style="color:inherit;text-decoration:none">{{ t(article.author.name) }}</a></b><p>{{ t_or_empty(article.author.job_title) }}</p></div>
       </div>
       {% endif %}
       
     </article>
     {% if toc %}
-    <aside class="toc" aria-label="محتويات المقال"><b>في هذا المقال</b>
+    <aside class="toc" aria-label="{{ t('محتويات المقال') }}"><b>{{ t('في هذا المقال') }}</b>
       <ol>{% for h in toc %}<li class="l{{ h.level }}"><a href="#{{ h.id }}">{{ h.text }}</a></li>{% endfor %}</ol>
     </aside>
     {% endif %}
@@ -54,7 +54,7 @@
   </div>
   {% if ns.b %}<div class="sdc-bottom">{% for sc in _cards if sc.side == 'bottom' %}{{ sc_card(sc) }}{% endfor %}</div>{% endif %}
   {% if related %}
-  <section style="padding-bottom:64px"><h2 style="font-size:24px">مقالات ذات صلة</h2>
+  <section style="padding-bottom:64px"><h2 style="font-size:24px">{{ t('مقالات ذات صلة') }}</h2>
     <div class="grid g3">{% for a in related %}{% include "public/_post_card.html" %}{% endfor %}</div>
   </section>
   {% endif %}

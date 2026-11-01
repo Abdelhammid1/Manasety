@@ -7,7 +7,7 @@
     </div>
     {% if c.variant == 'gallery' %}
     <div class="gl" data-gl>
-      <div class="gl-thumbs" role="group" aria-label="الأنظمة">{% for s in c['items'] or [] %}{% set lg = media_obj(s.logo) %}
+      <div class="gl-thumbs" role="group" aria-label="{{ t('الأنظمة') }}">{% for s in c['items'] or [] %}{% set lg = media_obj(s.logo) %}
         <button type="button" class="gl-thumb{% if loop.first %} on{% endif %}" data-i="{{ loop.index0 }}" aria-label="{{ s.name }}" aria-pressed="{{ 'true' if loop.first else 'false' }}">{% if lg %}<img class="sys-logo" src="{{ lg.url }}" alt="" loading="lazy">{% else %}{{ icon(s.icon) }}{% endif %}</button>{% endfor %}
       </div>
       <div class="gl-stage">{% for s in c['items'] or [] %}{% set lg = media_obj(s.logo) %}

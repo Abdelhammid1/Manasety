@@ -1,6 +1,7 @@
 """flask CLI: seed, create-admin, publish-scheduled, scan-links, check-backlinks."""
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 import click
@@ -19,6 +20,27 @@ def register_cli(app: Flask) -> None:
         for line in seed_all(legal_dir, profile_pdf):
             click.echo(f"  + {line}")
         click.echo("done")
+
+    @app.cli.command("translations-apply")
+    @click.option("--file", "path", type=click.Path(exists=True, dir_okay=False, path_type=Path), default=None,
+                  help="Reviewed JSON file of Arabic → English (from translations-export).")
+    def translations_apply(path: Path | None) -> None:
+        """Fill empty English fields from the built-in copy (and the file). Arabic and edited English stay untouched."""
+        from .services.translations import fill_english, import_translations
+        if path:
+            count = import_translations(json.loads(path.read_text(encoding="utf-8")))
+            click.echo(f"imported {count} translations")
+        result = fill_english()
+        click.echo(f"filled {result['filled']} fields; {len(result['missing'])} strings still have no translation")
+
+    @app.cli.command("translations-export")
+    @click.option("--out", "path", type=click.Path(dir_okay=False, path_type=Path), required=True)
+    def translations_export(path: Path) -> None:
+        """Write the Arabic text that has no translation yet, as JSON to fill in and pass to translations-apply."""
+        from .services.translations import fill_english
+        missing = fill_english(dry_run=True)["missing"]  # a report: changes nothing on the site
+        path.write_text(json.dumps({text: "" for text in missing}, ensure_ascii=False, indent=2), encoding="utf-8")
+        click.echo(f"{len(missing)} strings written to {path}")
 
     @app.cli.command("create-admin")
     @click.option("--email", prompt=True)

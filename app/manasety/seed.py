@@ -377,6 +377,14 @@ def seed_all(legal_dir: Path | None = None, profile_pdf: Path | None = None) -> 
         log += import_profile(profile_pdf)
 
     db.session.commit()
+    # Once only: seed is re-run on deploys, and must not bring back English someone removed from the dashboard.
+    from .settings_store import get_setting, set_setting
+    if not get_setting("english_seed_filled"):
+        from .services.translations import fill_english
+        set_setting("english_seed_filled", True)
+        filled = fill_english()["filled"]
+        if filled:
+            log.append(f"English text filled: {filled} (shown only once English is switched on)")
     return log
 
 

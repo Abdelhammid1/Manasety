@@ -133,11 +133,11 @@ def website_schema(s: dict, site_url: str) -> dict:
             "publisher": {"@id": f"{site_url}/#organization"}}
 
 
-def software_schema(site_url: str, name: str, description: str) -> dict:
+def software_schema(site_url: str, name: str, description: str, lang: str = "ar") -> dict:
     # No offers/price (no prices on the site during the PayTabs review), no ratings (none verified).
     return {"@context": "https://schema.org", "@type": "SoftwareApplication", "name": name,
             "applicationCategory": "EducationalApplication", "operatingSystem": "Web",
-            "description": description, "url": site_url + "/", "inLanguage": "ar",
+            "description": description, "url": site_url + ("/en/" if lang == "en" else "/"), "inLanguage": lang,
             "publisher": {"@id": f"{site_url}/#organization"}}
 
 

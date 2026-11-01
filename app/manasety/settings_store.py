@@ -108,6 +108,43 @@ DEFAULTS: dict[str, Any] = {
     "blog_description": "مقالات عملية عن إدارة المدارس والتقييم والتعلم الإلكتروني والذكاء الاصطناعي في التعليم.",
     "product_page_url": "/",
     "internal_links_min_related": 2,
+    # English version: read instead of the Arabic setting of the same name on /en/ pages (see i18n.py).
+    "footer_brand_en": "Manasety School",
+    "footer_about_en": "A smart, comprehensive cloud system for managing educational, administrative and financial operations with accuracy and security.",
+    "footer_note_en": "We serve Saudi and Egyptian educational institutions remotely",
+    "footer_social_text_en": "Follow the latest in education technology and AI on our accounts:",
+    "footer_tagline_en": "The integrated Manasety system for school education and AI solutions",
+    "whatsapp_prefill_en": "Hello 👋 I came from the Manasety website and would like a free consultation",
+    "nav_en": [
+        {"label": "School solution", "href": "/#solution"},
+        {"label": "Features", "href": "/#features"},
+        {"label": "AI", "href": "/#ai"},
+        {"label": "Success stories", "href": "/#success"},
+        {"label": "Our other systems", "href": "/#portfolio"},
+    ],
+    "nav_cta_label_en": "Book a demo",
+    "footer_links_en": [
+        {"label": "Privacy Policy", "href": "/privacy.html"},
+        {"label": "Terms and Conditions", "href": "/terms.html"},
+        {"label": "Refund Policy", "href": "/refund.html"},
+    ],
+    "thank_you_title_en": "Your request was received successfully!",
+    "thank_you_text_en": "Thank you for your interest. The Manasety team will contact you by WhatsApp or phone to schedule the demo.",
+    "blog_title_en": "Manasety articles",
+    "blog_description_en": "Practical articles on school management, assessment, e-learning and AI in education.",
+    "blog_title_biz_en": "Manasety Business articles",
+    "blog_description_biz_en": "Practical articles on custom management systems, process automation, branch management and reporting.",
+    "whatsapp_prefill_biz_en": "Hello 👋 I came from the Manasety website and would like to know more about custom management systems for my company",
+    "nav_biz_en": [
+        {"label": "Our services", "href": "#services"},
+        {"label": "From idea to launch", "href": "#process"},
+        {"label": "Our systems", "href": "#portfolio"},
+    ],
+    "nav_cta_label_biz_en": "Book a consultation",
+    "footer_about_biz_en": "Custom operating systems and platforms for companies: management, tracking, reports and permissions, built around your business.",
+    "footer_tagline_biz_en": "Manasety: software solutions and custom management systems for companies.",
+    "whatsapp_bubble_en": "Hello! Would you like to know more about our plans and pricing?",
+    "cookie_banner_text_en": "We use cookies to analyze traffic and improve the site.",
 }
 
 

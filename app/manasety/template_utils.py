@@ -10,6 +10,7 @@ from flask import Flask, current_app, request
 from markupsafe import Markup, escape
 
 from .extensions import db
+from .i18n import (LAYOUT_TEXT_KEYS, current_lang, english_draft, lang_switch_url, lhref, loc, num, plain_path, setting, t, t_or_empty)
 from .icons import ICONS
 from .models import Article, Fact, Integration, Media
 from .publishing import (live_articles, public_case_studies, public_clients, public_features, public_files,
@@ -45,19 +46,21 @@ _AR_MONTHS = ["يناير", "فبراير", "مارس", "أبريل", "مايو"
 def ar_date(value: Any) -> str:
     if not isinstance(value, (date, datetime)):
         return ""
+    if current_lang() == "en":
+        return f"{value.strftime('%B')} {value.day}, {value.year}"
     return f"{value.day} {_AR_MONTHS[value.month - 1]} {value.year}"
 
 
 def whatsapp_url(country: str = "eg") -> str:
     number = get_setting(f"whatsapp_{country}")
-    from flask import g, request
-    text = get_setting('whatsapp_prefill') or ''
+    from flask import g
+    text = setting('whatsapp_prefill') or ''
     try:
-        if (request.path.startswith('/business') or getattr(g, 'page_slug', '') in lines(get_setting('business_pages'))) and get_setting('whatsapp_prefill_biz'):
-            text = get_setting('whatsapp_prefill_biz')
-        elif (getattr(g, 'page_slug', '') == 'training-institutes' or request.path.startswith('/training-institutes')) \
-                and get_setting('whatsapp_prefill_institutes'):
-            text = get_setting('whatsapp_prefill_institutes')
+        if (plain_path().startswith('/business') or getattr(g, 'page_slug', '') in lines(get_setting('business_pages'))) and setting('whatsapp_prefill_biz'):
+            text = setting('whatsapp_prefill_biz')
+        elif (getattr(g, 'page_slug', '') == 'training-institutes' or plain_path().startswith('/training-institutes')) \
+                and setting('whatsapp_prefill_institutes'):
+            text = setting('whatsapp_prefill_institutes')
     except RuntimeError:
         pass
     try:
@@ -73,7 +76,7 @@ def integrations_for(placement: str) -> list[Integration]:
     rows = (db.session.query(Integration)
             .filter(Integration.is_active.is_(True), Integration.placement == placement)
             .order_by(Integration.position, Integration.id).all())
-    return [i for i in rows if i.code and i.applies_to(request.path)]
+    return [i for i in rows if i.code and i.applies_to(plain_path())]  # same analytics on both languages
 
 
 def needs_consent_banner() -> bool:
@@ -97,13 +100,12 @@ def ring_position(index: int, total: int, radius: float = 42.0) -> tuple[float, 
 
 
 def featured_articles(slugs: Any, count: int, lang: str = "ar") -> list[Article]:
-    from flask import request
     wanted = lines(slugs)
     if wanted:
         rows = db.session.query(Article).filter(Article.lang == lang, Article.slug.in_(wanted)).all()
         by_slug = {a.slug: a for a in rows if a.is_live}
         return [by_slug[s] for s in wanted if s in by_slug][:count]
-    aud = "business" if request.path.startswith("/business") else "schools"
+    aud = "business" if plain_path().startswith("/business") else "schools"
     return live_articles(lang, limit=count, audience=aud)
 
 
@@ -132,7 +134,11 @@ def page_layout() -> dict:
     if not slug:
         return {}
     data = get_setting("page_layout") or {}
-    return dict(data.get(slug) or {}) if isinstance(data, dict) else {}
+    layout = dict(data.get(slug) or {}) if isinstance(data, dict) else {}
+    if current_lang() == "en":  # the per-page overrides are Arabic text: English uses the English settings
+        for key in LAYOUT_TEXT_KEYS:
+            layout.pop(key, None)
+    return layout
 
 
 def side_cards_for(slug: str) -> list:
@@ -144,9 +150,14 @@ def side_cards_for(slug: str) -> list:
 
 
 def register_template_utils(app: Flask) -> None:
-    app.jinja_env.filters.update(rt=render_text, rich=render_rich, tables=wrap_tables, ar_date=ar_date, lines=lines)
+    @app.context_processor
+    def _lang_default() -> dict:
+        return {"lang": current_lang()}  # a view's explicit lang= still wins
+
+    app.jinja_env.filters.update(rt=render_text, rich=render_rich, tables=wrap_tables, ar_date=ar_date, lines=lines, lhref=lhref)
     app.jinja_env.globals.update(
-        icon=icon, icon_sprite=icon_sprite, media_obj=media_obj, setting=get_setting, jsonld=jsonld,
+        icon=icon, icon_sprite=icon_sprite, media_obj=media_obj, setting=setting, jsonld=jsonld, t=t, loc=loc, num=num,
+        lang_switch_url=lang_switch_url, english_draft=english_draft, plain_path=plain_path, t_or_empty=t_or_empty,
         whatsapp_url=whatsapp_url, integrations_for=integrations_for, needs_consent_banner=needs_consent_banner,
         fact=fact_value, files_for=public_files, features_for=public_features, clients=public_clients,
         case_studies=public_case_studies, page_is_live=page_is_live, side_cards_for=side_cards_for, page_layout=page_layout, ring_position=ring_position, featured_articles=featured_articles,

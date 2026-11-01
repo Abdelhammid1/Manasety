@@ -938,3 +938,27 @@ html.pl .social-float, html.pl .wa-float { z-index: 1; }
   .stp { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
   .stp::before { content: ""; position: absolute; top: 26px; inset-inline: 16.66%; border-top: 2px dashed var(--accent); opacity: .45; z-index: 0; }
 }
+
+/* language button */
+.lang-switch { display: inline-flex; align-items: center; min-height: 36px; padding: 0 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--navy); font-size: 14px; font-weight: 600; text-decoration: none; white-space: nowrap; }
+.lang-switch:hover { border-color: var(--accent); color: var(--accent); }
+.site-header .nav:has(.lang-switch) { grid-template-columns: 1fr auto auto auto; }
+.site-header .nav:has(.lang-switch) .lang-switch { justify-self: end; }
+/* phones: the header has one more item, so it tightens only when the button is there */
+@media (max-width: 480px) {
+  .nav:has(.lang-switch) { gap: 8px; }
+  .nav:has(.lang-switch) > .btn { flex: none; white-space: nowrap; padding-inline: 10px; font-size: 13px; }
+  .nav:has(.lang-switch) .lang-switch { min-height: 34px; padding: 0 9px; font-size: 13px; }
+  .nav:has(.lang-switch) .nav-toggle { flex: none; width: 40px; height: 40px; }
+  .nav:has(.lang-switch) .brand { min-width: 0; font-size: 17px; gap: 6px; }
+}
+@media (max-width: 400px) { .nav:has(.lang-switch) .brand > span { display: none; } }
+
+/* English pages (left-to-right): the few rules above that are written for Arabic */
+html[dir="ltr"] .field input[dir="ltr"] { text-align: left; }
+html[dir="ltr"] .wa-bubble { direction: ltr; text-align: left; }
+html[dir="ltr"] .hub-node p, html[dir="ltr"] .tl-tile { text-align: left; }
+html[dir="ltr"] .tl-tile::after { content: counter(svc); left: auto; right: 14px; }
+html[dir="ltr"] .art-wrap > * { direction: ltr; }
+html[dir="ltr"] .cl-tag { text-align: right; }
+
