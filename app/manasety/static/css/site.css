@@ -962,3 +962,16 @@ html[dir="ltr"] .tl-tile::after { content: counter(svc); left: auto; right: 14px
 html[dir="ltr"] .art-wrap > * { direction: ltr; }
 html[dir="ltr"] .cl-tag { text-align: right; }
 
+
+/* contact page */
+.contact-grid { display: grid; gap: 24px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 960px) { .contact-grid { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); align-items: start; } }
+.contact-grid .form-card { max-width: none; width: 100%; margin: 0; }
+.contact-info { background: var(--surface); border: 1px solid var(--line); border-radius: 24px; padding: 28px 24px; min-width: 0; }
+.contact-info h2 { font-size: 20px; margin: 0 0 18px; }
+.contact-info ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; }
+.contact-info li { display: flex; gap: 12px; align-items: flex-start; }
+.contact-info li > svg { flex: none; width: 20px; height: 20px; margin-top: 3px; color: var(--ink-2); }
+.contact-info li > div { display: flex; flex-direction: column; gap: 2px; min-width: 0; overflow-wrap: anywhere; }
+.contact-info b { font-size: 14px; color: var(--ink-2); font-weight: 600; }
+.contact-info a { width: fit-content; }

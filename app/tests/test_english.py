@@ -10,7 +10,7 @@ from manasety.i18n import AR_RE, t, t_or_empty, translate_text
 from manasety.i18n_catalog import CONTENT, UI
 from manasety.models import Feature, Lead, Page, Section
 from manasety.services.translations import fill_english, import_translations
-from manasety.settings_store import set_setting
+from manasety.settings_store import get_setting, set_setting
 from tests.conftest import login, make_user
 from tests.test_public import _publish_article
 
@@ -40,7 +40,8 @@ def _strings(value):
 
 def test_all_seeded_copy_has_a_translation():
     table = {**UI, **CONTENT}
-    sources = [s["content"]["ar"] for s in seed_module.HOME_SECTIONS] + [
+    sources = [s["content"]["ar"] for s in seed_module.HOME_SECTIONS + seed_module.ABOUT_SECTIONS + seed_module.CONTACT_SECTIONS] + [
+        [seo for *_x, seo in seed_module.EXTRA_PAGES],
         [(n, d) for _m, _i, n, d, _s in seed_module.FEATURES],
         [(q, a) for q, _c, a in seed_module.FAQ_HOME], seed_module.FAQ_LEGACY, seed_module.CLIENTS,
         [n for n, _s in seed_module.CATEGORIES]]
@@ -274,6 +275,46 @@ def test_untranslated_description_stays_hidden_in_english(client):
         assert t_or_empty("وصف لم يترجم") == ""
     with client.application.test_request_context("/"):
         assert t_or_empty("وصف لم يترجم") == "وصف لم يترجم"
+
+
+@pytest.mark.parametrize("path, arabic, english", [
+    ("about", "من نحن", "About us"), ("contact", "تواصل معنا", "Contact us")])
+def test_about_and_contact_in_both_languages(client, path, arabic, english):
+    _enable()
+    ar = client.get(f"/{path}").data.decode()
+    en = client.get(f"/en/{path}").data.decode()
+    assert '<html lang="ar"' in ar and f"<title>{arabic} | منصتي" in ar and f'class="lang-switch" href="/en/{path}"' in ar
+    assert '<html lang="en"' in en and f"<title>{english} | Manasety" in en and f'class="lang-switch" href="/{path}"' in en
+    assert not AR_RE.search(_visible_text(en).replace("العربية", ""))
+    assert en.count("<h1") == 1 and ar.count("<h1") == 1
+    assert f'href="/{path}"' in client.get("/").data.decode() and f'href="/en/{path}"' in client.get("/en/").data.decode()
+
+
+def test_about_and_contact_stay_arabic_only_until_english_is_on(client):
+    assert client.get("/about").status_code == 200 and client.get("/contact").status_code == 200
+    assert client.get("/en/about").status_code == 404 and client.get("/en/contact").status_code == 404
+
+
+def test_contact_page_shows_current_settings_and_saves_a_contact_lead(client):
+    _enable()
+    set_setting("email", "new@manasety.ai")
+    db.session.commit()
+    en = client.get("/en/contact").data.decode()
+    assert "new@manasety.ai" in en and 'name="form" value="contact"' in en and 'data-thanks="/en/thank-you"' in en
+    r = client.post("/api/leads", data={"form": "contact", "name": "Sam", "phone": "+966500000000", "message": "Hi",
+                                        "lang": "en", "source": "contact_page"})
+    assert r.status_code == 302 and r.headers["Location"].endswith("/en/thank-you")
+    lead = db.session.query(Lead).one()
+    assert lead.form == "contact" and lead.source == "contact_page"
+
+
+def test_seed_keeps_an_edited_about_page_and_does_not_repeat_footer_links(client):
+    page = db.session.query(Page).filter_by(slug="about").one()
+    page.title = "Edited"
+    db.session.commit()
+    seed_module.seed_all()
+    assert db.session.query(Page).filter_by(slug="about").one().title == "Edited"
+    assert sum(item["href"] == "/about" for item in get_setting("extra_pages")) == 1
 
 
 def test_root_files_are_not_swallowed_by_the_page_route(client):

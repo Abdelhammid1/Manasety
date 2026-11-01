@@ -9,6 +9,11 @@ Translations only: never add a number, client name, price or claim that the Arab
 from __future__ import annotations
 
 UI: dict[str, str] = {
+    "البريد الإلكتروني": "Email",
+    "البريد الإلكتروني (اختياري)": "Email (optional)",
+    "اسم الجهة (اختياري)": "Organization name (optional)",
+    "وصف مختصر للاحتياج": "A short description of what you need",
+    "إرسال الطلب": "Send request",
     "الصفحة غير موجودة | منصتي": "Page not found | Manasety",
     "الصفحة غير موجودة": "Page not found",
     "ربما تغيّر الرابط. جرّب الصفحة الرئيسية أو المقالات.": "The link may have changed. Try the home page.",
@@ -428,4 +433,32 @@ CONTENT: dict[str, str] = {
     "النسخة شغالة فعليًا وتخدم المدرسة يوميًا.": "This version is live and serves the school every day.",
     # ───────── display files ─────────
     "الملف التعريفي للشركة (PDF)": "Company profile (PDF)",
+    # ───────── about page ─────────
+    "من نحن": "About us",
+    "نبني أنظمة الإدارة من واقع العمل اليومي.": "We build management systems from how daily work really happens.",
+    "منصتي علامة تجارية تابعة لشركة شلبي إنتليجنس للبرمجيات وحلول الذكاء الاصطناعي. نبني أنظمة مخصصة وحلول ذكاء اصطناعي تنظّم العمليات، وتقلل العمل اليدوي، وتربط الفرق والبيانات في مكان واحد.": "Manasety is a brand of Shalaby Intelligence Software and AI Solutions. We build custom systems and AI solutions that organize operations, reduce manual work, and bring teams and data together in one place.",
+    "من أنظمة القطاعات إلى المدرسة": "From other sectors to the school",
+    "<p>قبل المدارس، بنينا أنظمة إدارة متكاملة في قطاعات أخرى: مكاتب المحاماة، والمبيعات والمستودعات، والصالات الرياضية، والفعاليات.</p><p>ثم بنينا منصة معهد متخصص في التدريب على اختبارات القدرات والتحصيلي وSTEP، ونقلنا ما تعلمناه إلى بنك الأسئلة والتقييم في منصتي-سكول: نظام واحد للمدرسة كلها، من القبول والحضور إلى الدرجات والفواتير والرواتب.</p>": "<p>Before schools, we built complete management systems in other sectors: law firms, sales and warehouses, gyms, and events.</p><p>Then we built the platform of an institute specialized in training for the Qudurat, Tahsili and STEP exams, and carried what we learned into the question bank and assessment in Manasety School: one system for the whole school, from admissions and attendance to grades, invoices and payroll.</p>",
+    "كيف نعمل": "How we work",
+    "مبادئ نلتزم بها في كل نظام نبنيه.": "Principles we keep in every system we build.",
+    "الذكاء الاصطناعي يقترح، والإنسان يقرّر": "AI suggests, people decide",
+    "مهمة الذكاء الاصطناعي رفع الأعباء الروتينية، ويبقى القرار النهائي والاعتماد بيد الكادر البشري.": "AI takes on the routine load, while the final decision and approval stay with your staff.",
+    "بيانات محمية ومعزولة": "Protected, isolated data",
+    "بيانات كل مدرسة محمية ومعزولة عن أي مدرسة أخرى، ويمكن استرجاعها.": "Each school's data is protected, isolated from every other school, and recoverable.",
+    "حسب طريقة عملك": "Built around how you work",
+    "أنظمة مخصصة حسب طريقة عمل كل جهة، وتنفيذ واضح وتسليم على مراحل، ودعم وتطوير بعد التسليم.": "Systems customized to how each organization works, clear execution with delivery in stages, and support and development after delivery.",
+    "لنتحدث عن مؤسستك": "Let's talk about your organization",
+    "<p>شاركنا فكرتك أو نظامك الحالي، وسنرجع لك بخطوة واضحة.</p>": "<p>Share your idea or your current system, and we'll come back to you with a clear next step.</p>",
+    "تواصل معنا": "Contact us",
+    "من نحن | منصتي": "About us | Manasety",
+    "منصتي علامة تجارية تابعة لشركة شلبي إنتليجنس للبرمجيات وحلول الذكاء الاصطناعي. نبني أنظمة مخصصة وحلول ذكاء اصطناعي.": "Manasety is a brand of Shalaby Intelligence Software and AI Solutions. We build custom systems and AI solutions.",
+    # ───────── contact page ─────────
+    "لنبدأ محادثة واضحة.": "Let's start a clear conversation.",
+    "اختر طريقة التواصل المناسبة أو أرسل تفاصيل احتياجك، وسنراجع الطلب ونتواصل معك.": "Choose the way that suits you, or send the details of what you need. We'll review your request and get in touch.",
+    "أرسل تفاصيل احتياجك": "Send us the details",
+    "اكتب لنا المطلوب بشكل مختصر، وسنرجع لك بخطوة واضحة.": "Tell us briefly what you need, and we'll come back to you with a clear next step.",
+    "وصف مختصر للاحتياج": "A short description of what you need",
+    "إرسال الطلب": "Send request",
+    "تواصل معنا | منصتي": "Contact us | Manasety",
+    "تواصل مع فريق منصتي عبر الواتساب أو البريد الإلكتروني، أو أرسل تفاصيل احتياجك وسنتواصل معك.": "Reach the Manasety team by WhatsApp or email, or send the details of what you need and we'll get in touch.",
 }

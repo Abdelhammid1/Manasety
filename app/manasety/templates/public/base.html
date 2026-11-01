@@ -33,7 +33,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="{{ url_for('static', filename='css/site.css') }}?v=4">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/site.css') }}?v=5">
 {% for item in schema or [] %}{{ jsonld(item) }}
 {% endfor %}
 <script>document.documentElement.classList.add('js');try{if(!sessionStorage.getItem('pl_seen'))document.documentElement.classList.add('pl')}catch(e){document.documentElement.classList.add('pl')}</script>
@@ -242,6 +242,6 @@ w.querySelector('.wa-x').addEventListener('click',function(){w.hidden=true;try{s
 {% for it in integrations_for('body_end') %}{% if it.requires_consent %}<template data-consent-code="{{ it.id }}">{{ it.code|safe }}</template>{% else %}{{ it.code|safe }}{% endif %}
 {% endfor %}
 <script>(function(){var p=document.getElementById('preloader');if(!p)return;var done=false;function go(){if(done)return;done=true;p.classList.add('hide');try{sessionStorage.setItem('pl_seen','1')}catch(e){}setTimeout(function(){document.documentElement.classList.remove('pl')},800)}if(document.readyState==='complete')setTimeout(go,1200);else window.addEventListener('load',function(){setTimeout(go,1200)});setTimeout(go,3500)})();</script>
-<script src="{{ url_for('static', filename='js/site.js') }}?v=3" defer></script>
+<script src="{{ url_for('static', filename='js/site.js') }}?v=4" defer></script>
 </body>
 </html>

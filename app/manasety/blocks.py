@@ -32,6 +32,21 @@ _CTA = [
 ]
 
 BLOCK_TYPES: dict[str, dict[str, Any]] = {
+    "page_head": {
+        "label": "عنوان صفحة (H1)",
+        "fields": [*_HEAD],
+    },
+    "contact": {
+        "label": "نموذج التواصل وبيانات التواصل (من الإعدادات)",
+        "fields": [
+            F(key="title", kind="textarea", label="عنوان النموذج"),
+            F(key="subtitle", kind="textarea", label="نص تحت العنوان"),
+            F(key="name_placeholder", kind="text", label="مثال حقل الاسم"),
+            F(key="phone_placeholder", kind="text", label="مثال حقل الهاتف"),
+            F(key="notes_placeholder", kind="text", label="مثال حقل الوصف"),
+            F(key="submit_label", kind="text", label="نص زر الإرسال"),
+        ],
+    },
     "hero": {
         "label": "Hero (العنوان الرئيسي)",
         "fields": [
@@ -212,6 +227,7 @@ BLOCK_TYPES: dict[str, dict[str, Any]] = {
         "fields": [
             F(key="title", kind="textarea", label="العنوان"),
             F(key="body", kind="rich", label="النص"),
+            *_CTA,
         ],
     },
 }

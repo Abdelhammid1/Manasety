@@ -102,7 +102,7 @@
         })
         .then(function (res) {
           if (!res.ok || !res.body.ok) throw new Error((res.body.errors || []).join(' ') || 'error');
-          track('generate_lead', { event_category: 'Form' }, 'Lead', { content_name: 'Demo Request', content_category: 'Landing Page' });
+          track('generate_lead', { event_category: 'Form' }, 'Lead', { content_name: form.dataset.leadName || 'Demo Request', content_category: 'Landing Page' });
           window.location.href = form.dataset.thanks || '/thank-you.html';
         })
         .catch(function (err) {
