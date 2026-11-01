@@ -50,13 +50,20 @@ def _parse_dt(value: str) -> datetime | None:
 @bp.route("/<int:aid>", methods=["GET", "POST"])
 @permission_required("articles")
 def edit(aid: int | None = None):
-    art = db.session.get(Article, aid) if aid else Article(lang="ar", status="draft", related_mode="auto", faq=[], related_ids=[])
+    art = db.session.get(Article, aid) if aid else Article(lang="ar", status="draft", related_mode="auto", faq=[], related_ids=[],
+                                                          author_id=_own_author_id())
     if art is None:
         abort(404)
     if request.method == "POST":
         with db.session.no_autoflush:  # validation queries must not flush half-edited rows
             return _save(art, aid)
     return _render_form(art, aid)
+
+
+def _own_author_id() -> int | None:
+    """A new article starts with the writer's linked author (still changeable in the form)."""
+    author = current_user.author
+    return author.id if author is not None else None
 
 
 def _save(art: Article, aid: int | None):
@@ -75,6 +82,7 @@ def _save(art: Article, aid: int | None):
     for fk in ("category_id", "author_id", "cover_id", "og_image_id", "translation_of_id"):
         raw = request.form.get(fk, "")
         setattr(art, fk, int(raw) if raw.isdigit() else None)
+    art.author_id = Author.existing_id(request.form.get("author_id"))  # a deleted author must not fail the FK on save
     tag_ids = [int(x) for x in request.form.getlist("tag_ids") if x.isdigit()]
     art.tags = db.session.query(Tag).filter(Tag.id.in_(tag_ids)).all() if tag_ids else []
     art.faq = [{"q": clean_text(q), "a": clean_rich(a)}

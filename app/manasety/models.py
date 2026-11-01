@@ -57,6 +57,10 @@ class User(UserMixin, Model):
     session_version: Mapped[int] = mapped_column(Integer, default=1)
     last_login_at: Mapped[Optional[datetime]] = mapped_column(DateTime)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=utcnow)
+    # The byline this person writes under: new articles they create start with this author selected.
+    author_id: Mapped[Optional[int]] = mapped_column(ForeignKey("authors.id", ondelete="SET NULL"))
+
+    author = relationship("Author")
 
     def set_password(self, password: str) -> None:
         self.password_hash = generate_password_hash(password)
@@ -439,6 +443,14 @@ class Author(Model):
     same_as: Mapped[list] = mapped_column(JSON, default=list)  # profile URLs
 
     photo = relationship("Media")
+
+    @staticmethod
+    def existing_id(raw: Any) -> Optional[int]:
+        """A form value → the id of an author that exists, else None (ASCII digits only: '²'.isdigit() is True)."""
+        raw = str(raw or "")
+        if not re.fullmatch(r"[0-9]{1,9}", raw):
+            return None
+        return int(raw) if db.session.get(Author, int(raw)) is not None else None
 
 
 ARTICLE_STATUSES = {

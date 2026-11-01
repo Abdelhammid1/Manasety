@@ -3,12 +3,14 @@
 {% block title %}المستخدمون{% endblock %}
 {% block content %}
 <div class="top"><div class="grow"><h1>المستخدمون والأدوار</h1><p>Admin وEditor يجب أن يفعّلوا التحقق بخطوتين قبل أي دخول.</p></div></div>
-<div class="t-wrap"><table class="t"><thead><tr><th>الاسم</th><th>البريد</th><th>الدور</th><th>2FA</th><th>الحالة</th><th>آخر دخول</th><th>إجراءات</th></tr></thead><tbody>
+<div class="t-wrap"><table class="t"><thead><tr><th>الاسم</th><th>البريد</th><th>الدور</th><th>الكاتب المرتبط</th><th>2FA</th><th>الحالة</th><th>آخر دخول</th><th>إجراءات</th></tr></thead><tbody>
 {% for u in users %}
 <tr>
   <td>{{ u.name }}</td><td class="mono">{{ u.email }}</td>
   <td><form class="inline" method="post" action="{{ url_for('admin_core.user_update', uid=u.id) }}">{{ csrf() }}<input type="hidden" name="action" value="role">
     <select name="role" onchange="this.form.submit()" aria-label="الدور" {% if u.id == current_user.id %}disabled{% endif %}>{% for k, v in roles.items() %}<option value="{{ k }}" {% if u.role == k %}selected{% endif %}>{{ v }}</option>{% endfor %}</select></form></td>
+  <td><form class="inline" method="post" action="{{ url_for('admin_core.user_update', uid=u.id) }}">{{ csrf() }}<input type="hidden" name="action" value="author">
+    <select name="author_id" onchange="this.form.submit()" aria-label="الكاتب المرتبط بـ {{ u.name }}"><option value="">—</option>{% for a in authors %}<option value="{{ a.id }}" {% if u.author_id == a.id %}selected{% endif %}>{{ a.name }}</option>{% endfor %}</select></form></td>
   <td>{% if u.totp_enabled %}<span class="pill ok">مفعّل</span>{% elif u.requires_2fa %}<span class="pill bad">مطلوب</span>{% else %}<span class="pill off">اختياري</span>{% endif %}</td>
   <td>{% if u.is_active_flag %}<span class="pill ok">نشط</span>{% else %}<span class="pill off">معطّل</span>{% endif %}</td>
   <td class="mono">{{ u.last_login_at.strftime('%Y-%m-%d %H:%M') if u.last_login_at else '—' }}</td>
@@ -27,6 +29,8 @@
     <div class="field"><label for="n">الاسم</label><input id="n" name="name" required></div>
     <div class="field"><label for="e">البريد</label><input id="e" type="email" name="email" required class="ltr"></div>
     <div class="field"><label for="r">الدور</label><select id="r" name="role">{% for k, v in roles.items() %}<option value="{{ k }}">{{ v }}</option>{% endfor %}</select></div>
+    <div class="field"><label for="au">الكاتب المرتبط</label><select id="au" name="author_id"><option value="">—</option>{% for a in authors %}<option value="{{ a.id }}">{{ a.name }}</option>{% endfor %}</select>
+      <span class="help">المقالات الجديدة التي ينشئها هذا المستخدم تبدأ بهذا الكاتب، ويمكن تغييره من المقال.</span></div>
   </div>
   <p class="help" style="color:var(--ink-3)">Admin: كل شيء · Editor: الصفحة والمميزات والنشر · Marketer: المقالات والـ SEO والباك لينكس والتحليلات · Sales: الطلبات فقط.</p>
   <div class="actions"><button class="btn dark" type="submit">إنشاء</button></div>
