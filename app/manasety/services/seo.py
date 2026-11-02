@@ -226,7 +226,11 @@ def article_checks(article: Any, product_url: str = "/", min_related: int = 2) -
     title = article.h1 or article.title or ""
     links = re.findall(r'href="([^"]+)"', content)
     internal = [h for h in links if h.startswith("/") or "manasety.ai" in h]
-    to_product = any(h.split("#")[0].rstrip("/") in ("", product_url.rstrip("/"), "https://manasety.ai") for h in internal)
+    product_targets = {"", product_url.rstrip("/"), "https://manasety.ai"}
+    if getattr(article, "audience", "") in ("business", "both"):
+        # business articles feed the /business page, so a link to it counts as the product link
+        product_targets |= {"/business", "https://manasety.ai/business", "/en/business", "https://manasety.ai/en/business"}
+    to_product = any(h.split("#")[0].rstrip("/") in product_targets for h in internal)
     to_articles = {h for h in internal if "/blog/" in h}
     bold_lines = bold_line_count(content)
     imgs_without_alt = re.findall(r"<img(?![^>]*\balt=\"[^\"]+\")[^>]*>", article.content_html or "")
