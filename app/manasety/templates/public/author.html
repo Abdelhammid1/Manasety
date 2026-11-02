@@ -1,6 +1,6 @@
 {% extends "public/base.html" %}
 {% block title %}{{ t(author.name) }} | {{ setting('brand_name_ar') }}{% endblock %}
-{% block description %}{{ t_or_empty(author.job_title) }}{% endblock %}
+{% block description %}{{ (t_or_empty(author.bio)|striptags|trim|truncate(155, True, '')) or t_or_empty(author.job_title) }}{% endblock %}
 {% block content %}
 <div class="wrap">
   <div class="page-head">

@@ -9,7 +9,7 @@
 {% set _title = (self.title() | trim) %}
 <title>{% block title %}{{ setting('brand_name_ar') }}{% endblock %}</title>
 <meta name="description" content="{% block description %}{% endblock %}">
-{% if noindex or preview or config.STAGING or english_draft() %}<meta name="robots" content="noindex, nofollow">{% endif %}
+{% if noindex or preview or config.STAGING or english_draft() %}<meta name="robots" content="noindex, nofollow">{% elif noindex_follow %}<meta name="robots" content="noindex, follow">{% endif %}
 {% if canonical %}<link rel="canonical" href="{{ canonical }}">{% endif %}
 {% block hreflang %}{% endblock %}
 <meta property="og:type" content="{% block og_type %}website{% endblock %}">

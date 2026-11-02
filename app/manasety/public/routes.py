@@ -239,6 +239,9 @@ def _blog_prefix(lang: str) -> str:
     return "/en/blog" if lang == "en" else "/blog"
 
 
+MIN_CATEGORY_ARTICLES = 3  # thinner category pages are noindex,follow and stay out of the sitemap
+
+
 def _blog_categories(lang: str, audience: str, current: Optional[Category] = None):
     """Filter chips: only categories that have live articles for this blog (schools/business) and language."""
     cats = db.session.query(Category).order_by(Category.name).all()
@@ -247,6 +250,7 @@ def _blog_categories(lang: str, audience: str, current: Optional[Category] = Non
 
 def _blog_index(lang: str, category: Optional[Category] = None, tag: Optional[Tag] = None, audience: str = "schools"):
     articles = live_articles(lang, category_id=category.id if category else None, audience=audience)
+    thin_category = category is not None and len(articles) < MIN_CATEGORY_ARTICLES
     if tag:
         articles = [a for a in articles if tag in a.tags]
     page_no = max(request.args.get("page", 1, type=int) or 1, 1)
@@ -264,7 +268,7 @@ def _blog_index(lang: str, category: Optional[Category] = None, tag: Optional[Ta
     return render_template(
         "public/blog_index.html", articles=articles[(page_no - 1) * per_page: page_no * per_page],
         categories=_blog_categories(lang, audience, category), category=category, tag=tag,
-        page_no=page_no, total_pages=total_pages, lang=lang, blog_audience=audience,
+        page_no=page_no, total_pages=total_pages, lang=lang, blog_audience=audience, noindex_follow=thin_category,
         canonical=site + path + (f"?page={page_no}" if page_no > 1 else ""),
         schema=[seo.breadcrumb_schema(crumbs)], crumbs=crumbs,
     )
@@ -434,6 +438,15 @@ def rss():
 
 # ───────── sitemap / robots ─────────
 
+def _indexable_category_ids(arts) -> set:
+    """Categories with enough live articles to deserve a place in the sitemap."""
+    counts: dict = {}
+    for a in arts:
+        if a.category_id:
+            counts[a.category_id] = counts.get(a.category_id, 0) + 1
+    return {cid for cid, n in counts.items() if n >= MIN_CATEGORY_ARTICLES}
+
+
 def _english_sitemap_urls(site: str) -> list[dict[str, Any]]:
     """Only English addresses that really open: pages with English, and listings with English articles."""
     urls: list[dict[str, Any]] = []
@@ -453,7 +466,7 @@ def _english_sitemap_urls(site: str) -> list[dict[str, Any]]:
     for a in arts:
         if not (a.noindex or (a.canonical_url and a.canonical_url != site + a.path)):
             urls.append({"loc": site + a.path, "lastmod": a.content_updated_at or a.published_at})
-    used_cats = {a.category_id for a in arts if a.category_id}
+    used_cats = _indexable_category_ids(arts)
     for c in db.session.query(Category).filter(Category.id.in_(used_cats)).all() if used_cats else []:
         urls.append({"loc": f"{site}/en/blog/category/{c.slug}", "lastmod": None})
     for au in db.session.query(Author).all():
@@ -483,7 +496,7 @@ def sitemap():
         if a.noindex or (a.canonical_url and a.canonical_url != site + a.path):
             continue
         urls.append({"loc": site + a.path, "lastmod": a.content_updated_at or a.published_at})
-    used_cats = {a.category_id for a in arts if a.category_id}
+    used_cats = _indexable_category_ids(arts)
     for c in db.session.query(Category).filter(Category.id.in_(used_cats)).all() if used_cats else []:
         urls.append({"loc": f"{site}/blog/category/{c.slug}", "lastmod": None})
     for au in db.session.query(Author).all():
