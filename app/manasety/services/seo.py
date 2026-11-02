@@ -134,7 +134,6 @@ def organization_schema(s: dict, site_url: str, lang: str = "ar") -> dict:
         "logo": f"{site_url}/static/img/logo.svg",
         "description": _ORG_DESC["en" if en else "ar"],
         "parentOrganization": {"@type": "Organization", "name": s["legal_name_en"]},
-        "areaServed": ["EG", "SA"],
         "email": s["email"],
     }
     if phone:

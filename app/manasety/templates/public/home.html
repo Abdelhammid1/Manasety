@@ -1,5 +1,5 @@
 {% extends "public/base.html" %}
-{% block title %}{{ page_seo.get('title') or t('منصتي-سكول | نظام إدارة مدارس متكامل') }}{% endblock %}
+{% block title %}{{ page_seo.get('title') or t('منصتي | نظام إدارة المدارس والتعليم الإلكتروني') }}{% endblock %}
 {% block description %}{{ page_seo.get('description') or '' }}{% endblock %}
 {% block og_image %}{% set _og = (page_seo.get('og_image') or setting('default_og_image') or '')|trim %}{% if _og.startswith('http') %}{{ _og }}{% else %}{{ site_url() ~ '/' ~ _og.lstrip('/') }}{% endif %}{% endblock %}
 {% block hreflang %}{% if hreflang %}

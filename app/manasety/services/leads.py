@@ -90,7 +90,7 @@ def _to_marsoud(app: Flask, lead: Lead) -> str:
         "name": lead.name,
         "phone": lead.phone,
         "company_name": lead.school or lead.company,
-        "service_type": lead.service or ("عرض توضيحي منصتي-سكول" if lead.form == "demo" else "استشارة"),
+        "service_type": lead.service or ("عرض توضيحي منصتي" if lead.form == "demo" else "استشارة"),
         "package": "",
         "description": _description(lead),
         "ad_variant": lead.utm_content or "",
