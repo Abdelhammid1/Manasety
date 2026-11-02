@@ -239,6 +239,12 @@ def _blog_prefix(lang: str) -> str:
     return "/en/blog" if lang == "en" else "/blog"
 
 
+def _blog_categories(lang: str, audience: str, current: Optional[Category] = None):
+    """Filter chips: only categories that have live articles for this blog (schools/business) and language."""
+    cats = db.session.query(Category).order_by(Category.name).all()
+    return [c for c in cats if (current and c.id == current.id) or live_articles(lang, category_id=c.id, audience=audience)]
+
+
 def _blog_index(lang: str, category: Optional[Category] = None, tag: Optional[Tag] = None, audience: str = "schools"):
     articles = live_articles(lang, category_id=category.id if category else None, audience=audience)
     if tag:
@@ -257,7 +263,7 @@ def _blog_index(lang: str, category: Optional[Category] = None, tag: Optional[Ta
         crumbs.append((t(tag.name), site + path))
     return render_template(
         "public/blog_index.html", articles=articles[(page_no - 1) * per_page: page_no * per_page],
-        categories=db.session.query(Category).order_by(Category.name).all(), category=category, tag=tag,
+        categories=_blog_categories(lang, audience, category), category=category, tag=tag,
         page_no=page_no, total_pages=total_pages, lang=lang, blog_audience=audience,
         canonical=site + path + (f"?page={page_no}" if page_no > 1 else ""),
         schema=[seo.breadcrumb_schema(crumbs)], crumbs=crumbs,
