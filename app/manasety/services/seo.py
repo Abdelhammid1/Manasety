@@ -232,6 +232,14 @@ def article_checks(article: Any, product_url: str = "/", min_related: int = 2) -
         product_targets |= {"/business", "https://manasety.ai/business", "/en/business", "https://manasety.ai/en/business"}
     to_product = any(h.split("#")[0].rstrip("/") in product_targets for h in internal)
     to_articles = {h for h in internal if "/blog/" in h}
+    related_count = len(to_articles)
+    if related_count < min_related:
+        # the automatic "related articles" block under the article counts too
+        try:
+            from ..publishing import related_articles
+            related_count = max(related_count, len(related_articles(article, count=max(min_related, 3))))
+        except Exception:
+            pass
     bold_lines = bold_line_count(content)
     imgs_without_alt = re.findall(r"<img(?![^>]*\balt=\"[^\"]+\")[^>]*>", article.content_html or "")
     checks = [
@@ -247,7 +255,7 @@ def article_checks(article: Any, product_url: str = "/", min_related: int = 2) -
         (bold_lines == 0, "لا توجد سطور غامقة مكان العناوين" if bold_lines == 0 else
          f"{bold_lines} سطر غامق يبدو كعنوان: حوّله بزر «تحويل لعنوان»"),
         (to_product, "رابط داخلي لصفحة المنتج"),
-        (len(to_articles) >= min_related, f"روابط لمقالين ذوي صلة على الأقل (الحالي {len(to_articles)})"),
+        (related_count >= min_related, f"روابط لمقالين ذوي صلة على الأقل (الحالي {related_count})"),
         (not imgs_without_alt, "كل الصور داخل المقال لها alt"),
         (bool(article.cover_id), "صورة رئيسية"),
         (bool(article.author_id), "كاتب حقيقي محدد"),
