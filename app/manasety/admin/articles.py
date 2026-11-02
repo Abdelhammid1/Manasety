@@ -193,6 +193,11 @@ def autosave(aid: int):
 
 def _render_form(art: Article, aid: int | None):
     others = [a for a in db.session.query(Article).order_by(Article.title).all() if a.id != aid]
+    if aid and art.audience in ("schools", "business"):
+        # a schools article picks related articles from schools/both, a business one from business/both
+        # (articles already selected stay in the list so existing choices are not lost on save)
+        keep = set(art.related_ids or [])
+        others = [a for a in others if a.audience in (art.audience, "both") or a.id in keep]
     suggestions = suggest_internal_links(art, live_articles(art.lang or "ar")) if aid else []
     checks = article_checks(art, get_setting("product_page_url") or "/", int(get_setting("internal_links_min_related") or 2))
     return render_template(
