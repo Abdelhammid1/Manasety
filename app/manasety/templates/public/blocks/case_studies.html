@@ -17,7 +17,7 @@
           {% if cs.built %}<div><dt>{{ c.label_built or t('ما بنيناه') }}</dt><dd>{{ loc(cs, 'built')|rt }}</dd></div>{% endif %}
           {% if cs.working_now %}<div class="now"><dt>{{ c.label_now or t('ما يعمل الآن') }}</dt><dd>{{ loc(cs, 'working_now')|rt }}</dd></div>{% endif %}
         </dl>
-        {% if cs.display_url() %}{% if cs.display_url().startswith('/') %}<a href="{{ cs.display_url()|lhref }}" class="case-link">{{ t('اقرأ المزيد') }}</a>{% else %}<a href="{{ cs.display_url() }}" rel="noopener" target="_blank" class="case-link">{{ t('زيارة المنصة') }}</a>{% endif %}{% endif %}
+        {% if cs.display_url() %}{% if cs.display_url().startswith('/') %}<a href="{{ cs.display_url()|lhref }}" class="case-link">{{ t('قراءة دراسة حالة:') }} {{ cs.display_name(lang) }}</a>{% else %}<a href="{{ cs.display_url() }}" rel="noopener" target="_blank" class="case-link">{{ t('زيارة المنصة') }}</a>{% endif %}{% endif %}
       </article>
       {% endfor %}
     </div>

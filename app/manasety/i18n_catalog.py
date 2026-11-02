@@ -68,6 +68,7 @@ UI: dict[str, str] = {
     "ما بنيناه": "What we built",
     "ما يعمل الآن": "What is running now",
     "اقرأ المزيد": "Read more",
+    "قراءة دراسة حالة:": "Read case study:",
     "زيارة المنصة": "Visit the platform",
     "اترك هذا الحقل فارغًا": "Leave this field empty",
     "الاسم الكريم": "Your name",
