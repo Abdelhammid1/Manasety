@@ -102,8 +102,8 @@ UI: dict[str, str] = {
     "السابق": "Previous",
     "التالي": "Next",
     "الأسئلة الشائعة | منصتي": "FAQ | Manasety",
-    "إجابات عن طبيعة منصتي، والأمان، والتخصيص، والذكاء الاصطناعي، والتسعير.":
-        "Answers about what Manasety is, security, customization, AI, and pricing.",
+    "إجابات عن أسئلتك الشائعة حول منصتي: طبيعة الخدمة، والأمان، والتخصيص حسب احتياجك، والذكاء الاصطناعي، والتسعير، وطريقة البدء.":
+        "Answers to common questions about Manasety: what we offer, security, customization to your needs, AI features, pricing, and how to get started.",
     "الأسئلة الشائعة": "Frequently asked questions",
     "ملفات منصتي": "Manasety files",
     "الملف التعريفي لمنصتي ومعرض أعمالنا.": "The Manasety company profile and our portfolio.",
