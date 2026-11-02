@@ -140,9 +140,9 @@ def organization_schema(s: dict, site_url: str, lang: str = "ar") -> dict:
         org["telephone"] = phone
         org["contactPoint"] = {"@type": "ContactPoint", "contactType": "sales", "telephone": phone,
                                "url": f"{site_url}{'/en' if en else ''}/contact", "availableLanguage": ["ar", "en"]}
-    if str(s.get("address_ar") or "").strip():
-        org["address"] = {"@type": "PostalAddress", "streetAddress": s["address_ar"],
-                          "addressLocality": "قويسنا", "addressRegion": "المنوفية", "addressCountry": "EG"}
+    if True:  # fixed registered address (matches DUNS)
+        org["address"] = {"@type": "PostalAddress", "streetAddress": "11 Radwan Mosque Street",
+                          "addressLocality": "Quesna", "addressRegion": "Monufia", "addressCountry": "EG"}
     same = [x["url"] for x in s.get("social", []) if x.get("url")]
     if str(s.get("gbp_url") or "").strip():
         same.append(str(s["gbp_url"]).strip())
