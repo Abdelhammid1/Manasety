@@ -975,3 +975,10 @@ html[dir="ltr"] .cl-tag { text-align: right; }
 .contact-info li > div { display: flex; flex-direction: column; gap: 2px; min-width: 0; overflow-wrap: anywhere; }
 .contact-info b { font-size: 14px; color: var(--ink-2); font-weight: 600; }
 .contact-info a { width: fit-content; }
+
+/* nav-center-v1: center the desktop nav links in the header */
+@media (min-width: 1024px) {
+  .site-header .nav:has(.lang-switch) { display: flex; position: relative; }
+  .site-header .nav > nav { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+  .site-header .nav > .btn { margin-inline-start: auto; }
+}
