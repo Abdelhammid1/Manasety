@@ -250,7 +250,7 @@ def _blog_categories(lang: str, audience: str, current: Optional[Category] = Non
 
 def _blog_index(lang: str, category: Optional[Category] = None, tag: Optional[Tag] = None, audience: str = "schools"):
     articles = live_articles(lang, category_id=category.id if category else None, audience=audience)
-    thin_category = category is not None and len(articles) < MIN_CATEGORY_ARTICLES
+    thin_category = (category is not None and len(articles) < MIN_CATEGORY_ARTICLES) or (category is None and tag is None and not articles)
     if tag:
         articles = [a for a in articles if tag in a.tags]
     page_no = max(request.args.get("page", 1, type=int) or 1, 1)
