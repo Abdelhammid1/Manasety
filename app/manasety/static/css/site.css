@@ -979,6 +979,6 @@ html[dir="ltr"] .cl-tag { text-align: right; }
 /* nav-center-v1: center the desktop nav links in the header */
 @media (min-width: 1024px) {
   .site-header .nav:has(.lang-switch) { display: flex; position: relative; }
-  .site-header .nav > nav { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
-  .site-header .nav > .btn { margin-inline-start: auto; }
+  .site-header .nav:has(.lang-switch) > nav { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+  .site-header .nav:has(.lang-switch) > .btn { margin-inline-start: auto; }
 }
