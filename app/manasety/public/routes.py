@@ -526,11 +526,6 @@ def robots():
 
 # ───────── display files & legacy static files (catch-all, keep last) ─────────
 
-@bp.route("/sara")
-def sara_root():
-    return redirect("/sara/", code=301)
-
-
 @bp.route("/<path:filename>")
 def root_file(filename: str):
     df = db.session.query(DisplayFile).filter_by(public_path=filename).first()

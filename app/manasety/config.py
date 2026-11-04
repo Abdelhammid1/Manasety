@@ -86,4 +86,4 @@ LEGACY_FILES = {
 }
 # Old static sub-sites served as whole folders (unknown sub-paths fall back to the folder's index.html,
 # because they use path-based URLs, e.g. /sara/<name>).
-LEGACY_DIRS = {"sara"}
+LEGACY_DIRS = set()
