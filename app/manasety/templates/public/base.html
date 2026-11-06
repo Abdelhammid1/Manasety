@@ -6,8 +6,8 @@
 {# Integrations registry: injected verbatim, in registry order (same IDs and places as the old site). #}
 {% for it in integrations_for('head') %}{% if it.requires_consent %}<template data-consent-code="{{ it.id }}">{{ it.code|safe }}</template>{% else %}{{ it.code|safe }}{% endif %}
 {% endfor %}
-{% set _title = (self.title() | trim) %}
-<title>{% block title %}{{ setting('brand_name_ar') }}{% endblock %}</title>
+{% set _title = (self.title() | trim | brand_title) %}
+<title>{% filter brand_title %}{% block title %}{{ setting('brand_name_ar') }}{% endblock %}{% endfilter %}</title>
 <meta name="description" content="{% block description %}{% endblock %}">
 {% if noindex or preview or config.STAGING or english_draft() %}<meta name="robots" content="noindex, nofollow">{% elif noindex_follow %}<meta name="robots" content="noindex, follow">{% endif %}
 {% if canonical %}<link rel="canonical" href="{{ canonical }}">{% endif %}

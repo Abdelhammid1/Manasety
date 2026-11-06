@@ -154,7 +154,8 @@ def register_template_utils(app: Flask) -> None:
     def _lang_default() -> dict:
         return {"lang": current_lang()}  # a view's explicit lang= still wins
 
-    app.jinja_env.filters.update(rt=render_text, rich=render_rich, tables=wrap_tables, ar_date=ar_date, lines=lines, lhref=lhref)
+    from .brand_title import brand_title
+    app.jinja_env.filters.update(rt=render_text, rich=render_rich, tables=wrap_tables, ar_date=ar_date, lines=lines, lhref=lhref, brand_title=brand_title)
     app.jinja_env.globals.update(
         icon=icon, icon_sprite=icon_sprite, media_obj=media_obj, setting=setting, jsonld=jsonld, t=t, loc=loc, num=num,
         lang_switch_url=lang_switch_url, english_draft=english_draft, plain_path=plain_path, t_or_empty=t_or_empty,

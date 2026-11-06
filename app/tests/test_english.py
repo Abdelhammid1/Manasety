@@ -284,7 +284,7 @@ def test_about_and_contact_in_both_languages(client, path, arabic, english):
     ar = client.get(f"/{path}").data.decode()
     en = client.get(f"/en/{path}").data.decode()
     assert '<html lang="ar"' in ar and f"<title>{arabic} | منصتي" in ar and f'class="lang-switch" href="/en/{path}"' in ar
-    assert '<html lang="en"' in en and f"<title>{english} | Manasety" in en and f'class="lang-switch" href="/{path}"' in en
+    assert '<html lang="en"' in en and f"<title>{english} | منصتي - Manasety" in en and f'class="lang-switch" href="/{path}"' in en
     assert not AR_RE.search(_visible_text(en).replace("العربية", ""))
     assert en.count("<h1") == 1 and ar.count("<h1") == 1
     assert f'href="/{path}"' in client.get("/").data.decode() and f'href="/en/{path}"' in client.get("/en/").data.decode()
