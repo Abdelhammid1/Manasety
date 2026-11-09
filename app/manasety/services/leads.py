@@ -23,7 +23,7 @@ OFFER_LABEL = "\u0627\u0644\u0639\u0631\u0636"
 
 def _offer_subject(lead: Lead) -> str | None:
     """Email subject for the ActiveFit gyms campaign; None for every other lead."""
-    if lead.utm_campaign == GYM_CAMPAIGN:
+    if lead.utm_campaign == GYM_CAMPAIGN and lead.message.startswith(f"[{OFFER_LABEL}:"):
         return f"ActiveFit - {GYM_OFFER} - {lead.school or lead.name}"
     return None
 

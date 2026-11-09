@@ -13,6 +13,11 @@
     } catch (e) {}
   }
 
+  /* ActiveFit gyms campaign (activefit-offer.js sets window.__afOffer): Lead params + one Lead per click */
+  var lastWa = 0;
+  function waDup() { var n = Date.now(); if (n - lastWa < 1000) return true; lastWa = n; return false; }
+  function afParams() { var af = window.__afOffer; return af ? { content_name: 'activefit_gyms', content_category: af.utm_content || '' } : null; }
+
   /* mobile menu */
   var toggle = d.querySelector('.nav-toggle');
   var menu = d.getElementById('mobile-menu');
@@ -102,7 +107,7 @@
         })
         .then(function (res) {
           if (!res.ok || !res.body.ok) throw new Error((res.body.errors || []).join(' ') || 'error');
-          track('generate_lead', { event_category: 'Form' }, 'Lead', { content_name: form.dataset.leadName || 'Demo Request', content_category: 'Landing Page' });
+          track('generate_lead', { event_category: 'Form' }, 'Lead', afParams() || { content_name: form.dataset.leadName || 'Demo Request', content_category: 'Landing Page' });
           window.location.href = form.dataset.thanks || '/thank-you.html';
         })
         .catch(function (err) {
@@ -119,10 +124,10 @@
     if (!a) return;
     if (a.hasAttribute('data-lang-switch') && location.hash) a.href = a.pathname + location.hash;  // stay on the same section
     var href = a.getAttribute('href') || '';
-    if (/wa\.me|whatsapp/.test(href)) {
+    if (/wa\.me|whatsapp/.test(href) && !waDup()) {
       var source = a.getAttribute('data-wa-source') || 'landing-website';
       track('click_whatsapp', { event_category: 'Contact', event_label: source }, 'Lead',
-        { content_name: 'WhatsApp Click', content_category: 'Landing Page WhatsApp', source: source },
+        afParams() || { content_name: 'WhatsApp Click', content_category: 'Landing Page WhatsApp', source: source },
         ['WhatsAppClick', { source: source }]);
     } else if (/#contact$/.test(href)) {
       track('click_book_session', { event_category: 'CTA' });
