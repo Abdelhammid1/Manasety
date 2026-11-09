@@ -242,7 +242,7 @@ w.querySelector('.wa-x').addEventListener('click',function(){w.hidden=true;try{s
 {% for it in integrations_for('body_end') %}{% if it.requires_consent %}<template data-consent-code="{{ it.id }}">{{ it.code|safe }}</template>{% else %}{{ it.code|safe }}{% endif %}
 {% endfor %}
 <script>(function(){var p=document.getElementById('preloader');if(!p)return;var done=false;function go(){if(done)return;done=true;p.classList.add('hide');try{sessionStorage.setItem('pl_seen','1')}catch(e){}setTimeout(function(){document.documentElement.classList.remove('pl')},800)}if(document.readyState==='complete')setTimeout(go,1200);else window.addEventListener('load',function(){setTimeout(go,1200)});setTimeout(go,3500)})();</script>
-{% if g.get('page_slug') == 'activefit' %}<script src="{{ url_for('static', filename='js/activefit-offer.js') }}?v=2" defer></script>
+{% if g.get('page_slug') == 'activefit' %}<script src="{{ url_for('static', filename='js/activefit-offer.js') }}?v=3" defer></script>
 {% endif %}<script src="{{ url_for('static', filename='js/site.js') }}?v=5" defer></script>
 </body>
 </html>

@@ -101,8 +101,8 @@ var OFFER_ACTIVE = true;
 
   /* 3) WhatsApp prefilled message on every wa.me link of the Egypt number */
   var msg = [
-    'السلام عليكم 👋',
-    'أنا شفت إعلان ActiveFit على فيسبوك وعايز آخد *عرض الجيم* 🎁',
+    'السلام عليكم',
+    'أنا شفت إعلان ActiveFit على فيسبوك وعايز آخد *عرض الجيم*',
     '(تجربة 14 يوم + نقل بيانات ناديي مجانًا + خصم 30% على الاشتراك السنوي)',
     '',
     'اسم ناديي:',
