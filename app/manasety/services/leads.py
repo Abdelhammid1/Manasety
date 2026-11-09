@@ -16,6 +16,17 @@ from ..models import LEAD_STATUSES, Lead
 UTM_KEYS = ("utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content")
 TIMEOUT = 8
 
+GYM_CAMPAIGN = "activefit_gyms"
+GYM_OFFER = "\u0639\u0631\u0636 \u0627\u0644\u062c\u064a\u0645"  # gym offer name, used to count leads
+OFFER_LABEL = "\u0627\u0644\u0639\u0631\u0636"
+
+
+def _offer_subject(lead: Lead) -> str | None:
+    """Email subject for the ActiveFit gyms campaign; None for every other lead."""
+    if lead.utm_campaign == GYM_CAMPAIGN:
+        return f"ActiveFit - {GYM_OFFER} - {lead.school or lead.name}"
+    return None
+
 
 def build_lead(form: Any, form_kind: str) -> tuple[Lead | None, list[str]]:
     def val(key: str, limit: int = 255) -> str:
@@ -41,6 +52,8 @@ def build_lead(form: Any, form_kind: str) -> tuple[Lead | None, list[str]]:
     )
     for key in UTM_KEYS:
         setattr(lead, key, val(key))
+    if val("offer") == GYM_OFFER:
+        lead.message = f"[{OFFER_LABEL}: {GYM_OFFER}]\n{lead.message}".strip()
     return lead, []
 
 
@@ -78,6 +91,8 @@ def _description(lead: Lead) -> str:
         parts.append(f"نوع النشاط: {lead.business_type}")
     if lead.message:
         parts.append(lead.message)
+    if lead.utm_campaign == GYM_CAMPAIGN:
+        parts.append(f"utm: {lead.utm_source}/{lead.utm_medium}/{lead.utm_campaign}/{lead.utm_content}")
     return "\n".join(parts)
 
 
@@ -107,10 +122,12 @@ def _to_web3forms(app: Flask, lead: Lead) -> str:
         return "skipped: WEB3FORMS_ACCESS_KEY not set"
     data = {
         "access_key": key,
-        "subject": "طلب جديد من موقع منصتي",
+        "subject": _offer_subject(lead) or "طلب جديد من موقع منصتي",
         "name": lead.name, "phone": lead.phone, "company": lead.school or lead.company,
         "service": lead.service, "message": _description(lead), "email": lead.email,
         "source": lead.source,
+        "utm_source": lead.utm_source, "utm_medium": lead.utm_medium,
+        "utm_campaign": lead.utm_campaign, "utm_content": lead.utm_content,
     }
     r = requests.post("https://api.web3forms.com/submit", data=data, timeout=TIMEOUT)
     return f"{r.status_code}"
@@ -121,7 +138,7 @@ def _to_email(app: Flask, lead: Lead) -> str:
     if not (user and pwd and to):
         return "skipped: SMTP not configured"
     msg = EmailMessage()
-    msg["Subject"] = f"طلب جديد ({lead.form}) — {lead.name}"
+    msg["Subject"] = _offer_subject(lead) or f"طلب جديد ({lead.form}) — {lead.name}"
     msg["From"] = app.config.get("SMTP_FROM") or user
     msg["To"] = to
     lines = [f"{k}: {v}" for k, v in (
