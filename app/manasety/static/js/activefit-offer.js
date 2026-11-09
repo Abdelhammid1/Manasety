@@ -47,7 +47,7 @@ var OFFER_ACTIVE = true;
   var st = d.createElement('style');
   st.textContent =
     '.af-banner{position:sticky;top:0;z-index:1000;background:#1849A9;color:#fff;text-align:center;font-weight:700;font-size:14px;line-height:1.7;padding:10px 14px}' +
-    'html.af-offer .dom-switch,html.af-offer .nav-links,html.af-offer .nav-toggle,html.af-offer .mobile-menu,html.af-offer .lang-switch{display:none!important}';
+    'html.af-offer .dom-switch,html.af-offer .nav-links,html.af-offer .nav-toggle,html.af-offer .mobile-menu,html.af-offer .lang-switch,html.af-offer .social-float{display:none!important}';
   d.head.appendChild(st);
 
   var banner = d.createElement('div');
@@ -88,6 +88,16 @@ var OFFER_ACTIVE = true;
   d.querySelectorAll('.site-footer h2').forEach(function (h) {
     if (h.textContent.trim() === 'صفحاتنا' && h.parentElement) h.parentElement.style.display = 'none';
   });
+
+  var bubble = d.querySelector('.wa-bubble');
+  if (bubble) {
+    var BUBBLE = 'مرحباً.. عايز تعرف تفاصيل عرض الجيم؟';
+    var done = false;
+    Array.prototype.forEach.call(bubble.childNodes, function (n) {
+      if (!done && n.nodeType === 3 && n.nodeValue.trim()) { n.nodeValue = BUBBLE; done = true; }
+    });
+    if (!done && !bubble.children.length) bubble.textContent = BUBBLE;
+  }
 
   /* 3) WhatsApp prefilled message on every wa.me link of the Egypt number */
   var msg = [
