@@ -112,6 +112,12 @@ SETTINGS_FORM = [
         ("robots_extra", "أسطر إضافية في robots.txt", "textarea"),
         ("english_enabled", "تفعيل النسخة الإنجليزية (/en/)", "bool"),
     ]),
+    ("بيانات الشركة لمحركات البحث", [
+        ("schema_phone", "رقم التليفون (بصيغة دولية مثل +20...)", "text"), ("schema_contact_type", "نوع جهة الاتصال (customer service / sales / technical support)", "text"),
+        ("schema_logo", "رابط اللوجو (مسار أو https)", "text"),
+        ("schema_same_as", "روابط الحسابات الرسمية (sameAs) - رابط في كل سطر", "textarea"),
+        ("org_description_ar", "وصف الشركة (عربي)", "textarea"), ("org_description_en", "وصف الشركة (إنجليزي)", "textarea"),
+    ]),
 ]
 
 

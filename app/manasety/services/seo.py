@@ -140,12 +140,46 @@ _ORG_SAMEAS = [
 ]
 
 
+_SAMEAS_OK = re.compile(r"^https?://[^\s<>]+$")
+_PHONE_OK = re.compile(r"^\+\d{8,15}$")
+_CONTACT_TYPES = {"customer service", "customer support", "sales", "technical support", "billing support",
+                  "reservations", "emergency", "bill payment", "package tracking"}
+
+
+def _org_cfg(s: dict, site_url: str, lang: str = "ar") -> dict:
+    """Admin-editable Organization fields (Settings > company data for search engines).
+    Empty or invalid values fall back to the built-in defaults, so the schema never breaks."""
+    base = site_url.rstrip("/")
+    links = []
+    for line in str(s.get("schema_same_as") or "").replace("\r", "").split("\n"):
+        line = line.strip()
+        if _SAMEAS_OK.match(line) and line not in links:
+            links.append(line)
+    if not links:
+        links = list(_ORG_SAMEAS)
+    phone = str(s.get("schema_phone") or "").replace(" ", "").replace("-", "").strip()
+    if not _PHONE_OK.match(phone):
+        phone = _ORG_PHONE
+    ctype = str(s.get("schema_contact_type") or "").strip()
+    if ctype not in _CONTACT_TYPES:
+        ctype = "customer service"
+    logo = str(s.get("schema_logo") or "").strip()
+    if logo.startswith("/") and not logo.startswith("//"):
+        logo = base + logo
+    elif not logo.startswith("https://"):
+        logo = base + "/static/img/logo.svg"
+    key = "en" if lang == "en" else "ar"
+    desc = str(s.get("org_description_" + key) or "").strip()[:600] or _ORG_DESC[key]
+    return {"same_as": links[:20], "phone": phone, "contact_type": ctype, "logo": logo, "description": desc}
+
+
 def org_ar_schema(s: dict, site_url: str) -> Optional[dict]:
     """Single source for the full Arabic Organization node (home @graph, /about, /contact)."""
     parts = [p.strip() for p in str(s.get("address_ar") or "").split(" - ")]
     if len(parts) != 3 or not all(parts):
         return None
     base = site_url.rstrip("/")
+    cfg = _org_cfg(s, site_url, "ar")
     return {
         "@type": "Organization",
         "@id": f"{base}/#organization",
@@ -153,21 +187,21 @@ def org_ar_schema(s: dict, site_url: str) -> Optional[dict]:
         "alternateName": [s["brand_name_en"], s["brand_name_ar"]],
         "legalName": s["legal_name_en"],
         "url": base,
-        "logo": f"{base}/static/img/logo.svg",
-        "description": _ORG_DESC["ar"],
+        "logo": cfg["logo"],
+        "description": cfg["description"],
         "address": {"@type": "PostalAddress", "streetAddress": parts[0],
                     "addressLocality": parts[1], "addressRegion": parts[2], "addressCountry": "EG"},
-        "contactPoint": {"@type": "ContactPoint", "contactType": "customer service",
-                         "telephone": _ORG_PHONE, "email": s["email"]},
-        "sameAs": list(_ORG_SAMEAS),
+        "contactPoint": {"@type": "ContactPoint", "contactType": cfg["contact_type"],
+                         "telephone": cfg["phone"], "email": s["email"]},
+        "sameAs": cfg["same_as"],
     }
 
 
 def org_publisher(s: dict, site_url: str) -> dict:
-    """Short Organization node used as BlogPosting publisher."""
+    """Short Organization node used as publisher (BlogPosting, WebPage)."""
     base = site_url.rstrip("/")
     return {"@type": "Organization", "@id": f"{base}/#organization", "name": _brand_title(s),
-            "url": base, "logo": f"{base}/static/img/logo.svg"}
+            "url": base, "logo": _org_cfg(s, site_url)["logo"]}
 
 
 def home_graph_schema(s: dict, site_url: str) -> Optional[dict]:
@@ -199,7 +233,7 @@ def org_node(s: dict, site_url: str, lang: str = "ar") -> Optional[dict]:
     if not org:
         return None
     if lang == "en":
-        org = {**org, "description": _ORG_DESC["en"],
+        org = {**org, "description": _org_cfg(s, site_url, "en")["description"],
                "address": {"@type": "PostalAddress", "streetAddress": "11 Radwan Mosque Street",
                            "addressLocality": "Quesna", "addressRegion": "Monufia", "addressCountry": "EG"}}
     return org

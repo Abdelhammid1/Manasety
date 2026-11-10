@@ -25,7 +25,7 @@
       {% else %}<div class="field"><label for="s-{{ key }}">{{ label }}</label><input id="s-{{ key }}" name="{{ key }}" value="{{ values[key] }}"{% if kind == 'int' %} type="number"{% endif %}></div>{% endif %}
     {% endfor %}
     </div>
-    {% for key, label, kind in fields if kind == 'textarea' %}<div class="field"><label for="s-{{ key }}">{{ label }}</label><textarea id="s-{{ key }}" name="{{ key }}" rows="2">{{ values[key] }}</textarea></div>{% endfor %}
+    {% for key, label, kind in fields if kind == 'textarea' %}<div class="field"><label for="s-{{ key }}">{{ label }}</label><textarea id="s-{{ key }}" name="{{ key }}" rows="{{ 9 if key == 'schema_same_as' else 2 }}">{{ values[key] }}</textarea></div>{% endfor %}
     {% for key, label, kind in fields if kind == 'links' %}<fieldset><legend>{{ label }}</legend>{{ rows(key, values[key] or [], 'label', 'href', 'النص', 'الرابط') }}</fieldset>{% endfor %}
     {% for key, label, kind in fields if kind == 'social' %}<fieldset><legend>{{ label }}</legend>{{ rows(key, values[key] or [], 'name', 'url', 'المنصة', 'الرابط') }}</fieldset>{% endfor %}
   </section>
