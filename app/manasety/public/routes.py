@@ -48,6 +48,10 @@ def _render_page(page: Page, snapshot: Optional[list], lang: str, preview: bool 
         _home_graph = seo.home_graph_schema(s, site)
         if _home_graph:
             schema = [_home_graph]
+    if page.slug in ("about", "contact") and lang == "ar":  # ticket 2026-11-10: full Organization, no WebSite
+        _org_only = seo.org_page_schema(s, site)
+        if _org_only:
+            schema = [_org_only]
     if page.slug == "about":
         schema.append(seo.about_page_schema(site, page_seo.get("title") or "", lang))
     if page.slug not in ("about", "contact"):
@@ -379,7 +383,7 @@ def _article_view(lang: str, slug: str, preview_article: Optional[Article] = Non
     if art.category:
         crumbs.append((t(art.category.name), f"{site}{blog_path}/category/{art.category.slug}"))
     crumbs.append((art.title, site + art.path))
-    schema: list[Any] = [seo.article_schema(art, site, (site + og.url) if og else ""), seo.breadcrumb_schema(crumbs)]
+    schema: list[Any] = [seo.article_schema(art, site, (site + og.url) if og else "", all_settings()), seo.breadcrumb_schema(crumbs)]
     fs = seo.faq_schema(faq_pairs)
     if fs:
         schema.append(fs)

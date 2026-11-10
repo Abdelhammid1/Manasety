@@ -156,51 +156,86 @@ def website_schema(s: dict, site_url: str, lang: str = "ar") -> dict:
             "inLanguage": lang, "publisher": {"@id": f"{site_url}/#organization"}}
 
 
-def home_graph_schema(s: dict, site_url: str) -> Optional[dict]:
-    """Arabic home only: one @graph (Organization + WebSite), per the schema ticket of 2026-11-10."""
+_ORG_PHONE = "+201044203322"
+_ORG_SAMEAS = [
+    "https://www.linkedin.com/company/manasetyai/",
+    "https://www.facebook.com/manasetyai",
+    "https://www.instagram.com/manasetyai",
+    "https://www.tiktok.com/@manasetyai",
+    "https://www.snapchat.com/@manasetyai",
+    "https://x.com/manasetyai",
+    "https://www.youtube.com/@manasetyai",
+    "https://www.crunchbase.com/organization/manasety-%D9%85%D9%86%D8%B5%D8%AA%D9%8A",
+    "https://maps.app.goo.gl/AMxjeWMMwRQCFrr57",
+]
+
+
+def org_ar_schema(s: dict, site_url: str) -> Optional[dict]:
+    """Single source for the full Arabic Organization node (home @graph, /about, /contact)."""
     parts = [p.strip() for p in str(s.get("address_ar") or "").split(" - ")]
     if len(parts) != 3 or not all(parts):
         return None
     base = site_url.rstrip("/")
     return {
+        "@type": "Organization",
+        "@id": f"{base}/#organization",
+        "name": _brand_title(s),
+        "alternateName": [s["brand_name_en"], s["brand_name_ar"]],
+        "legalName": s["legal_name_en"],
+        "url": base,
+        "logo": f"{base}/static/img/logo.svg",
+        "description": _ORG_DESC["ar"],
+        "address": {"@type": "PostalAddress", "streetAddress": parts[0],
+                    "addressLocality": parts[1], "addressRegion": parts[2], "addressCountry": "EG"},
+        "contactPoint": {"@type": "ContactPoint", "contactType": "customer service",
+                         "telephone": _ORG_PHONE, "email": s["email"]},
+        "sameAs": list(_ORG_SAMEAS),
+    }
+
+
+def org_publisher(s: dict, site_url: str) -> dict:
+    """Short Organization node used as BlogPosting publisher."""
+    base = site_url.rstrip("/")
+    return {"@type": "Organization", "@id": f"{base}/#organization", "name": _brand_title(s),
+            "url": base, "logo": f"{base}/static/img/logo.svg"}
+
+
+def home_graph_schema(s: dict, site_url: str) -> Optional[dict]:
+    """Arabic home only: one @graph (Organization + WebSite)."""
+    org = org_ar_schema(s, site_url)
+    if not org:
+        return None
+    base = site_url.rstrip("/")
+    return {
         "@context": "https://schema.org",
         "@graph": [
-            {
-                "@type": "Organization",
-                "@id": f"{base}/#organization",
-                "name": _brand_title(s),
-                "alternateName": [s["brand_name_en"], s["brand_name_ar"]],
-                "legalName": s["legal_name_en"],
-                "url": base,
-                "logo": f"{base}/static/img/logo.svg",
-                "description": _ORG_DESC["ar"],
-                "address": {"@type": "PostalAddress", "streetAddress": parts[0],
-                            "addressLocality": parts[1], "addressRegion": parts[2], "addressCountry": "EG"},
-                "contactPoint": {"@type": "ContactPoint", "contactType": "customer service",
-                                 "telephone": "+201044203322", "email": s["email"]},
-                "sameAs": [
-                    "https://www.linkedin.com/company/manasetyai/",
-                    "https://www.facebook.com/manasetyai",
-                    "https://www.instagram.com/manasetyai",
-                    "https://www.tiktok.com/@manasetyai",
-                    "https://www.snapchat.com/@manasetyai",
-                    "https://x.com/manasetyai",
-                    "https://www.youtube.com/@manasetyai",
-                    "https://www.crunchbase.com/organization/manasety-%D9%85%D9%86%D8%B5%D8%AA%D9%8A",
-                    "https://maps.app.goo.gl/AMxjeWMMwRQCFrr57",
-                ],
-            },
-            {
-                "@type": "WebSite",
-                "@id": f"{base}/#website",
-                "name": _brand_title(s),
-                "alternateName": [s["brand_name_en"], s["brand_name_ar"]],
-                "url": base,
-                "inLanguage": "ar",
-                "publisher": {"@id": f"{base}/#organization"},
-            },
+            org,
+            {"@type": "WebSite", "@id": f"{base}/#website", "name": _brand_title(s),
+             "alternateName": [s["brand_name_en"], s["brand_name_ar"]], "url": base,
+             "inLanguage": "ar", "publisher": {"@id": f"{base}/#organization"}},
         ],
     }
+
+
+def org_page_schema(s: dict, site_url: str) -> Optional[dict]:
+    """Arabic /about and /contact: the same Organization node, without WebSite."""
+    org = org_ar_schema(s, site_url)
+    return {"@context": "https://schema.org", **org} if org else None
+
+
+def iso_local(dt: Any) -> Optional[str]:
+    """Stored datetimes are naive UTC; emit ISO 8601 in Africa/Cairo with the correct (DST-aware) offset."""
+    if not dt:
+        return None
+    from datetime import timezone
+    try:
+        from zoneinfo import ZoneInfo
+        tz = ZoneInfo("Africa/Cairo")
+    except Exception:
+        tz = timezone.utc
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=timezone.utc)
+    return dt.astimezone(tz).replace(microsecond=0).isoformat()
 
 
 def about_page_schema(site_url: str, name: str, lang: str = "ar") -> dict:
@@ -231,16 +266,16 @@ def faq_schema(pairs: list[tuple[str, str]]) -> Optional[dict]:
         for q, a in pairs]}
 
 
-def article_schema(article: Any, site_url: str, image_url: str = "") -> dict:
+def article_schema(article: Any, site_url: str, image_url: str = "", settings: Optional[dict] = None) -> dict:
     data: dict[str, Any] = {
         "@context": "https://schema.org", "@type": "BlogPosting",
         "headline": article.h1 or article.title,
         "description": article.meta_description or article.excerpt,
         "inLanguage": article.lang,
         "mainEntityOfPage": site_url + article.path,
-        "datePublished": article.published_at.isoformat() if article.published_at else None,
-        "dateModified": (article.content_updated_at or article.published_at).isoformat() if article.published_at else None,
-        "publisher": {"@id": f"{site_url}/#organization"},
+        "datePublished": iso_local(article.published_at),
+        "dateModified": iso_local(article.content_updated_at or article.published_at),
+        "publisher": (org_publisher(settings, site_url) if settings else {"@id": f"{site_url}/#organization"}),
     }
     if image_url:
         data["image"] = image_url
