@@ -43,7 +43,11 @@ def _render_page(page: Page, snapshot: Optional[list], lang: str, preview: bool 
     if lang == "en":  # a section with no English yet stays hidden rather than rendering empty
         sections = [sec for sec in sections if sec["c"]]
     hero = next((x["c"] for x in sections if x["block_type"] == "hero"), {})
-    schema = [seo.organization_schema(s, site, lang), seo.website_schema(s, site, lang)]
+    _canon = site + ("/en" if lang == "en" and path else "") + (path or ("/en/" if lang == "en" else "/"))
+    _org = seo.org_standalone_schema(s, site, lang)
+    schema = [_org] if _org else []
+    if page.slug == "home":  # WebSite only on the home page
+        schema.append(seo.website_schema(s, site, lang))
     if page.slug == "home" and lang == "ar":  # schema ticket 2026-11-10: one @graph on the Arabic home only
         _home_graph = seo.home_graph_schema(s, site)
         if _home_graph:
@@ -55,8 +59,14 @@ def _render_page(page: Page, snapshot: Optional[list], lang: str, preview: bool 
     if page.slug == "about":
         schema.append(seo.about_page_schema(site, page_seo.get("title") or "", lang))
     if page.slug not in ("about", "contact"):
-        schema.append(seo.software_schema(site, page_seo.get("software_name") or t("منصتي"),
-                                          page_seo.get("description") or hero.get("subtitle", ""), lang))
+        _pdesc = page_seo.get("description") or hero.get("subtitle", "")
+        if page.slug == "home":
+            schema.append(seo.software_schema(site, page_seo.get("software_name") or t("منصتي"), _pdesc, lang))
+        elif page.slug == "training-institutes":
+            schema.append(seo.software_page_schema(_canon, page_seo.get("software_name") or t("منصتي"), _pdesc, lang, site))
+        else:
+            schema.append(seo.webpage_schema(_canon, page_seo.get("title") or t("منصتي"), _pdesc, lang,
+                                             seo.org_publisher(s, site)))
     faq_items = []
     faq_section = next((x for x in sections if x["block_type"] == "faq"), None)
     if faq_section:

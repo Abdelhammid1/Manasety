@@ -120,36 +120,6 @@ _ORG_DESC = {
 }
 
 
-def organization_schema(s: dict, site_url: str, lang: str = "ar") -> dict:
-    en = lang == "en"
-    digits = "".join(ch for ch in str(s.get("whatsapp_eg") or "") if ch.isdigit())
-    phone = ("+" + digits) if digits else ""
-    org = {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "@id": f"{site_url}/#organization",
-        "name": _brand_title(s),
-        "alternateName": [s["brand_name_en"], s["brand_name_ar"]],
-        "url": site_url + "/",
-        "logo": f"{site_url}/static/img/logo.svg",
-        "description": _ORG_DESC["en" if en else "ar"],
-        "parentOrganization": {"@type": "Organization", "name": s["legal_name_en"]},
-        "email": s["email"],
-    }
-    if phone:
-        org["telephone"] = phone
-        org["contactPoint"] = {"@type": "ContactPoint", "contactType": "sales", "telephone": phone,
-                               "url": f"{site_url}{'/en' if en else ''}/contact", "availableLanguage": ["ar", "en"]}
-    if True:  # fixed registered address (matches DUNS)
-        org["address"] = {"@type": "PostalAddress", "streetAddress": "11 Radwan Mosque Street",
-                          "addressLocality": "Quesna", "addressRegion": "Monufia", "addressCountry": "EG"}
-    same = [x["url"] for x in s.get("social", []) if x.get("url")]
-    if str(s.get("gbp_url") or "").strip():
-        same.append(str(s["gbp_url"]).strip())
-    org["sameAs"] = same
-    return org
-
-
 def website_schema(s: dict, site_url: str, lang: str = "ar") -> dict:
     return {"@context": "https://schema.org", "@type": "WebSite", "@id": f"{site_url}/#website",
             "url": site_url + "/", "name": _brand_title(s), "alternateName": s["brand_name_en"],
@@ -221,6 +191,35 @@ def org_page_schema(s: dict, site_url: str) -> Optional[dict]:
     """Arabic /about and /contact: the same Organization node, without WebSite."""
     org = org_ar_schema(s, site_url)
     return {"@context": "https://schema.org", **org} if org else None
+
+
+def org_node(s: dict, site_url: str, lang: str = "ar") -> Optional[dict]:
+    """Shared Organization node for every page; English only swaps description and address."""
+    org = org_ar_schema(s, site_url)
+    if not org:
+        return None
+    if lang == "en":
+        org = {**org, "description": _ORG_DESC["en"],
+               "address": {"@type": "PostalAddress", "streetAddress": "11 Radwan Mosque Street",
+                           "addressLocality": "Quesna", "addressRegion": "Monufia", "addressCountry": "EG"}}
+    return org
+
+
+def org_standalone_schema(s: dict, site_url: str, lang: str = "ar") -> Optional[dict]:
+    org = org_node(s, site_url, lang)
+    return {"@context": "https://schema.org", **org} if org else None
+
+
+def webpage_schema(url: str, name: str, description: str, lang: str, publisher: dict) -> dict:
+    return {"@context": "https://schema.org", "@type": "WebPage", "url": url, "name": name,
+            "description": description, "inLanguage": lang, "publisher": publisher}
+
+
+def software_page_schema(url: str, name: str, description: str, lang: str, site_url: str) -> dict:
+    return {"@context": "https://schema.org", "@type": "SoftwareApplication", "name": name,
+            "applicationCategory": "EducationalApplication", "operatingSystem": "Web",
+            "description": description, "url": url, "inLanguage": lang,
+            "publisher": {"@id": f"{site_url.rstrip('/')}/#organization"}}
 
 
 def iso_local(dt: Any) -> Optional[str]:
