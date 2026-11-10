@@ -44,6 +44,10 @@ def _render_page(page: Page, snapshot: Optional[list], lang: str, preview: bool 
         sections = [sec for sec in sections if sec["c"]]
     hero = next((x["c"] for x in sections if x["block_type"] == "hero"), {})
     schema = [seo.organization_schema(s, site, lang), seo.website_schema(s, site, lang)]
+    if page.slug == "home" and lang == "ar":  # schema ticket 2026-11-10: one @graph on the Arabic home only
+        _home_graph = seo.home_graph_schema(s, site)
+        if _home_graph:
+            schema = [_home_graph]
     if page.slug == "about":
         schema.append(seo.about_page_schema(site, page_seo.get("title") or "", lang))
     if page.slug not in ("about", "contact"):
