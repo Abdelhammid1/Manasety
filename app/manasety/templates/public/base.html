@@ -210,6 +210,7 @@
       </div>
       {% endif %}
     </div>
+    {% if g.get('lang') == 'en' %}<nav class="foot-explore" aria-label="Explore" style="display:flex;flex-wrap:wrap;gap:8px 22px;padding:14px 0;border-top:1px solid rgba(127,127,127,.2)"><a href="/en/business">Custom business systems</a><a href="/en/training-institutes">Training institutes software</a><a href="/en/qdrat-platform">Qdrat learning platform</a></nav>{% endif %}
     <div class="foot-bottom">
       <span>{% if setting('show_footer_copyright') %}© {{ now_year() }} {{ setting('legal_name_en') }}{{ t('. جميع الحقوق محفوظة. ·') }} {% endif %}{{ t('سجل تجاري') }} <bdi class="num">{{ setting('commercial_registration') }}</bdi> · {{ setting('address_ar') }}</span>
       <span>{{ (LAY.footer_tagline if LAY.footer_tagline else (setting('footer_tagline_biz') if on_biz and setting('footer_tagline_biz') else setting('footer_tagline'))) }}</span>

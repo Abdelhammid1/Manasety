@@ -258,6 +258,7 @@ def _blog_prefix(lang: str) -> str:
 
 
 MIN_CATEGORY_ARTICLES = 3  # thinner category pages are noindex,follow and stay out of the sitemap
+NOINDEX_CATEGORY_SLUGS = {"school-management"}  # always noindex,follow and out of the sitemap, whatever the article count (decision 2026-11-12)
 
 
 def _blog_categories(lang: str, audience: str, current: Optional[Category] = None):
@@ -268,7 +269,7 @@ def _blog_categories(lang: str, audience: str, current: Optional[Category] = Non
 
 def _blog_index(lang: str, category: Optional[Category] = None, tag: Optional[Tag] = None, audience: str = "schools"):
     articles = live_articles(lang, category_id=category.id if category else None, audience=audience)
-    thin_category = (category is not None and len(articles) < MIN_CATEGORY_ARTICLES) or (category is None and tag is None and not articles)
+    thin_category = (category is not None and len(articles) < MIN_CATEGORY_ARTICLES) or (category is None and tag is None and not articles) or (category is not None and category.slug in NOINDEX_CATEGORY_SLUGS)
     if tag:
         articles = [a for a in articles if tag in a.tags]
     page_no = max(request.args.get("page", 1, type=int) or 1, 1)
@@ -462,7 +463,10 @@ def _indexable_category_ids(arts) -> set:
     for a in arts:
         if a.category_id:
             counts[a.category_id] = counts.get(a.category_id, 0) + 1
-    return {cid for cid, n in counts.items() if n >= MIN_CATEGORY_ARTICLES}
+    ids = {cid for cid, n in counts.items() if n >= MIN_CATEGORY_ARTICLES}
+    if ids:
+        ids -= {c.id for c in db.session.query(Category).filter(Category.id.in_(ids), Category.slug.in_(list(NOINDEX_CATEGORY_SLUGS))).all()}
+    return ids
 
 
 def _english_sitemap_urls(site: str) -> list[dict[str, Any]]:

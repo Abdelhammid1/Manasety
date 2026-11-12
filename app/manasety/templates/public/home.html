@@ -13,4 +13,34 @@
 {% set anchor = s.anchor %}
 {% include "public/blocks/" ~ s.block_type ~ ".html" ignore missing %}
 {% endfor %}
+{% if page.slug == 'home' and lang == 'en' and not preview %}
+<section class="section" id="solutions">
+  <div class="wrap">
+    <div class="head center">
+      <h2>Our solutions</h2>
+      <p>Management systems we build and run. Explore each product or service.</p>
+    </div>
+    <ul class="en-sol">
+      <li><a href="/en/marsoud"><strong>Marsoud</strong><span>Accounting &amp; ERP software</span></a></li>
+      <li><a href="/en/elmouhamy"><strong>Elmouhamy</strong><span>Law office management software</span></a></li>
+      <li><a href="/en/activefit"><strong>ActiveFit</strong><span>Gym management software</span></a></li>
+      <li><a href="/en/easygo"><strong>EasyGo</strong><span>AI unified chat inbox</span></a></li>
+      <li><a href="/en/ecommerce"><strong>E-commerce system</strong><span>Online store management system</span></a></li>
+      <li><a href="/en/elyasmin"><strong>Elyasmin</strong><span>Dairy farm management system</span></a></li>
+      <li><a href="/en/shalabyverse"><strong>ShalabyVerse</strong><span>Kids programming &amp; STEM platform</span></a></li>
+      <li><a href="/en/qdrat-platform"><strong>Qdrat Platform</strong><span>E-learning platform for a training institute</span></a></li>
+      <li><a href="/en/sheikh-saleh-school"><strong>Sheikh Saleh School</strong><span>School management system (SIS, LMS &amp; ERP)</span></a></li>
+      <li><a href="/en/training-institutes"><strong>Training institutes software</strong><span>Management software for training centers</span></a></li>
+      <li><a href="/en/business"><strong>Custom business systems</strong><span>Tailor-made management systems for companies</span></a></li>
+    </ul>
+    <style>
+    .en-sol{list-style:none;margin:24px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+    .en-sol a{display:block;padding:16px 18px;border:1px solid rgba(127,127,127,.28);border-radius:12px;text-decoration:none;color:inherit}
+    .en-sol a:hover{border-color:currentColor}
+    .en-sol strong{display:block;margin-bottom:4px}
+    .en-sol span{opacity:.75;font-size:.92em}
+    </style>
+  </div>
+</section>
+{% endif %}
 {% endblock %}
